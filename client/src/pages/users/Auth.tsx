@@ -5,21 +5,15 @@ import LoginForm from './LoginForm';
 import RoundButton from '../../components/RoundButton';
 import SignUpForm from './SignUpForm';
 import styled from 'styled-components';
+import TextLogo from '../../components/Logo';
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
 
   return (
-    <div style={{ display: 'flex', height: '100vh' }}>
-      <LoginImage />
-      <div
-        style={{
-          flexGrow: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+    <AuthContainer>
+      <AuthImage />
+      <AuthContentContainer>
         <div
           style={{
             display: 'flex',
@@ -76,29 +70,24 @@ function Login() {
           </div>
           <div style={{ width: '100%', position: 'relative', margin: '1.25rem 0' }}>
             <hr style={{ border: '1px solid var(--normal-gray)' }} />
-            <div
-              style={{
-                position: 'absolute',
-                top: '0px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                padding: '0 2rem',
-                backgroundColor: 'var(--background)',
-                color: 'var(--bright-black)',
-                fontSize: '14px',
-              }}
-            >
-              BUYTE
-            </div>
+            <TextLogo />
             {isSignUp ? <SignUpForm /> : <LoginForm />}
           </div>
         </div>
-      </div>
-    </div>
+      </AuthContentContainer>
+    </AuthContainer>
   );
 }
 
-const LoginImage = styled.div`
+const AuthContainer = styled.div`
+  display: flex;
+  height: 100vh;
+  @media screen and (max-width: 840px) {
+    flex-direction: column;
+  }
+`;
+
+const AuthImage = styled.div`
   background-image: url(${loginImage});
   flex-grow: 1;
   width: auto;
@@ -107,8 +96,15 @@ const LoginImage = styled.div`
   background-size: cover;
   background-position: center;
   @media screen and (max-width: 840px) {
-    display: none;
+    flex-grow: 0.2;
   }
+`;
+
+const AuthContentContainer = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default Login;
