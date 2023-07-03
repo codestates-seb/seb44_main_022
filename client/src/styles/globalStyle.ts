@@ -2,24 +2,27 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 :root{
-  //흰색흰색,회색,검은색,포인트색,노랑색 너비
+  --background: #FCFCFF;
+  --light-purple: #DDDCED;
+  --purple: #AAA8E0;
+  --dark-purple: #555388;
+  --bright-gray: #888888;
+  --light-gray: #999999;
+  --gray: #F5F5F5;
+  --dark-gray: #585858;
   --white: #FFFFFF;
+  --bright-black: #4C4C4C;
+  --light-black: #423D38;
   --black: #000000;
-  --orange-point: #F48225;
-  --blue-text: #0074CC;
-  --blue: #0A95FF;
-  --blue-hover: #0064C2;
-  --lightblue: #B3D3EA;
-  --lightblue-hover: #B9D2E8;
-  --gray-nav-active: #F1F2F3;
-  --green: #2F6F44;
-  --black-nav-active: #0C0D0E;
-  --black-footer: #232629;
-  --main-width: 1280px;
-  --main-heigth: 80px;
-  --main-padding: 76px;
-  --gray-text: #6C737B;
-//header height 80px / 패딩 값 0 76px
+  --dark-blue-black: #142E38;
+  --gold: #DCD2BD;
+  --dark-khaki: #665D49;
+  --orange-yellow: #FAB65D;
+  --ivory: #FFF4E4;
+  --blue-purple: #7771D5;
+  --light-blue-purple: #8784D6;
+  --light-pink: #FFB7B0;
+  --pink: #F178C5;
 }
 html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -60,7 +63,7 @@ html, body, div, span, applet, object, iframe,
     width: 100vw;
 }
   ol, ul {
-    list-style: none; //왜 적용안되는것임. ! 
+    list-style: none;
   }
   blockquote, q {
     quotes: none;
