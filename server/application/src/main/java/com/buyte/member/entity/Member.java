@@ -7,13 +7,13 @@ import javax.persistence.Id;
 public class Member {
 
     @Id
-    private Long id;
+    private Long memberId;
 
     private String email;
 
     private String password;
 
-    private String nickname;
+    private String memberName;
 
 
 }
