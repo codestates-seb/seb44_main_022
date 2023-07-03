@@ -5,7 +5,7 @@ interface InputProps {
   setState: React.Dispatch<React.SetStateAction<string>>;
   state: string;
   placeholderText: string;
-  icon: ReactElement<ComponentType<{ size?: number }>>;
+  icon: ReactElement<ComponentType>;
 }
 
 function UserInput({ setState, state, placeholderText, icon }: InputProps) {
@@ -26,6 +26,7 @@ const UserInputWrapper = styled.div`
 `;
 
 const InputBox = styled.input`
+  display: block;
   border-radius: 12px;
   width: 300px;
   border: none;
@@ -43,6 +44,7 @@ const Icons = styled.div`
   width: 1.35rem;
   height: 1.35rem;
   display: flex;
+  align-items: center;
   top: 50%;
   left: 1.5rem;
   transform: translate(-50%, -50%);
