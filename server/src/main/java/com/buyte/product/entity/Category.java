@@ -21,8 +21,8 @@ public class Category {
     @Column(name = "category_id")
     private Long categoryId;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "category_name")
+    @Enumerated(EnumType.STRING)
     private CategoryName categoryName;
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})

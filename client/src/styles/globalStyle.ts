@@ -24,6 +24,7 @@ export const GlobalStyle = createGlobalStyle`
   --light-purple: #DDDCED;
   --purple: #AAA8E0;
   --dark-purple: #555388;
+  --white-gray: #777777;
   --bright-gray: #888888;
   --light-gray: #999999;
   --gray: #F5F5F5;

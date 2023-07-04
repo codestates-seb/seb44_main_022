@@ -1,5 +1,6 @@
 package com.buyte.member.entity;
 
+import com.buyte.audit.Auditable;
 import com.buyte.order.entity.Orders;
 import com.buyte.store.entity.Store;
 import lombok.Getter;
@@ -23,7 +24,7 @@ import javax.persistence.OneToOne;
 @Entity
 @Getter
 @Setter
-public class Member {
+public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,9 +40,6 @@ public class Member {
     @Column(name = "member_name", nullable = false)
     private String memberName;
 
-//    @Column(name = "email", nullable = false)
-//    private String email;
-
     @OneToOne(mappedBy = "member", cascade = {CascadeType.ALL})
     private Store store;
 
@@ -51,12 +49,12 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Orders> orderList = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "member_type")
+    @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "member_role")
+    @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
     public enum MemberType {

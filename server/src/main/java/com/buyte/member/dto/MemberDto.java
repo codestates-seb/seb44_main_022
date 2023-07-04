@@ -3,7 +3,6 @@ package com.buyte.member.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
@@ -26,9 +25,6 @@ public class MemberDto {
         @NotBlank(message = "닉네임을 입력해주세요.")
         private String memberName;
 
-//        @Email(message = "정확한 이메일을 입력해주세요.")
-//        private String email;
-
     }
 
     @AllArgsConstructor
@@ -36,6 +32,5 @@ public class MemberDto {
     public static class Response {
         private long memberId;
         private String memberName;
-//        private String email;
     }
 }
