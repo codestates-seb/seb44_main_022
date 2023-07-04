@@ -1,11 +1,23 @@
 import { createGlobalStyle } from 'styled-components';
 import JustAnotherHand from '../assets/fonts/JustAnotherHand-Regular.ttf';
-
+import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
+import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
 export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Just Another Hand';
   font-style: normal;
   src: url(${JustAnotherHand}) format("truetype");
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Yaldevi';
+  font-style: normal;
+  font-weight: 400;
+  src: url(${Yaldevi}) format('woff2'); 
+}
+@font-face {
+  font-family: 'Indie Flower';
+  src: url(${IndieFlower}) ;
 }
 :root{
   --background: #FCFCFF;
