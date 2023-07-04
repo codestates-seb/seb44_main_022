@@ -1,6 +1,10 @@
 package com.buyte.member.entity;
 
 import com.buyte.product.entity.Product;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Cart {
 
     @Id
@@ -29,5 +35,5 @@ public class Cart {
     private String cartCustomProductImage;
 
     @Column(name = "cart_custom_product_price")
-    private String cartCustomProductPrice;
+    private Long cartCustomProductPrice;
 }
