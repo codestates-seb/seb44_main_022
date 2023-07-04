@@ -1,5 +1,7 @@
 import { FunctionComponent } from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import { useEffect } from 'react';
+import { useRef } from 'react';
 import Header from '../../share/Header';
 import Footer from '../../share/Footer';
 import Slider from 'react-slick';
@@ -28,7 +30,7 @@ import {
 const settings = {
   dots: true,
   infinite: true,
-  speed: 700,
+  speed: 600,
   autoplay: true,
   autoplaySpeed: 3000,
   slidesToShow: 1,
@@ -154,8 +156,50 @@ const TextOverlay = styled.div`
   padding: 10px;
   font-size: 16px;
 `;
+const Section2 = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+`;
 
-const Main: FunctionComponent = () => {
+const slideAnimation = keyframes`
+  from {
+    left: -100px;
+    opacity: 0;
+  }
+  to {
+    left: 100px;
+    opacity: 1;
+  }
+`;
+
+const disappearAnimation = keyframes`
+  from {
+    left: 100px;
+    opacity: 1;
+  }
+  to {
+    left: -100px;
+    opacity: 0;
+  }
+`;
+
+const Section2Text = styled.div`
+  font-size: 3em;
+  width: 258px;
+  color: black;
+  font-family: sans-serif;
+  position: absolute;
+  top: 78%;
+  left: 10%;
+  animation: ${slideAnimation} 2s ease-in-out forwards;
+
+  &.disappear {
+    animation: ${disappearAnimation} 1s ease-out forwards;
+  }
+`;
+
+
   const section3Icons = [section3_1, section3_2, section3_3, section3_4, section3_5];
   const sliderItems = [
     { src: section1_1, text: 'BUYTE가 처음이신가요?' },
@@ -184,7 +228,10 @@ const Main: FunctionComponent = () => {
             ))}
           </Slider>
         </Section1>
-        <Secion2Img src={section2} />
+        <Section2>
+          <Section2Text ref={section2TextRef}>ㄴㅁㅇㄹ</Section2Text>
+          <Secion2Img src={section2} />
+        </Section2>
         <Section3>
           {section3Icons.map((src, index) => (
             <Section3Icon key={index} src={src} />
