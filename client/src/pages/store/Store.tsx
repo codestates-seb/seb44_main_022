@@ -3,6 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import StoreCard from '../../components/storeCard';
 import Header from '../../share/Header';
 import Footer from '../../share/Footer';
+
 function Store() {
   return <><Header/>
   <section style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop:'240px'}}>
@@ -23,9 +24,7 @@ function Store() {
         </Search>
       </SearchSection>
       <StoreListSection>
-        <section>
           <StoreCard/>
-        </section>
       </StoreListSection>      
       </section>
      </section>
