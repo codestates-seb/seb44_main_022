@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public interface CartMapper {
     default List<CartResDto> cartsToCartsResDtos(List<Cart> cartList) {
         return cartList.stream().map(cart -> CartResDto
-                .builder()
+                .builder().cartId(cart.getCartId())
                 .productId(cart.getProduct().getProductId())
                 .productName(cart.getProduct().getProductName())
                 .productPrice(cart.getCartCustomProductPrice())
