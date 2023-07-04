@@ -199,7 +199,29 @@ const Section2Text = styled.div`
   }
 `;
 
+const Main: React.FunctionComponent = () => {
+  const section2TextRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const value = window.scrollY;
+      console.log('scrollY', value);
+      if (value >= 300 && value <= 750) {
+        if (section2TextRef.current) {
+          section2TextRef.current.classList.remove('disappear');
+        }
+      } else {
+        if (section2TextRef.current) {
+          section2TextRef.current.classList.add('disappear');
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
   const section3Icons = [section3_1, section3_2, section3_3, section3_4, section3_5];
   const sliderItems = [
     { src: section1_1, text: 'BUYTE가 처음이신가요?' },
