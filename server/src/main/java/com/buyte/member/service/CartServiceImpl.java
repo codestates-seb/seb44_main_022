@@ -6,6 +6,8 @@ import com.buyte.member.entity.Member;
 import com.buyte.member.mapper.CartMapper;
 import com.buyte.member.repository.CartRepository;
 import com.buyte.member.repository.MemberRepository;
+import com.buyte.product.entity.Product;
+import com.buyte.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import java.util.List;
 public class CartServiceImpl implements CartService{
 
     private final MemberRepository memberRepository;
+    private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     private final CartMapper cartMapper;
 
@@ -33,5 +36,14 @@ public class CartServiceImpl implements CartService{
     @Override
     public void deleteSelectedProducts(List<Long> cartIds) throws Exception {
         cartRepository.deleteByCartIdIn(cartIds);
+    }
+
+    @Override
+    public void addProductToCart(Long productId) throws Exception {
+        Product product = productRepository.findById(productId).orElseThrow();
+        Cart cart = new Cart(product, product.getProductImage(), product.getProductPrice());
+
+        cartRepository.save(cart);
+
     }
 }

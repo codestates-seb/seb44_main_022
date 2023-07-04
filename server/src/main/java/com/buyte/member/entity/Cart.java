@@ -2,6 +2,7 @@ package com.buyte.member.entity;
 
 import com.buyte.product.entity.Product;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,5 +36,13 @@ public class Cart {
     private String cartCustomProductImage;
 
     @Column(name = "cart_custom_product_price")
-    private Long cartCustomProductPrice;
+    private Integer cartCustomProductPrice;
+
+    @Builder
+    public Cart( Product product, String cartCustomProductImage, Integer cartCustomProductPrice) {
+
+        this.product = product;
+        this.cartCustomProductImage = cartCustomProductImage;
+        this.cartCustomProductPrice = cartCustomProductPrice;
+    }
 }

@@ -15,17 +15,25 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/cart/{member-id}")
-    public ResponseEntity<List<CartResDto>> getCartInfo(@PathVariable(name = "member-id") Long memberId) throws Exception {
+    @GetMapping("/cart/{member_id}")
+    public ResponseEntity<List<CartResDto>> getCartInfo(@PathVariable(name = "member_id") Long memberId) throws Exception {
         List<CartResDto> memberCart = cartService.getInfoMemberCart(memberId);
 
         return ResponseEntity.ok(memberCart);
     }
 
-    @DeleteMapping("/cart/{member-id}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deletePorducts(@RequestBody List<Long> cartIds) throws Exception {
+    @DeleteMapping("/cart/{member_id}/delete")
+    public ResponseEntity deletePorducts(@RequestBody List<Long> cartIds) throws Exception {
         cartService.deleteSelectedProducts(cartIds);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/store/{store_id}/{custom_item_id}")
+    public ResponseEntity addProduct(@PathVariable(name = "custom_item_id") Long productId) throws Exception {
+        cartService.addProductToCart(productId);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 

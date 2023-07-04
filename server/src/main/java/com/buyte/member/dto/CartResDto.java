@@ -11,5 +11,5 @@ public class CartResDto {
     private Long productId;
     private String productName;
     private String productImagePath;
-    private Long productPrice;
+    private Integer productPrice;
 }
