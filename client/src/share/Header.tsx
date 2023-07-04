@@ -6,9 +6,9 @@ import logo from '../assets/images/logo.png';
 const LoginIcon = styled.img`
   position: absolute;
   top: 0px;
-  right: 12.74px;
-  width: 35.41px;
-  height: 33.25px;
+  right: 17.74px;
+  width: 32.41px;
+  height: 31.25px;
 `;
 const Login = styled.div`
   position: absolute;
@@ -19,6 +19,7 @@ const Login = styled.div`
   align-items: center;
   width: 54.65px;
   height: 25.63px;
+  font-size: 15px;
 `;
 const LoginContainer = styled.div`
   position: absolute;
@@ -79,7 +80,7 @@ const Buyte = styled.div`
   align-items: center;
   height: 37px;
 `;
-const LinkMy = styled.div`
+const Cart = styled.div`
   position: absolute;
   top: 43.54px;
   right: 0px;
@@ -88,13 +89,14 @@ const LinkMy = styled.div`
   align-items: center;
   width: 78.13px;
   height: 25.63px;
+  font-size: 15px;
 `;
 const CartIcon = styled.img`
   position: absolute;
   top: 0px;
-  right: 27px;
-  width: 40.53px;
-  height: 33.46px;
+  right: 33px;
+  width: 39px;
+  height: 32px;
 `;
 const CartContainer = styled.div`
   position: absolute;
@@ -136,6 +138,7 @@ const HeaderRoot = styled.div`
   overflow: hidden;
   text-align: left;
   color: var(--light-purple);
+  z-index: 2;
 `;
 
 const Header: FunctionComponent = () => {
@@ -151,7 +154,7 @@ const Header: FunctionComponent = () => {
         <LinkMypage>Mypage</LinkMypage>
         <Buyte>BUYTE</Buyte>
         <CartContainer>
-          <LinkMy>장바구니</LinkMy>
+          <Cart>장바구니</Cart>
           <CartIcon src={cart_img} alt="Cart" />
         </CartContainer>
         <Icon src={logo} alt="Logo" />
