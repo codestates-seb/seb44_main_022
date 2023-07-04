@@ -1,5 +1,12 @@
+import Header from '../../share/Header';
+import Footer from '../../share/Footer';
 function Main() {
-  return <div>메인 페이지</div>;
+  return (
+    <div>
+      <Header />
+      <div style={{ height: '3000px' }}></div>
+      <Footer />
+    </div>
+  );
 }
-
 export default Main;
