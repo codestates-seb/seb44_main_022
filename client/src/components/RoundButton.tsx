@@ -1,3 +1,4 @@
+import { useGoogleLogin } from '@react-oauth/google';
 import { ComponentType, ReactElement } from 'react';
 import styled, { FlattenSimpleInterpolation, css } from 'styled-components';
 
@@ -9,7 +10,7 @@ interface ButtonProps {
 }
 
 const ROUND_BUTTON_TYPE: { [index: string]: FlattenSimpleInterpolation } = {
-  default: css`
+  google: css`
     background-color: var(--background);
     color: var(--dark-blue-black);
     font-weight: 700;
@@ -42,8 +43,23 @@ const ROUND_BUTTON_TYPE: { [index: string]: FlattenSimpleInterpolation } = {
 };
 
 function RoundButton({ title, types, icon, enabled }: ButtonProps) {
+  const handleClick = () => {
+    if (types === 'google') handleGoogleLogin();
+  };
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: ({ code }) => {
+      console.log(code);
+      window.location.href = '/';
+    },
+    onError: (errorResponse) => {
+      console.log(errorResponse);
+    },
+    flow: 'auth-code',
+  });
+
   return (
-    <RoundButtonStyle types={types} disabled={enabled === false && true}>
+    <RoundButtonStyle types={types} disabled={enabled === false && true} onClick={handleClick}>
       {icon && <Icons>{icon}</Icons>}
       {title}
     </RoundButtonStyle>
