@@ -38,69 +38,38 @@ const settings = {
   centerPadding: '40px',
 };
 
-const BodyContainer = styled.div`
-  position: absolute;
-  top: 3458px;
-  left: calc(50% - 839px);
-  width: 100%;
-  height: 276px;
-  overflow: hidden;
-  opacity: 0.99;
-`;
 const Secion2Img = styled.img`
-  position: absolute;
-  top: 959px;
-  left: 1px;
-  width: 1920px;
-  height: 820px;
+  margin-top: 30px;
+  width: 100%;
   object-fit: cover;
 `;
 const Heading2 = styled.div`
-  position: absolute;
-  top: 81px;
-  left: 832.83px;
   letter-spacing: -0.46px;
-  width: 114.53px;
-  height: 31px;
+  padding: 1rem 0;
 `;
 const Heading1TitleReviewpng = styled.img`
-  position: absolute;
-  top: -11px;
-  left: calc(50% - 105px);
   width: 210px;
-  height: 68px;
   object-fit: cover;
 `;
 const ReviewText = styled.div`
-  position: absolute;
-  top: 80px;
-  left: 20px;
-  width: 1780px;
-  height: 114.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-const Abcd = styled.div`
-  position: absolute;
-  top: -2.5px;
-  left: 0px;
+const ProductText = styled.div`
   line-height: 22.8px;
   display: flex;
   align-items: center;
   width: 98.25px;
   height: 27px;
 `;
-const PproductName = styled.div`
-  position: absolute;
-  top: 20px;
-  left: 0px;
+const ProductName = styled.div`
   width: 340px;
   height: 22.8px;
   overflow: hidden;
 `;
-const Won = styled.b`
-  position: absolute;
-  top: -3px;
-  left: 0px;
+const Price = styled.b`
   line-height: 26.4px;
   display: flex;
   align-items: center;
@@ -108,223 +77,70 @@ const Won = styled.b`
   height: 32px;
 `;
 const Divprice = styled.div`
-  position: absolute;
-  top: 52.8px;
-  left: 0px;
   width: 340px;
   height: 26.39px;
   font-size: var(--font-size-3xl);
 `;
 const Section4Box = styled.div`
-  position: absolute;
   display: flex;
-  top: 340px;
-  left: 0px;
   width: 340px;
   height: 99.19px;
 `;
 const DivimgBoxIcon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 310px;
-  height: 310px;
+  width: 300px;
+  height: 300px;
   overflow: hidden;
   object-fit: cover;
 `;
-const Link1 = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100;
-  height: 439.19px;
-`;
-const Abcd1 = styled.div`
-  position: absolute;
-  top: -3px;
-  left: 0px;
-  line-height: 22.8px;
-  display: flex;
-  align-items: center;
-  width: 280.59px;
-  height: 27px;
-`;
-const Link2 = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 360px;
+const Link = styled.div`
   width: 340px;
   height: 439.19px;
-`;
-const Abcd2 = styled.div`
-  position: absolute;
-  top: -3px;
-  left: 0px;
-  line-height: 22.8px;
-  display: flex;
-  align-items: center;
-  width: 140.73px;
-  height: 27px;
-`;
-const Link3 = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 720px;
-  width: 340px;
-  height: 439.19px;
-`;
-const Abcd3 = styled.div`
-  position: absolute;
-  top: -3px;
-  left: 0px;
-  line-height: 22.8px;
-  display: flex;
-  align-items: center;
-  width: 217.95px;
-  height: 27px;
-`;
-const Link4 = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 1080px;
-  width: 340px;
-  height: 439.19px;
-`;
-const Abcd4 = styled.div`
-  position: absolute;
-  top: -3px;
-  left: 0px;
-  line-height: 22.8px;
-  display: flex;
-  align-items: center;
-  width: 119.93px;
-  height: 27px;
-`;
-const Link5 = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 1440px;
-  width: 340px;
-  height: 439.19px;
-`;
-const Section4Wrapper = styled.div`
-  position: relative;
-  height: 100%;
-  width: 100%;
 `;
 
 const Section4Container = styled.div`
   display: flex;
-  position: relative;
-  top: 210px;
   width: 100%;
   height: 420px;
   overflow: hidden;
   text-align: left;
+  justify-content: center;
 `;
 
 const Section4 = styled.div`
-  position: relative;
   display: flex;
-  justify-content: center;
-  top: 2500px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 100vh;
-  width: 100vw;
-
-  @media (max-width: 1200px) {
-    left: 45%;
-  }
-
-  @media (max-width: 768px) {
-    left: 40%;
-  }
-
-  @media (max-width: 480px) {
-    left: 35%;
-  }
+  flex-direction: column;
+  width: 100%;
+  height: auto;
 `;
 
 const Section1_img = styled.img`
-  top: 0px;
   width: 100%;
   height: 750px;
   object-fit: cover;
 `;
 const Section1 = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
 `;
-const Section31Icon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 375.2px;
-  height: 735px;
-  overflow: hidden;
-  object-fit: cover;
-`;
-const Section33Icon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 792.4px;
-  width: 377.2px;
-  height: 735px;
-  overflow: hidden;
-  object-fit: cover;
-`;
-const Section34Icon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 1189.6px;
-  width: 377.2px;
-  height: 735px;
-  overflow: hidden;
-  object-fit: cover;
-`;
-const Section35Icon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 1586.8px;
-  width: 377.2px;
-  height: 735px;
-  overflow: hidden;
-  object-fit: cover;
-`;
-const Section32Icon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 395.2px;
-  width: 377.2px;
-  height: 735px;
+
+const Section3Icon = styled.img`
+  width: 20%;
   object-fit: cover;
 `;
 const Section3 = styled.div`
-  position: absolute;
-  top: calc(50% + 149px);
-  left: calc(50% - 955px);
-  width: 1920px;
-  height: 735px;
+  width: 100%;
+  display: flex;
 `;
 const Body = styled.div`
-  position: absolute;
-  top: 160px;
-  left: 0px;
   width: 100%;
-  height: 3260px;
   overflow: hidden;
   text-align: center;
 `;
 const MainRoot = styled.div`
-  position: absolute;
   background-color: #fffffc;
   width: 100%;
-  height: 3660px;
+  margin-top: 160px;
   text-align: left;
   font-size: 22px;
 `;
@@ -333,115 +149,70 @@ const SliderItem = styled.div`
 `;
 
 const TextOverlay = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   padding: 10px;
   font-size: 16px;
 `;
+
 const Main: FunctionComponent = () => {
+  const section3Icons = [section3_1, section3_2, section3_3, section3_4, section3_5];
+  const sliderItems = [
+    { src: section1_1, text: 'BUYTE가 처음이신가요?' },
+    { src: section1_2, text: 'BUYTE가 처음이신가요?' },
+    { src: section1_3, text: 'BUYTE가 처음이신가요?' },
+    { src: section1_4, text: 'BUYTE가 처음이신가요?' },
+  ];
+  const products = [
+    { src: divimgbox, price: '31,000 won' },
+    { src: divimgbox1, price: '68,000 won' },
+    { src: divimgbox2, price: '20,000 won' },
+    { src: divimgbox3, price: '46,000 won' },
+    { src: divimgbox4, price: '52,000 won' },
+  ];
   return (
     <MainRoot>
-      <Footer />
       <Header />
       <Body>
-        <BodyContainer />
-        <Secion2Img alt="" src={section2} />
+        <Section1>
+          <Slider {...settings}>
+            {sliderItems.map((item, index) => (
+              <SliderItem key={index}>
+                <Section1_img src={item.src} />
+                <TextOverlay>{item.text}</TextOverlay>
+              </SliderItem>
+            ))}
+          </Slider>
+        </Section1>
+        <Secion2Img src={section2} />
+        <Section3>
+          {section3Icons.map((src, index) => (
+            <Section3Icon key={index} src={src} />
+          ))}
+        </Section3>
         <Section4>
           <ReviewText>
             <Heading2>인기 메뉴</Heading2>
-            <Heading1TitleReviewpng alt="" src={heading} />
+            <Heading1TitleReviewpng src={heading} />
           </ReviewText>
           <Section4Container>
-            <Section4Wrapper>
-              <Link1>
+            {products.map((product, index) => (
+              <Link key={index}>
+                <DivimgBoxIcon src={product.src} />
                 <Section4Box>
-                  <PproductName>
-                    <Abcd>abcd</Abcd>
-                  </PproductName>
+                  <ProductName>
+                    <ProductText>ProductText</ProductText>
+                  </ProductName>
                   <Divprice>
-                    <Won>31,000 won</Won>
+                    <Price>{product.price}</Price>
                   </Divprice>
                 </Section4Box>
-                <DivimgBoxIcon alt="" src={divimgbox} />
-              </Link1>
-              <Link2>
-                <Section4Box>
-                  <PproductName>
-                    <Abcd1>abcd</Abcd1>
-                  </PproductName>
-                  <Divprice>
-                    <Won>68,000 won</Won>
-                  </Divprice>
-                </Section4Box>
-                <DivimgBoxIcon alt="" src={divimgbox1} />
-              </Link2>
-              <Link3>
-                <Section4Box>
-                  <PproductName>
-                    <Abcd2>abcd</Abcd2>
-                  </PproductName>
-                  <Divprice>
-                    <Won>20,000 won</Won>
-                  </Divprice>
-                </Section4Box>
-                <DivimgBoxIcon alt="" src={divimgbox2} />
-              </Link3>
-              <Link4>
-                <Section4Box>
-                  <PproductName>
-                    <Abcd3>abcd</Abcd3>
-                  </PproductName>
-                  <Divprice>
-                    <Won>46,000 won</Won>
-                  </Divprice>
-                </Section4Box>
-                <DivimgBoxIcon alt="" src={divimgbox3} />
-              </Link4>
-              <Link5>
-                <Section4Box>
-                  <PproductName>
-                    <Abcd4>abcd</Abcd4>
-                  </PproductName>
-                  <Divprice>
-                    <Won>52,000 won</Won>
-                  </Divprice>
-                </Section4Box>
-                <DivimgBoxIcon alt="" src={divimgbox4} />
-              </Link5>
-            </Section4Wrapper>
+              </Link>
+            ))}
           </Section4Container>
         </Section4>
-        <Section1>
-          <Slider {...settings}>
-            <SliderItem>
-              <Section1_img alt="" src={section1_1} />
-              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
-            </SliderItem>
-            <SliderItem>
-              <Section1_img alt="" src={section1_2} />
-              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
-            </SliderItem>
-            <SliderItem>
-              <Section1_img alt="" src={section1_3} />
-              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
-            </SliderItem>
-            <SliderItem>
-              <Section1_img alt="" src={section1_4} />
-              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
-            </SliderItem>
-          </Slider>
-        </Section1>
-        <Section3>
-          <Section31Icon alt="" src={section3_1} />
-          <Section33Icon alt="" src={section3_2} />
-          <Section34Icon alt="" src={section3_3} />
-          <Section35Icon alt="" src={section3_4} />
-          <Section32Icon alt="" src={section3_5} />
-        </Section3>
       </Body>
+      <Footer />
     </MainRoot>
   );
 };

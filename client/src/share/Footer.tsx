@@ -50,7 +50,7 @@ const Item3 = styled.div`
   align-items: center;
   width: 244px;
   height: 19px;
-  font-size: 13px;
+  font-size: 10px;
 `;
 const DivfooterText2 = styled.div`
   position: absolute;
@@ -120,15 +120,12 @@ const FooterContainer = styled.div`
   bottom: 0;
   background-color: var(--purple);
   width: 100%;
-  height: 180px;
+  height: 200px;
   color: var(--color-white);
   font-family: var(--font-noto-sans-kr);
 `;
 const FooterRoot = styled.div`
-  height: auto;
-  min-height: 100%;
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
