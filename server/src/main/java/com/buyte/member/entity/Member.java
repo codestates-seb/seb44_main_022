@@ -1,5 +1,6 @@
 package com.buyte.member.entity;
 
+import com.buyte.audit.Auditable;
 import com.buyte.order.entity.Orders;
 import com.buyte.store.entity.Store;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Member {
+public class Member extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,12 +43,12 @@ public class Member {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Orders> orderList = new ArrayList<>();
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "member_type")
+    @Enumerated(EnumType.STRING)
     private MemberType memberType;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "member_role")
+    @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
     public enum MemberType {
