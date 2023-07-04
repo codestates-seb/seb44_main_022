@@ -18,6 +18,7 @@ import {
   section3_4,
   section3_5,
   divimgbox,
+  divimgbox1,
   divimgbox2,
   divimgbox3,
   divimgbox4,
@@ -27,25 +28,26 @@ import {
 const settings = {
   dots: true,
   infinite: true,
-  speed: 500,
+  speed: 700,
   autoplay: true,
   autoplaySpeed: 3000,
   slidesToShow: 1,
   slidesToScroll: 1,
   centerMode: true,
-  centerPadding: '20px',
+  arrow: false,
+  centerPadding: '40px',
 };
 
-const DivswiperContainer = styled.div`
+const BodyContainer = styled.div`
   position: absolute;
   top: 3458px;
   left: calc(50% - 839px);
-  width: 1680px;
+  width: 100%;
   height: 276px;
   overflow: hidden;
   opacity: 0.99;
 `;
-const Section2Icon = styled.img`
+const Secion2Img = styled.img`
   position: absolute;
   top: 959px;
   left: 1px;
@@ -58,10 +60,6 @@ const Heading2 = styled.div`
   top: 81px;
   left: 832.83px;
   letter-spacing: -0.46px;
-  line-height: 34.5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 114.53px;
   height: 31px;
 `;
@@ -75,32 +73,12 @@ const Heading1TitleReviewpng = styled.img`
 `;
 const ReviewText = styled.div`
   position: absolute;
-  top: 0px;
+  top: 80px;
   left: 20px;
   width: 1780px;
   height: 114.5px;
 `;
-const SeeMore = styled.div`
-  position: relative;
-  font-weight: 500;
-`;
-const BtnSeemore = styled.div`
-  position: absolute;
-  top: calc(50% + 288.69px);
-  left: calc(50% - 95.22px);
-  border-radius: 800px;
-  background-color: var(--color-white);
-  border: 1px solid var(--color-cornflowerblue);
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: row;
-  padding: var(--padding-smi) 41.41999816894531px var(--padding-smi) 41px;
-  align-items: flex-start;
-  justify-content: flex-start;
-  opacity: 0.96;
-  min-width: 110px;
-  font-size: var(--font-size-3xl);
-`;
+
 const Abcd = styled.div`
   position: absolute;
   top: -2.5px;
@@ -137,8 +115,9 @@ const Divprice = styled.div`
   height: 26.39px;
   font-size: var(--font-size-3xl);
 `;
-const DivtxtBox = styled.div`
+const Section4Box = styled.div`
   position: absolute;
+  display: flex;
   top: 340px;
   left: 0px;
   width: 340px;
@@ -148,8 +127,8 @@ const DivimgBoxIcon = styled.img`
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 340px;
-  height: 340px;
+  width: 310px;
+  height: 310px;
   overflow: hidden;
   object-fit: cover;
 `;
@@ -157,7 +136,7 @@ const Link1 = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
-  width: 340px;
+  width: 100;
   height: 439.19px;
 `;
 const Abcd1 = styled.div`
@@ -229,107 +208,54 @@ const Link5 = styled.div`
   height: 439.19px;
 `;
 const Section4Wrapper = styled.div`
-  position: absolute;
+  position: relative;
   height: 100%;
   width: 100%;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
 `;
+
 const Section4Container = styled.div`
-  position: absolute;
-  top: 126px;
-  left: calc(50% - 890px);
-  width: 1780px;
-  height: 439.19px;
+  display: flex;
+  position: relative;
+  top: 210px;
+  width: 100%;
+  height: 420px;
   overflow: hidden;
   text-align: left;
-  font-size: var(--font-size-lgi);
-  color: var(--color-gray-100);
 `;
+
 const Section4 = styled.div`
-  position: absolute;
-  top: 2541px;
-  left: calc(50% - 905px);
-  width: 1820px;
-  height: 691.69px;
-`;
-const Section11Icon = styled.img`
-  position: absolute;
-  top: -740px;
-  left: 0px;
-  width: 1920px;
-  height: 960px;
-  object-fit: cover;
-`;
-const Buyte = styled.div`
-  position: absolute;
-  top: 19.8px;
-  left: 28.86px;
-  letter-spacing: -0.66px;
-  line-height: 26.4px;
+  position: relative;
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 222.47px;
-  height: 29px;
+  top: 2500px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100vh;
+  width: 100vw;
+
+  @media (max-width: 1200px) {
+    left: 45%;
+  }
+
+  @media (max-width: 768px) {
+    left: 40%;
+  }
+
+  @media (max-width: 480px) {
+    left: 35%;
+  }
 `;
-const Link = styled.div`
-  position: absolute;
-  top: calc(50% - 35px);
-  left: calc(50% - 138.8px);
-  border-radius: 70px;
-  background-color: var(--color-white);
-  border: 1px solid var(--color-dimgray-100);
-  box-sizing: border-box;
-  width: 280px;
-  height: 70px;
-`;
-const BtnIntroduce = styled.div`
-  position: absolute;
-  height: calc(100% - 890px);
-  width: calc(100% - 5750px);
-  top: 740px;
-  right: 5750px;
-  bottom: 150px;
-  left: 0px;
-`;
-const DivswiperContainerIcon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: calc(50% - 3835px);
-  width: 1920px;
-  height: 960px;
-  overflow: hidden;
-`;
-const Section12Icon = styled.img`
+
+const Section1_img = styled.img`
   top: 0px;
   width: 100%;
-  height: 960px;
-  object-fit: cover;
-`;
-const Section13Icon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 3840px;
-  width: 1920px;
-  height: 960px;
-  object-fit: cover;
-`;
-const Section14Icon = styled.img`
-  position: absolute;
-  top: 0px;
-  left: 5760px;
-  width: 1920px;
-  height: 960px;
+  height: 750px;
   object-fit: cover;
 `;
 const Section1 = styled.div`
   position: absolute;
   top: 0px;
   left: 0px;
-  border: 1px solid #000;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -402,95 +328,118 @@ const MainRoot = styled.div`
   text-align: left;
   font-size: 22px;
 `;
+const SliderItem = styled.div`
+  position: relative;
+`;
+
+const TextOverlay = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+`;
 const Main: FunctionComponent = () => {
   return (
     <MainRoot>
       <Footer />
       <Header />
       <Body>
-        <DivswiperContainer />
-        <Section2Icon alt="" src="/section2@2x.png" />
+        <BodyContainer />
+        <Secion2Img alt="" src={section2} />
         <Section4>
           <ReviewText>
             <Heading2>인기 메뉴</Heading2>
-            <Heading1TitleReviewpng alt="" src="./heading-1--title-reviewpng@2x.png" />
+            <Heading1TitleReviewpng alt="" src={heading} />
           </ReviewText>
-          <BtnSeemore>
-            <SeeMore>SEE MORE</SeeMore>
-          </BtnSeemore>
           <Section4Container>
             <Section4Wrapper>
               <Link1>
-                <DivtxtBox>
+                <Section4Box>
                   <PproductName>
                     <Abcd>abcd</Abcd>
                   </PproductName>
                   <Divprice>
                     <Won>31,000 won</Won>
                   </Divprice>
-                </DivtxtBox>
-                <DivimgBoxIcon alt="" src="./divimgbox@2x.png" />
+                </Section4Box>
+                <DivimgBoxIcon alt="" src={divimgbox} />
               </Link1>
               <Link2>
-                <DivtxtBox>
+                <Section4Box>
                   <PproductName>
                     <Abcd1>abcd</Abcd1>
                   </PproductName>
                   <Divprice>
                     <Won>68,000 won</Won>
                   </Divprice>
-                </DivtxtBox>
-                <DivimgBoxIcon alt="" src="/divimgbox1@2x.png" />
+                </Section4Box>
+                <DivimgBoxIcon alt="" src={divimgbox1} />
               </Link2>
               <Link3>
-                <DivtxtBox>
+                <Section4Box>
                   <PproductName>
                     <Abcd2>abcd</Abcd2>
                   </PproductName>
                   <Divprice>
                     <Won>20,000 won</Won>
                   </Divprice>
-                </DivtxtBox>
-                <DivimgBoxIcon alt="" src="/divimgbox2@2x.png" />
+                </Section4Box>
+                <DivimgBoxIcon alt="" src={divimgbox2} />
               </Link3>
               <Link4>
-                <DivtxtBox>
+                <Section4Box>
                   <PproductName>
                     <Abcd3>abcd</Abcd3>
                   </PproductName>
                   <Divprice>
                     <Won>46,000 won</Won>
                   </Divprice>
-                </DivtxtBox>
-                <DivimgBoxIcon alt="" src="/divimgbox3@2x.png" />
+                </Section4Box>
+                <DivimgBoxIcon alt="" src={divimgbox3} />
               </Link4>
               <Link5>
-                <DivtxtBox>
+                <Section4Box>
                   <PproductName>
                     <Abcd4>abcd</Abcd4>
                   </PproductName>
                   <Divprice>
                     <Won>52,000 won</Won>
                   </Divprice>
-                </DivtxtBox>
-                <DivimgBoxIcon alt="" src="/divimgbox4@2x.png" />
+                </Section4Box>
+                <DivimgBoxIcon alt="" src={divimgbox4} />
               </Link5>
             </Section4Wrapper>
           </Section4Container>
         </Section4>
         <Section1>
           <Slider {...settings}>
-            <Section12Icon alt="" src={section1_1} />
-            <Section12Icon alt="" src={section1_2} />
-            <Section12Icon alt="" src={section1_1} />
+            <SliderItem>
+              <Section1_img alt="" src={section1_1} />
+              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
+            </SliderItem>
+            <SliderItem>
+              <Section1_img alt="" src={section1_2} />
+              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
+            </SliderItem>
+            <SliderItem>
+              <Section1_img alt="" src={section1_3} />
+              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
+            </SliderItem>
+            <SliderItem>
+              <Section1_img alt="" src={section1_4} />
+              <TextOverlay>BUYTE가 처음이신가요?</TextOverlay>
+            </SliderItem>
           </Slider>
         </Section1>
         <Section3>
-          <Section31Icon alt="" src="./section3-1@2x.png" />
-          <Section33Icon alt="" src="./section3-3@2x.png" />
-          <Section34Icon alt="" src="./section3-4@2x.png" />
-          <Section35Icon alt="" src="/section3-5@2x.png" />
-          <Section32Icon alt="" src="/section3-2@2x.png" />
+          <Section31Icon alt="" src={section3_1} />
+          <Section33Icon alt="" src={section3_2} />
+          <Section34Icon alt="" src={section3_3} />
+          <Section35Icon alt="" src={section3_4} />
+          <Section32Icon alt="" src={section3_5} />
         </Section3>
       </Body>
     </MainRoot>
