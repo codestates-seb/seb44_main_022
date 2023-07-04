@@ -1,6 +1,24 @@
 import { createGlobalStyle } from 'styled-components';
-
+import JustAnotherHand from '../assets/fonts/JustAnotherHand-Regular.ttf';
+import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
+import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
 export const GlobalStyle = createGlobalStyle`
+@font-face {
+  font-family: 'Just Another Hand';
+  font-style: normal;
+  src: url(${JustAnotherHand}) format("truetype");
+}
+@font-face {
+  font-display: swap;
+  font-family: 'Yaldevi';
+  font-style: normal;
+  font-weight: 400;
+  src: url(${Yaldevi}) format('woff2'); 
+}
+@font-face {
+  font-family: 'Indie Flower';
+  src: url(${IndieFlower}) ;
+}
 :root{
   --background: #FCFCFF;
   --light-purple: #DDDCED;
@@ -9,6 +27,7 @@ export const GlobalStyle = createGlobalStyle`
   --bright-gray: #888888;
   --light-gray: #999999;
   --gray: #F5F5F5;
+  --normal-gray: #E5E5E5;
   --dark-gray: #585858;
   --white: #FFFFFF;
   --bright-black: #4C4C4C;
@@ -46,6 +65,7 @@ html, body, div, span, applet, object, iframe,
     text-decoration: none;
     color: var(--black);
     font-family: 'Inter';
+    height: auto;
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure, 
@@ -61,6 +81,8 @@ html, body, div, span, applet, object, iframe,
     -webkit-user-select: none;
     user-select: none;
     width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
 }
   ol, ul {
     list-style: none;
@@ -87,5 +109,6 @@ html, body, div, span, applet, object, iframe,
   }
   input{
     outline: none;
+    box-sizing: border-box;
   }
 `;
