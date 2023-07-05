@@ -13,7 +13,7 @@ public interface ProductMapper {
         ProductDto.Response productResponseDto = new Response();
 
         productResponseDto.setProductId(product.getProductId());
-        productResponseDto.setProductImages(product.getProductImage());
+        productResponseDto.setProductImage(product.getProductImage());
         productResponseDto.setProductName(product.getProductName());
         productResponseDto.setProductPrice(product.getProductPrice());
 
