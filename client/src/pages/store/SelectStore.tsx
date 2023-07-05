@@ -1,7 +1,8 @@
+/* eslint-disable react/no-children-prop */
 import styled from 'styled-components';
 import Header from '../../share/Header';
 import Footer from '../../share/Footer';
-import ModalComponent from '../../share/ModalComponent';
+import ModalComponentDetail from '../../share/ModalComponentDetail';
 import { useState } from 'react';
 
 import SelectStoreImg from '../../assets/images/img_select/select_store.png';
@@ -111,14 +112,12 @@ const SelectStore: React.FunctionComponent = () => {
           <GrayText> 다양한 메뉴를 확인해보세요.</GrayText>
         </ContentContainer>
       </Container>
-      <ModalComponent
+      <ModalComponentDetail
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
         contentLabel="매장 리스트"
-      >
-        <h2> </h2>
-        <p> </p>
-      </ModalComponent>
+        children={undefined}
+      />
       <Footer />
     </MainRoot>
   );
