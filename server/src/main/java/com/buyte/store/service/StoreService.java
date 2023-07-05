@@ -1,5 +1,7 @@
 package com.buyte.store.service;
 
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.product.dto.ProductDto;
 import com.buyte.product.entity.Product;
 import com.buyte.product.mapper.ProductMapper;
@@ -53,7 +55,7 @@ public class StoreService {
     public Store findVerifiedStore(long storeId) {
         Optional<Store> optionalStore = storeRepository.findById(storeId);
         Store findStore = optionalStore.orElseThrow(
-            //() -> new
+            () -> new BusinessLogicException(ExceptionCode.STORE_NOT_FOUND)
         );
         return findStore;
     }
