@@ -21,8 +21,7 @@ import com.buyte.product.entity.Product;
 import com.buyte.product.entity.Product.ProductFavor;
 import com.buyte.product.entity.Product.ProductGeneric;
 import com.buyte.store.controller.StoreController;
-import com.buyte.store.dto.StoreDto;
-import com.buyte.store.dto.StoreDto.Response;
+import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.entity.Store;
 import com.buyte.store.service.StoreService;
 import com.google.gson.Gson;
@@ -60,7 +59,7 @@ public class StoreControllerRestDocsTest {
         long memberId = 1L;
         Member member = new Member();
         member.setMemberId(memberId);
-        member.setEmail("temp1234@gmail.com");
+        member.setLoginId("temp1234");
         member.setMemberName("이준기");
         member.setMemberRole(MemberRole.SELLER);
         member.setMemberType(MemberType.BASIC);
@@ -103,15 +102,15 @@ public class StoreControllerRestDocsTest {
         List<ProductDto.Response> productResponseDtoList = new ArrayList<>();
         productResponseDtoList.add(productResponseDto);
 
-        StoreDto.Response storeResponseDto = new Response();
-        storeResponseDto.setMemberId(memberId);
-        storeResponseDto.setStoreAddress(store.getStoreAddress());
-        storeResponseDto.setStoreName(store.getStoreName());
-        storeResponseDto.setStoreintroduction(store.getStoreIntroduction());
-        storeResponseDto.setStoreImage(store.getStoreImage());
-        storeResponseDto.setProductList(productResponseDtoList);
+        StoreDetailsDto storeDetailsDto = new StoreDetailsDto();
+        storeDetailsDto.setMemberId(memberId);
+        storeDetailsDto.setStoreAddress(store.getStoreAddress());
+        storeDetailsDto.setStoreName(store.getStoreName());
+        storeDetailsDto.setStoreintroduction(store.getStoreIntroduction());
+        storeDetailsDto.setStoreImage(store.getStoreImage());
+        storeDetailsDto.setProductList(productResponseDtoList);
 
-        given(storeService.getStoreDetails(Mockito.anyLong())).willReturn(storeResponseDto);
+        given(storeService.getStoreDetails(Mockito.anyLong())).willReturn(storeDetailsDto);
 
         ResultActions actions =
             mockMvc.perform(
