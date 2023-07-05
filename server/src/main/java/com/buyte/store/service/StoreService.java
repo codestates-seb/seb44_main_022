@@ -2,14 +2,19 @@ package com.buyte.store.service;
 
 import com.buyte.exception.BusinessLogicException;
 import com.buyte.exception.ExceptionCode;
+import com.buyte.product.dto.FavorProductDto;
 import com.buyte.product.dto.ProductDto;
 import com.buyte.product.entity.Product;
+import com.buyte.product.entity.Product.ProductFavor;
 import com.buyte.product.mapper.ProductMapper;
+import com.buyte.product.repository.ProductRepository;
 import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.dto.StoreInfoDto;
+import com.buyte.store.dto.StoreMapDto;
 import com.buyte.store.entity.Store;
 import com.buyte.store.mapper.StoreMapper;
 import com.buyte.store.repository.StoreRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +40,7 @@ public class StoreService {
     }
 
     @Transactional(readOnly = true)
-    public List<StoreInfoDto> getAllStoreList(String storeName) {
+    public List<StoreInfoDto> getStoreList(String storeName) {
 
         log.info("# storeName : " + storeName);
 
@@ -57,9 +62,32 @@ public class StoreService {
     }
 
     @Transactional(readOnly = true)
+    public List<StoreMapDto> getStoreMap() {
+
+        List<Store> storeList = storeRepository.findAll();
+
+        List<StoreMapDto> storeMapDtoList = new ArrayList<>();
+
+        storeList.forEach(store -> {
+            StoreMapDto storeMapDto = storeMapper.storeToStoreMap(store);
+
+            List<FavorProductDto> favorProductDtoList = store.getProductList().stream()
+                .filter(product -> product.getProductFavor() == ProductFavor.FAVOR)
+                .map(productMapper::productToFavorProduct)
+                .collect(Collectors.toList());
+
+            storeMapDto.setFavorProductList(favorProductDtoList);
+            storeMapDtoList.add(storeMapDto);
+        });
+
+        return storeMapDtoList;
+    }
+
+
+    @Transactional(readOnly = true)
     public StoreDetailsDto getStoreDetails(long storeId) {
 
-        log.info("# sotreId : "+storeId);
+        log.info("# sotreId : " + storeId);
 
         Store findStore = findStore(storeId);
 

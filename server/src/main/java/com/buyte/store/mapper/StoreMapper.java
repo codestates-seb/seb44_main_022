@@ -2,6 +2,7 @@ package com.buyte.store.mapper;
 
 import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.dto.StoreInfoDto;
+import com.buyte.store.dto.StoreMapDto;
 import com.buyte.store.entity.Store;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -28,5 +29,17 @@ public interface StoreMapper {
         storeInfoDto.setStoreAddress(store.getStoreAddress());
 
         return storeInfoDto;
+    }
+
+    default StoreMapDto storeToStoreMap(Store store) {
+        StoreMapDto storeMapDto = new StoreMapDto();
+        storeMapDto.setStoreId(store.getStoreId());
+        storeMapDto.setStoreLatitude(store.getStoreLatitude());
+        storeMapDto.setStoreLongitude(store.getStoreLongitude());
+        storeMapDto.setStoreName(store.getStoreName());
+        storeMapDto.setStoreIntroduction(store.getStoreIntroduction());
+        storeMapDto.setStoreImage(store.getStoreImage());
+
+        return storeMapDto;
     }
 }

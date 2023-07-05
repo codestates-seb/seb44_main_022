@@ -1,5 +1,6 @@
 package com.buyte.product.mapper;
 
+import com.buyte.product.dto.FavorProductDto;
 import com.buyte.product.dto.ProductDto;
 import com.buyte.product.dto.ProductDto.Response;
 import com.buyte.product.entity.Product;
@@ -18,5 +19,15 @@ public interface ProductMapper {
         productResponseDto.setProductPrice(product.getProductPrice());
 
         return productResponseDto;
+    }
+
+    default FavorProductDto productToFavorProduct(Product product) {
+        FavorProductDto favorProductDto = new FavorProductDto();
+        favorProductDto.setProductId(product.getProductId());
+        favorProductDto.setProductImage(product.getProductImage());
+        favorProductDto.setProductName(product.getProductName());
+        favorProductDto.setProductPrice(product.getProductPrice());
+
+        return favorProductDto;
     }
 }

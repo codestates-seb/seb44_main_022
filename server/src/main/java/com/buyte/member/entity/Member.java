@@ -23,7 +23,8 @@ import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-
+@Getter
+@Setter
 @Entity
 public class Member extends Auditable {
 
