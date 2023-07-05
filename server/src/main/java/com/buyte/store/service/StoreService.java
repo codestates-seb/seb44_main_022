@@ -5,17 +5,21 @@ import com.buyte.exception.ExceptionCode;
 import com.buyte.product.dto.ProductDto;
 import com.buyte.product.entity.Product;
 import com.buyte.product.mapper.ProductMapper;
-import com.buyte.store.dto.StoreDto;
+import com.buyte.store.dto.StoreDetailsDto;
+import com.buyte.store.dto.StoreInfoDto;
 import com.buyte.store.entity.Store;
 import com.buyte.store.mapper.StoreMapper;
 import com.buyte.store.repository.StoreRepository;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
+@Transactional
 @Service
 public class StoreService {
 
@@ -31,7 +35,32 @@ public class StoreService {
     }
 
     @Transactional(readOnly = true)
-    public StoreDto.Response getStoreDetails(long storeId) {
+    public List<StoreInfoDto> getAllStoreList(String storeName) {
+
+        log.info("# storeName : " + storeName);
+
+        List<Store> storeList;
+
+        if (storeName != null) {
+            storeList = storeRepository.findByStoreNameContaining(storeName);
+            storeList.forEach(item -> log.info("# store: " + item.getStoreId()));
+        } else {
+            storeList = storeRepository.findAll(Sort.by("createdAt").descending());
+            storeList.forEach(item -> log.info("# store: " + item.getStoreId()));
+        }
+
+        List<StoreInfoDto> storeInfoDtoList = storeList.stream()
+            .map(store -> storeMapper.storeToStoreInfo(store))
+            .collect(Collectors.toList());
+
+        return storeInfoDtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public StoreDetailsDto getStoreDetails(long storeId) {
+
+        log.info("# sotreId : "+storeId);
+
         Store findStore = findStore(storeId);
 
         List<Product> productList = findStore.getProductList();
@@ -40,10 +69,10 @@ public class StoreService {
             .map(product -> productMapper.productToProductResponse(product))
             .collect(Collectors.toList());
 
-        StoreDto.Response storeResponseDto = storeMapper.storeToStoreResponse(findStore);
-        storeResponseDto.setProductList(productResponseDtoList);
+        StoreDetailsDto storeDetailsDto = storeMapper.storeToStoreDetails(findStore);
+        storeDetailsDto.setProductList(productResponseDtoList);
 
-        return storeResponseDto;
+        return storeDetailsDto;
     }
 
     @Transactional(readOnly = true)

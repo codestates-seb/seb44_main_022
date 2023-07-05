@@ -1,5 +1,6 @@
 package com.buyte.store.entity;
 
+import com.buyte.audit.Auditable;
 import com.buyte.member.entity.Member;
 import com.buyte.product.entity.Product;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Store {
+public class Store extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
