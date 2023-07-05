@@ -67,10 +67,15 @@ const Cards = styled.li`
   border: 5px solid var(--light-purple);
   min-width: 230px;
   height: 330px;
+  overflow: hidden;
   &:hover {
     ${StoreMenuInfo} {
       opacity: 1;
       cursor: pointer;
+    }
+    img {
+      transform: scale(1.05); 
+      transition: all 1s;
     }
   }
 `;
