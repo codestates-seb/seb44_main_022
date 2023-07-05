@@ -1,4 +1,3 @@
-import { FunctionComponent } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useEffect } from 'react';
 import { useRef } from 'react';
@@ -197,7 +196,7 @@ const Section2Text = styled.div`
   color: black;
   font-family: sans-serif;
   position: absolute;
-  bottom: 5%;
+  bottom: -30%;
   left: 10%;
   animation: ${slideAnimation} 2s ease-in-out forwards;
 
@@ -213,7 +212,7 @@ const Main: React.FunctionComponent = () => {
     const handleScroll = () => {
       const value = window.scrollY;
       console.log('scrollY', value);
-      if (value >= 300 && value <= 800) {
+      if (value >= 200 && value <= 1200) {
         if (section2TextRef.current) {
           section2TextRef.current.classList.remove('disappear');
         }

@@ -1,5 +1,5 @@
 import { FunctionComponent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import login_img from '../assets/images/cart_img.png';
 import cart_img from '../assets/images/login_img.png';
@@ -97,6 +97,12 @@ const Buyte = styled.div`
   align-items: center;
   height: 37px;
 `;
+const BuyteLink = styled(Link)`
+  font-family: 'Just Another Hand', cursive;
+  font-size: 3rem;
+  color: inherit;
+  text-decoration: none;
+`;
 const Cart = styled.div`
   position: absolute;
   top: 43.54px;
@@ -177,7 +183,9 @@ const Header: FunctionComponent = () => {
         <LinkMypage>
           <Link to="/mypage/:id">Mypage</Link>
         </LinkMypage>
-        <Buyte>BUYTE</Buyte>
+        <Buyte>
+          <BuyteLink to="/">BUYTE</BuyteLink>
+        </Buyte>
         <CartContainer>
           <CartIcon to="/cart">
             <img src={cart_img} alt="Cart" />
