@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Header from '../../share/Header';
 import Footer from '../../share/Footer';
 import ModalComponentDetail from '../../share/ModalComponentDetail';
+import ModalComponentCustom from '../../share/ModalComponentCustom';
 import { useState } from 'react';
 
 import SelectStoreImg from '../../assets/images/img_select/select_store.png';
@@ -112,7 +113,7 @@ const SelectStore: React.FunctionComponent = () => {
           <GrayText> 다양한 메뉴를 확인해보세요.</GrayText>
         </ContentContainer>
       </Container>
-      <ModalComponentDetail
+      <ModalComponentCustom
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
         contentLabel="매장 리스트"
