@@ -19,7 +19,7 @@ function Store() {
               <span>매장 목록</span>
               <div style={{display: 'flex', alignItems:'center', position: 'relative'}}>
                 <FaSearch style={{color: 'var(--light-black)', position: 'absolute', right: '15px'}}/>
-                <input type='text' placeholder="찾고 있는 매장을 적어주세요." />
+                <StyledInput type='text' placeholder="찾고 있는 매장을 적어주세요." />
               </div>        
         </Search>
       </SearchSection>
@@ -33,6 +33,12 @@ function Store() {
 
 export default Store;
 
+const StyledInput = styled.input`
+  outline: 1px solid var(--white);
+  &:focus {
+      outline: 1px solid var(--purple);
+    }
+  `;
 
 const StoreSection = styled.section`
   display: flex;
