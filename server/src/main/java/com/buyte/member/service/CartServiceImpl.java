@@ -1,5 +1,6 @@
 package com.buyte.member.service;
 
+import com.buyte.config.S3Service;
 import com.buyte.member.dto.CartResDto;
 import com.buyte.member.entity.Cart;
 import com.buyte.member.entity.Member;
@@ -10,8 +11,10 @@ import com.buyte.product.entity.Product;
 import com.buyte.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -23,6 +26,7 @@ public class CartServiceImpl implements CartService{
     private final ProductRepository productRepository;
     private final CartRepository cartRepository;
     private final CartMapper cartMapper;
+    private final S3Service s3Service;
 
     @Override
     public List<CartResDto> getInfoMemberCart(Long memberId) throws Exception {
@@ -46,4 +50,17 @@ public class CartServiceImpl implements CartService{
         cartRepository.save(cart);
 
     }
+
+    @Override
+    public void addCustomProductToCart(MultipartFile file, Long productId) throws IOException {
+        Product product = productRepository.findById(productId).orElseThrow();
+        if(file.isEmpty()) {
+            throw new IllegalArgumentException("파일이 존재하지 않습니다.");
+        }
+        String storedFileName = s3Service.upload(file, "customProduct");
+        Cart cart = new Cart(product, storedFileName, product.getProductPrice());
+        cartRepository.save(cart);
+    }
+
+
 }
