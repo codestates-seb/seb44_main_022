@@ -1,4 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 import { ComponentType, ReactElement } from 'react';
 import styled, { FlattenSimpleInterpolation, css } from 'styled-components';
 
@@ -50,7 +51,14 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: ({ code }) => {
       console.log(code);
-      window.location.href = '/';
+      // axios
+      //   .get('https://604b-218-53-232-194.ngrok-free.app/oauth2/authorization/google', {
+      //     headers: {
+      //       'ngrok-skip-browser-warning': true,
+      //     },
+      //   })
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
     },
     onError: (errorResponse) => {
       console.log(errorResponse);
