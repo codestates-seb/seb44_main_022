@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import Header from '../../share/Header';
 import Footer from '../../share/Footer';
+import ModalComponent from '../../share/ModalComponent';
+import { useState } from 'react';
 
-import SelectStoreImg from '../../assets/images/select_store.png';
-import SelectMenuImg from '../../assets/images/select_menu.png';
+import SelectStoreImg from '../../assets/images/img_select/select_store.png';
+import SelectMenuImg from '../../assets/images/img_select/select_menu.png';
 const MainRoot = styled.div`
   background-color: #fffffc;
   width: 100%;
@@ -13,6 +15,7 @@ const MainRoot = styled.div`
   justify-content: space-between;
   min-height: 100vh;
   font-size: 22px;
+  position: relative;
 `;
 
 const OrderText = styled.h1`
@@ -68,7 +71,22 @@ const Button = styled.button`
   color: var(--purple);
 `;
 
+const ModalContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+`;
+
 const SelectStore: React.FunctionComponent = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <MainRoot>
       <Header />
@@ -76,7 +94,7 @@ const SelectStore: React.FunctionComponent = () => {
       <Container>
         <ContentContainer>
           <Image src={SelectStoreImg} alt="Select Store" />
-          <Button>매장 리스트보기 (클릭!)</Button>
+          <Button onClick={handleOpenModal}>매장 리스트보기 (클릭!)</Button>
           <Text>
             입점된 매장들을 보고 싶으시
             <br /> 다면 리스트를 먼저 확인해보세요
@@ -85,7 +103,7 @@ const SelectStore: React.FunctionComponent = () => {
         </ContentContainer>
         <ContentContainer>
           <Image src={SelectMenuImg} alt="Select Menu" />
-          <Button>추천 메뉴보기 (클릭!)</Button>
+          <Button onClick={() => console.log('추천 메뉴보기 열기!')}>추천 메뉴보기 (클릭!)</Button>
           <Text>
             추천 메뉴를 보고 싶으시다면
             <br /> 추천 메뉴 보기를 선택해주세요
@@ -93,9 +111,16 @@ const SelectStore: React.FunctionComponent = () => {
           <GrayText> 다양한 메뉴를 확인해보세요.</GrayText>
         </ContentContainer>
       </Container>
+      <ModalComponent
+        isOpen={isModalOpen}
+        onRequestClose={handleCloseModal}
+        contentLabel="매장 리스트"
+      >
+        <h2> </h2>
+        <p> </p>
+      </ModalComponent>
       <Footer />
     </MainRoot>
   );
 };
-
 export default SelectStore;
