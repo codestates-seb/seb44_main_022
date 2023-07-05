@@ -162,7 +162,7 @@ const ImageBox = styled.div`
   width: 155px;
   height: 75px;
   bottom: 0px;
-  right: calc(10%);
+  right: 115px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -187,6 +187,7 @@ const CustomContainer = styled.div`
   border: 0.5px solid rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   overflow: hidden;
+  display: flex;
 `;
 
 const Sidebar = styled.div`
@@ -205,6 +206,7 @@ const SidebarContent = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 20px;
+  overflow: auto;
 `;
 
 const ContentContainer = styled.div`
@@ -219,25 +221,28 @@ const CustomIcon = styled.img`
   width: 40px;
   height: 10px;
   margin-bottom: 20px;
-  margin-right: 55%;
+  margin-left: 10px;
 `;
 
 const ContentItem = styled.div`
   width: 90%;
-  height: 50px;
+  height: 80px;
   background-color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  margin-left: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   padding: 10px;
 `;
 
 const ContentImage = styled.img`
-  width: 30px;
-  height: 30px;
+  width: 45px;
+  height: 45px;
   margin-right: 10px;
+  border: 1px solid var(--light-gray);
+  border-radius: 4px;
 `;
 
 const ContentText = styled.p`
@@ -247,6 +252,13 @@ const ContentText = styled.p`
   text-align: left;
   margin-left: 10px;
   margin-bottom: 8px;
+`;
+const ContentImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  overflow: auto;
+  margin-top: 10px;
+  height: 60px;
 `;
 const ModalComponent: React.FC<ModalProps> = ({
   isOpen,
@@ -279,23 +291,30 @@ const ModalComponent: React.FC<ModalProps> = ({
               <Sidebar>
                 <SidebarContent>
                   <CustomIcon src={custom_icon} alt="Custom Icon" />
-                  <ContentText>Cake</ContentText>
+                  <ContentText>베이스</ContentText>
+                  <ContentItem>
+                    <ContentImageContainer>
+                      <ContentImage src={modal_cake} alt="Cake Icon" />
+                      <ContentImage src={modal_cake} alt="Cake Icon" />
+                      <ContentImage src={modal_cake} alt="Cake Icon" />
+                      <ContentImage src={modal_cake} alt="Cake Icon" />
+                      <ContentImage src={modal_cake} alt="Cake Icon" />
+                      <ContentImage src={modal_cake} alt="Cake Icon" />
+                    </ContentImageContainer>
+                  </ContentItem>
+                  <ContentText>맛</ContentText>
                   <ContentItem>
                     <ContentImage src={modal_cake} alt="Cake Icon" />
                   </ContentItem>
-                  <ContentText>Pie</ContentText>
+                  <ContentText>크림</ContentText>
                   <ContentItem>
                     <ContentImage src={modal_cake} alt="Cake Icon" />
                   </ContentItem>
-                  <ContentText>Bread</ContentText>
+                  <ContentText>토핑</ContentText>
                   <ContentItem>
                     <ContentImage src={modal_cake} alt="Cake Icon" />
                   </ContentItem>
-                  <ContentText>Pastries</ContentText>
-                  <ContentItem>
-                    <ContentImage src={modal_cake} alt="Cake Icon" />
-                  </ContentItem>
-                  <ContentText>Cookies</ContentText>
+                  <ContentText>그림판</ContentText>
                   <ContentItem>
                     <ContentImage src={modal_cake} alt="Cake Icon" />
                   </ContentItem>
