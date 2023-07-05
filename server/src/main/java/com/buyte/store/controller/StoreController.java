@@ -25,7 +25,7 @@ public class StoreController {
     }
 
     @GetMapping("/{store-id}")
-    public ResponseEntity getStore(@PathVariable("store-id") @Positive long storeId) {
+    public ResponseEntity getStoreDetails(@PathVariable("store-id") @Positive long storeId) {
 
         StoreDto.Response storeDetails = storeService.getStoreDetails(storeId);
 
