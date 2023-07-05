@@ -24,8 +24,8 @@ const OrderText = styled.h1`
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
+  justify-content: space-around;
+  align-items: center;
   margin-top: 10px;
 `;
 
@@ -33,7 +33,7 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 50px; /* Adjusted horizontal margin */
+  margin: 0 50px;
 `;
 
 const Image = styled.img`

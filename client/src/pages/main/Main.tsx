@@ -159,6 +159,7 @@ const TextOverlay = styled.button`
   top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border: solid;
   border-radius: 25px;
   border-color: var(--purple);
 `;
