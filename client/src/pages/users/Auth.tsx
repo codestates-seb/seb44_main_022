@@ -6,12 +6,14 @@ import RoundButton from '../../components/RoundButton';
 import SignUpForm from './SignUpForm';
 import styled from 'styled-components';
 import TextLogo from '../../components/Logo';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleClickHome = () => {
-    window.location.href = '/';
+    navigate('/');
   };
 
   return (

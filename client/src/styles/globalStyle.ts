@@ -82,7 +82,6 @@ html, body, div, span, applet, object, iframe,
     -webkit-user-select: none;
     user-select: none;
     width: 100vw;
-    height: 100vh;
     background-color: var(--background);
 }
   ol, ul {
