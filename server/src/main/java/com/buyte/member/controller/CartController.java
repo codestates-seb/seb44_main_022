@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -36,5 +37,12 @@ public class CartController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @PostMapping("/store/{store_id}/{custom_item_id}/custom")
+    public ResponseEntity addCustomProduct(@RequestPart(value = "file") MultipartFile file,
+                                           @PathVariable(name = "custom_item_id") Long productId) throws Exception {
+        cartService.addCustomProductToCart(file,productId);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 
 }

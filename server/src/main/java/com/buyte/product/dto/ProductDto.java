@@ -10,7 +10,7 @@ public class ProductDto {
     @NoArgsConstructor
     public static class Response {
         private long productId;
-        private String productImages;
+        private String productImage;
         private String productName;
         private Integer productPrice;
     }

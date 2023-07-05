@@ -1,7 +1,7 @@
 package com.buyte.store.mapper;
 
-import com.buyte.store.dto.StoreDto;
-import com.buyte.store.dto.StoreDto.Response;
+import com.buyte.store.dto.StoreDetailsDto;
+import com.buyte.store.dto.StoreInfoDto;
 import com.buyte.store.entity.Store;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -9,14 +9,24 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface StoreMapper {
 
-    default StoreDto.Response storeToStoreResponse(Store store) {
-        StoreDto.Response storeResponseDto = new Response();
-        storeResponseDto.setStoreName(store.getStoreName());
-        storeResponseDto.setMemberId(store.getStoreId());
-        storeResponseDto.setStoreAddress(store.getStoreAddress());
-        storeResponseDto.setStoreintroduction(store.getStoreIntroduction());
-        storeResponseDto.setStoreImage(store.getStoreImage());
+    default StoreDetailsDto storeToStoreDetails(Store store) {
+        StoreDetailsDto storeDetailsDto = new StoreDetailsDto();
+        storeDetailsDto.setStoreName(store.getStoreName());
+        storeDetailsDto.setMemberId(store.getStoreId());
+        storeDetailsDto.setStoreAddress(store.getStoreAddress());
+        storeDetailsDto.setStoreintroduction(store.getStoreIntroduction());
+        storeDetailsDto.setStoreImage(store.getStoreImage());
 
-        return storeResponseDto;
+        return storeDetailsDto;
+    }
+
+    default StoreInfoDto storeToStoreInfo(Store store) {
+        StoreInfoDto storeInfoDto = new StoreInfoDto();
+        storeInfoDto.setStoreId(store.getStoreId());
+        storeInfoDto.setStoreImage(store.getStoreImage());
+        storeInfoDto.setStoreName(store.getStoreName());
+        storeInfoDto.setStoreAddress(store.getStoreAddress());
+
+        return storeInfoDto;
     }
 }
