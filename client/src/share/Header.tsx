@@ -1,12 +1,14 @@
 import { FunctionComponent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import login_img from '../assets/images/cart_img.png';
 import cart_img from '../assets/images/login_img.png';
 import logo from '../assets/images/logo.png';
-const LoginIcon = styled.img`
+
+const LoginIcon = styled(Link)`
   position: absolute;
   top: 0px;
-  right: 17.74px;
+  right: 22px;
   width: 32.41px;
   height: 31.25px;
 `;
@@ -41,6 +43,11 @@ const LinkMap = styled.div`
   height: 48px;
   font-size: 1.3rem;
   font-family: 'Yaldevi', sans-serif;
+  &:hover {
+    font-size: 1.35rem;
+    color: var(--purple);
+    cursor: pointer;
+  }
 `;
 
 const LinkOrder = styled.div`
@@ -52,6 +59,11 @@ const LinkOrder = styled.div`
   font-size: 1.3rem;
   font-family: 'Yaldevi', sans-serif;
   color: var(--dark-gray);
+  &:hover {
+    font-size: 1.35rem;
+    color: var(--purple);
+    cursor: pointer;
+  }
 `;
 
 const LinkMypage = styled.div`
@@ -67,6 +79,11 @@ const LinkMypage = styled.div`
   font-size: 1.3rem;
   font-family: 'Yaldevi', sans-serif;
   color: var(--dark-gray);
+  &:hover {
+    font-size: 1.35rem;
+    color: var(--purple);
+    cursor: pointer;
+  }
 `;
 const Buyte = styled.div`
   position: absolute;
@@ -91,7 +108,7 @@ const Cart = styled.div`
   height: 25.63px;
   font-size: 15px;
 `;
-const CartIcon = styled.img`
+const CartIcon = styled(Link)`
   position: absolute;
   top: 0px;
   right: 33px;
@@ -109,7 +126,7 @@ const CartContainer = styled.div`
 const Icon = styled.img`
   position: absolute;
   top: 25px;
-  right: calc(50% + 5rem); /* 수정된 부분 */
+  right: calc(50% + 5rem);
   transform: translateX(50%);
   width: 52px;
   height: 73px;
@@ -146,16 +163,26 @@ const Header: FunctionComponent = () => {
     <HeaderRoot>
       <HeaderContainer>
         <LoginContainer>
-          <LoginIcon src={login_img} alt="Login" />
+          <LoginIcon to="/auth">
+            <img src={login_img} alt="Login" />
+          </LoginIcon>
           <Login>LOGIN</Login>
         </LoginContainer>
-        <LinkMap>Map</LinkMap>
-        <LinkOrder>Order</LinkOrder>
-        <LinkMypage>Mypage</LinkMypage>
+        <LinkMap>
+          <Link to="/map">Map</Link>
+        </LinkMap>
+        <LinkOrder>
+          <Link to="/select">Order</Link>
+        </LinkOrder>
+        <LinkMypage>
+          <Link to="/mypage/:id">Mypage</Link>
+        </LinkMypage>
         <Buyte>BUYTE</Buyte>
         <CartContainer>
+          <CartIcon to="/cart">
+            <img src={cart_img} alt="Cart" />
+          </CartIcon>
           <Cart>장바구니</Cart>
-          <CartIcon src={cart_img} alt="Cart" />
         </CartContainer>
         <Icon src={logo} alt="Logo" />
       </HeaderContainer>

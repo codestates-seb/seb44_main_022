@@ -40,14 +40,14 @@ const settings = {
   centerPadding: '40px',
 };
 
-const Secion2Img = styled.img`
+const Section2Img = styled.img`
   margin-top: 30px;
   width: 100%;
   object-fit: cover;
 `;
 const Heading2 = styled.div`
   letter-spacing: -0.46px;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
 `;
 const Heading1TitleReviewpng = styled.img`
   width: 210px;
@@ -150,11 +150,18 @@ const SliderItem = styled.div`
   position: relative;
 `;
 
-const TextOverlay = styled.div`
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 10px;
-  font-size: 16px;
+const TextOverlay = styled.button`
+  background-color: white;
+  color: #7b78e0;
+  padding: 15px;
+  font-size: 12px;
+  cursor: pointer;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 25px;
+  border-color: var(--purple);
 `;
 const Section2 = styled.div`
   box-sizing: border-box;
@@ -164,22 +171,22 @@ const Section2 = styled.div`
 
 const slideAnimation = keyframes`
   from {
-    left: -100px;
+    left: -150px;
     opacity: 0;
   }
   to {
-    left: 100px;
+    left: 150px;
     opacity: 1;
   }
 `;
 
 const disappearAnimation = keyframes`
   from {
-    left: 100px;
+    left: 150px;
     opacity: 1;
   }
   to {
-    left: -100px;
+    left: -150px;
     opacity: 0;
   }
 `;
@@ -190,7 +197,7 @@ const Section2Text = styled.div`
   color: black;
   font-family: sans-serif;
   position: absolute;
-  top: 78%;
+  bottom: 5%;
   left: 10%;
   animation: ${slideAnimation} 2s ease-in-out forwards;
 
@@ -206,7 +213,7 @@ const Main: React.FunctionComponent = () => {
     const handleScroll = () => {
       const value = window.scrollY;
       console.log('scrollY', value);
-      if (value >= 300 && value <= 750) {
+      if (value >= 300 && value <= 800) {
         if (section2TextRef.current) {
           section2TextRef.current.classList.remove('disappear');
         }
@@ -251,8 +258,8 @@ const Main: React.FunctionComponent = () => {
           </Slider>
         </Section1>
         <Section2>
-          <Section2Text ref={section2TextRef}>ㄴㅁㅇㄹ</Section2Text>
-          <Secion2Img src={section2} />
+          <Section2Text ref={section2TextRef}>커스텀할 수 있씀</Section2Text>
+          <Section2Img src={section2} />
         </Section2>
         <Section3>
           {section3Icons.map((src, index) => (
