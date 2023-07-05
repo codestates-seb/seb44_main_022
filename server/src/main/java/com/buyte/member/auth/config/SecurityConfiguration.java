@@ -2,6 +2,8 @@ package com.buyte.member.auth.config;
 
 import com.buyte.member.auth.filter.JwtAuthenticationFilter;
 import com.buyte.member.auth.filter.JwtVerificationFilter;
+import com.buyte.member.auth.handler.MemberAuthenticationEntryPoint;
+import com.buyte.member.auth.handler.MemberAuthenticationFailureHandler;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +38,9 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new MemberAuthenticationEntryPoint())
+                .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
@@ -61,6 +66,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer());
             jwtAuthenticationFilter.setFilterProcessesUrl("/login");
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer());
 
