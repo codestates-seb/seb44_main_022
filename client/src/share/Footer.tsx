@@ -10,12 +10,13 @@ const Item1 = styled.div`
   width: 16.62rem;
   height: 1.7rem;
   color: var(--white);
+  font-size: 15px;
 `;
 const Item2 = styled.div`
   position: absolute;
   top: 1.125rem;
   left: 0;
-  font-size: 0.7rem;
+  font-size: 12px;
   line-height: 1.125rem;
   font-weight: 300;
   color: var(--white);
@@ -36,6 +37,7 @@ const CopyrightBuyteAll = styled.div`
   align-items: center;
   width: 226.2px;
   height: 17px;
+  font-size: 13px;
 `;
 const Item3 = styled.div`
   position: absolute;
@@ -48,6 +50,7 @@ const Item3 = styled.div`
   align-items: center;
   width: 244px;
   height: 19px;
+  font-size: 10px;
 `;
 const DivfooterText2 = styled.div`
   position: absolute;
@@ -61,7 +64,7 @@ const Buyte = styled.div`
   position: absolute;
   top: 34px;
   left: 20px;
-  font-size: 2rem;
+  font-size: 25px;
   color: var(--white);
   line-height: 60px;
   font-family: 'Indie Flower', cursive;
@@ -77,6 +80,7 @@ const Item4 = styled.div`
   color: var(--white);
   line-height: 19.5px;
   font-weight: 500;
+  font-size: 13px;
 `;
 const Item5 = styled.b`
   position: absolute;
@@ -84,6 +88,7 @@ const Item5 = styled.b`
   left: 10px;
   color: var(--white);
   line-height: 25.5px;
+  font-size: 13px;
 `;
 const Item6 = styled.div`
   position: absolute;
@@ -98,15 +103,15 @@ const Divcontainer2 = styled.div`
   top: 98px;
   left: 20px;
   width: 153.56px;
+  font-size: 12px;
   height: 101px;
 `;
 const Divcontainer = styled.div`
   position: sticky;
   bottom: 0;
   width: 100%;
-  height: 240px;
+  height: 200px;
   background-color: var(--purple);
-  font-size: var(--font-size-smi);
   color: var(--color-white);
   font-family: var(--font-noto-sans-kr);
 `;
@@ -115,23 +120,18 @@ const FooterContainer = styled.div`
   bottom: 0;
   background-color: var(--purple);
   width: 100%;
-  height: 240px;
-  font-size: var(--font-size-smi);
+  height: 200px;
   color: var(--color-white);
   font-family: var(--font-noto-sans-kr);
 `;
 const FooterRoot = styled.div`
-  position: absolute;
   width: 100%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: var(--gap-3510xl);
   text-align: left;
   color: var(--gray);
-  font-family: var(--font-buenard);
 `;
 const Footer: FunctionComponent = () => {
   return (
