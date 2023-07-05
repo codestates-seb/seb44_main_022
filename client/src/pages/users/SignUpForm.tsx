@@ -5,6 +5,8 @@ import { AiFillLock } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import RoundButton from '../../components/RoundButton';
 import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function SignUpForm() {
   const [nickname, setNickname] = useState<string>('');
@@ -13,13 +15,30 @@ function SignUpForm() {
   const [userIdValid, setUserIdValid] = useState<boolean>(false);
   const [passwordValid, setPasswordValid] = useState<boolean>(false);
   const [nicknameValid, setNicknameValid] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleLoginSubmit: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     if (userIdValid && passwordValid) {
-      // 통신 코드 예정
       console.log(nickname, userId, password);
+      // axios
+      //   .post(
+      //     'https://604b-218-53-232-194.ngrok-free.app/signup',
+      //     {
+      //       loginId: userId,
+      //       password: password,
+      //       memberName: nickname,
+      //     },
+      //     {
+      //       headers: {
+      //         'ngrok-skip-browser-warning': true,
+      //       },
+      //     }
+      //   )
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
       alert('통신 성공');
+      navigate('/auth');
       return;
     }
   };
