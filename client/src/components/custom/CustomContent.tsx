@@ -23,8 +23,6 @@ const ContentContainer = styled.div`
 `;
 const CanvasWrapper = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 78%;
   z-index: 10;
@@ -47,16 +45,17 @@ const RangeInputContainer = styled.div`
 const RangeInput = styled.input.attrs({
   type: 'range',
   min: '1',
-  max: '50',
+  max: '100',
 })`
   position: relative;
-  margin-top: 8px;
   z-index: 20;
   -webkit-appearance: none;
   background-color: blue;
   border-radius: 10px;
   height: 8px;
-  width: 20%;
+  width: 27%;
+  margin-top: 10px;
+
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -67,6 +66,14 @@ const RangeInput = styled.input.attrs({
     cursor: pointer;
   }
 
+  &::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: yellow;
+    cursor: pointer;
+  }
+
   &:focus {
     animation: 1s pulse infinite;
     outline: none;
@@ -74,13 +81,13 @@ const RangeInput = styled.input.attrs({
 
   &:hover {
     background-color: var(--purple);
-    scale: 1.15;
+    transform: scale(1.15);
   }
 
   background-color: var(--light-purple);
   top: calc(5px + 50%);
 
-  transition: background-color 0.2s ease-in-out, top 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 `;
 const ColorInput = styled.input.attrs({
   type: 'color',
@@ -90,7 +97,7 @@ const ColorInput = styled.input.attrs({
   height: 25px;
   width: 40px;
   border-radius: 20px;
-  margin-left: 20px;
+  margin-left: 30px;
 
   &::-webkit-color-swatch {
     position: absolute;
