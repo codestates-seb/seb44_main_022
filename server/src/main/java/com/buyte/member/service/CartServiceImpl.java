@@ -1,6 +1,7 @@
 package com.buyte.member.service;
 
 import com.buyte.config.S3Service;
+import com.buyte.member.dto.CartReqDto;
 import com.buyte.member.dto.CartResDto;
 import com.buyte.member.entity.Cart;
 import com.buyte.member.entity.Member;
@@ -38,8 +39,8 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public void deleteSelectedProducts(List<Long> cartIds) throws Exception {
-        cartRepository.deleteByCartIdIn(cartIds);
+    public void deleteSelectedProducts(CartReqDto cartReqDto) throws Exception {
+        cartRepository.deleteByCartIdIn(cartReqDto.getCartIds());
     }
 
     @Override

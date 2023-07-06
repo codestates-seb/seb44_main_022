@@ -1,5 +1,6 @@
 package com.buyte.member.controller;
 
+import com.buyte.member.dto.CartReqDto;
 import com.buyte.member.dto.CartResDto;
 import com.buyte.member.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +25,8 @@ public class CartController {
     }
 
     @DeleteMapping("/cart/{member_id}/delete")
-    public ResponseEntity deletePorducts(@RequestBody List<Long> cartIds) throws Exception {
-        cartService.deleteSelectedProducts(cartIds);
+    public ResponseEntity deletePorducts(@RequestBody CartReqDto cartReqDto) throws Exception {
+        cartService.deleteSelectedProducts(cartReqDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

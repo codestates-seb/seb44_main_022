@@ -1,5 +1,6 @@
 package com.buyte.member.service;
 
+import com.buyte.member.dto.CartReqDto;
 import com.buyte.member.dto.CartResDto;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,7 +10,7 @@ public interface CartService {
 
     List<CartResDto> getInfoMemberCart(Long memberId) throws Exception;
 
-    void deleteSelectedProducts(List<Long> cartIds) throws Exception;
+    void deleteSelectedProducts(CartReqDto cartReqDto) throws Exception;
 
     void addProductToCart(Long productId) throws Exception;
 
