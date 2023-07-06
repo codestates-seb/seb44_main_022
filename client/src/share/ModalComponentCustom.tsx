@@ -225,12 +225,7 @@ const RangeInput = styled.input.attrs({
 
   transition: background-color 0.2s ease-in-out, top 0.2s ease-in-out;
 `;
-const ModalComponent: React.FC<ModalProps> = ({
-  isOpen,
-  onRequestClose,
-  contentLabel,
-  children,
-}) => {
+const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentLabel }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const [size, setSize] = useState(5);
 
@@ -258,6 +253,8 @@ const ModalComponent: React.FC<ModalProps> = ({
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
 
+      if (event.buttons !== 1) return;
+
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.lineTo(x, y);
@@ -265,7 +262,6 @@ const ModalComponent: React.FC<ModalProps> = ({
       }
     }
   };
-
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas) {
@@ -310,7 +306,6 @@ const ModalComponent: React.FC<ModalProps> = ({
                 onMouseDown={handleMouseDown}
               />
             </CanvasWrapper>
-            {children}
           </ContentContainer>
         </CustomContainer>
         <ModalButtons>
