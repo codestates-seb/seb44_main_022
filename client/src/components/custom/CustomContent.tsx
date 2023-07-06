@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import pencil from '../../assets/images/img_modal/pencil.png';
+import eraser from '../../assets/images/img_modal/eraser.png';
 const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
@@ -19,6 +20,7 @@ const ContentContainer = styled.div`
   align-items: center;
   overflow: hidden;
 `;
+
 const CanvasWrapper = styled.div`
   position: absolute;
   top: 0;
@@ -27,10 +29,12 @@ const CanvasWrapper = styled.div`
   height: 78%;
   z-index: 10;
 `;
+
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
 `;
+
 const RangeInputContainer = styled.div`
   background-color: transparent;
   position: absolute;
@@ -54,6 +58,7 @@ const RangeInput = styled.input.attrs({
   border-radius: 10px;
   height: 8px;
   width: 55%;
+
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -86,6 +91,7 @@ const RangeInput = styled.input.attrs({
 
   transition: background-color 0.2s ease-in-out, top 0.2s ease-in-out;
 `;
+
 const ColorInput = styled.input.attrs({
   type: 'color',
 })<{ value: string }>`
@@ -113,6 +119,7 @@ const ColorInput = styled.input.attrs({
     outline: none;
   }
 `;
+
 const EraseButton = styled.button`
   position: relative;
   z-index: 20;
@@ -129,10 +136,26 @@ const EraseButton = styled.button`
   }
 
   &:focus {
-    animation: 1s pulse infinite; // 애니메이션
+    animation: 1s pulse infinite;
     outline: none;
   }
+
+  // 아이콘 모양에 따라 클래스명 변경
+  &.eraser {
+    background-image: src{eraser}
+  }
+
+  &.pencil {
+    background-image:src{pencil}
+  }
 `;
+
+// 다음의 스타일을 필요에 따라 조정하십시오.
+const InputWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const CustomContent: React.FC = () => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = React.useRef<HTMLDivElement>(null);
@@ -179,11 +202,9 @@ const CustomContent: React.FC = () => {
 
         if (eraser) {
           ctx.strokeStyle = 'rgba(0,0,0,1)';
-          // destination-out 때문에 적용(인터넷익스플로러 호환성)
           const temp = ctx.fillStyle;
           ctx.fillStyle = 'rgba(0,0,0,0)';
           ctx.fillRect(x, y, size, size);
-          // destination-out 때문에 적용
           ctx.fillStyle = temp;
         } else {
           ctx.strokeStyle = color;
@@ -194,6 +215,7 @@ const CustomContent: React.FC = () => {
       }
     }
   };
+
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas) {
@@ -207,17 +229,31 @@ const CustomContent: React.FC = () => {
         ctx.globalCompositeOperation = target;
         ctx.beginPath();
         ctx.moveTo(x, y);
+        if (eraser) {
+          const eraserWidth = ctx.lineWidth + 2;
+          const temp = ctx.fillStyle;
+          ctx.fillStyle = 'rgba(0,0,0,0)';
+          ctx.fillRect(x - eraserWidth / 2, y - eraserWidth / 2, eraserWidth, eraserWidth);
+          ctx.fillStyle = temp;
+        }
       }
     }
   };
+
+  const handleEraseButtonClick = () => {
+    setEraser((prev) => !prev);
+  };
+
   return (
     <ContentContainer>
       <RangeInputContainer>
-        <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
-        <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
-        <EraseButton onClick={() => setEraser(true)}></EraseButton>
+        <InputWrapper>
+          <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
+          <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
+          {/* EraseButton에 클래스명 추가 */}
+          <EraseButton className={eraser ? 'eraser' : 'pencil'} onClick={handleEraseButtonClick} />
+        </InputWrapper>
       </RangeInputContainer>
-      {/* Canvas 추가 */}
       <CanvasWrapper ref={canvasWrapperRef}>
         <Canvas ref={canvasRef} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} />
       </CanvasWrapper>
