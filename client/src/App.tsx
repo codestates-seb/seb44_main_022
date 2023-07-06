@@ -9,6 +9,7 @@ import SelectStore from './pages/store/SelectStore';
 import Header from './share/Header';
 import Footer from './share/Footer';
 import Payment from './pages/order/Payment';
+import StoreDetail from './pages/store/StoreDetail';
 
 function App() {
   const location = useLocation();
@@ -18,6 +19,7 @@ function App() {
       <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
         {location.pathname !== '/auth' && <Header />}
         <Routes>
+          <Route path="/store/:1" element={<StoreDetail />}/>
           <Route path="/" element={<Main />} />
           <Route path="/mypage/:id" element={<Mypage />} />
           <Route path="/auth" element={<Auth />} />
