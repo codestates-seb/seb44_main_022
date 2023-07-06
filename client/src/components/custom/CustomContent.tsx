@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import pencil from '../../assets/images/img_modal/pencil.png';
 import eraser from '../../assets/images/img_modal/eraser.png';
+
 const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
@@ -20,7 +21,6 @@ const ContentContainer = styled.div`
   align-items: center;
   overflow: hidden;
 `;
-
 const CanvasWrapper = styled.div`
   position: absolute;
   top: 0;
@@ -29,12 +29,10 @@ const CanvasWrapper = styled.div`
   height: 78%;
   z-index: 10;
 `;
-
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
 `;
-
 const RangeInputContainer = styled.div`
   background-color: transparent;
   position: absolute;
@@ -49,16 +47,16 @@ const RangeInputContainer = styled.div`
 const RangeInput = styled.input.attrs({
   type: 'range',
   min: '1',
-  max: '100',
+  max: '50',
 })`
   position: relative;
+  margin-top: 8px;
   z-index: 20;
   -webkit-appearance: none;
   background-color: blue;
   border-radius: 10px;
   height: 8px;
-  width: 55%;
-
+  width: 20%;
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -69,14 +67,6 @@ const RangeInput = styled.input.attrs({
     cursor: pointer;
   }
 
-  &::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: yellow;
-    cursor: pointer;
-  }
-
   &:focus {
     animation: 1s pulse infinite;
     outline: none;
@@ -84,6 +74,7 @@ const RangeInput = styled.input.attrs({
 
   &:hover {
     background-color: var(--purple);
+    scale: 1.15;
   }
 
   background-color: var(--light-purple);
@@ -91,13 +82,14 @@ const RangeInput = styled.input.attrs({
 
   transition: background-color 0.2s ease-in-out, top 0.2s ease-in-out;
 `;
-
 const ColorInput = styled.input.attrs({
   type: 'color',
 })<{ value: string }>`
   position: relative;
   z-index: 20;
   height: 25px;
+  width: 40px;
+  border-radius: 20px;
   margin-left: 20px;
 
   &::-webkit-color-swatch {
@@ -105,7 +97,7 @@ const ColorInput = styled.input.attrs({
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 3px;
+    border-radius: 20px;
     padding: 0;
     pointer-events: none;
   }
@@ -113,47 +105,67 @@ const ColorInput = styled.input.attrs({
   &::-webkit-color-swatch-wrapper {
     padding: 0;
   }
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+  }
 
-  &:focus {
-    animation: 1s pulse infinite;
-    outline: none;
+  &:hover::before {
+    transform: scale(1);
+  }
+
+  &:active {
+    filter: brightness(1.2);
   }
 `;
+interface EraseButtonProps {
+  onClick: () => void;
+  eraser: boolean;
+}
 
-const EraseButton = styled.button`
+const EraseButton = styled.button<EraseButtonProps>`
   position: relative;
   z-index: 20;
-  width: 25px;
-  height: 25px;
-  margin-left: 20px;
+  width: 30px;
+  height: 30px;
+  margin-left: 25px;
   border-radius: 50%;
   border: none;
-  cursor: pointer;
-  background-color: var(--light-gray);
+  cursor: grab;
 
-  &:hover {
-    background-color: var(--gray);
+  background-image: ${(props) => (props.eraser ? `url(${eraser})` : `url(${pencil})`)};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
   }
 
-  &:focus {
-    animation: 1s pulse infinite;
-    outline: none;
+  &:hover::before {
+    transform: scale(1);
   }
 
-  // 아이콘 모양에 따라 클래스명 변경
-  &.eraser {
-    background-image: src{eraser}
+  &:active {
+    filter: brightness(1.2);
   }
-
-  &.pencil {
-    background-image:src{pencil}
-  }
-`;
-
-// 다음의 스타일을 필요에 따라 조정하십시오.
-const InputWrapper = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 const CustomContent: React.FC = () => {
@@ -202,9 +214,11 @@ const CustomContent: React.FC = () => {
 
         if (eraser) {
           ctx.strokeStyle = 'rgba(0,0,0,1)';
+          // destination-out 때문에 적용(인터넷익스플로러 호환성)
           const temp = ctx.fillStyle;
           ctx.fillStyle = 'rgba(0,0,0,0)';
           ctx.fillRect(x, y, size, size);
+          // destination-out 때문에 적용
           ctx.fillStyle = temp;
         } else {
           ctx.strokeStyle = color;
@@ -231,9 +245,11 @@ const CustomContent: React.FC = () => {
         ctx.moveTo(x, y);
         if (eraser) {
           const eraserWidth = ctx.lineWidth + 2;
+          // destination-out 때문에 적용(인터넷익스플로러 호환성)
           const temp = ctx.fillStyle;
           ctx.fillStyle = 'rgba(0,0,0,0)';
           ctx.fillRect(x - eraserWidth / 2, y - eraserWidth / 2, eraserWidth, eraserWidth);
+          // destination-out 때문에 적용
           ctx.fillStyle = temp;
         }
       }
@@ -247,13 +263,11 @@ const CustomContent: React.FC = () => {
   return (
     <ContentContainer>
       <RangeInputContainer>
-        <InputWrapper>
-          <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
-          <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
-          {/* EraseButton에 클래스명 추가 */}
-          <EraseButton className={eraser ? 'eraser' : 'pencil'} onClick={handleEraseButtonClick} />
-        </InputWrapper>
+        <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
+        <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
+        <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
       </RangeInputContainer>
+      {/* Canvas 추가 */}
       <CanvasWrapper ref={canvasWrapperRef}>
         <Canvas ref={canvasRef} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} />
       </CanvasWrapper>
