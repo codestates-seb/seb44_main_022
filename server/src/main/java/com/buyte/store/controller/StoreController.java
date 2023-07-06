@@ -2,6 +2,7 @@ package com.buyte.store.controller;
 
 import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.dto.StoreInfoDto;
+import com.buyte.store.dto.StoreMapDto;
 import com.buyte.store.service.StoreService;
 import java.util.List;
 import javax.validation.constraints.Positive;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/store")
 @Validated
 @Slf4j
 public class StoreController {
@@ -27,15 +28,23 @@ public class StoreController {
         this.storeService = storeService;
     }
 
-    @GetMapping("/store")
+    @GetMapping
     public ResponseEntity getStoreList(@RequestParam(required = false) String storeName) {
 
-        List<StoreInfoDto> storeInfoDtoList = storeService.getAllStoreList(storeName);
+        List<StoreInfoDto> storeInfoDtoList = storeService.getStoreList(storeName);
 
         return new ResponseEntity<>(storeInfoDtoList, HttpStatus.OK);
     }
 
-    @GetMapping("/store/{store-id}")
+    @GetMapping("/map")
+    public ResponseEntity getStoreMap() {
+
+        List<StoreMapDto> storeMapDtoList = storeService.getStoreMap();
+
+        return new ResponseEntity<>(storeMapDtoList, HttpStatus.OK);
+    }
+
+    @GetMapping("/{store-id}")
     public ResponseEntity getStoreDetails(@PathVariable("store-id") @Positive long storeId) {
 
         StoreDetailsDto storeDetails = storeService.getStoreDetails(storeId);

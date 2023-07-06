@@ -1,12 +1,10 @@
 package com.buyte.store.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
+@Builder
 public class StoreInfoDto {
 
     private long storeId;

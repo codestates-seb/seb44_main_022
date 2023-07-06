@@ -1,20 +1,18 @@
 package com.buyte.store.dto;
 
-import com.buyte.product.dto.ProductDto;
+import com.buyte.product.dto.ProductInfoDto;
 import java.util.List;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
+@Builder
 public class StoreDetailsDto {
 
     private long memberId;
     private String storeName;
     private String storeAddress;
-    private String storeintroduction;
+    private String storeIntroduction;
     private String storeImage;
-    private List<ProductDto.Response> productList;
+    private List<ProductInfoDto> productInfoList;
 }
