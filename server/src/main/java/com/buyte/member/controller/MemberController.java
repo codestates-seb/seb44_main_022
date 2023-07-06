@@ -6,11 +6,10 @@ import com.buyte.member.mapper.MemberMapper;
 import com.buyte.member.service.MemberService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -30,5 +29,11 @@ public class MemberController {
         Member savedMember = memberService.createMember(member);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/token/refresh")
+    public ResponseEntity reIssueAccessToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        response = memberService.checkRefreshAndReIssueAccess(request, response);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

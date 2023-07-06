@@ -35,6 +35,7 @@ public class JwtTokenizer {
     @Value("${jwt.refresh-token-expiration-minutes}")
     private int refreshTokenExpirationMinutes;
 
+    @Getter
     private final RedisTemplate redisTemplate;
 
     public String encodeBase64SecretKey(String secretKey) {
@@ -87,7 +88,7 @@ public class JwtTokenizer {
     }
 
     public String delegateRefreshToken(Member member) {
-        String subject = member.getLoginId();
+        String subject = member.getMemberId().toString();
         Date expiration = getTokenExpiration(getRefreshTokenExpirationMinutes());
 
         String base64EncodedSecretKey = encodeBase64SecretKey(getSecretKey());
@@ -130,5 +131,16 @@ public class JwtTokenizer {
         Date expiration = calendar.getTime();
 
         return expiration;
+    }
+
+    public String getMemberIdFromRefreshToken(String refreshToken) {
+        Key key = getKeyFromBase64EncodedKey(encodeBase64SecretKey(getSecretKey()));
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(refreshToken)
+                .getBody();
+
+        return claims.getSubject();
     }
 }

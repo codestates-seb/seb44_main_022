@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Cookie cookie = new Cookie(cookieName, cookieValue);
 
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+//        cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(60*60*24);
         return cookie;
