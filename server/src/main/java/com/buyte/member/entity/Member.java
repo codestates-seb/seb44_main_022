@@ -23,8 +23,6 @@ import javax.persistence.OneToOne;
 @Getter
 @Setter
 @Entity
-@Getter
-@Setter
 public class Member extends Auditable {
 
     @Id

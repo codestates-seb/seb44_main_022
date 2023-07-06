@@ -3,9 +3,8 @@ package com.buyte.store.service;
 import com.buyte.exception.BusinessLogicException;
 import com.buyte.exception.ExceptionCode;
 import com.buyte.product.dto.ProductInfoDto;
-import com.buyte.product.dto.ProductPreferenceDto;
 import com.buyte.product.entity.Product;
-import com.buyte.product.entity.Product.ProductPreference;
+import com.buyte.product.entity.Product.PreferenceProduct;
 import com.buyte.product.mapper.ProductMapper;
 import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.dto.StoreInfoDto;
@@ -22,9 +21,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 @Slf4j
 @Transactional
-@Service
 public class StoreService {
 
     private final StoreRepository storeRepository;
@@ -69,11 +68,11 @@ public class StoreService {
         storeList.forEach(store -> {
             StoreMapDto storeMapDto = storeMapper.storeToStoreMap(store);
 
-            List<ProductPreferenceDto> productPreferenceList = store.getProductList().stream()
-                .filter(product -> product.getProductPreference() == ProductPreference.PREFERRED)
-                .map(productMapper::productToFavorProduct).collect(Collectors.toList());
+            List<ProductInfoDto> productInfoDtoList = store.getProductList().stream()
+                .filter(product -> product.getPreferenceProduct() == PreferenceProduct.PREFERRED)
+                .map(productMapper::productToProductInfo).collect(Collectors.toList());
 
-            storeMapDto.setProductPreferenceList(productPreferenceList);
+            storeMapDto.setProductPreferenceList(productInfoDtoList);
             storeMapDtoList.add(storeMapDto);
         });
 
@@ -93,7 +92,7 @@ public class StoreService {
         StoreDetailsDto storeDetailsDto = storeMapper.storeToStoreDetails(findStore);
 
         List<ProductInfoDto> productInfoDtoList = productList.stream()
-            .map(product -> productMapper.productToProductResponse(product))
+            .map(product -> productMapper.productToProductInfo(product))
             .collect(Collectors.toList());
 
         storeDetailsDto.setProductInfoList(productInfoDtoList);
