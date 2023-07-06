@@ -93,7 +93,7 @@ const StoreTitleInfo = styled.div`
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--background);
   padding: 15px 0;
   font-weight: 800;
   text-align: center;
