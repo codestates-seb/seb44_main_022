@@ -1,5 +1,6 @@
 package com.buyte.member.controller;
 
+import com.buyte.member.dto.CartReqDto;
 import com.buyte.member.dto.CartResDto;
 import com.buyte.member.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +18,14 @@ public class CartController {
     private final CartService cartService;
 
     @GetMapping("/cart/{member_id}")
-    public ResponseEntity<List<CartResDto>> getCartInfo(@PathVariable(name = "member_id") Long memberId) throws Exception {
-        List<CartResDto> memberCart = cartService.getInfoMemberCart(memberId);
+    public ResponseEntity<CartResDto.CartAllInfo> getCartInfo(@PathVariable(name = "member_id") Long memberId) throws Exception {
+        CartResDto.CartAllInfo memberCart = cartService.getInfoMemberCart(memberId);
 
         return ResponseEntity.ok(memberCart);
     }
 
     @DeleteMapping("/cart/{member_id}/delete")
-    public ResponseEntity deletePorducts(@RequestBody List<Long> cartIds) throws Exception {
+    public ResponseEntity deletePorducts(@RequestBody CartReqDto.CartIds cartIds) throws Exception {
         cartService.deleteSelectedProducts(cartIds);
 
         return new ResponseEntity<>(HttpStatus.OK);
@@ -43,6 +44,16 @@ public class CartController {
         cartService.addCustomProductToCart(file,productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/cart/{member_id}")
+    public ResponseEntity updateProductCount(@PathVariable(name = "member_id") Long memberId,
+                                             @RequestBody CartReqDto.CartProductCount cartProductCount) throws Exception {
+        if(cartProductCount.getCount() <= 0) {
+            return new ResponseEntity<>("1개 이상",HttpStatus.BAD_REQUEST);
+        }
+        CartResDto.PatchTotalPrcie patchTotalPrcie = cartService.updateProductCount(memberId, cartProductCount);
+        return ResponseEntity.ok(patchTotalPrcie);
     }
 
 }
