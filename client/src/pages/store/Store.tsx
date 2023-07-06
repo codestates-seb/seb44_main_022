@@ -2,9 +2,7 @@ import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import StoreCard from '../../components/storeCard';
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
-import Header from '../../share/Header';
 import axios from 'axios';
-
 interface Store {
   id: number;
   store_title: string;
@@ -115,7 +113,6 @@ function Store() {
 
   return (
     <>
-      <Header/>
       <StoreSection style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop:'240px'}}>
         <section style={{ width: '70%'}}>    
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -171,7 +168,6 @@ const StoreSection = styled.section`
 
 const StoreListSection = styled.section`
   width: 100%;
-  height: 100vh;
   section {
     display: flex;
     width: 70%;
