@@ -50,13 +50,13 @@ public class Product extends Auditable {
     @Column(name = "product_image")
     private String productImage;
 
-    @Column(name = "product_favor")
+    @Column(name = "product_preference")
     @Enumerated(EnumType.STRING)
-    private ProductFavor productFavor;
+    private ProductPreference productPreference;
 
-    @Column(name = "product_generic")
+    @Column(name = "product_type")
     @Enumerated(EnumType.STRING)
-    private ProductGeneric productGeneric;
+    private ProductType productType;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<ProductIngerdient> productIngerdientList = new ArrayList<>();
@@ -67,12 +67,12 @@ public class Product extends Auditable {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<OrderProduct> orderProductList = new ArrayList<>();
 
-    public enum ProductFavor {
-        FAVOR,
-        DISFAVOR
+    public enum ProductPreference {
+        PREFERRED,
+        NOT_PREFERRED
     }
 
-    public enum ProductGeneric {
+    public enum ProductType {
         CUSTOM,
         STANDARD
     }
