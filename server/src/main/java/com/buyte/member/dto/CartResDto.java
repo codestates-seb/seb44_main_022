@@ -27,4 +27,11 @@ public class CartResDto {
         private Integer productCount;
     }
 
+    @Builder
+    @Getter
+    public static class PatchTotalPrcie {
+
+        private Integer totalPrice;
+    }
+
 }

@@ -52,8 +52,8 @@ public class CartController {
         if(cartProductCount.getCount() <= 0) {
             return new ResponseEntity<>("1개 이상",HttpStatus.BAD_REQUEST);
         }
-        cartService.updateProductCount(cartProductCount);
-        return new ResponseEntity<>(HttpStatus.OK);
+        CartResDto.PatchTotalPrcie patchTotalPrcie = cartService.updateProductCount(memberId, cartProductCount);
+        return ResponseEntity.ok(patchTotalPrcie);
     }
 
 }
