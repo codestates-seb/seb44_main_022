@@ -4,7 +4,6 @@ import com.buyte.audit.Auditable;
 import com.buyte.order.entity.Orders;
 import com.buyte.store.entity.Store;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -20,8 +19,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 @Setter
