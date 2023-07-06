@@ -1,8 +1,9 @@
-import styled, { css } from 'styled-components';
-import tempImg from '../assets/images/cart_img.png';
-import CheckBox from './CheckBox';
-import CountButton from './CountButton';
+import tempImg from '../../assets/images/cart_img.png';
+import CheckBox from '../CheckBox';
+import CountButton from '../CountButton.style.ts/CountButton';
 import { useState } from 'react';
+import { CartItemProps } from '../../assets/interface/Cart.interface';
+import { CartListName } from './CartItem.style';
 
 export const CARTLIST = [
   {
@@ -56,21 +57,6 @@ export const CARTLIST = [
   },
 ];
 
-interface CartItem {
-  id: number;
-  img: string;
-  title: string;
-  count: number;
-  price: number;
-}
-
-interface CartItemProps {
-  items: CartItem;
-  idx: number;
-  initialChecked: boolean;
-  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
-}
-
 function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) {
   const [priceCnt, setPriceCnt] = useState<number>(items.count);
 
@@ -105,25 +91,5 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
     </div>
   );
 }
-
-const CartListName = styled.div<{ grow: number; minWidth?: number }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid var(--normal-gray);
-  padding: 1rem;
-  color: var(--dark-blue-black);
-  width: ${({ grow }) =>
-    css`
-      ${grow}%
-    `};
-
-  min-width: ${({ minWidth }) =>
-    minWidth
-      ? css`
-          ${minWidth}px
-        `
-      : css`120px`};
-`;
 
 export default CartItem;
