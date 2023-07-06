@@ -52,7 +52,7 @@ public class Product extends Auditable {
 
     @Column(name = "product_preference")
     @Enumerated(EnumType.STRING)
-    private ProductPreference productPreference;
+    private PreferenceProduct preferenceProduct;
 
     @Column(name = "product_type")
     @Enumerated(EnumType.STRING)
@@ -67,7 +67,7 @@ public class Product extends Auditable {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<OrderProduct> orderProductList = new ArrayList<>();
 
-    public enum ProductPreference {
+    public enum PreferenceProduct {
         PREFERRED,
         NOT_PREFERRED
     }

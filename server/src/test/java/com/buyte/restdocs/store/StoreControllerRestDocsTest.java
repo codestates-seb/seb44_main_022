@@ -18,7 +18,7 @@ import com.buyte.product.dto.ProductInfoDto;
 import com.buyte.product.entity.Category;
 import com.buyte.product.entity.Category.CategoryName;
 import com.buyte.product.entity.Product;
-import com.buyte.product.entity.Product.ProductPreference;
+import com.buyte.product.entity.Product.PreferenceProduct;
 import com.buyte.product.entity.Product.ProductType;
 import com.buyte.store.controller.StoreController;
 import com.buyte.store.dto.StoreDetailsDto;
@@ -141,7 +141,7 @@ public class StoreControllerRestDocsTest {
         product.setProductIntroduction("딸기 케이크");
         product.setProductImage("/images/store-1/1");
         product.setProductType(ProductType.STANDARD);
-        product.setProductPreference(ProductPreference.PREFERRED);
+        product.setPreferenceProduct(PreferenceProduct.PREFERRED);
         return product;
     }
 
