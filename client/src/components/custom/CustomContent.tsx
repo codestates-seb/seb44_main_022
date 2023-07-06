@@ -88,8 +88,7 @@ const RangeInput = styled.input.attrs({
 `;
 const ColorInput = styled.input.attrs({
   type: 'color',
-  value: '#000000',
-})`
+})<{ value: string }>`
   position: relative;
   z-index: 20;
   height: 25px;
@@ -116,8 +115,8 @@ const ColorInput = styled.input.attrs({
 `;
 const CustomContent: React.FC = () => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
-  const [size, setSize] = useState(5);
-  const [color, setColor] = useState('#000000');
+  const [size, setSize] = useState<number>(5);
+  const [color, setColor] = useState<string>('#000000');
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
