@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +31,20 @@ public class CartServiceImpl implements CartService{
     private final S3Service s3Service;
 
     @Override
-    public List<CartResDto> getInfoMemberCart(Long memberId) throws Exception {
+    public CartResDto.CartAllInfo getInfoMemberCart(Long memberId) throws Exception {
         Member member = memberRepository.findById(memberId).orElseThrow();
         List<Cart> cartList = member.getCartList();
-        List<CartResDto> cartResDtos = cartMapper.cartsToCartsResDtos(cartList);
+        Integer totalPrice = 0;
+        for(Cart cart : cartList){
+            totalPrice += cart.getCartCustomProductPrice() * cart.getProductCount();
+        }
+        List<CartResDto.CartInfo> cartInfos = cartMapper.cartsToCartsResDtos(cartList);
+        CartResDto.CartAllInfo cartAllInfo = CartResDto.CartAllInfo.builder()
+                .cartInfos(cartInfos)
+                .totalPrice(totalPrice)
+                .build();
 
-        return cartResDtos;
+        return cartAllInfo;
     }
 
     @Override
