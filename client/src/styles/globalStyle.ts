@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 import JustAnotherHand from '../assets/fonts/JustAnotherHand-Regular.ttf';
 import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
 import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
+import OpenSans from '../assets/fonts/OpenSans-SemiBold.ttf';
+
 export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Just Another Hand';
@@ -9,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   src: url(${JustAnotherHand}) format("truetype");
 }
 @font-face {
-  font-display: swap;
+  // font-display: swap;
   font-family: 'Yaldevi';
   font-style: normal;
   font-weight: 400;
@@ -19,11 +21,16 @@ export const GlobalStyle = createGlobalStyle`
   font-family: 'Indie Flower';
   src: url(${IndieFlower}) ;
 }
+@font-face {
+  font-family: 'Open Sans';
+  src: url(${OpenSans}) ;
+}
 :root{
   --background: #FCFCFF;
   --light-purple: #DDDCED;
   --purple: #AAA8E0;
   --dark-purple: #555388;
+  --white-gray: #777777;
   --bright-gray: #888888;
   --light-gray: #999999;
   --gray: #F5F5F5;
@@ -64,7 +71,6 @@ html, body, div, span, applet, object, iframe,
     box-sizing: border-box;
     text-decoration: none;
     color: var(--black);
-    font-family: 'Inter';
     height: auto;
   }
   /* HTML5 display-role reset for older browsers */
@@ -81,7 +87,6 @@ html, body, div, span, applet, object, iframe,
     -webkit-user-select: none;
     user-select: none;
     width: 100vw;
-    height: 100vh;
     background-color: var(--background);
 }
   ol, ul {

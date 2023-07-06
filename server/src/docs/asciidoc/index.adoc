@@ -1,0 +1,27 @@
+= buyte
+
+== StoreController
+
+.curl-request
+include::{snippets}/get-store-details/curl-request.adoc[]
+
+.http-request
+include::{snippets}/get-store-details/http-request.adoc[]
+
+.http-response
+include::{snippets}/get-store-details/http-response.adoc[]
+
+.httpie-request
+include::{snippets}/get-store-details/httpie-request.adoc[]
+
+.path-parameters
+include::{snippets}/get-store-details/path-parameters.adoc[]
+
+.request-body
+include::{snippets}/get-store-details/request-body.adoc[]
+
+.response-body
+include::{snippets}/get-store-details/response-body.adoc[]
+
+.response-fields
+include::{snippets}/get-store-details/response-fields.adoc[]

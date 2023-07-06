@@ -1,6 +1,11 @@
 package com.buyte.order.entity;
 
 import com.buyte.product.entity.Product;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +35,16 @@ public class OrderProduct {
     private String orderProductCustomProductImage;
 
     @Column(name = "order_product_custom_product_count")
-    private Integer orderProductCustomProductCount;
+    private Long orderProductCustomProductCount;
+
+    @Builder
+    public OrderProduct(Product product, String orderProductCustomProductImage, Long orderProductCustomProductCount){
+        this.product = product;
+        this.orderProductCustomProductImage = orderProductCustomProductImage;
+        this.orderProductCustomProductCount = orderProductCustomProductCount;
+    }
+
+    public void setOrder(Orders order) {
+        this.order = order;
+    }
 }

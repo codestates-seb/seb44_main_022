@@ -1,3 +1,5 @@
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 import { ComponentType, ReactElement } from 'react';
 import styled, { FlattenSimpleInterpolation, css } from 'styled-components';
 
@@ -5,17 +7,35 @@ interface ButtonProps {
   title: string;
   types: string;
   icon?: ReactElement<ComponentType>;
+  enabled?: boolean;
 }
 
 const ROUND_BUTTON_TYPE: { [index: string]: FlattenSimpleInterpolation } = {
-  default: css`
-    background-color: var(--white);
+  google: css`
+    background-color: var(--background);
     color: var(--dark-blue-black);
     font-weight: 700;
+    &:hover {
+      background-color: var(--gray);
+    }
+    &:active {
+      background-color: var(--normal-gray);
+    }
   `,
   dark: css`
     background-color: var(--dark-gray);
     color: var(--white);
+    &:hover {
+      background-color: var(--white-gray);
+    }
+    &:active {
+      background-color: var(--bright-black);
+    }
+    :disabled {
+      background-color: var(--dark-gray);
+      color: var(--white);
+      opacity: 0.6;
+    }
   `,
   purple: css`
     background-color: var(--purple);
@@ -23,9 +43,31 @@ const ROUND_BUTTON_TYPE: { [index: string]: FlattenSimpleInterpolation } = {
   `,
 };
 
-function RoundButton({ title, types, icon }: ButtonProps) {
+function RoundButton({ title, types, icon, enabled }: ButtonProps) {
+  const handleClick = () => {
+    if (types === 'google') handleGoogleLogin();
+  };
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: ({ code }) => {
+      console.log(code);
+      // axios
+      //   .get('https://604b-218-53-232-194.ngrok-free.app/oauth2/authorization/google', {
+      //     headers: {
+      //       'ngrok-skip-browser-warning': true,
+      //     },
+      //   })
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
+    },
+    onError: (errorResponse) => {
+      console.log(errorResponse);
+    },
+    flow: 'auth-code',
+  });
+
   return (
-    <RoundButtonStyle types={types}>
+    <RoundButtonStyle types={types} disabled={enabled === false && true} onClick={handleClick}>
       {icon && <Icons>{icon}</Icons>}
       {title}
     </RoundButtonStyle>
@@ -42,6 +84,8 @@ const RoundButtonStyle = styled.button<{ types: string }>`
   border: 2px solid var(--normal-gray);
   border-radius: 100px;
   align-items: center;
+  outline: none;
+  transition: 0.3s;
   ${({ types }) => ROUND_BUTTON_TYPE[types] || ROUND_BUTTON_TYPE.default};
 `;
 

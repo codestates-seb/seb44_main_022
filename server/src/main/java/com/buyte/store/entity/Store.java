@@ -1,5 +1,6 @@
 package com.buyte.store.entity;
 
+import com.buyte.audit.Auditable;
 import com.buyte.member.entity.Member;
 import com.buyte.product.entity.Product;
 import java.util.ArrayList;
@@ -14,9 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-public class Store {
+public class Store extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +31,9 @@ public class Store {
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @Column(name = "store_name")
+    private String storeName;
 
     @Column(name = "store_address")
     private String storeAddress;

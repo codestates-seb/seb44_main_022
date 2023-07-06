@@ -6,9 +6,15 @@ import RoundButton from '../../components/RoundButton';
 import SignUpForm from './SignUpForm';
 import styled from 'styled-components';
 import TextLogo from '../../components/Logo';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const handleClickHome = () => {
+    navigate('/');
+  };
 
   return (
     <AuthContainer>
@@ -30,6 +36,7 @@ function Login() {
               fontSize: '4rem',
               marginBottom: '4rem',
             }}
+            onClick={handleClickHome}
           >
             BUYTE
           </div>
@@ -66,7 +73,7 @@ function Login() {
             </div>
           </div>
           <div style={{ width: '100%' }}>
-            <RoundButton title="Continue with Google" types="default" icon={<FcGoogle />} />
+            <RoundButton title="Continue with Google" types="google" icon={<FcGoogle />} />
           </div>
           <div style={{ width: '100%', position: 'relative', margin: '1.25rem 0' }}>
             <hr style={{ border: '1px solid var(--normal-gray)' }} />

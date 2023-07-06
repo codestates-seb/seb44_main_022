@@ -1,14 +1,16 @@
 import { FunctionComponent } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import login_img from '../assets/images/cart_img.png';
 import cart_img from '../assets/images/login_img.png';
 import logo from '../assets/images/logo.png';
-const LoginIcon = styled.img`
+
+const LoginIcon = styled(Link)`
   position: absolute;
   top: 0px;
-  right: 12.74px;
-  width: 35.41px;
-  height: 33.25px;
+  right: 22px;
+  width: 32.41px;
+  height: 31.25px;
 `;
 const Login = styled.div`
   position: absolute;
@@ -19,6 +21,7 @@ const Login = styled.div`
   align-items: center;
   width: 54.65px;
   height: 25.63px;
+  font-size: 15px;
 `;
 const LoginContainer = styled.div`
   position: absolute;
@@ -40,6 +43,11 @@ const LinkMap = styled.div`
   height: 48px;
   font-size: 1.3rem;
   font-family: 'Yaldevi', sans-serif;
+  &:hover {
+    font-size: 1.35rem;
+    color: var(--purple);
+    cursor: pointer;
+  }
 `;
 
 const LinkOrder = styled.div`
@@ -51,6 +59,11 @@ const LinkOrder = styled.div`
   font-size: 1.3rem;
   font-family: 'Yaldevi', sans-serif;
   color: var(--dark-gray);
+  &:hover {
+    font-size: 1.35rem;
+    color: var(--purple);
+    cursor: pointer;
+  }
 `;
 
 const LinkMypage = styled.div`
@@ -66,6 +79,11 @@ const LinkMypage = styled.div`
   font-size: 1.3rem;
   font-family: 'Yaldevi', sans-serif;
   color: var(--dark-gray);
+  &:hover {
+    font-size: 1.35rem;
+    color: var(--purple);
+    cursor: pointer;
+  }
 `;
 const Buyte = styled.div`
   position: absolute;
@@ -79,7 +97,13 @@ const Buyte = styled.div`
   align-items: center;
   height: 37px;
 `;
-const LinkMy = styled.div`
+const BuyteLink = styled(Link)`
+  font-family: 'Just Another Hand', cursive;
+  font-size: 3rem;
+  color: inherit;
+  text-decoration: none;
+`;
+const Cart = styled.div`
   position: absolute;
   top: 43.54px;
   right: 0px;
@@ -88,13 +112,14 @@ const LinkMy = styled.div`
   align-items: center;
   width: 78.13px;
   height: 25.63px;
+  font-size: 15px;
 `;
-const CartIcon = styled.img`
+const CartIcon = styled(Link)`
   position: absolute;
   top: 0px;
-  right: 27px;
-  width: 40.53px;
-  height: 33.46px;
+  right: 33px;
+  width: 39px;
+  height: 32px;
 `;
 const CartContainer = styled.div`
   position: absolute;
@@ -107,7 +132,7 @@ const CartContainer = styled.div`
 const Icon = styled.img`
   position: absolute;
   top: 25px;
-  right: calc(50% + 5rem); /* 수정된 부분 */
+  right: calc(50% + 5rem);
   transform: translateX(50%);
   width: 52px;
   height: 73px;
@@ -126,37 +151,38 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 160px;
   display: flex;
-`;
-const HeaderRoot = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 238px;
-  overflow: hidden;
-  text-align: left;
-  color: var(--light-purple);
+  z-index: 1;
 `;
 
 const Header: FunctionComponent = () => {
   return (
-    <HeaderRoot>
-      <HeaderContainer>
-        <LoginContainer>
-          <LoginIcon src={login_img} alt="Login" />
-          <Login>LOGIN</Login>
-        </LoginContainer>
-        <LinkMap>Map</LinkMap>
-        <LinkOrder>Order</LinkOrder>
-        <LinkMypage>Mypage</LinkMypage>
-        <Buyte>BUYTE</Buyte>
-        <CartContainer>
-          <LinkMy>장바구니</LinkMy>
-          <CartIcon src={cart_img} alt="Cart" />
-        </CartContainer>
-        <Icon src={logo} alt="Logo" />
-      </HeaderContainer>
-    </HeaderRoot>
+    <HeaderContainer>
+      <LoginContainer>
+        <LoginIcon to="/auth">
+          <img src={login_img} alt="Login" />
+        </LoginIcon>
+        <Login>LOGIN</Login>
+      </LoginContainer>
+      <LinkMap>
+        <Link to="/map">Map</Link>
+      </LinkMap>
+      <LinkOrder>
+        <Link to="/select">Order</Link>
+      </LinkOrder>
+      <LinkMypage>
+        <Link to="/mypage/:id">Mypage</Link>
+      </LinkMypage>
+      <Buyte>
+        <BuyteLink to="/">BUYTE</BuyteLink>
+      </Buyte>
+      <CartContainer>
+        <CartIcon to="/cart">
+          <img src={cart_img} alt="Cart" />
+        </CartIcon>
+        <Cart>장바구니</Cart>
+      </CartContainer>
+      <Icon src={logo} alt="Logo" />
+    </HeaderContainer>
   );
 };
 

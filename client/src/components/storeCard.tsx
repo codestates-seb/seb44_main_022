@@ -87,6 +87,12 @@ const Cards = styled.li`
       transition: all 1s;
     }
   }
+  &:not(:hover) {
+    img {
+      transform: scale(1);
+      transition: all 1s;
+    }
+  }
 `;
 
 const StoreTitleInfo = styled.div`
