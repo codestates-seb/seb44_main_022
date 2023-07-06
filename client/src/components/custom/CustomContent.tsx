@@ -24,7 +24,7 @@ const CanvasWrapper = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 78%;
   z-index: 10;
 `;
 const Canvas = styled.canvas`
@@ -115,6 +115,7 @@ const ColorInput = styled.input.attrs({
 `;
 const CustomContent: React.FC = () => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const canvasWrapperRef = React.useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<number>(5);
   const [color, setColor] = useState<string>('#000000');
 
@@ -128,7 +129,10 @@ const CustomContent: React.FC = () => {
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
-    if (canvas) {
+    const canvasWrapper = canvasWrapperRef.current;
+    if (canvas && canvasWrapper) {
+      canvas.width = canvasWrapper.clientWidth;
+      canvas.height = canvasWrapper.clientHeight;
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.lineWidth = size;
@@ -139,37 +143,30 @@ const CustomContent: React.FC = () => {
       }
     }
   }, [size, color]);
-
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
-      if (event.buttons !== 1) return;
-
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.lineTo(x, y);
+        if (event.buttons !== 1) return;
+
+        ctx.lineTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
         ctx.stroke();
       }
     }
   };
+
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas) {
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.beginPath();
-        ctx.moveTo(x, y);
+        ctx.moveTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
       }
     }
   };
+
   return (
     <ContentContainer>
       <RangeInputContainer>
@@ -177,14 +174,8 @@ const CustomContent: React.FC = () => {
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
       </RangeInputContainer>
       {/* Canvas 추가 */}
-      <CanvasWrapper>
-        <Canvas
-          ref={canvasRef}
-          width={window.innerWidth}
-          height={window.innerHeight}
-          onMouseMove={handleMouseMove}
-          onMouseDown={handleMouseDown}
-        />
+      <CanvasWrapper ref={canvasWrapperRef}>
+        <Canvas ref={canvasRef} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} />
       </CanvasWrapper>
     </ContentContainer>
   );
