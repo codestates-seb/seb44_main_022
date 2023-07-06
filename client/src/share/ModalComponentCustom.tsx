@@ -225,12 +225,46 @@ const RangeInput = styled.input.attrs({
 
   transition: background-color 0.2s ease-in-out, top 0.2s ease-in-out;
 `;
+
+const ColorInput = styled.input.attrs({
+  type: 'color',
+})`
+  position: relative;
+  z-index: 20;
+  height: 25px;
+  margin-left: 20px;
+
+  &::-webkit-color-swatch {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 3px;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  &:focus {
+    animation: 1s pulse infinite;
+    outline: none;
+  }
+`;
+
 const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentLabel }) => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const [size, setSize] = useState(5);
+  const [color, setColor] = useState('#000000');
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
+  };
+
+  const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setColor(event.target.value);
   };
 
   React.useEffect(() => {
@@ -241,10 +275,11 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentL
         ctx.lineWidth = size;
         ctx.strokeStyle = 'black';
         ctx.lineCap = 'round';
+        ctx.strokeStyle = color;
         ctx.lineJoin = 'round';
       }
     }
-  }, [size]);
+  }, [size, color]);
 
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
@@ -295,6 +330,7 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentL
           <ContentContainer>
             <RangeInputContainer>
               <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
+              <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
             </RangeInputContainer>
             {/* Canvas 추가 */}
             <CanvasWrapper>
