@@ -151,50 +151,38 @@ const HeaderContainer = styled.div`
   width: 100%;
   height: 160px;
   display: flex;
-`;
-const HeaderRoot = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 238px;
-  overflow: hidden;
-  text-align: left;
-  color: var(--light-purple);
-  z-index: 2;
+  z-index: 1;
 `;
 
 const Header: FunctionComponent = () => {
   return (
-    <HeaderRoot>
-      <HeaderContainer>
-        <LoginContainer>
-          <LoginIcon to="/auth">
-            <img src={login_img} alt="Login" />
-          </LoginIcon>
-          <Login>LOGIN</Login>
-        </LoginContainer>
-        <LinkMap>
-          <Link to="/map">Map</Link>
-        </LinkMap>
-        <LinkOrder>
-          <Link to="/select">Order</Link>
-        </LinkOrder>
-        <LinkMypage>
-          <Link to="/mypage/:id">Mypage</Link>
-        </LinkMypage>
-        <Buyte>
-          <BuyteLink to="/">BUYTE</BuyteLink>
-        </Buyte>
-        <CartContainer>
-          <CartIcon to="/cart">
-            <img src={cart_img} alt="Cart" />
-          </CartIcon>
-          <Cart>장바구니</Cart>
-        </CartContainer>
-        <Icon src={logo} alt="Logo" />
-      </HeaderContainer>
-    </HeaderRoot>
+    <HeaderContainer>
+      <LoginContainer>
+        <LoginIcon to="/auth">
+          <img src={login_img} alt="Login" />
+        </LoginIcon>
+        <Login>LOGIN</Login>
+      </LoginContainer>
+      <LinkMap>
+        <Link to="/map">Map</Link>
+      </LinkMap>
+      <LinkOrder>
+        <Link to="/select">Order</Link>
+      </LinkOrder>
+      <LinkMypage>
+        <Link to="/mypage/:id">Mypage</Link>
+      </LinkMypage>
+      <Buyte>
+        <BuyteLink to="/">BUYTE</BuyteLink>
+      </Buyte>
+      <CartContainer>
+        <CartIcon to="/cart">
+          <img src={cart_img} alt="Cart" />
+        </CartIcon>
+        <Cart>장바구니</Cart>
+      </CartContainer>
+      <Icon src={logo} alt="Logo" />
+    </HeaderContainer>
   );
 };
 
