@@ -1,7 +1,6 @@
 import React from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import Draggable from 'react-draggable';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import CustomSidebar from '../components/custom/CustomSidebar';
@@ -152,9 +151,7 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentL
         overlayClassName="overlay"
       >
         <CustomContainer>
-          <Draggable>
-            <Title>BUYTE</Title>
-          </Draggable>
+          <Title>BUYTE</Title>
           <CustomSidebar />
           <CustomContent />
         </CustomContainer>
