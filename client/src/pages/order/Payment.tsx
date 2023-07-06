@@ -1,5 +1,9 @@
+import { useLocation } from 'react-router';
+
 function Payment() {
-  return <div>결제 페이지</div>;
+  const { state } = useLocation();
+  console.log(state);
+  return <div></div>;
 }
 
 export default Payment;
