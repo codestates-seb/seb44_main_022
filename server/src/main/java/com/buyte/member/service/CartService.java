@@ -10,9 +10,11 @@ public interface CartService {
 
     List<CartResDto> getInfoMemberCart(Long memberId) throws Exception;
 
-    void deleteSelectedProducts(CartReqDto cartReqDto) throws Exception;
+    void deleteSelectedProducts(CartReqDto.CartIds cartIds) throws Exception;
 
     void addProductToCart(Long productId) throws Exception;
 
     void addCustomProductToCart(MultipartFile file, Long productId) throws Exception;
+
+    void updateProductCount(CartReqDto.CartProductCount cartProductCount) throws Exception;
 }

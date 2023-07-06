@@ -25,8 +25,8 @@ public class CartController {
     }
 
     @DeleteMapping("/cart/{member_id}/delete")
-    public ResponseEntity deletePorducts(@RequestBody CartReqDto cartReqDto) throws Exception {
-        cartService.deleteSelectedProducts(cartReqDto);
+    public ResponseEntity deletePorducts(@RequestBody CartReqDto.CartIds cartIds) throws Exception {
+        cartService.deleteSelectedProducts(cartIds);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -44,6 +44,16 @@ public class CartController {
         cartService.addCustomProductToCart(file,productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/cart/{member_id}")
+    public ResponseEntity updateProductCount(@PathVariable(name = "member_id") Long memberId,
+                                             @RequestBody CartReqDto.CartProductCount cartProductCount) throws Exception {
+        if(cartProductCount.getCount() <= 0) {
+            return new ResponseEntity<>("1개 이상",HttpStatus.BAD_REQUEST);
+        }
+        cartService.updateProductCount(cartProductCount);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

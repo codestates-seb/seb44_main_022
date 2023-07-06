@@ -39,8 +39,8 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public void deleteSelectedProducts(CartReqDto cartReqDto) throws Exception {
-        cartRepository.deleteByCartIdIn(cartReqDto.getCartIds());
+    public void deleteSelectedProducts(CartReqDto.CartIds cartIds) throws Exception {
+        cartRepository.deleteByCartIdIn(cartIds.getCartIds());
     }
 
     @Override
@@ -60,6 +60,13 @@ public class CartServiceImpl implements CartService{
         }
         String storedFileName = s3Service.upload(file, "customProduct");
         Cart cart = new Cart(product, storedFileName, product.getProductPrice());
+        cartRepository.save(cart);
+    }
+
+    @Override
+    public void updateProductCount(CartReqDto.CartProductCount cartProductCount) throws Exception {
+        Cart cart = cartRepository.findById(cartProductCount.getCartId()).orElseThrow();
+        cart.updateProductCount(cartProductCount.getCount());
         cartRepository.save(cart);
     }
 
