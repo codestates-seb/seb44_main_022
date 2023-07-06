@@ -143,7 +143,7 @@ const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
   min-height: 100vh;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255);
   backdrop-filter: blur(50px);
   position: absolute;
   top: 0;
@@ -163,35 +163,36 @@ const CanvasWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 10;
 `;
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
 `;
 const RangeInputContainer = styled.div`
+  background-color: transparent;
   position: absolute;
   width: 100%;
   bottom: 35%;
   left: 0;
   display: flex;
   justify-content: center;
-  z-index: 11; // 수정된 부분
+  z-index: 15;
 `;
 
 const RangeInput = styled.input.attrs({
   type: 'range',
   min: '1',
-  max: '10',
-  defaultValue: '5',
+  max: '100',
+  defaultValue: '50',
 })`
+  position: relative;
+  z-index: 20;
   -webkit-appearance: none;
-  background-color: blue; // 수정된 부분
+  background-color: blue;
   border-radius: 10px;
   height: 10px;
   width: 90%;
-  outline: none;
-  opacity: 1;
-
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -209,6 +210,20 @@ const RangeInput = styled.input.attrs({
     background-color: yellow;
     cursor: pointer;
   }
+
+  &:focus {
+    animation: 1s pulse infinite;
+    outline: none;
+  }
+
+  &:hover {
+    background-color: hotpink;
+  }
+
+  background-color: pink;
+  top: calc(5px + 50%);
+
+  transition: background-color 0.2s ease-in-out, top 0.2s ease-in-out;
 `;
 const ModalComponent: React.FC<ModalProps> = ({
   isOpen,
@@ -225,16 +240,46 @@ const ModalComponent: React.FC<ModalProps> = ({
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
-
     if (canvas) {
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.lineWidth = size;
+        ctx.strokeStyle = 'black';
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
       }
     }
   }, [size]);
 
+  const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.lineTo(x, y);
+        ctx.stroke();
+      }
+    }
+  };
+
+  const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+      }
+    }
+  };
   return (
     <ModalContainer>
       {isOpen && <Overlay />}
@@ -255,13 +300,15 @@ const ModalComponent: React.FC<ModalProps> = ({
             <RangeInputContainer>
               <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
             </RangeInputContainer>
+            {/* Canvas 추가 */}
             <CanvasWrapper>
-              {/*
-                  이 부분에서 스타일을 수정하여 Canvas 크기를 조정합니다.
-                  이전까지는 height/width: 100%였지만, 이제는 state 값을 사용합니다.
-                  RangeInput에서 state를 조정하는 대로 Canvas 크기도 같이 커지거나 작아지게 됩니다.
-                */}
-              <Canvas ref={canvasRef} width={100 * size} height={80 * size} />
+              <Canvas
+                ref={canvasRef}
+                width={window.innerWidth}
+                height={window.innerHeight}
+                onMouseMove={handleMouseMove}
+                onMouseDown={handleMouseDown}
+              />
             </CanvasWrapper>
             {children}
           </ContentContainer>
