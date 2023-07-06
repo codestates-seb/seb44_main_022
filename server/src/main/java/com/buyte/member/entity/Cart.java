@@ -38,11 +38,19 @@ public class Cart {
     @Column(name = "cart_custom_product_price")
     private Integer cartCustomProductPrice;
 
-    @Builder
+    @Column(name = "product_count")
+    private Integer productCount;
+
+    @Builder //나중에 바꾸기
     public Cart( Product product, String cartCustomProductImage, Integer cartCustomProductPrice) {
 
         this.product = product;
         this.cartCustomProductImage = cartCustomProductImage;
         this.cartCustomProductPrice = cartCustomProductPrice;
+        this.productCount = 1;
+    }
+
+    public void updateProductCount(Integer productCount) {
+        this.productCount = productCount;
     }
 }
