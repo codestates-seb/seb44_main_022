@@ -117,42 +117,31 @@ const Divcontainer = styled.div`
 `;
 
 const FooterContainer = styled.div`
-  bottom: 0;
   background-color: var(--purple);
   width: 100%;
   height: 200px;
   color: var(--color-white);
   font-family: var(--font-noto-sans-kr);
-`;
-const FooterRoot = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  text-align: left;
-  color: var(--gray);
+  margin-top: auto;
 `;
 const Footer: FunctionComponent = () => {
   return (
-    <FooterRoot>
-      <FooterContainer>
-        <Divcontainer>
-          <DivfooterText2>
-            <Item1>22팀 | 메인프로젝트 화이팅</Item1>
-            <Item2>대표자: 김준표 | 그 외 5 인 | 🥲🥲🥲</Item2>
-            <CopyrightBuyteAll>Copyright© buyte. All Rights Reserved.</CopyrightBuyteAll>
-            <Item3>이용약관 | 개인정보처리방침 | 1:1 문의</Item3>
-          </DivfooterText2>
-          <Buyte>BUYTE</Buyte>
-          <Divcontainer2>
-            <Item4>(주) BUYTE</Item4>
-            <Item5>010-1234-1234</Item5>
-            <Item6>서비스 시간: 09:00 ~ 18:00</Item6>
-          </Divcontainer2>
-        </Divcontainer>
-      </FooterContainer>
-    </FooterRoot>
+    <FooterContainer>
+      <Divcontainer>
+        <DivfooterText2>
+          <Item1>22팀 | 메인프로젝트 화이팅</Item1>
+          <Item2>대표자: 김준표 | 그 외 5 인 | 🥲🥲🥲</Item2>
+          <CopyrightBuyteAll>Copyright© buyte. All Rights Reserved.</CopyrightBuyteAll>
+          <Item3>이용약관 | 개인정보처리방침 | 1:1 문의</Item3>
+        </DivfooterText2>
+        <Buyte>BUYTE</Buyte>
+        <Divcontainer2>
+          <Item4>(주) BUYTE</Item4>
+          <Item5>010-1234-1234</Item5>
+          <Item6>서비스 시간: 09:00 ~ 18:00</Item6>
+        </Divcontainer2>
+      </Divcontainer>
+    </FooterContainer>
   );
 };
 

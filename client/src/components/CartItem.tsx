@@ -1,6 +1,8 @@
-import { MdCheckBox } from 'react-icons/md';
 import styled, { css } from 'styled-components';
 import tempImg from '../assets/images/cart_img.png';
+import CheckBox from './CheckBox';
+import CountButton from './CountButton';
+import { useState } from 'react';
 
 export const CARTLIST = [
   {
@@ -38,32 +40,67 @@ export const CARTLIST = [
     count: 7,
     price: 6000,
   },
+  {
+    id: 6,
+    img: tempImg,
+    title: '커스텀 도넛',
+    count: 7,
+    price: 6000,
+  },
+  {
+    id: 7,
+    img: tempImg,
+    title: '커스텀 도넛',
+    count: 7,
+    price: 6000,
+  },
 ];
 
-interface CartItemProps {
+interface CartItem {
+  id: number;
   img: string;
   title: string;
   count: number;
   price: number;
 }
 
-function CartItem({ img, title, count, price }: CartItemProps) {
+interface CartItemProps {
+  items: CartItem;
+  idx: number;
+  initialChecked: boolean;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+}
+
+function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) {
+  const [priceCnt, setPriceCnt] = useState<number>(items.count);
+
   return (
     <div style={{ display: 'flex', fontSize: '14px' }}>
-      <CartListName grow={5} minWidth={60} style={{ justifyContent: 'flex-start' }}>
-        <MdCheckBox />
+      <CartListName grow={5} minWidth={45} style={{ justifyContent: 'flex-start' }}>
+        {idx + 1}.
       </CartListName>
-      <CartListName grow={5} minWidth={40}>
-        <img src={img} style={{ width: '1rem', height: '1rem', objectFit: 'cover' }} />
+      <CartListName grow={5} minWidth={40} style={{ padding: ' 0.5rem', alignItems: 'center' }}>
+        <img src={items.img} style={{ width: '3rem', height: '3rem', objectFit: 'cover' }} />
       </CartListName>
-      <CartListName grow={75} style={{ justifyContent: 'flex-start' }}>
-        {title}
+      <CartListName grow={75} style={{ justifyContent: 'flex-start', fontWeight: 'bold' }}>
+        {items.title}
       </CartListName>
-      <CartListName grow={0} minWidth={80}>
-        {count}
+      <CartListName
+        grow={10}
+        minWidth={100}
+        style={{ justifyContent: 'space-between', maxWidth: '100px' }}
+      >
+        <CountButton count={priceCnt} setCount={setPriceCnt} setTotalPrice={setTotalPrice} />
       </CartListName>
-      <CartListName grow={15} minWidth={120}>
-        {price}
+      <CartListName grow={15} minWidth={110} style={{ fontWeight: 'bold' }}>
+        {items.price.toLocaleString()}
+      </CartListName>
+      <CartListName
+        grow={5}
+        minWidth={40}
+        style={{ justifyContent: 'flex-start', fontSize: '18px', padding: '0.5rem' }}
+      >
+        <CheckBox id={items.id} initialChecked={initialChecked} />
       </CartListName>
     </div>
   );
@@ -72,8 +109,10 @@ function CartItem({ img, title, count, price }: CartItemProps) {
 const CartListName = styled.div<{ grow: number; minWidth?: number }>`
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid gray;
+  align-items: center;
+  border-bottom: 1px solid var(--normal-gray);
   padding: 1rem;
+  color: var(--dark-blue-black);
   width: ${({ grow }) =>
     css`
       ${grow}%

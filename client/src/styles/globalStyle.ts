@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
   src: url(${JustAnotherHand}) format("truetype");
 }
 @font-face {
-  font-display: swap;
+  // font-display: swap;
   font-family: 'Yaldevi';
   font-style: normal;
   font-weight: 400;
@@ -65,7 +65,6 @@ html, body, div, span, applet, object, iframe,
     box-sizing: border-box;
     text-decoration: none;
     color: var(--black);
-    font-family: 'Inter';
     height: auto;
   }
   /* HTML5 display-role reset for older browsers */
