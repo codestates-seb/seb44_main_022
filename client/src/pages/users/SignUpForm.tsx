@@ -1,9 +1,9 @@
 import { MdLocalPostOffice } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
-import UserInput from '../../components/UserInput';
+import UserInput from '../../components/UserInput/UserInput';
 import { AiFillLock } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
-import RoundButton from '../../components/RoundButton';
+import RoundButton from '../../components/RoundButton/RoundButton';
 import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';

@@ -1,6 +1,5 @@
 import { BsArrowDownCircle, BsArrowUpCircle } from 'react-icons/bs';
-import styled from 'styled-components';
-
+import { DownBtn } from './CountButton.style';
 interface CountProps {
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
@@ -33,14 +32,5 @@ function CountButton({ count, setCount, setTotalPrice }: CountProps) {
     </>
   );
 }
-
-const DownBtn = styled.div`
-  cursor: pointer;
-  transition: 0.3s;
-  &:hover {
-    transform: scale(120%, 120%);
-    color: var(--white-gray);
-  }
-`;
 
 export default CountButton;
