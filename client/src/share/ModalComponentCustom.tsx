@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
-import custom_icon from '../assets/images/img_modal/custom_icon.png';
+import CustomSidebar from '../components/custom/CustomSidebar';
 
 type ModalProps = {
   isOpen: boolean;
@@ -139,83 +139,102 @@ const CustomContainer = styled.div`
   display: flex;
 `;
 
-const Sidebar = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(50px);
-`;
-
-const SidebarContent = styled.div`
-  position: relative;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-  overflow: auto;
-`;
-
 const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
-  height: 100%;
+  min-height: 100vh;
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(50px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+`;
+const CanvasWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+const Canvas = styled.canvas`
+  width: 100%;
+  height: 100%;
+`;
+const RangeInputContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  bottom: 35%;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 11; // 수정된 부분
 `;
 
-const CustomIcon = styled.img`
-  width: 40px;
+const RangeInput = styled.input.attrs({
+  type: 'range',
+  min: '1',
+  max: '10',
+  defaultValue: '5',
+})`
+  -webkit-appearance: none;
+  background-color: blue; // 수정된 부분
+  border-radius: 10px;
   height: 10px;
-  margin-bottom: 20px;
-  margin-left: 10px;
-`;
-
-const ContentItem = styled.div`
   width: 90%;
-  height: 80px;
-  background-color: #fff;
-  margin-bottom: 15px;
-  margin-left: 10px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-`;
+  outline: none;
+  opacity: 1;
 
-const ContentImage = styled.img`
-  width: 45px;
-  height: 45px;
-  margin-right: 10px;
-  border: 1px solid var(--light-gray);
-  border-radius: 4px;
-`;
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background-color: red;
+    border-radius: 50%;
+    cursor: pointer;
+  }
 
-const ContentText = styled.p`
-  font-family: 'Open Sans', cursive;
-  font-size: 14px;
-  color: var(--light-black);
-  text-align: left;
-  margin-left: 10px;
-  margin-bottom: 8px;
+  &::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: yellow;
+    cursor: pointer;
+  }
 `;
-const ContentImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  overflow: auto;
-  margin-top: 10px;
-  height: 60px;
-`;
-
 const ModalComponent: React.FC<ModalProps> = ({
   isOpen,
   onRequestClose,
   contentLabel,
   children,
 }) => {
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+  const [size, setSize] = useState(5);
+
+  const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSize(Number(event.target.value));
+  };
+
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+    }
+  }, [size]);
+
   return (
     <ModalContainer>
       {isOpen && <Overlay />}
@@ -231,39 +250,21 @@ const ModalComponent: React.FC<ModalProps> = ({
           <Draggable>
             <Title>BUYTE</Title>
           </Draggable>
-          <Sidebar>
-            <SidebarContent>
-              <CustomIcon src={custom_icon} alt="Custom Icon" />
-              <ContentText>베이스</ContentText>
-              <ContentItem>
-                <ContentImageContainer>
-                  <ContentImage src={modal_cake} alt="Cake Icon" />
-                  <ContentImage src={modal_cake} alt="Cake Icon" />
-                  <ContentImage src={modal_cake} alt="Cake Icon" />
-                  <ContentImage src={modal_cake} alt="Cake Icon" />
-                  <ContentImage src={modal_cake} alt="Cake Icon" />
-                  <ContentImage src={modal_cake} alt="Cake Icon" />
-                </ContentImageContainer>
-              </ContentItem>
-              <ContentText>맛</ContentText>
-              <ContentItem>
-                <ContentImage src={modal_cake} alt="Cake Icon" />
-              </ContentItem>
-              <ContentText>크림</ContentText>
-              <ContentItem>
-                <ContentImage src={modal_cake} alt="Cake Icon" />
-              </ContentItem>
-              <ContentText>토핑</ContentText>
-              <ContentItem>
-                <ContentImage src={modal_cake} alt="Cake Icon" />
-              </ContentItem>
-              <ContentText>그림판</ContentText>
-              <ContentItem>
-                <ContentImage src={modal_cake} alt="Cake Icon" />
-              </ContentItem>
-            </SidebarContent>
-          </Sidebar>
-          <ContentContainer>{children}</ContentContainer>
+          <CustomSidebar />
+          <ContentContainer>
+            <RangeInputContainer>
+              <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
+            </RangeInputContainer>
+            <CanvasWrapper>
+              {/*
+                  이 부분에서 스타일을 수정하여 Canvas 크기를 조정합니다.
+                  이전까지는 height/width: 100%였지만, 이제는 state 값을 사용합니다.
+                  RangeInput에서 state를 조정하는 대로 Canvas 크기도 같이 커지거나 작아지게 됩니다.
+                */}
+              <Canvas ref={canvasRef} width={100 * size} height={80 * size} />
+            </CanvasWrapper>
+            {children}
+          </ContentContainer>
         </CustomContainer>
         <ModalButtons>
           <CloseButton onClick={onRequestClose}>X</CloseButton>
