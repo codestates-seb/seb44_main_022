@@ -50,6 +50,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
+                .logout().disable()
                 .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
 
         return http.build();

@@ -1,5 +1,7 @@
 package com.buyte.member.service;
 
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import com.buyte.member.entity.Member;
 import com.buyte.member.repository.MemberRepository;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.TimeUnit;
 
 @Transactional
 @Service
@@ -43,7 +46,7 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
-    public HttpServletResponse checkRefreshAndReIssueAccess(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public HttpServletResponse checkRefreshAndReIssueAccess(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = getCookieValue(request, "RefreshToken");
         String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
 
@@ -54,12 +57,12 @@ public class MemberService {
             String accessToken = jwtTokenizer.delegateAccessToken(memberRepository.findById(Long.parseLong(memberId)).orElseThrow());
             response.setHeader("Authorization", "Bearer " + accessToken);
         } else {
-            throw new Exception("인증되지 않았습니다. 다시 로그인하세요.");
+            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
         }
         return response;
     }
 
-    public static String getCookieValue(HttpServletRequest request, String cookieName) throws Exception {
+    public static String getCookieValue(HttpServletRequest request, String cookieName) {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -67,7 +70,18 @@ public class MemberService {
                     return cookie.getValue();
                 }
             }
-        } else throw new Exception("쿠키가 없습니다.");
+        } else throw new BusinessLogicException(ExceptionCode.NO_COOKIE);
         return null;
+    }
+
+    public void logout(HttpServletRequest request) {
+        String accessToken = request.getHeader("Authorization");
+        String refreshToken = getCookieValue(request, "RefreshToken");
+        String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
+
+        // Redis에 accessToken 사용 못하도록 블랙리스트 등록
+        RedisTemplate redisTemplate = jwtTokenizer.getRedisTemplate();
+        redisTemplate.opsForValue().set(accessToken, "logout", 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(memberId, "logout", 300, TimeUnit.MINUTES);
     }
 }

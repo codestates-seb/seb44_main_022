@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
@@ -142,5 +143,12 @@ public class JwtTokenizer {
                 .getBody();
 
         return claims.getSubject();
+    }
+
+    public String getAccessToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+
+        if (bearerToken.startsWith("Bearer ")) return bearerToken;
+        else return null;
     }
 }

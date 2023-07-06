@@ -32,8 +32,14 @@ public class MemberController {
     }
 
     @PostMapping("/token/refresh")
-    public ResponseEntity reIssueAccessToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ResponseEntity reIssueAccessToken(HttpServletRequest request, HttpServletResponse response) {
         response = memberService.checkRefreshAndReIssueAccess(request, response);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest request) {
+        memberService.logout(request);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

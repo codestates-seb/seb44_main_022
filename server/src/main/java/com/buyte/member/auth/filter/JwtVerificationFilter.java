@@ -1,14 +1,18 @@
 package com.buyte.member.auth.filter;
 
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -29,14 +33,17 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         try {
+            checkLogout(request);
             Jws<Claims> claims = verifyJws(request);
             setAuthenticationToContext(claims);
         } catch (SignatureException se) {
             log.info("Exception, {}", se.getMessage());
-            request.setAttribute("exception", se);
+            BusinessLogicException be = new BusinessLogicException(ExceptionCode.INVALID_ACCESS_TOKEN_STATE);
+            request.setAttribute("exception", be);
         } catch (ExpiredJwtException ee) {
             log.info("ExpiredJwtException: {}", ee.getMessage());
-            request.setAttribute("exception", ee);
+            BusinessLogicException be = new BusinessLogicException(ExceptionCode.ACCESS_TOKEN_EXPIRED);
+            request.setAttribute("exception", be);
         } catch (Exception e) {
             log.info("Exception, {}", e.getMessage());
             request.setAttribute("exception", e);
@@ -63,5 +70,14 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         Jws<Claims> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey);
         return claims;
+    }
+
+    private void checkLogout(HttpServletRequest request) {
+        String accessToken = jwtTokenizer.getAccessToken(request);
+        RedisTemplate redisTemplate = jwtTokenizer.getRedisTemplate();
+
+        String isLogout = (String) redisTemplate.opsForValue().get(accessToken);
+        // accessToken의 로그아웃 여부 확인. 값 없으면 다음 단계로 넘어가고 있으면 로그아웃상태이므로 오류발생
+        if (!ObjectUtils.isEmpty(isLogout)) throw new BusinessLogicException(ExceptionCode.LOGOUT);
     }
 }
