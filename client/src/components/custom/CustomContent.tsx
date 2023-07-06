@@ -46,7 +46,6 @@ const RangeInput = styled.input.attrs({
   type: 'range',
   min: '1',
   max: '100',
-  defaultValue: '50',
 })`
   position: relative;
   z-index: 20;
@@ -87,10 +86,9 @@ const RangeInput = styled.input.attrs({
 
   transition: background-color 0.2s ease-in-out, top 0.2s ease-in-out;
 `;
-
 const ColorInput = styled.input.attrs({
   type: 'color',
-  defaultValue: '#000000',
+  value: '#000000',
 })`
   position: relative;
   z-index: 20;
@@ -116,7 +114,6 @@ const ColorInput = styled.input.attrs({
     outline: none;
   }
 `;
-
 const CustomContent: React.FC = () => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const [size, setSize] = useState(5);
