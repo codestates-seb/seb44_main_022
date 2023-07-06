@@ -11,35 +11,32 @@ import org.mapstruct.ReportingPolicy;
 public interface StoreMapper {
 
     default StoreDetailsDto storeToStoreDetails(Store store) {
-        StoreDetailsDto storeDetailsDto = new StoreDetailsDto();
-        storeDetailsDto.setStoreName(store.getStoreName());
-        storeDetailsDto.setMemberId(store.getStoreId());
-        storeDetailsDto.setStoreAddress(store.getStoreAddress());
-        storeDetailsDto.setStoreintroduction(store.getStoreIntroduction());
-        storeDetailsDto.setStoreImage(store.getStoreImage());
-
-        return storeDetailsDto;
+        return StoreDetailsDto.builder()
+            .memberId(store.getMember().getMemberId())
+            .storeName(store.getStoreName())
+            .storeAddress(store.getStoreAddress())
+            .storeImage(store.getStoreImage())
+            .storeIntroduction(store.getStoreIntroduction())
+            .build();
     }
 
     default StoreInfoDto storeToStoreInfo(Store store) {
-        StoreInfoDto storeInfoDto = new StoreInfoDto();
-        storeInfoDto.setStoreId(store.getStoreId());
-        storeInfoDto.setStoreImage(store.getStoreImage());
-        storeInfoDto.setStoreName(store.getStoreName());
-        storeInfoDto.setStoreAddress(store.getStoreAddress());
-
-        return storeInfoDto;
+        return StoreInfoDto.builder()
+            .storeId(store.getStoreId())
+            .storeImage(store.getStoreImage())
+            .storeName(store.getStoreName())
+            .storeAddress(store.getStoreAddress())
+            .build();
     }
 
     default StoreMapDto storeToStoreMap(Store store) {
-        StoreMapDto storeMapDto = new StoreMapDto();
-        storeMapDto.setStoreId(store.getStoreId());
-        storeMapDto.setStoreLatitude(store.getStoreLatitude());
-        storeMapDto.setStoreLongitude(store.getStoreLongitude());
-        storeMapDto.setStoreName(store.getStoreName());
-        storeMapDto.setStoreIntroduction(store.getStoreIntroduction());
-        storeMapDto.setStoreImage(store.getStoreImage());
-
-        return storeMapDto;
+        return StoreMapDto.builder()
+            .storeId(store.getStoreId())
+            .storeLatitude(store.getStoreLatitude())
+            .storeLongitude(store.getStoreLongitude())
+            .storeImage(store.getStoreImage())
+            .storeName(store.getStoreName())
+            .storeIntroduction(store.getStoreIntroduction())
+            .build();
     }
 }

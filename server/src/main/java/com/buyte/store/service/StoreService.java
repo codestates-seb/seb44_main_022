@@ -2,12 +2,11 @@ package com.buyte.store.service;
 
 import com.buyte.exception.BusinessLogicException;
 import com.buyte.exception.ExceptionCode;
-import com.buyte.product.dto.FavorProductDto;
-import com.buyte.product.dto.ProductDto;
+import com.buyte.product.dto.ProductInfoDto;
+import com.buyte.product.dto.ProductPreferenceDto;
 import com.buyte.product.entity.Product;
-import com.buyte.product.entity.Product.ProductFavor;
+import com.buyte.product.entity.Product.ProductPreference;
 import com.buyte.product.mapper.ProductMapper;
-import com.buyte.product.repository.ProductRepository;
 import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.dto.StoreInfoDto;
 import com.buyte.store.dto.StoreMapDto;
@@ -55,8 +54,7 @@ public class StoreService {
         }
 
         List<StoreInfoDto> storeInfoDtoList = storeList.stream()
-            .map(store -> storeMapper.storeToStoreInfo(store))
-            .collect(Collectors.toList());
+            .map(store -> storeMapper.storeToStoreInfo(store)).collect(Collectors.toList());
 
         return storeInfoDtoList;
     }
@@ -71,12 +69,11 @@ public class StoreService {
         storeList.forEach(store -> {
             StoreMapDto storeMapDto = storeMapper.storeToStoreMap(store);
 
-            List<FavorProductDto> favorProductDtoList = store.getProductList().stream()
-                .filter(product -> product.getProductFavor() == ProductFavor.FAVOR)
-                .map(productMapper::productToFavorProduct)
-                .collect(Collectors.toList());
+            List<ProductPreferenceDto> productPreferenceList = store.getProductList().stream()
+                .filter(product -> product.getProductPreference() == ProductPreference.PREFERRED)
+                .map(productMapper::productToFavorProduct).collect(Collectors.toList());
 
-            storeMapDto.setFavorProductList(favorProductDtoList);
+            storeMapDto.setProductPreferenceList(productPreferenceList);
             storeMapDtoList.add(storeMapDto);
         });
 
@@ -93,12 +90,13 @@ public class StoreService {
 
         List<Product> productList = findStore.getProductList();
 
-        List<ProductDto.Response> productResponseDtoList = productList.stream()
+        StoreDetailsDto storeDetailsDto = storeMapper.storeToStoreDetails(findStore);
+
+        List<ProductInfoDto> productInfoDtoList = productList.stream()
             .map(product -> productMapper.productToProductResponse(product))
             .collect(Collectors.toList());
 
-        StoreDetailsDto storeDetailsDto = storeMapper.storeToStoreDetails(findStore);
-        storeDetailsDto.setProductList(productResponseDtoList);
+        storeDetailsDto.setProductInfoList(productInfoDtoList);
 
         return storeDetailsDto;
     }
@@ -112,8 +110,7 @@ public class StoreService {
     public Store findVerifiedStore(long storeId) {
         Optional<Store> optionalStore = storeRepository.findById(storeId);
         Store findStore = optionalStore.orElseThrow(
-            () -> new BusinessLogicException(ExceptionCode.STORE_NOT_FOUND)
-        );
+            () -> new BusinessLogicException(ExceptionCode.STORE_NOT_FOUND));
         return findStore;
     }
 }

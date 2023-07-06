@@ -1,13 +1,11 @@
 package com.buyte.product.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Builder;
+import lombok.Data;
 
-@NoArgsConstructor
-@Getter
-@Setter
-public class FavorProductDto {
+@Data
+@Builder
+public class ProductPreferenceDto {
     private long productId;
     private String productImage;
     private String productName;
