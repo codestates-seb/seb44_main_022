@@ -113,11 +113,32 @@ const ColorInput = styled.input.attrs({
     outline: none;
   }
 `;
+const EraseButton = styled.button`
+  position: relative;
+  z-index: 20;
+  width: 25px;
+  height: 25px;
+  margin-left: 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background-color: var(--light-gray);
+
+  &:hover {
+    background-color: var(--gray);
+  }
+
+  &:focus {
+    animation: 1s pulse infinite; // 애니메이션
+    outline: none;
+  }
+`;
 const CustomContent: React.FC = () => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = React.useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<number>(5);
   const [color, setColor] = useState<string>('#000000');
+  const [eraser, setEraser] = useState<boolean>(false);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -152,8 +173,22 @@ const CustomContent: React.FC = () => {
 
       const ctx = canvas.getContext('2d');
       if (ctx) {
+        const target = eraser ? 'destination-out' : 'source-over';
+        ctx.globalCompositeOperation = target;
         ctx.lineWidth = size;
-        ctx.strokeStyle = color;
+
+        if (eraser) {
+          ctx.strokeStyle = 'rgba(0,0,0,1)';
+          // destination-out 때문에 적용(인터넷익스플로러 호환성)
+          const temp = ctx.fillStyle;
+          ctx.fillStyle = 'rgba(0,0,0,0)';
+          ctx.fillRect(x, y, size, size);
+          // destination-out 때문에 적용
+          ctx.fillStyle = temp;
+        } else {
+          ctx.strokeStyle = color;
+        }
+
         ctx.lineTo(x, y);
         ctx.stroke();
       }
@@ -168,6 +203,8 @@ const CustomContent: React.FC = () => {
 
       const ctx = canvas.getContext('2d');
       if (ctx) {
+        const target = eraser ? 'destination-out' : 'source-over';
+        ctx.globalCompositeOperation = target;
         ctx.beginPath();
         ctx.moveTo(x, y);
       }
@@ -178,6 +215,7 @@ const CustomContent: React.FC = () => {
       <RangeInputContainer>
         <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
+        <EraseButton onClick={() => setEraser(true)}></EraseButton>
       </RangeInputContainer>
       {/* Canvas 추가 */}
       <CanvasWrapper ref={canvasWrapperRef}>
