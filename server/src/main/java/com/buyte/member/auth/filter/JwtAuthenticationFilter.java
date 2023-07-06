@@ -47,43 +47,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) {
         Member member = (Member) authResult.getPrincipal();
 
-        String accessToken = delegateAccessToken(member);
+        String accessToken = jwtTokenizer.delegateAccessToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.addCookie(createCookie(member));
     }
 
-    private String delegateAccessToken(Member member) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("memberId", member.getMemberId());
-        claims.put("loginId", member.getLoginId());
-        claims.put("memberName", member.getMemberName());
-        claims.put("memberType", member.getMemberType());
-        claims.put("memberRole", member.getMemberRole());
-
-        String subject = member.getLoginId();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
-
-        return accessToken;
-    }
-
-    private String delegateRefreshToken(Member member) {
-        String subject = member.getLoginId();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
-
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-
-        return refreshToken;
-    }
     private Cookie createCookie(Member member){
         String cookieName = "RefreshToken";
-        String cookieValue = delegateRefreshToken(member);
+        String cookieValue = jwtTokenizer.delegateRefreshToken(member);
 
         Cookie cookie = new Cookie(cookieName, cookieValue);
 

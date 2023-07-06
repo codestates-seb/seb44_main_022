@@ -1,5 +1,6 @@
 package com.buyte.member.auth.jwt;
 
+import com.buyte.member.entity.Member;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -7,15 +8,20 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+@RequiredArgsConstructor
 public class JwtTokenizer {
     @Getter
     @Value("${jwt.key}")
@@ -28,6 +34,8 @@ public class JwtTokenizer {
     @Getter
     @Value("${jwt.refresh-token-expiration-minutes}")
     private int refreshTokenExpirationMinutes;
+
+    private final RedisTemplate redisTemplate;
 
     public String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -59,6 +67,35 @@ public class JwtTokenizer {
                 .setExpiration(expiration)
                 .signWith(key)
                 .compact();
+    }
+    public String delegateAccessToken(Member member) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("memberId", member.getMemberId());
+        claims.put("loginId", member.getLoginId());
+        claims.put("memberName", member.getMemberName());
+        claims.put("memberType", member.getMemberType());
+        claims.put("memberRole", member.getMemberRole());
+
+        String subject = member.getLoginId();
+        Date expiration = getTokenExpiration(getAccessTokenExpirationMinutes());
+
+        String base64EncodedSecretKey = encodeBase64SecretKey(getSecretKey());
+
+        String accessToken = generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
+
+        return accessToken;
+    }
+
+    public String delegateRefreshToken(Member member) {
+        String subject = member.getLoginId();
+        Date expiration = getTokenExpiration(getRefreshTokenExpirationMinutes());
+
+        String base64EncodedSecretKey = encodeBase64SecretKey(getSecretKey());
+
+        String refreshToken = generateRefreshToken(subject, expiration, base64EncodedSecretKey);
+        redisTemplate.opsForValue().set(member.getMemberId().toString(), refreshToken, getRefreshTokenExpirationMinutes(), TimeUnit.MINUTES);
+
+        return refreshToken;
     }
 
     public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {

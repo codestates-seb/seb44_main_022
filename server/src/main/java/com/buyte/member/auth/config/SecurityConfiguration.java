@@ -7,6 +7,7 @@ import com.buyte.member.auth.handler.MemberAuthenticationFailureHandler;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,6 +28,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration implements WebMvcConfigurer {
+    private RedisTemplate redisTemplate;
+
+    public SecurityConfiguration(RedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -80,6 +87,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     }
     @Bean
     public JwtTokenizer jwtTokenizer() {
-        return new JwtTokenizer();
+        return new JwtTokenizer(redisTemplate);
     }
 }
