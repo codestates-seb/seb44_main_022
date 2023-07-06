@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 import { FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import dummy from '../assets/dummyDatas/StoreDummy.json';
 
-function StoreCard() {
+interface Store {
+    id: number;
+    store_title: string;
+    store_location: string;
+    store_image_url: string;
+  }
+  
+  interface StoreCardProps {
+    data: Store[];
+  }
+
+function StoreCard({data}: StoreCardProps) {
   return (
     <>
       <CardListContainer>
-            {dummy.map((store) => (
+            {data.map((store) => (
               <Cards key={store.id}>
                 <Link style={{ height: '100%', width: '100%' }} to="/">
                   <div style={{ position: 'relative', height: '100%', width: '100%' }}>
@@ -27,7 +37,7 @@ function StoreCard() {
                   <p style={{ fontSize: '14px', marginBottom: '0.4rem'  }}>
                     <Link to="/" style={{color: 'var(--light-black)'}}>{store.store_title}</Link>
                   </p>
-                  <p style={{ fontSize: '11px', color: 'var(--light-gray)', display: 'flex' }}>
+                  <p style={{ fontSize: '11px', color: 'var(--light-gray)', marginRight:'0.3rem'}}>
                     <FiMapPin style={{ marginRight: '0.1rem', alignItems: 'center' }} />
                     {store.store_location}
                   </p>
@@ -53,8 +63,8 @@ const StoreMenuInfo = styled.div`
 
 const CardListContainer = styled.ul`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  grid-gap: 5rem;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-gap: 1rem;
   justify-content: center;
   grid-row-gap: 4rem;
 `;
@@ -64,9 +74,8 @@ const Cards = styled.li`
   display: flex;
   flex-direction: column;
   position: relative;
-  border: 5px solid var(--light-purple);
-  min-width: 230px;
-  height: 330px;
+  min-width: 200px;
+  height: 320px;
   overflow: hidden;
   &:hover {
     ${StoreMenuInfo} {
@@ -87,5 +96,5 @@ const StoreTitleInfo = styled.div`
   background-color: #fff;
   padding: 15px 0;
   font-weight: 800;
-  padding-left: 20px;
+  text-align: center;
 `;
