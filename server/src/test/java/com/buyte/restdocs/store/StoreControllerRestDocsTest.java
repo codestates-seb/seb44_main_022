@@ -14,17 +14,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.buyte.member.entity.Member;
 import com.buyte.member.entity.Member.MemberRole;
 import com.buyte.member.entity.Member.MemberType;
-import com.buyte.product.dto.ProductDto;
+import com.buyte.product.dto.ProductInfoDto;
 import com.buyte.product.entity.Category;
 import com.buyte.product.entity.Category.CategoryName;
 import com.buyte.product.entity.Product;
-import com.buyte.product.entity.Product.ProductFavor;
-import com.buyte.product.entity.Product.ProductGeneric;
+import com.buyte.product.entity.Product.ProductPreference;
+import com.buyte.product.entity.Product.ProductType;
 import com.buyte.store.controller.StoreController;
 import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.entity.Store;
 import com.buyte.store.service.StoreService;
-import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -37,7 +36,6 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 @WebMvcTest(StoreController.class)
 @MockBean(JpaMetamodelMappingContext.class)
@@ -50,13 +48,59 @@ public class StoreControllerRestDocsTest {
     @MockBean
     private StoreService storeService;
 
-    @Autowired
-    private Gson gson;
-
     @Test
     public void getStoreDetailsTest() throws Exception {
-
+        // Mock 데이터 설정
         long memberId = 1L;
+        Member member = createMockMember(memberId);
+        long storeId = 1L;
+        Store store = createMockStore(storeId, member);
+        long categoryId = 1L;
+        Category category = createMockCategory(categoryId);
+        long productId = 1L;
+        Product product = createMockProduct(productId, store, category);
+
+        // Mock 서비스 응답 설정
+        StoreDetailsDto storeDetailsDto = createMockStoreDetailsDto(member, store, product);
+        given(storeService.getStoreDetails(Mockito.anyLong())).willReturn(storeDetailsDto);
+
+        // API 호출 및 테스트
+        mockMvc.perform(
+                get("/v1/store/{store-id}", storeId)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .contentType(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(status().isOk())
+            .andDo(document("get-store-details",
+                getRequestPreProcessor(),
+                getResponsePreProcessor(),
+                pathParameters(
+                    parameterWithName("store-id").description("가게 식별자")
+                ),
+                responseFields(
+                    fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
+                    fieldWithPath("storeName").type(JsonFieldType.STRING).description("가게명"),
+                    fieldWithPath("storeAddress").type(JsonFieldType.STRING).description("가게 주소"),
+                    fieldWithPath("storeIntroduction").type(JsonFieldType.STRING)
+                        .description("가게 소개"),
+                    fieldWithPath("storeImage").type(JsonFieldType.STRING).description("가게 이미지"),
+                    fieldWithPath("productInfoList").type(JsonFieldType.ARRAY)
+                        .description("제품 리스트"),
+                    fieldWithPath("productInfoList[].productId").type(JsonFieldType.NUMBER)
+                        .description("제품 식별자"),
+                    fieldWithPath("productInfoList[].productName").type(JsonFieldType.STRING)
+                        .description("제품명"),
+                    fieldWithPath("productInfoList[].productImage").type(JsonFieldType.STRING)
+                        .description("제품 이미지"),
+                    fieldWithPath("productInfoList[].productPrice").type(JsonFieldType.NUMBER)
+                        .description("제품 가격"),
+                    fieldWithPath("productInfoList[].productType").type(JsonFieldType.STRING)
+                        .description("제품 유형")
+                )
+            ));
+    }
+
+    private Member createMockMember(long memberId) {
         Member member = new Member();
         member.setMemberId(memberId);
         member.setLoginId("temp1234");
@@ -64,8 +108,10 @@ public class StoreControllerRestDocsTest {
         member.setMemberRole(MemberRole.SELLER);
         member.setMemberType(MemberType.BASIC);
         member.setPassword("1q2w3e4r!");
+        return member;
+    }
 
-        long storeId = 1L;
+    private Store createMockStore(long storeId, Member member) {
         Store store = new Store();
         store.setStoreId(storeId);
         store.setStoreAddress("서울 강남구 도산대로53길 15");
@@ -75,13 +121,17 @@ public class StoreControllerRestDocsTest {
         store.setStoreLongitude(127.028394);
         store.setStoreName("노티드 청담점");
         store.setMember(member);
+        return store;
+    }
 
-        long categoryId = 1L;
+    private Category createMockCategory(long categoryId) {
         Category category = new Category();
         category.setCategoryId(categoryId);
         category.setCategoryName(CategoryName.CAKE);
+        return category;
+    }
 
-        long productId = 1L;
+    private Product createMockProduct(long productId, Store store, Category category) {
         Product product = new Product();
         product.setProductId(productId);
         product.setStore(store);
@@ -90,66 +140,31 @@ public class StoreControllerRestDocsTest {
         product.setProductPrice(22000);
         product.setProductIntroduction("딸기 케이크");
         product.setProductImage("/images/store-1/1");
-        product.setProductFavor(ProductFavor.FAVOR);
-        product.setProductGeneric(ProductGeneric.STANDARD);
+        product.setProductType(ProductType.STANDARD);
+        product.setProductPreference(ProductPreference.PREFERRED);
+        return product;
+    }
 
-        ProductDto.Response productResponseDto = new ProductDto.Response();
-        productResponseDto.setProductId(product.getProductId());
-        productResponseDto.setProductName(product.getProductName());
-        productResponseDto.setProductImage(product.getProductImage());
-        productResponseDto.setProductPrice(product.getProductPrice());
+    private StoreDetailsDto createMockStoreDetailsDto(Member member, Store store, Product product) {
+        ProductInfoDto productInfoDto = ProductInfoDto.builder()
+            .productId(product.getProductId())
+            .productImage(product.getProductImage())
+            .productName(product.getProductName())
+            .productPrice(product.getProductPrice())
+            .productType(product.getProductType())
+            .build();
 
-        List<ProductDto.Response> productResponseDtoList = new ArrayList<>();
-        productResponseDtoList.add(productResponseDto);
+        List<ProductInfoDto> productInfoDtoList = new ArrayList<>();
+        productInfoDtoList.add(productInfoDto);
 
-        StoreDetailsDto storeDetailsDto = new StoreDetailsDto();
-        storeDetailsDto.setMemberId(memberId);
-        storeDetailsDto.setStoreAddress(store.getStoreAddress());
-        storeDetailsDto.setStoreName(store.getStoreName());
-        storeDetailsDto.setStoreintroduction(store.getStoreIntroduction());
-        storeDetailsDto.setStoreImage(store.getStoreImage());
-        storeDetailsDto.setProductList(productResponseDtoList);
-
-        given(storeService.getStoreDetails(Mockito.anyLong())).willReturn(storeDetailsDto);
-
-        ResultActions actions =
-            mockMvc.perform(
-                get("/v1/store/{store-id}", storeId)
-                    .accept(MediaType.APPLICATION_JSON)
-                    .contentType(MediaType.APPLICATION_JSON)
-            );
-
-        actions
-            .andExpect(status().isOk())
-            .andDo(document("get-store-details",
-                getRequestPreProcessor(),
-                getResponsePreProcessor(),
-                pathParameters(
-                    parameterWithName("store-id").description("가게 식별자")
-                ),
-                responseFields(
-                    List.of(
-                        fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 식별자"),
-                        fieldWithPath("storeName").type(JsonFieldType.STRING).description("가게명"),
-                        fieldWithPath("storeAddress").type(JsonFieldType.STRING)
-                            .description("가게 주소"),
-                        fieldWithPath("storeIntroduction").type(JsonFieldType.STRING)
-                            .description("가게 소개"),
-                        fieldWithPath("storeImage").type(JsonFieldType.STRING)
-                            .description("가게 이미지"),
-                        fieldWithPath("productList").type(JsonFieldType.ARRAY)
-                            .description("제품 리스트"),
-                        fieldWithPath("productList[].productId").type(JsonFieldType.NUMBER)
-                            .description("제품 식별자"),
-                        fieldWithPath("productList[].productName").type(JsonFieldType.STRING)
-                            .description("제품명"),
-                        fieldWithPath("productList[].productImage").type(JsonFieldType.STRING)
-                            .description("제품 이미지"),
-                        fieldWithPath("productList[].productPrice").type(JsonFieldType.NUMBER)
-                            .description("제품 가격")
-                    )
-                )
-            ));
+        return StoreDetailsDto.builder()
+            .memberId(member.getMemberId())
+            .storeName(store.getStoreName())
+            .storeAddress(store.getStoreAddress())
+            .storeIntroduction(store.getStoreIntroduction())
+            .storeImage(store.getStoreImage())
+            .productInfoList(productInfoDtoList)
+            .build();
     }
 }
 

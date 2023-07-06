@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 import JustAnotherHand from '../assets/fonts/JustAnotherHand-Regular.ttf';
 import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
 import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
+import OpenSans from '../assets/fonts/OpenSans-SemiBold.ttf';
+
 export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Just Another Hand';
@@ -18,6 +20,10 @@ export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Indie Flower';
   src: url(${IndieFlower}) ;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url(${OpenSans}) ;
 }
 :root{
   --background: #FCFCFF;
