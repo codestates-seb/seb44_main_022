@@ -135,38 +135,44 @@ const CustomContent: React.FC = () => {
       canvas.height = canvasWrapper.clientHeight;
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        ctx.lineWidth = size;
-        ctx.strokeStyle = 'black';
         ctx.lineCap = 'round';
-        ctx.strokeStyle = color;
         ctx.lineJoin = 'round';
       }
     }
-  }, [size, color]);
+  }, []);
+
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
+      if (event.buttons !== 1) return;
+
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        if (event.buttons !== 1) return;
-
-        ctx.lineTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+        ctx.lineWidth = size;
+        ctx.strokeStyle = color;
+        ctx.lineTo(x, y);
         ctx.stroke();
       }
     }
   };
-
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas) {
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.beginPath();
-        ctx.moveTo(event.nativeEvent.offsetX, event.nativeEvent.offsetY);
+        ctx.moveTo(x, y);
       }
     }
   };
-
   return (
     <ContentContainer>
       <RangeInputContainer>
