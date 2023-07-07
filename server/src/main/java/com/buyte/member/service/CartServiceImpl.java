@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -87,6 +86,23 @@ public class CartServiceImpl implements CartService{
                 .totalPrice(totalPrice).build();
 
         return patchTotalPrcie;
+    }
+
+    @Override
+    public CartResDto.CartAllInfo paymentSelectedProduct(CartReqDto.CartIds cartIds) throws Exception {
+        List<Cart> cartList = cartRepository.findAllByCartIdIn(cartIds.getCartIds());
+        Integer totalPrice = 0;
+        System.out.println(cartList);
+        for(Cart cart : cartList){
+            totalPrice += cart.getCartCustomProductPrice() * cart.getProductCount();
+        }
+        List<CartResDto.CartInfo> cartInfos = cartMapper.cartsToCartsResDtos(cartList);
+        CartResDto.CartAllInfo cartAllInfo = CartResDto.CartAllInfo.builder()
+                .cartInfos(cartInfos)
+                .totalPrice(totalPrice)
+                .build();
+
+        return cartAllInfo;
     }
 
 
