@@ -1,13 +1,18 @@
 package com.buyte.store.service;
 
+import com.buyte.dto.PageInfoDto;
 import com.buyte.exception.BusinessLogicException;
 import com.buyte.exception.ExceptionCode;
+import com.buyte.product.dto.CustomProductInfoDto;
 import com.buyte.product.dto.ProductInfoDto;
+import com.buyte.product.dto.StandardProductInfoDto;
 import com.buyte.product.entity.Product;
 import com.buyte.product.entity.Product.PreferenceProduct;
+import com.buyte.product.entity.Product.ProductType;
 import com.buyte.product.mapper.ProductMapper;
 import com.buyte.store.dto.StoreDetailsDto;
 import com.buyte.store.dto.StoreInfoDto;
+import com.buyte.store.dto.StoreInfoPageDto;
 import com.buyte.store.dto.StoreMapDto;
 import com.buyte.store.entity.Store;
 import com.buyte.store.mapper.StoreMapper;
@@ -17,6 +22,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,45 +47,50 @@ public class StoreService {
     }
 
     @Transactional(readOnly = true)
-    public List<StoreInfoDto> getStoreList(String storeName) {
+    public StoreInfoPageDto getStores(int page, String search) {
 
-        log.info("# storeName : " + storeName);
+        log.info("# storeName : " + search);
 
-        List<Store> storeList;
+        Page<Store> findStorePage;
 
-        if (storeName != null) {
-            storeList = storeRepository.findByStoreNameContaining(storeName);
-            storeList.forEach(item -> log.info("# store: " + item.getStoreId()));
+        Pageable pageable = PageRequest.of(page, 20, Sort.by("createdAt").descending());
+
+        if (search != null) {
+            findStorePage = storeRepository.findByStoreNameContaining(search, pageable);
         } else {
-            storeList = storeRepository.findAll(Sort.by("createdAt").descending());
-            storeList.forEach(item -> log.info("# store: " + item.getStoreId()));
+            findStorePage = storeRepository.findAll(pageable);
         }
 
-        List<StoreInfoDto> storeInfoDtoList = storeList.stream()
-            .map(store -> storeMapper.storeToStoreInfo(store)).collect(Collectors.toList());
+        List<StoreInfoDto> storeInfoList = findStorePage.getContent().stream()
+            .map(store -> storeMapper.storeToStoreInfo(store))
+            .collect(Collectors.toList());
 
-        return storeInfoDtoList;
+        StoreInfoPageDto storeInfoPageDto = storeMapper.storePageToStoreInfoPage(findStorePage);
+
+        storeInfoPageDto.setStoreInfoList(storeInfoList);
+
+        return storeInfoPageDto;
     }
 
     @Transactional(readOnly = true)
     public List<StoreMapDto> getStoreMap() {
 
-        List<Store> storeList = storeRepository.findAll();
+        List<Store> allStoreList = storeRepository.findAll();
 
-        List<StoreMapDto> storeMapDtoList = new ArrayList<>();
+        List<StoreMapDto> storeMapList = new ArrayList<>();
 
-        storeList.forEach(store -> {
+        allStoreList.forEach(store -> {
             StoreMapDto storeMapDto = storeMapper.storeToStoreMap(store);
 
-            List<ProductInfoDto> productInfoDtoList = store.getProductList().stream()
+            List<ProductInfoDto> productInfoList = store.getProductList().stream()
                 .filter(product -> product.getPreferenceProduct() == PreferenceProduct.PREFERRED)
                 .map(productMapper::productToProductInfo).collect(Collectors.toList());
 
-            storeMapDto.setProductPreferenceList(productInfoDtoList);
-            storeMapDtoList.add(storeMapDto);
+            storeMapDto.setProductPreferenceList(productInfoList);
+            storeMapList.add(storeMapDto);
         });
 
-        return storeMapDtoList;
+        return storeMapList;
     }
 
 
@@ -91,11 +105,29 @@ public class StoreService {
 
         StoreDetailsDto storeDetailsDto = storeMapper.storeToStoreDetails(findStore);
 
-        List<ProductInfoDto> productInfoDtoList = productList.stream()
-            .map(product -> productMapper.productToProductInfo(product))
-            .collect(Collectors.toList());
+//        List<CustomProductInfoDto> customProductInfoList = productList.stream()
+//            .filter(product -> product.getProductType() == ProductType.CUSTOM)
+//            .map(product -> productMapper.productToCustomProductInfo(product))
+//            .collect(Collectors.toList());
+//
+//        List<StandardProductInfoDto> standardProductInfoList = productList.stream()
+//            .filter(product -> product.getProductType() == ProductType.STANDARD)
+//            .map(product -> productMapper.productToStandardProductInfo(product))
+//            .collect(Collectors.toList());
 
-        storeDetailsDto.setProductInfoList(productInfoDtoList);
+        List<CustomProductInfoDto> customProductInfoList = new ArrayList<>();
+        List<StandardProductInfoDto> standardProductInfoList = new ArrayList<>();
+
+        productList.stream().forEach(product -> {
+            if (product.getProductType() == ProductType.CUSTOM) {
+                customProductInfoList.add(productMapper.productToCustomProductInfo(product));
+            } else if (product.getProductType() == ProductType.STANDARD) {
+                standardProductInfoList.add(productMapper.productToStandardProductInfo(product));
+            }
+        });
+
+        storeDetailsDto.setCustomProductInfoList(customProductInfoList);
+        storeDetailsDto.setStandardProductInfoList(standardProductInfoList);
 
         return storeDetailsDto;
     }

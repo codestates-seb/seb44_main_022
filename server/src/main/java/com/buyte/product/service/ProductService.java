@@ -1,13 +1,26 @@
 package com.buyte.product.service;
 
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
+import com.buyte.ingredient.dto.AllergyIngredientDto;
+import com.buyte.ingredient.dto.IngredientOriginDto;
+import com.buyte.ingredient.entity.Ingredient.AllergyIngredient;
+import com.buyte.ingredient.mapper.IngredientMapper;
 import com.buyte.product.dto.PreferenceProductDto;
+import com.buyte.product.dto.PreferenceProductPageDto;
+import com.buyte.product.dto.ProductDetailsDto;
 import com.buyte.product.entity.Product;
 import com.buyte.product.entity.Product.PreferenceProduct;
 import com.buyte.product.mapper.ProductMapper;
 import com.buyte.product.repository.ProductRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,43 +31,65 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final IngredientMapper ingredientMapper;
 
-    public ProductService(ProductRepository productRepository, ProductMapper productMapper) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper,
+        IngredientMapper ingredientMapper) {
         this.productRepository = productRepository;
         this.productMapper = productMapper;
+        this.ingredientMapper = ingredientMapper;
     }
 
     @Transactional(readOnly = true)
-    public List<PreferenceProductDto> getPreferenceProductList(String cartegory) {
-        List<Product> findProductList = productRepository.findByPreferenceProduct(PreferenceProduct.PREFERRED);
+    public PreferenceProductPageDto getPreferenceProducts(int page) {
 
-        List<PreferenceProductDto> preferenceProductDtoList =findProductList.stream()
-            .map(product -> productMapper.productToPreferenceProduct(product)).collect(Collectors.toList());
+        Pageable pageable = PageRequest.of(page, 20, Sort.by("createdAt").descending());
 
-        return preferenceProductDtoList;
+        Page<Product> findProductPage = productRepository.findByPreferenceProduct(PreferenceProduct.PREFERRED, pageable);
+
+        List<PreferenceProductDto> preferenceProductList = findProductPage.getContent().stream()
+            .map(product -> productMapper.productToPreferenceProduct(product))
+            .collect(Collectors.toList());
+
+        PreferenceProductPageDto preferenceProductPageDto = productMapper.productPageToPreferenceProductPage(findProductPage);
+
+        preferenceProductPageDto.setPreferenceProductList(preferenceProductList);
+
+        return preferenceProductPageDto;
     }
 
+    @Transactional(readOnly = true)
+    public ProductDetailsDto getProductDetails(long productId) {
+        Product findProduct = findProduct(productId);
 
-    /*
-        @Transactional(readOnly = true)
-    public List<StoreMapDto> getStoreMap() {
+        List<IngredientOriginDto> ingredientOriginList = findProduct.getProductIngerdientList().stream()
+            .map(productIngerdient -> productIngerdient.getIngredient())
+            .map(ingredient -> ingredientMapper.ingredientToIngredientOrigin(ingredient))
+            .collect(Collectors.toList());
 
-        List<Store> storeList = storeRepository.findAll();
+        List<AllergyIngredientDto> allergyIngredientList = findProduct.getProductIngerdientList().stream()
+            .map(productIngerdient -> productIngerdient.getIngredient())
+            .filter(ingredient -> ingredient.getAllergyIngredient() == AllergyIngredient.ALLERGIC)
+            .map(ingredient -> ingredientMapper.ingredientToAllergyIngredient(ingredient))
+            .collect(Collectors.toList());
 
-        List<StoreMapDto> storeMapDtoList = new ArrayList<>();
+        ProductDetailsDto productDetailsDto = productMapper.productToProductDetails(findProduct);
+        productDetailsDto.setIngredientOriginList(ingredientOriginList);
+        productDetailsDto.setAllergyIngredientList(allergyIngredientList);
 
-        storeList.forEach(store -> {
-            StoreMapDto storeMapDto = storeMapper.storeToStoreMap(store);
-
-            List<PreferenceProductDto> productPreferenceList = store.getProductList().stream()
-                .filter(product -> product.getPreferenceProduct() == PreferenceProduct.PREFERRED)
-                .map(productMapper::productToPreferenceProduct).collect(Collectors.toList());
-
-            storeMapDto.setProductPreferenceList(productPreferenceList);
-            storeMapDtoList.add(storeMapDto);
-        });
-
-        return storeMapDtoList;
+        return productDetailsDto;
     }
-     */
+
+    @Transactional(readOnly = true)
+    public Product findProduct(long productId) {
+        return findVerifiedProduct(productId);
+    }
+
+    @Transactional(readOnly = true)
+    public Product findVerifiedProduct(long productId) {
+        Optional<Product> optionalProduct = productRepository.findById(productId);
+        Product findProduct = optionalProduct.orElseThrow(
+            () -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
+        return findProduct;
+    }
 }
