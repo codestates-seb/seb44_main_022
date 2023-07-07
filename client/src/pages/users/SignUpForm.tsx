@@ -21,26 +21,14 @@ function SignUpForm() {
     e.preventDefault();
     if (userIdValid && passwordValid) {
       console.log(nickname, userId, password);
-      axios
-        .post(
-          'https://11e5-218-53-232-194.ngrok-free.app/signup',
-          {
-            loginId: userId,
-            password: password,
-            memberName: nickname,
-          },
-          {
-            headers: {
-              'ngrok-skip-browser-warning': true,
-            },
-          }
-        )
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
       // axios
       //   .post(
-      //     'https://11e5-218-53-232-194.ngrok-free.app/token/refresh',
-      //     {},
+      //     'https://11e5-218-53-232-194.ngrok-free.app/signup',
+      //     {
+      //       loginId: userId,
+      //       password: password,
+      //       memberName: nickname,
+      //     },
       //     {
       //       headers: {
       //         'ngrok-skip-browser-warning': true,
@@ -49,6 +37,15 @@ function SignUpForm() {
       //   )
       //   .then((res) => console.log(res))
       //   .catch((err) => console.log(err));
+      axios
+        .post('https://90d0-218-53-232-194.ngrok-free.app/token/refresh', null, {
+          headers: {
+            'ngrok-skip-browser-warning': true,
+          },
+          withCredentials: true,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       alert('통신 성공');
       navigate('/auth');
       return;

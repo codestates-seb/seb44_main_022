@@ -23,7 +23,7 @@ function LoginForm() {
       // 통신 코드 예정
       axios
         .post(
-          'https://11e5-218-53-232-194.ngrok-free.app/login',
+          'https://90d0-218-53-232-194.ngrok-free.app/login',
           {
             loginId: userId,
             password: password,
