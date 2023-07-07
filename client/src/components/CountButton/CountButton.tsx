@@ -13,7 +13,7 @@ function CountButton({ id, count, setCount, setTotalPrice }: CountProps) {
     if (count > 1) {
       setCount(count - 1);
       axios
-        .patch('https://9176-220-76-183-16.ngrok-free.app/cart/1', {
+        .patch('https://6f8d-220-76-183-16.ngrok-free.app/cart/1', {
           cartId: id,
           count: count - 1,
         })
@@ -29,7 +29,7 @@ function CountButton({ id, count, setCount, setTotalPrice }: CountProps) {
     if (count < 99) {
       setCount(count + 1);
       axios
-        .patch('https://9176-220-76-183-16.ngrok-free.app/cart/1', {
+        .patch('https://6f8d-220-76-183-16.ngrok-free.app/cart/1', {
           cartId: id,
           count: count + 1,
         })

@@ -63,7 +63,10 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
       <CartListName
         grow={10}
         minWidth={100}
-        style={{ justifyContent: 'space-between', maxWidth: '100px' }}
+        style={{
+          justifyContent: `${setTotalPrice !== undefined ? 'space-between' : 'center'}`,
+          maxWidth: '100px',
+        }}
       >
         {setTotalPrice !== undefined ? (
           <CountButton

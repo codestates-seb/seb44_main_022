@@ -19,9 +19,11 @@ import {
   TotalPaymentContainer,
 } from './ShoppingCart.style';
 import axios from 'axios';
+import { CartItemType } from '../../../assets/interface/Cart.interface';
 
 function ShoppingCart() {
-  const [cartList, setCartList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [cartList, setCartList] = useState<CartItemType[]>([]);
   const [initialChecked, setInitialChecked] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
@@ -32,7 +34,7 @@ function ShoppingCart() {
   const handleSelectedDelete = () => {
     // 서버 통신으로 delete 시키고, window.location.reload 처리하기
     axios
-      .delete('https://9176-220-76-183-16.ngrok-free.app/cart/1/delete', {
+      .delete('https://6f8d-220-76-183-16.ngrok-free.app/cart/1/delete', {
         data: {
           cartIds: idList,
         },
@@ -47,10 +49,10 @@ function ShoppingCart() {
     setInitialChecked(!initialChecked);
   };
 
-  // useEffect로 서버와 바로 통신 시도하고, 장바구니 데이터 가져오기.
   useEffect(() => {
+    setIsLoading(true);
     axios
-      .get('https://9176-220-76-183-16.ngrok-free.app/cart/1', {
+      .get('https://6f8d-220-76-183-16.ngrok-free.app/cart/1', {
         headers: {
           'ngrok-skip-browser-warning': true,
         },
@@ -58,6 +60,10 @@ function ShoppingCart() {
       .then((res) => {
         setCartList(res.data.cartInfos);
         setTotalPrice(res.data.totalPrice);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -66,7 +72,6 @@ function ShoppingCart() {
       alert('반드시 한 개 이상의 제품을 선택해야합니다.');
       return;
     }
-    // 여기서 재통신 => 리스트로 뽑힌 idList를 전송해서 그 값들만 받아오기
     navigate('/payment', { state: 'selected' });
   };
 
@@ -138,14 +143,16 @@ function ShoppingCart() {
             <MdCheckBox />
           </CartListName>
         </div>
-        {cartList.length > 0 ? (
+        {isLoading ? (
+          <div>로딩중</div>
+        ) : cartList.length > 0 ? (
           cartList.map((e, idx) => (
             <CartItem
               items={e}
               idx={idx}
               initialChecked={initialChecked}
               setTotalPrice={setTotalPrice}
-              key={idx}
+              key={e.cartId}
             />
           ))
         ) : (
@@ -168,7 +175,7 @@ function ShoppingCart() {
         </div>
         <TotalPaymentContainer>
           <div style={{ fontSize: '22px', fontWeight: 'bold', margin: '0.5rem 0' }}>
-            <span style={{ color: 'var(--gold)' }}>{totalPrice}</span>원
+            <span style={{ color: 'var(--gold)' }}>{totalPrice.toLocaleString()}</span>원
           </div>
           <div style={{ margin: '0.5rem 0', fontWeight: 'bold' }}>주문금액</div>
         </TotalPaymentContainer>
@@ -190,7 +197,6 @@ function ShoppingCart() {
           <RectangleButton
             text="&nbsp;&nbsp;&nbsp;전체주문&nbsp;&nbsp;&nbsp;"
             types="dark"
-            // 이 부분은 아예 새롭게 데이터 받아오게 해야할 듯?
             clickEvent={handleAllSelectedPayment}
           />
         </div>
