@@ -33,17 +33,9 @@ public class CartServiceImpl implements CartService{
     public CartResDto.CartAllInfo getInfoMemberCart(Long memberId) throws Exception {
         Member member = memberRepository.findById(memberId).orElseThrow();
         List<Cart> cartList = member.getCartList();
-        Integer totalPrice = 0;
-        for(Cart cart : cartList){
-            totalPrice += cart.getCartCustomProductPrice() * cart.getProductCount();
-        }
-        List<CartResDto.CartInfo> cartInfos = cartMapper.cartsToCartsResDtos(cartList);
-        CartResDto.CartAllInfo cartAllInfo = CartResDto.CartAllInfo.builder()
-                .cartInfos(cartInfos)
-                .totalPrice(totalPrice)
-                .build();
+        Integer totalPrice = getTotalPrice(cartList);
 
-        return cartAllInfo;
+        return getCartAllInfo(cartList, totalPrice);
     }
 
     @Override
@@ -78,10 +70,7 @@ public class CartServiceImpl implements CartService{
         cartRepository.save(patchCart);
         Member member = memberRepository.findById(memberId).orElseThrow();
         List<Cart> cartList = member.getCartList();
-        Integer totalPrice = 0;
-        for(Cart cart : cartList){
-            totalPrice += cart.getCartCustomProductPrice() * cart.getProductCount();
-        }
+        Integer totalPrice = getTotalPrice(cartList);
         CartResDto.PatchTotalPrcie patchTotalPrcie = CartResDto.PatchTotalPrcie.builder()
                 .totalPrice(totalPrice).build();
 
@@ -91,18 +80,27 @@ public class CartServiceImpl implements CartService{
     @Override
     public CartResDto.CartAllInfo paymentSelectedProduct(CartReqDto.CartIds cartIds) throws Exception {
         List<Cart> cartList = cartRepository.findAllByCartIdIn(cartIds.getCartIds());
-        Integer totalPrice = 0;
-        System.out.println(cartList);
-        for(Cart cart : cartList){
-            totalPrice += cart.getCartCustomProductPrice() * cart.getProductCount();
-        }
+        Integer totalPrice = getTotalPrice(cartList);
+
+        return getCartAllInfo(cartList, totalPrice);
+    }
+
+
+    private CartResDto.CartAllInfo getCartAllInfo(List<Cart> cartList, Integer totalPrice) {
         List<CartResDto.CartInfo> cartInfos = cartMapper.cartsToCartsResDtos(cartList);
         CartResDto.CartAllInfo cartAllInfo = CartResDto.CartAllInfo.builder()
                 .cartInfos(cartInfos)
                 .totalPrice(totalPrice)
                 .build();
-
         return cartAllInfo;
+    }
+
+    private static Integer getTotalPrice(List<Cart> cartList) {
+        Integer totalPrice = 0;
+        for(Cart cart : cartList){
+            totalPrice += cart.getCartCustomProductPrice() * cart.getProductCount();
+        }
+        return totalPrice;
     }
 
 
