@@ -75,11 +75,10 @@ public class MemberService {
     }
 
     public void logout(HttpServletRequest request) {
-        String accessToken = request.getHeader("Authorization");
+        String accessToken = request.getHeader("Authorization").replace("Bearer ", "");
         String refreshToken = getCookieValue(request, "RefreshToken");
         String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
 
-        // Redis에 accessToken 사용 못하도록 블랙리스트 등록
         RedisTemplate redisTemplate = jwtTokenizer.getRedisTemplate();
         redisTemplate.opsForValue().set(accessToken, "logout", 5, TimeUnit.MINUTES);
         redisTemplate.opsForValue().set(memberId, "logout", 300, TimeUnit.MINUTES);

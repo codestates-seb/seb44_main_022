@@ -5,18 +5,16 @@ import com.buyte.member.auth.jwt.JwtTokenizer;
 import com.buyte.member.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Duration;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
@@ -50,19 +48,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = jwtTokenizer.delegateAccessToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
-        response.addCookie(createCookie(member));
+        response.addHeader("Set-Cookie", createCookie(member).toString());
     }
 
-    private Cookie createCookie(Member member){
+    private ResponseCookie createCookie(Member member) {
         String cookieName = "RefreshToken";
         String cookieValue = jwtTokenizer.delegateRefreshToken(member);
 
-        Cookie cookie = new Cookie(cookieName, cookieValue);
+        ResponseCookie cookie = ResponseCookie.from(cookieName, cookieValue)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(1))
+                .sameSite("None") // Lax
+//                .domain(".localhost")
+                .build();
 
-        cookie.setHttpOnly(true);
-//        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(60*60*24);
         return cookie;
     }
 }

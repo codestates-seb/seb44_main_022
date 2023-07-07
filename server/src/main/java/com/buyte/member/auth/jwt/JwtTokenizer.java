@@ -9,6 +9,8 @@ import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtTokenizer {
     @Getter
     @Value("${jwt.key}")
@@ -74,8 +77,6 @@ public class JwtTokenizer {
         Map<String, Object> claims = new HashMap<>();
         claims.put("memberId", member.getMemberId());
         claims.put("loginId", member.getLoginId());
-        claims.put("memberName", member.getMemberName());
-        claims.put("memberType", member.getMemberType());
         claims.put("memberRole", member.getMemberRole());
 
         String subject = member.getLoginId();
@@ -110,15 +111,6 @@ public class JwtTokenizer {
         return claims;
     }
 
-    public void verifySignature(String jws, String base64EncodedSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
-
-        Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(jws);
-    }
-
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
         byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
         Key key = Keys.hmacShaKeyFor(keyBytes);
@@ -143,12 +135,5 @@ public class JwtTokenizer {
                 .getBody();
 
         return claims.getSubject();
-    }
-
-    public String getAccessToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-
-        if (bearerToken.startsWith("Bearer ")) return bearerToken;
-        else return null;
     }
 }
