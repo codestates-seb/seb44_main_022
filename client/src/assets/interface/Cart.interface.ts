@@ -1,4 +1,4 @@
-export interface CartItem {
+export interface CartItemType {
   cartId: number;
   productImagePath: string;
   productName: string;
@@ -7,13 +7,13 @@ export interface CartItem {
 }
 
 export interface CartItemProps {
-  items: CartItem;
+  items: CartItemType;
   idx: number;
-  initialChecked: boolean;
-  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+  initialChecked?: boolean;
+  setTotalPrice?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface CartCheckProps {
-  items: CartItem;
+  items: CartItemType;
   initialChecked: boolean;
 }

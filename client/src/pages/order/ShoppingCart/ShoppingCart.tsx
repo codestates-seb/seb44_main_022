@@ -26,12 +26,10 @@ function ShoppingCart() {
   // 서버 통신때 진짜로 totalPrice를 set하자.
   const location = useLocation();
   const idList = useSelector((state: RootState) => state.cartReducer.idList);
-  const cartItemList = useSelector((state: RootState) => state.paymentReducer.cartItemList);
 
   const handleSelectedDelete = () => {
     // 서버 통신으로 delete 시키고, window.location.reload 처리하기
     console.log(idList);
-    console.log(cartItemList);
   };
 
   const handleAllSelected = () => {
@@ -41,11 +39,16 @@ function ShoppingCart() {
   // useEffect로 서버와 바로 통신 시도하고, 장바구니 데이터 가져오기.
 
   const handleSelectedPayment = () => {
-    if (cartItemList.length === 0) {
+    if (idList.length === 0) {
       alert('반드시 한 개 이상의 제품을 선택해야합니다.');
       return;
     }
-    navigate('/payment', { state: { cartItemList } });
+    // 여기서 재통신 => 리스트로 뽑힌 idList를 전송해서 그 값들만 받아오기
+    navigate('/payment', { state: 'selected' });
+  };
+
+  const handleAllSelectedPayment = () => {
+    navigate('/payment', { state: 'all' });
   };
 
   return (
@@ -164,7 +167,8 @@ function ShoppingCart() {
           <RectangleButton
             text="&nbsp;&nbsp;&nbsp;전체주문&nbsp;&nbsp;&nbsp;"
             types="dark"
-            clickEvent={() => navigate('/payment', { state: { CARTLIST } })}
+            // 이 부분은 아예 새롭게 데이터 받아오게 해야할 듯?
+            clickEvent={handleAllSelectedPayment}
           />
         </div>
       </div>

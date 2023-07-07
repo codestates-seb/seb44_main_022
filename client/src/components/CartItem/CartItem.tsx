@@ -65,7 +65,11 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
         minWidth={100}
         style={{ justifyContent: 'space-between', maxWidth: '100px' }}
       >
-        <CountButton count={priceCnt} setCount={setPriceCnt} setTotalPrice={setTotalPrice} />
+        {setTotalPrice !== undefined ? (
+          <CountButton count={priceCnt} setCount={setPriceCnt} setTotalPrice={setTotalPrice} />
+        ) : (
+          <div>{items.productCount}</div>
+        )}
       </CartListName>
       <CartListName grow={15} minWidth={110} style={{ fontWeight: 'bold' }}>
         {items.productPrice.toLocaleString()}
@@ -75,7 +79,11 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
         minWidth={40}
         style={{ justifyContent: 'flex-start', fontSize: '18px', padding: '0.5rem' }}
       >
-        <CheckBox items={items} initialChecked={initialChecked} />
+        {initialChecked !== undefined ? (
+          <CheckBox items={items} initialChecked={initialChecked} />
+        ) : (
+          <></>
+        )}
       </CartListName>
     </div>
   );

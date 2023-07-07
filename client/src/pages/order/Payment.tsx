@@ -9,11 +9,21 @@ import {
 } from './ShoppingCart/ShoppingCart.style';
 import { CART_CATEGORY_NAME } from '../../assets/constantValue/constantValue';
 import { AiOutlineCheckCircle, AiOutlineCreditCard, AiOutlineShoppingCart } from 'react-icons/ai';
+import { useEffect } from 'react';
 
 function Payment() {
   const { state } = useLocation();
 
-  console.log(state);
+  useEffect(() => {
+    if (state === 'all') {
+      //다시 장바구니 데이터 가져오기
+      console.log(state);
+      return;
+    }
+    console.log(state);
+    return;
+  }, []);
+
   return (
     <CartContainer>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -73,16 +83,6 @@ function Payment() {
             style={{ justifyContent: 'flex-start', fontSize: '18px', padding: '0.5rem' }}
           ></CartListName>
         </div>
-        {/* {state.cartItemList.map((e, idx) => (
-          <CartItem
-            items={e}
-            idx={idx}
-            initialChecked={initialChecked}
-            setTotalPrice={setTotalPrice}
-            key={e.cartId}
-          />
-        ))} */}
-
         <div
           style={{
             margin: '2rem 0',
