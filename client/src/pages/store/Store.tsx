@@ -59,10 +59,11 @@ function Store() {
 
   const fetchData = async (page?: number, searchTerm?: string) => {  
     try {
-      let url = `https://eeec-220-76-183-16.ngrok-free.app/v1/store`;     
+      let url = `https://11e5-218-53-232-194.ngrok-free.app/v1/store`;     
       if (searchTerm && searchTerm.trim() !=='') {
         url += `?storeName=${searchTerm}`;
       } 
+      console.log(url)
       const response = await axios.get(url, {
         headers: {
           'Content-Type': 'application/json',
@@ -103,6 +104,7 @@ function Store() {
     } else {
       setPage(1);
       setIsShowingAll(false);
+      fetchData(1, searchTerm);
     }
   };
 

@@ -19,7 +19,7 @@ function StoreCard({data}: StoreCardProps) {
       <CardListContainer>
             {data.map((store) => (
               <Cards key={store.storeId}>
-                <Link style={{ height: '100%', width: '100%' }} to="/">
+                <Link style={{ height: '100%', width: '100%' }} to={`/${store.storeId}`}>
                   <div style={{ position: 'relative', height: '100%', width: '100%' }}>
                     <img
                       src={store.storeImage}
