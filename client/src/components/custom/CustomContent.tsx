@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Draggable from 'react-draggable';
 import upload from '../../assets/images/img_modal/upload.png';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
@@ -53,6 +52,7 @@ const CustomContent = () => {
   const [size, setSize] = useState<number>(5);
   const [color, setColor] = useState<string>('#000000');
   const [eraser, setEraser] = useState<boolean>(false);
+  const [images, setImages] = useState<string[]>([]);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -62,7 +62,7 @@ const CustomContent = () => {
     setColor(event.target.value);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const canvas = canvasRef.current;
     const canvasWrapper = canvasWrapperRef.current;
     if (canvas && canvasWrapper) {
@@ -144,42 +144,44 @@ const CustomContent = () => {
 
     if (file) {
       const url = URL.createObjectURL(file);
-      const image = new Image();
-      image.src = url;
-      image.onload = function () {
-        const canvas = canvasRef.current;
-        if (canvas) {
-          const ctx = canvas.getContext('2d');
-          if (ctx) {
-            // Reset the canvas before drawing the uploaded image
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // 원본 이미지 원래크기 가져오기
-            const naturalWidth = image.naturalWidth;
-            const naturalHeight = image.naturalHeight;
-
-            // 원하는 크기 설정
-            const targetWidth = 300;
-            const targetHeight = 300;
-
-            // 이미지의 비율 계산
-            const aspectRatio = naturalWidth / naturalHeight;
-
-            // 비율을 유지하면서 이미지 크기 조정
-            let width = targetWidth;
-            let height = targetHeight;
-            if (targetWidth / targetHeight > aspectRatio) {
-              width = targetHeight * aspectRatio;
-            } else {
-              height = targetWidth / aspectRatio;
-            }
-
-            ctx.drawImage(image, 200, 200, width, height);
-          }
-        }
-      };
+      setImages((prevImages) => [...prevImages, url]);
     }
   };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (canvas && ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      images.forEach((imageUrl) => {
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
+          // 원본 이미지 원래크기 가져오기
+          const naturalWidth = image.naturalWidth;
+          const naturalHeight = image.naturalHeight;
+
+          // 원하는 크기 설정
+          const targetWidth = 300;
+          const targetHeight = 300;
+
+          // 이미지의 비율 계산
+          const aspectRatio = naturalWidth / naturalHeight;
+
+          // 비율을 유지하면서 이미지 크기 조정
+          let width = targetWidth;
+          let height = targetHeight;
+          if (targetWidth / targetHeight > aspectRatio) {
+            width = targetHeight * aspectRatio;
+          } else {
+            height = targetWidth / aspectRatio;
+          }
+
+          ctx.drawImage(image, 200, 200, width, height);
+        };
+      });
+    }
+  }, [images]);
 
   return (
     <ContentContainer>
