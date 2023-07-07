@@ -1,7 +1,7 @@
+import { useState } from 'react';
 import tempImg from '../../assets/images/cart_img.png';
 import CheckBox from '../CheckBox';
 import CountButton from '../CountButton.style.ts/CountButton';
-import { useState } from 'react';
 import { CartItemProps } from '../../assets/interface/Cart.interface';
 import { CartListName } from './CartItem.style';
 

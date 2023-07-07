@@ -4,13 +4,87 @@ import styled from 'styled-components';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import modal_ex from '../assets/images/img_modal/modal_ex.png';
-type ModalProps = {
+
+interface Product {
+  productId: number;
+  productImage: string;
+  productName: string;
+  productPrice: number;
+  productType: string;
+}
+
+interface ModalComponentDetailProps {
+  product: Product;
+  closeModal: () => void;
+}
+
+interface ModalProps extends ModalComponentDetailProps {
   isOpen: boolean;
   onRequestClose: () => void;
   contentLabel: string;
   children: React.ReactNode;
   overlay?: boolean;
-};
+}
+
+function ModalComponentDetail({
+  isOpen,
+  onRequestClose,
+  contentLabel,
+  children
+}: ModalProps ){
+  return (
+    <div>
+      {isOpen && <Overlay />}
+      <StyledModal
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        contentLabel={contentLabel}
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        overlayClassName="overlay"
+      >
+        <ModalContainer>
+          <Title>BUYTE</Title>
+          <Product>
+            <StoreName>매장 이름</StoreName>
+            <ProductName>제품 이름</ProductName>
+            <ProductDetail>
+              제품설명제품설명제품설명제품설명제품설명제품설명제품설명제품설명제품설명
+            </ProductDetail>
+            <ProductDetailTwo>ProductDetailTwo</ProductDetailTwo>
+          </Product>
+          <TextContainer>
+            <Text>Sweet</Text>
+            <Text>Delicious</Text>
+            <Text>Fresh</Text>
+          </TextContainer>
+          <CircleShape />
+          <Rectangle />
+          <ModalContent>{children}</ModalContent>
+          <ModalButtons>
+            <CloseButton onClick={onRequestClose}>X</CloseButton>
+            <ImageBox>
+              <Image src={modal_cake} alt="Cart" />
+            </ImageBox>
+            <CartButton>
+              <CartImage src={modal_cart} alt="Cart" />
+              <CartButtonText>장바구니 담기</CartButtonText>
+            </CartButton>
+            <Line />
+          </ModalButtons>
+          <ProductImgContainer>
+            <ProductImg src={modal_ex} alt="Example" />
+          </ProductImgContainer>
+        </ModalContainer>
+      </StyledModal>
+    </div>
+  );
+}
+
+export default ModalComponentDetail;
+
+
+
 const CircleShape = styled.div`
   position: absolute;
   width: 260px;
@@ -228,58 +302,3 @@ const ProductImg = styled.img`
   width: 400px;
   height: 400px;
 `;
-const ModalComponent: React.FC<ModalProps> = ({
-  isOpen,
-  onRequestClose,
-  contentLabel,
-  children,
-}) => {
-  return (
-    <div>
-      {isOpen && <Overlay />}
-      <StyledModal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-        contentLabel={contentLabel}
-        ariaHideApp={false}
-        shouldCloseOnOverlayClick={true}
-        overlayClassName="overlay"
-      >
-        <ModalContainer>
-          <Title>BUYTE</Title>
-          <Product>
-            <StoreName>매장 이름</StoreName>
-            <ProductName>제품 이름</ProductName>
-            <ProductDetail>
-              제품설명제품설명제품설명제품설명제품설명제품설명제품설명제품설명제품설명
-            </ProductDetail>
-            <ProductDetailTwo>ProductDetailTwo</ProductDetailTwo>
-          </Product>
-          <TextContainer>
-            <Text>Sweet</Text>
-            <Text>Delicious</Text>
-            <Text>Fresh</Text>
-          </TextContainer>
-          <CircleShape />
-          <Rectangle />
-          <ModalContent>{children}</ModalContent>
-          <ModalButtons>
-            <CloseButton onClick={onRequestClose}>X</CloseButton>
-            <ImageBox>
-              <Image src={modal_cake} alt="Cart" />
-            </ImageBox>
-            <CartButton>
-              <CartImage src={modal_cart} alt="Cart" />
-              <CartButtonText>장바구니 담기</CartButtonText>
-            </CartButton>
-            <Line />
-          </ModalButtons>
-          <ProductImgContainer>
-            <ProductImg src={modal_ex} alt="Example" />
-          </ProductImgContainer>
-        </ModalContainer>
-      </StyledModal>
-    </div>
-  );
-};
-export default ModalComponent;

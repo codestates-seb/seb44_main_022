@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import ModalComponentDetail from '../../share/ModalComponentDetail'
+
 interface Product {
   productId: number;
   productImage: string;
@@ -25,6 +26,7 @@ function ProductCard({data}: ProductCardProps) {
   const closeModal = () => {
     setModalOpen(false);
   };
+
   return (
     <>
       <ProductContainer>
@@ -37,9 +39,13 @@ function ProductCard({data}: ProductCardProps) {
       </ProductContainer>
       {modalOpen && selectedProduct && (
         <ModalComponentDetail
-          product={selectedProduct}
-          closeModal={closeModal}
-        />
+        isOpen={modalOpen} 
+        onRequestClose={closeModal} 
+        contentLabel="Modal" 
+        product={selectedProduct} 
+        closeModal={closeModal}
+      >
+      </ModalComponentDetail>
       )}
 
     </>
@@ -54,8 +60,8 @@ const ProductContainer = styled.ul`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   grid-gap: 0; 
-  justify-items: center; /* 가로 정렬을 중앙으로 조정합니다 */
-  align-items: center; /* 세로 정렬을 중앙으로 조정합니다 */
+  justify-items: center; 
+  align-items: center; 
   grid-row-gap: 3rem;
 `
 
