@@ -40,7 +40,7 @@ public class JwtTokenizer {
     private int refreshTokenExpirationMinutes;
 
     @Getter
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
     public String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));

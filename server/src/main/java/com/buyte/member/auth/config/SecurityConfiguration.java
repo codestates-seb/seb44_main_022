@@ -4,6 +4,7 @@ import com.buyte.member.auth.filter.JwtAuthenticationFilter;
 import com.buyte.member.auth.filter.JwtVerificationFilter;
 import com.buyte.member.auth.handler.MemberAuthenticationEntryPoint;
 import com.buyte.member.auth.handler.MemberAuthenticationFailureHandler;
+import com.buyte.member.auth.interceptor.JwtParseInterceptor;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import com.buyte.member.auth.utils.JwtUtils;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +21,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
@@ -29,9 +31,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration implements WebMvcConfigurer {
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
-    public SecurityConfiguration(RedisTemplate redisTemplate) {
+    public SecurityConfiguration(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -52,7 +54,9 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .logout().disable()
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+                .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers("/members/**").authenticated()
+                        .anyRequest().permitAll());
 
         return http.build();
     }
@@ -85,14 +89,23 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new JwtParseInterceptor(jwtUtils()))
+                .addPathPatterns("/members/**");
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
     @Bean
     public JwtUtils jwtUtils() {
         return new JwtUtils(jwtTokenizer());
     }
+
     @Bean
     public JwtTokenizer jwtTokenizer() {
         return new JwtTokenizer(redisTemplate);

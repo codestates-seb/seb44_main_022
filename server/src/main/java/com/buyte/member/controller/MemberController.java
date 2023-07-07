@@ -1,5 +1,6 @@
 package com.buyte.member.controller;
 
+import com.buyte.member.auth.interceptor.JwtParseInterceptor;
 import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
 import com.buyte.member.mapper.MemberMapper;
@@ -41,5 +42,13 @@ public class MemberController {
     public ResponseEntity logout(HttpServletRequest request) {
         memberService.logout(request);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/members")
+    public ResponseEntity memberDetails() {
+        long authenticatedMemberId = JwtParseInterceptor.getAuthenticatedMemberId();
+        Member member = memberService.getMemberDetails(authenticatedMemberId);
+
+        return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.OK);
     }
 }
