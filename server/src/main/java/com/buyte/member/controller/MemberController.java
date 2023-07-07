@@ -51,4 +51,15 @@ public class MemberController {
 
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.OK);
     }
+
+    @PatchMapping("/members")
+    public ResponseEntity updateMemberDetails(@RequestBody @Valid MemberDto.Patch memberPatchDto) {
+        long authenticatedMemberId = JwtParseInterceptor.getAuthenticatedMemberId();
+        memberPatchDto.setMemberId(authenticatedMemberId);
+
+        Member member = mapper.memberPatchToMember(memberPatchDto);
+        Member updatedMember = memberService.updateMember(member);
+
+        return new ResponseEntity<>(mapper.memberToMemberResponseDto(updatedMember), HttpStatus.OK);
+    }
 }
