@@ -64,7 +64,7 @@ const ContentImageContainer = styled.div`
   margin-top: 10px;
   height: 60px;
 `;
-const CustomSidebar: React.FunctionComponent = () => {
+function CustomSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
@@ -99,6 +99,6 @@ const CustomSidebar: React.FunctionComponent = () => {
       </SidebarContent>
     </Sidebar>
   );
-};
+}
 
 export default CustomSidebar;

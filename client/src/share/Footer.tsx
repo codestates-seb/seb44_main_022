@@ -1,4 +1,3 @@
-import { FunctionComponent } from 'react';
 import styled from 'styled-components';
 
 const Item1 = styled.div`
@@ -124,7 +123,7 @@ const FooterContainer = styled.div`
   font-family: var(--font-noto-sans-kr);
   margin-top: auto;
 `;
-const Footer: FunctionComponent = () => {
+function Footer() {
   return (
     <FooterContainer>
       <Divcontainer>
@@ -143,6 +142,6 @@ const Footer: FunctionComponent = () => {
       </Divcontainer>
     </FooterContainer>
   );
-};
+}
 
 export default Footer;

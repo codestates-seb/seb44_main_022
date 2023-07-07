@@ -71,7 +71,7 @@ const Button = styled.button`
   color: var(--purple);
 `;
 
-const SelectStore: React.FunctionComponent = () => {
+function SelectStore() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -111,5 +111,5 @@ const SelectStore: React.FunctionComponent = () => {
       />
     </MainRoot>
   );
-};
+}
 export default SelectStore;

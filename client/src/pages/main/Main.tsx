@@ -206,7 +206,7 @@ const Section2Text = styled.div`
   }
 `;
 
-const Main: React.FunctionComponent = () => {
+function Main() {
   const section2TextRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -291,6 +291,6 @@ const Main: React.FunctionComponent = () => {
       <Footer />
     </MainRoot>
   );
-};
+}
 
 export default Main;
