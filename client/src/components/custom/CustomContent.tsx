@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import pencil from '../../assets/images/img_modal/pencil.png';
 import eraser from '../../assets/images/img_modal/eraser.png';
-
+import Draggable from 'react-draggable';
 const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
@@ -324,7 +324,8 @@ const CustomContent: React.FC = () => {
         if (canvas) {
           const ctx = canvas.getContext('2d');
           if (ctx) {
-            ctx.drawImage(image, 200, 200);
+            // 이미지의 크기를 변경하여 그림
+            ctx.drawImage(image, 200, 200, 300, 300);
           }
         }
       };
