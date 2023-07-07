@@ -59,8 +59,8 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
     private void setAuthenticationToContext(Jws<Claims> claims) {
-        String loginId = (String) claims.getBody().get("loginId");
-        Authentication authentication = new UsernamePasswordAuthenticationToken(loginId, null, null);
+        Long memberId = claims.getBody().get("memberId", Long.class);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(memberId, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

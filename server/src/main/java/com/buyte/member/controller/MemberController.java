@@ -1,6 +1,6 @@
 package com.buyte.member.controller;
 
-import com.buyte.member.auth.interceptor.JwtParseInterceptor;
+import com.buyte.member.auth.utils.SecurityUtil;
 import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
 import com.buyte.member.mapper.MemberMapper;
@@ -46,7 +46,7 @@ public class MemberController {
 
     @GetMapping("/members")
     public ResponseEntity memberDetails() {
-        long authenticatedMemberId = JwtParseInterceptor.getAuthenticatedMemberId();
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         Member member = memberService.getMemberDetails(authenticatedMemberId);
 
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.OK);
@@ -54,7 +54,7 @@ public class MemberController {
 
     @PatchMapping("/members")
     public ResponseEntity updateMemberDetails(@RequestBody @Valid MemberDto.Patch memberPatchDto) {
-        long authenticatedMemberId = JwtParseInterceptor.getAuthenticatedMemberId();
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         memberPatchDto.setMemberId(authenticatedMemberId);
 
         Member member = mapper.memberPatchToMember(memberPatchDto);

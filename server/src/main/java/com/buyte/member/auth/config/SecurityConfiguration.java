@@ -4,7 +4,6 @@ import com.buyte.member.auth.filter.JwtAuthenticationFilter;
 import com.buyte.member.auth.filter.JwtVerificationFilter;
 import com.buyte.member.auth.handler.MemberAuthenticationEntryPoint;
 import com.buyte.member.auth.handler.MemberAuthenticationFailureHandler;
-import com.buyte.member.auth.interceptor.JwtParseInterceptor;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import com.buyte.member.auth.utils.JwtUtils;
 import org.springframework.context.annotation.Bean;
@@ -21,7 +20,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
@@ -88,12 +86,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
             builder.addFilter(jwtAuthenticationFilter)
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
-    }
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JwtParseInterceptor(jwtUtils()))
-                .addPathPatterns("/members/**");
     }
 
     @Bean
