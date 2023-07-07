@@ -21,14 +21,26 @@ function SignUpForm() {
     e.preventDefault();
     if (userIdValid && passwordValid) {
       console.log(nickname, userId, password);
+      axios
+        .post(
+          'https://11e5-218-53-232-194.ngrok-free.app/signup',
+          {
+            loginId: userId,
+            password: password,
+            memberName: nickname,
+          },
+          {
+            headers: {
+              'ngrok-skip-browser-warning': true,
+            },
+          }
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       // axios
       //   .post(
-      //     'https://604b-218-53-232-194.ngrok-free.app/signup',
-      //     {
-      //       loginId: userId,
-      //       password: password,
-      //       memberName: nickname,
-      //     },
+      //     'https://11e5-218-53-232-194.ngrok-free.app/token/refresh',
+      //     {},
       //     {
       //       headers: {
       //         'ngrok-skip-browser-warning': true,

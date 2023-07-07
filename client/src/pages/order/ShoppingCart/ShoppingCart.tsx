@@ -5,7 +5,7 @@ import { CARTLIST } from '../../../components/CartItem/CartItem';
 import CartItem from '../../../components/CartItem/CartItem';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import RectangleButton from '../../../components/RectangleButton/RectangleButton';
 import { CART_CATEGORY_NAME } from '../../../assets/constantValue/constantValue';
@@ -18,6 +18,7 @@ import {
   EmptyCartListBox,
   TotalPaymentContainer,
 } from './ShoppingCart.style';
+import axios from 'axios';
 
 function ShoppingCart() {
   const [initialChecked, setInitialChecked] = useState<boolean>(false);
@@ -29,6 +30,7 @@ function ShoppingCart() {
 
   const handleSelectedDelete = () => {
     // 서버 통신으로 delete 시키고, window.location.reload 처리하기
+
     console.log(idList);
   };
 
@@ -37,6 +39,15 @@ function ShoppingCart() {
   };
 
   // useEffect로 서버와 바로 통신 시도하고, 장바구니 데이터 가져오기.
+  useEffect(() => {
+    axios
+      .get('https://d2c5-220-76-183-16.ngrok-free.app/cart/3', {
+        headers: {
+          'ngrok-skip-browser-warning': true,
+        },
+      })
+      .then((res) => console.log(res));
+  }, []);
 
   return (
     <CartContainer>
