@@ -1,29 +1,25 @@
 import styled from 'styled-components';
-
+import upload from '../../assets/images/img_modal/upload.png';
 const InputStyled = styled.input.attrs({
   type: 'file',
   accept: 'image/*',
 })`
   position: relative;
   z-index: 20;
-  height: 25px;
-  width: 40px;
-  border-radius: 20px;
-  margin-left: 30px;
+  height: 31px;
+  width: 41px;
+  border-radius: 10px;
+  margin-left: 20px;
+  background-image: url(${upload});
+  background-size: contain; /* Adjusted property */
+  background-repeat: no-repeat;
+  background-position: center;
+  aspect-ratio: 1/1; /* Added property for aspect ratio */
 
-  &::-webkit-color-swatch {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 20px;
-    padding: 0;
-    pointer-events: none;
+  &::-webkit-file-upload-button {
+    visibility: hidden;
   }
 
-  &::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
   &::before {
     content: '';
     position: absolute;

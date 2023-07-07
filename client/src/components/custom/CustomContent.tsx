@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import Draggable from 'react-draggable';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
 import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
+import upload from '../../assets/images/img_modal/upload.png';
 
 const ContentContainer = styled.div`
   margin-left: 20%;
@@ -174,7 +175,6 @@ const CustomContent: React.FC = () => {
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <UploadButton id="upload-button" onChange={handleUploadButtonClick} />
       </RangeInputContainer>
-      {/* Canvas 추가 */}
       <CanvasWrapper ref={canvasWrapperRef}>
         <Canvas ref={canvasRef} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} />
       </CanvasWrapper>

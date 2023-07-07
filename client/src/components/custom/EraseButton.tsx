@@ -1,13 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
+import React from 'react';
 import pencil from '../../assets/images/img_modal/pencil.png';
 import eraser from '../../assets/images/img_modal/eraser.png';
-const Button = styled.button<{ eraser: boolean }>`
+
+const ButtonStyled = styled.button<{ eraser: boolean }>`
   position: relative;
   z-index: 20;
   width: 30px;
   height: 30px;
-  margin-left: 25px;
+  margin-left: 20px;
   border-radius: 50%;
   border: none;
   cursor: grab;
@@ -44,8 +45,8 @@ interface EraseButtonProps {
   eraser: boolean;
 }
 
-const EraseButton: React.FC<EraseButtonProps> = ({ onClick, eraser }) => {
-  return <Button eraser={eraser} onClick={onClick} />;
+const EraseButton: React.FC<EraseButtonProps> = ({ eraser, onClick }) => {
+  return <ButtonStyled onClick={onClick} eraser={eraser} />;
 };
 
 export default EraseButton;

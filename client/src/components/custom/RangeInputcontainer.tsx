@@ -4,8 +4,7 @@ const ContainerStyled = styled.div`
   background-color: transparent;
   position: absolute;
   width: 100%;
-  bottom: 35%;
-  left: 0;
+  bottom: 33%;
   display: flex;
   justify-content: center;
   z-index: 15;
