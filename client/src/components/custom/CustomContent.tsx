@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
+import upload from '../../assets/images/img_modal/upload.png';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
 import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
-import upload from '../../assets/images/img_modal/upload.png';
 
 const ContentContainer = styled.div`
   margin-left: 20%;
@@ -26,18 +26,28 @@ const ContentContainer = styled.div`
   align-items: center;
   overflow: hidden;
 `;
+
 const CanvasWrapper = styled.div`
   position: absolute;
   width: 100%;
-  height: 78%;
+  height: 100%;
   z-index: 10;
+
+  &:first-child {
+    top: 0;
+  }
+
+  &:last-child {
+    bottom: 0;
+  }
 `;
+
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
 `;
 
-const CustomContent: React.FC = () => {
+const CustomContent = () => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = React.useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<number>(5);
@@ -128,6 +138,7 @@ const CustomContent: React.FC = () => {
   const handleEraseButtonClick = () => {
     setEraser((prev) => !prev);
   };
+
   const handleUploadButtonClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // 선택된 파일
 
@@ -140,6 +151,9 @@ const CustomContent: React.FC = () => {
         if (canvas) {
           const ctx = canvas.getContext('2d');
           if (ctx) {
+            // Reset the canvas before drawing the uploaded image
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
             // 원본 이미지 원래크기 가져오기
             const naturalWidth = image.naturalWidth;
             const naturalHeight = image.naturalHeight;

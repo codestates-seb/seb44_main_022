@@ -6,15 +6,15 @@ const InputStyled = styled.input.attrs({
 })`
   position: relative;
   z-index: 20;
-  height: 31px;
+  height: 33px;
   width: 41px;
   border-radius: 10px;
   margin-left: 20px;
   background-image: url(${upload});
-  background-size: contain; /* Adjusted property */
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  aspect-ratio: 1/1; /* Added property for aspect ratio */
+  aspect-ratio: 1/1;
 
   &::-webkit-file-upload-button {
     visibility: hidden;
