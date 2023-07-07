@@ -1,41 +1,89 @@
 import styled from 'styled-components';
-
-interface ProductInfoList {
-    productId: number,
-    productImage: string,
-    productName: string,
-    productPrice: number,
-    productType: string
-  }
+import { useState } from 'react';
+import ModalComponentDetail from '../../share/ModalComponentDetail'
+interface Product {
+  productId: number;
+  productImage: string;
+  productName: string;
+  productPrice: number;
+  productType: string;
+}
 
 interface ProductCardProps {
-    data: ProductInfoList[];
-  }
-  //임시로 인터페이스 양식만 차용
+  data: Product[];
+}
+//인터페이스 정리 필요
 
 function ProductCard({data}: ProductCardProps) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const handleProductClick = (product: Product) => {
+    setSelectedProduct(product);
+    setModalOpen(true)
+  }
+  const closeModal = () => {
+    setModalOpen(false);
+  };
   return (
     <>
-     {data.map((product) => (
-    <ProductCardItem key={product.productId}>
-        <img src={product.productImage}
-                      style={{
-                        height: '100%',
-                        width: '100%',
-                        objectFit: 'cover',
-                        objectPosition: 'center',
-                      }}
-                    />
-    </ProductCardItem>
-                    ))}
+      <ProductContainer>
+        {data.map((product) => (
+            <ProductItem key={product.productId} onClick={() => handleProductClick(product)}>
+              <ProductImage src={product.productImage} alt={product.productName}/>
+              <HoverOverlay />
+            </ProductItem>
+                        ))}
+      </ProductContainer>
+      {modalOpen && selectedProduct && (
+        <ModalComponentDetail
+          product={selectedProduct}
+          closeModal={closeModal}
+        />
+      )}
+
     </>
   );
 }
 export default ProductCard;
 
+const ProductContainer = styled.ul`
+  margin-top: 1rem;
+  margin-bottom: 7rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-gap: 0; 
+  justify-items: center; /* 가로 정렬을 중앙으로 조정합니다 */
+  align-items: center; /* 세로 정렬을 중앙으로 조정합니다 */
+  grid-row-gap: 3rem;
+`
 
-const ProductCardItem = styled.div`
+const ProductItem = styled.li`
   min-width: 200px;
   height: 320px; 
-  overflow: hidden;
+  width: 100%;
+  position: relative;
 `
+
+const ProductImage = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  cursor: pointer;
+`
+const HoverOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  ${ProductItem}:hover & {
+    opacity: 1;
+  }
+`;
