@@ -26,10 +26,12 @@ function ShoppingCart() {
   // 서버 통신때 진짜로 totalPrice를 set하자.
   const location = useLocation();
   const idList = useSelector((state: RootState) => state.cartReducer.idList);
+  const cartItemList = useSelector((state: RootState) => state.paymentReducer.cartItemList);
 
   const handleSelectedDelete = () => {
     // 서버 통신으로 delete 시키고, window.location.reload 처리하기
     console.log(idList);
+    console.log(cartItemList);
   };
 
   const handleAllSelected = () => {
@@ -37,6 +39,14 @@ function ShoppingCart() {
   };
 
   // useEffect로 서버와 바로 통신 시도하고, 장바구니 데이터 가져오기.
+
+  const handleSelectedPayment = () => {
+    if (cartItemList.length === 0) {
+      alert('반드시 한 개 이상의 제품을 선택해야합니다.');
+      return;
+    }
+    navigate('/payment', { state: { cartItemList } });
+  };
 
   return (
     <CartContainer>
@@ -109,7 +119,7 @@ function ShoppingCart() {
               idx={idx}
               initialChecked={initialChecked}
               setTotalPrice={setTotalPrice}
-              key={e.id}
+              key={e.cartId}
             />
           ))
         ) : (
@@ -149,16 +159,12 @@ function ShoppingCart() {
             types="white"
             clickEvent={() => navigate('/store')}
           />
-          <RectangleButton
-            text="선택상품주문"
-            types="purple"
-            clickEvent={() => navigate('/payment', { state: 'Selected' })}
-          />
+          <RectangleButton text="선택상품주문" types="purple" clickEvent={handleSelectedPayment} />
 
           <RectangleButton
             text="&nbsp;&nbsp;&nbsp;전체주문&nbsp;&nbsp;&nbsp;"
             types="dark"
-            clickEvent={() => navigate('/payment', { state: 'All' })}
+            clickEvent={() => navigate('/payment', { state: { CARTLIST } })}
           />
         </div>
       </div>

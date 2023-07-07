@@ -1,9 +1,9 @@
 export interface CartItem {
-  id: number;
-  img: string;
-  title: string;
-  count: number;
-  price: number;
+  cartId: number;
+  productImagePath: string;
+  productName: string;
+  productCount: number;
+  productPrice: number;
 }
 
 export interface CartItemProps {
@@ -11,4 +11,9 @@ export interface CartItemProps {
   idx: number;
   initialChecked: boolean;
   setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface CartCheckProps {
+  items: CartItem;
+  initialChecked: boolean;
 }

@@ -7,58 +7,44 @@ import { CartListName } from './CartItem.style';
 
 export const CARTLIST = [
   {
-    id: 1,
-    img: tempImg,
-    title: '블루베리 쿠키',
-    count: 5,
-    price: 1900,
+    cartId: 1,
+    productImagePath: tempImg,
+    productName: '블루베리 쿠키',
+    productCount: 5,
+    productPrice: 19005,
   },
   {
-    id: 2,
-    img: tempImg,
-    title: '레드벨벳 케이크',
-    count: 1,
-    price: 29900,
+    cartId: 2,
+    productImagePath: tempImg,
+    productName: '블루베리쿠키',
+    productCount: 5,
+    productPrice: 19040,
   },
   {
-    id: 3,
-    img: tempImg,
-    title: '화이트 초코케이크',
-    count: 3,
-    price: 2100,
+    cartId: 3,
+    productImagePath: tempImg,
+    productName: '블루베리   쿠키',
+    productCount: 5,
+    productPrice: 19003,
   },
   {
-    id: 4,
-    img: tempImg,
-    title: '블랙 진저 쿠키',
-    count: 5,
-    price: 2200,
+    cartId: 4,
+    productImagePath: tempImg,
+    productName: '블리 쿠키',
+    productCount: 5,
+    productPrice: 19002,
   },
   {
-    id: 5,
-    img: tempImg,
-    title: '커스텀 도넛',
-    count: 7,
-    price: 6000,
-  },
-  {
-    id: 6,
-    img: tempImg,
-    title: '커스텀 도넛',
-    count: 7,
-    price: 6000,
-  },
-  {
-    id: 7,
-    img: tempImg,
-    title: '커스텀 도넛',
-    count: 7,
-    price: 6000,
+    cartId: 5,
+    productImagePath: tempImg,
+    productName: '리 쿠키',
+    productCount: 5,
+    productPrice: 19001,
   },
 ];
 
 function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) {
-  const [priceCnt, setPriceCnt] = useState<number>(items.count);
+  const [priceCnt, setPriceCnt] = useState<number>(items.productCount);
 
   return (
     <div style={{ display: 'flex', fontSize: '14px' }}>
@@ -66,10 +52,13 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
         {idx + 1}.
       </CartListName>
       <CartListName grow={5} minWidth={40} style={{ padding: ' 0.5rem', alignItems: 'center' }}>
-        <img src={items.img} style={{ width: '3rem', height: '3rem', objectFit: 'cover' }} />
+        <img
+          src={items.productImagePath}
+          style={{ width: '3rem', height: '3rem', objectFit: 'cover' }}
+        />
       </CartListName>
       <CartListName grow={75} style={{ justifyContent: 'flex-start', fontWeight: 'bold' }}>
-        {items.title}
+        {items.productName}
       </CartListName>
       <CartListName
         grow={10}
@@ -79,14 +68,14 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
         <CountButton count={priceCnt} setCount={setPriceCnt} setTotalPrice={setTotalPrice} />
       </CartListName>
       <CartListName grow={15} minWidth={110} style={{ fontWeight: 'bold' }}>
-        {items.price.toLocaleString()}
+        {items.productPrice.toLocaleString()}
       </CartListName>
       <CartListName
         grow={5}
         minWidth={40}
         style={{ justifyContent: 'flex-start', fontSize: '18px', padding: '0.5rem' }}
       >
-        <CheckBox id={items.id} initialChecked={initialChecked} />
+        <CheckBox items={items} initialChecked={initialChecked} />
       </CartListName>
     </div>
   );
