@@ -21,13 +21,30 @@ function LoginForm() {
     e.preventDefault();
     if (userIdValid && passwordValid) {
       // 통신 코드 예정
+      axios
+        .post(
+          'https://90d0-218-53-232-194.ngrok-free.app/login',
+          {
+            loginId: userId,
+            password: password,
+          },
+          {
+            headers: {
+              'ngrok-skip-browser-warning': true,
+            },
+          }
+        )
+        .then((res) => {
+          dispatch(setAccessToken(res.headers['authorization']));
+          navigate('/');
+          alert('통신 성공');
+          return;
+        })
+        .catch((err) => console.log(err));
       // axios
       //   .post(
-      //     'https://604b-218-53-232-194.ngrok-free.app/login',
-      //     {
-      //       loginId: userId,
-      //       password: password,
-      //     },
+      //     'https://11e5-218-53-232-194.ngrok-free.app/token/refresh',
+      //     {},
       //     {
       //       headers: {
       //         'ngrok-skip-browser-warning': true,
@@ -36,11 +53,8 @@ function LoginForm() {
       //   )
       //   .then((res) => console.log(res))
       //   .catch((err) => console.log(err));
-      dispatch(setAccessToken('AccessToken'));
       document.cookie = `refreshToken=refreshToken; Secure; Path=/;`;
       console.log(userId, password);
-      navigate('/');
-      alert('통신 성공');
       return;
     }
   };

@@ -23,7 +23,7 @@ function SignUpForm() {
       console.log(nickname, userId, password);
       // axios
       //   .post(
-      //     'https://604b-218-53-232-194.ngrok-free.app/signup',
+      //     'https://11e5-218-53-232-194.ngrok-free.app/signup',
       //     {
       //       loginId: userId,
       //       password: password,
@@ -37,6 +37,15 @@ function SignUpForm() {
       //   )
       //   .then((res) => console.log(res))
       //   .catch((err) => console.log(err));
+      axios
+        .post('https://90d0-218-53-232-194.ngrok-free.app/token/refresh', null, {
+          headers: {
+            'ngrok-skip-browser-warning': true,
+          },
+          withCredentials: true,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
       alert('통신 성공');
       navigate('/auth');
       return;
