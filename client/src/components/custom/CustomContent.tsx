@@ -324,8 +324,27 @@ const CustomContent: React.FC = () => {
         if (canvas) {
           const ctx = canvas.getContext('2d');
           if (ctx) {
-            // 이미지의 크기를 변경하여 그림
-            ctx.drawImage(image, 200, 200, 300, 300);
+            // 원본 이미지 원래크기 가져오기
+            const naturalWidth = image.naturalWidth;
+            const naturalHeight = image.naturalHeight;
+
+            // 원하는 크기 설정
+            const targetWidth = 300;
+            const targetHeight = 300;
+
+            // 이미지의 비율 계산
+            const aspectRatio = naturalWidth / naturalHeight;
+
+            // 비율을 유지하면서 이미지 크기 조정
+            let width = targetWidth;
+            let height = targetHeight;
+            if (targetWidth / targetHeight > aspectRatio) {
+              width = targetHeight * aspectRatio;
+            } else {
+              height = targetWidth / aspectRatio;
+            }
+
+            ctx.drawImage(image, 200, 200, width, height);
           }
         }
       };
