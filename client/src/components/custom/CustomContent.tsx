@@ -175,6 +175,52 @@ const EraseButton = styled.button<EraseButtonProps>`
   }
 `;
 
+const UploadButton = styled.input.attrs({
+  type: 'file',
+  accept: 'image/*',
+})`
+  position: relative;
+  z-index: 20;
+  height: 25px;
+  width: 40px;
+  border-radius: 20px;
+  margin-left: 30px;
+
+  &::-webkit-color-swatch {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 20px;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &:hover::before {
+    transform: scale(1);
+  }
+
+  &:active {
+    filter: brightness(1.2);
+  }
+`;
+
 const CustomContent: React.FC = () => {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = React.useRef<HTMLDivElement>(null);
@@ -266,13 +312,31 @@ const CustomContent: React.FC = () => {
   const handleEraseButtonClick = () => {
     setEraser((prev) => !prev);
   };
+  const handleUploadButtonClick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]; // 선택된 파일
 
+    if (file) {
+      const url = URL.createObjectURL(file);
+      const image = new Image();
+      image.src = url;
+      image.onload = function () {
+        const canvas = canvasRef.current;
+        if (canvas) {
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(image, 200, 200);
+          }
+        }
+      };
+    }
+  };
   return (
     <ContentContainer>
       <RangeInputContainer>
         <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
+        <UploadButton id="upload-button" onChange={handleUploadButtonClick} />
       </RangeInputContainer>
       {/* Canvas 추가 */}
       <CanvasWrapper ref={canvasWrapperRef}>
