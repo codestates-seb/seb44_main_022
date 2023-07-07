@@ -4,19 +4,17 @@ import StoreCard from '../../components/storeCard';
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import axios from 'axios';
 interface Store {
-  id: number;
-  store_title: string;
-  store_location: string;
-  store_image_url: string;
+  storeId: number;
+  storeName: string;
+  storeAddress: string;
+  storeImage: string;
 }
-
 function Store() {  
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Store[]>([]);
   const [isShowingAll, setIsShowingAll] = useState(true);
   const [page, setPage] = useState(1);
   const [isObserverActive, setIsObserverActive] = useState(false); 
-  const itemsPerPage = 12;  
   const options = {
     root: null,
     rootMargin: '0px',
@@ -59,15 +57,18 @@ function Store() {
     fetchDataAndActivateObserver();
   }, [page, searchTerm]);
 
-  const fetchData = async (page: number, searchTerm?: string) => {  
+  const fetchData = async (page?: number, searchTerm?: string) => {  
     try {
-      let url = `https://db5037e1-137a-4d2b-a379-6d6866a8a0b5.mock.pstmn.io/store?page=${page}&limit=${itemsPerPage}`;
-     
+      let url = `https://eeec-220-76-183-16.ngrok-free.app/v1/store`;     
       if (searchTerm && searchTerm.trim() !=='') {
-        url += `&search=${searchTerm}`;
+        url += `?storeName=${searchTerm}`;
       } 
-      console.log(url)
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
+        },
+      });
       const data = response.data;
       if (page === 1) {
         setFilteredData(data);
@@ -137,7 +138,7 @@ function Store() {
             </Search>
           </SearchSection>
           <StoreListSection>
-            <StoreCard data={isShowingAll ? filteredData : []} />
+            <StoreCard data ={isShowingAll ? filteredData : []} />
             <div id="intersection-target"></div>
           </StoreListSection>      
         </section>
@@ -145,7 +146,6 @@ function Store() {
     </>
   );
 }
-
 export default Store;
 
 const StyledInput = styled.input`

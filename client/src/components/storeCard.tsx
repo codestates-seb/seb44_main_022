@@ -3,10 +3,10 @@ import { FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 interface Store {
-    id: number;
-    store_title: string;
-    store_location: string;
-    store_image_url: string;
+    storeId: number;
+    storeName: string;
+    storeAddress: string;
+    storeImage: string;
   }
   
   interface StoreCardProps {
@@ -18,11 +18,11 @@ function StoreCard({data}: StoreCardProps) {
     <>
       <CardListContainer>
             {data.map((store) => (
-              <Cards key={store.id}>
+              <Cards key={store.storeId}>
                 <Link style={{ height: '100%', width: '100%' }} to="/">
                   <div style={{ position: 'relative', height: '100%', width: '100%' }}>
                     <img
-                      src={store.store_image_url}
+                      src={store.storeImage}
                       style={{
                         height: '100%',
                         width: '100%',
@@ -35,11 +35,11 @@ function StoreCard({data}: StoreCardProps) {
                 </Link>
                 <StoreTitleInfo>
                   <p style={{ fontSize: '14px', marginBottom: '0.4rem'  }}>
-                    <Link to="/" style={{color: 'var(--light-black)'}}>{store.store_title}</Link>
+                    <Link to="/" style={{color: 'var(--light-black)'}}>{store.storeName}</Link>
                   </p>
                   <p style={{ fontSize: '11px', color: 'var(--light-gray)', marginRight:'0.3rem'}}>
                     <FiMapPin style={{ marginRight: '0.1rem', alignItems: 'center' }} />
-                    {store.store_location}
+                    {store.storeAddress}
                   </p>
                 </StoreTitleInfo>
               </Cards>              
