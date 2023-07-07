@@ -21,6 +21,7 @@ import {
 import axios from 'axios';
 
 function ShoppingCart() {
+  const [cartList, setCartList] = useState([]);
   const [initialChecked, setInitialChecked] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
@@ -30,6 +31,14 @@ function ShoppingCart() {
 
   const handleSelectedDelete = () => {
     // 서버 통신으로 delete 시키고, window.location.reload 처리하기
+    axios
+      .delete('https://9176-220-76-183-16.ngrok-free.app/cart/1/delete', {
+        data: {
+          cartIds: idList,
+        },
+      })
+      .then(() => window.location.reload())
+      .catch((err) => console.log(err));
 
     console.log(idList);
   };
@@ -41,12 +50,15 @@ function ShoppingCart() {
   // useEffect로 서버와 바로 통신 시도하고, 장바구니 데이터 가져오기.
   useEffect(() => {
     axios
-      .get('https://d2c5-220-76-183-16.ngrok-free.app/cart/3', {
+      .get('https://9176-220-76-183-16.ngrok-free.app/cart/1', {
         headers: {
           'ngrok-skip-browser-warning': true,
         },
       })
-      .then((res) => console.log(res));
+      .then((res) => {
+        setCartList(res.data.cartInfos);
+        setTotalPrice(res.data.totalPrice);
+      });
   }, []);
 
   return (
@@ -113,14 +125,14 @@ function ShoppingCart() {
             <MdCheckBox />
           </CartListName>
         </div>
-        {CARTLIST ? (
-          CARTLIST.map((e, idx) => (
+        {cartList.length > 0 ? (
+          cartList.map((e, idx) => (
             <CartItem
               items={e}
               idx={idx}
               initialChecked={initialChecked}
               setTotalPrice={setTotalPrice}
-              key={e.id}
+              key={idx}
             />
           ))
         ) : (
