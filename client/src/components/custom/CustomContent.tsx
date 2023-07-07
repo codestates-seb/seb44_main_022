@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import pencil from '../../assets/images/img_modal/pencil.png';
-import eraser from '../../assets/images/img_modal/eraser.png';
-import Draggable from 'react-draggable';
+
+import ColorInput from './ColorInput';
+import EraseButton from './EraseButton';
+import RangeInput from './RangeInput';
+import RangeInputContainer from './RangeInputContainer';
+import UploadButton from './UploadButton';
+
 const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
@@ -30,195 +34,6 @@ const CanvasWrapper = styled.div`
 const Canvas = styled.canvas`
   width: 100%;
   height: 100%;
-`;
-const RangeInputContainer = styled.div`
-  background-color: transparent;
-  position: absolute;
-  width: 100%;
-  bottom: 35%;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  z-index: 15;
-`;
-
-const RangeInput = styled.input.attrs({
-  type: 'range',
-  min: '1',
-  max: '100',
-})`
-  position: relative;
-  z-index: 20;
-  -webkit-appearance: none;
-  background-color: blue;
-  border-radius: 10px;
-  height: 8px;
-  width: 27%;
-  margin-top: 10px;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 17px;
-    height: 17px;
-    background-color: var(--dark-purple);
-    border-radius: 50%;
-    cursor: pointer;
-  }
-
-  &::-moz-range-thumb {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: yellow;
-    cursor: pointer;
-  }
-
-  &:focus {
-    animation: 1s pulse infinite;
-    outline: none;
-  }
-
-  &:hover {
-    background-color: var(--purple);
-    transform: scale(1.15);
-  }
-
-  background-color: var(--light-purple);
-  top: calc(5px + 50%);
-
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
-`;
-const ColorInput = styled.input.attrs({
-  type: 'color',
-})<{ value: string }>`
-  position: relative;
-  z-index: 20;
-  height: 25px;
-  width: 40px;
-  border-radius: 20px;
-  margin-left: 30px;
-
-  &::-webkit-color-swatch {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 20px;
-    padding: 0;
-    pointer-events: none;
-  }
-
-  &::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-  &::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.1);
-    transform: scale(0);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  &:hover::before {
-    transform: scale(1);
-  }
-
-  &:active {
-    filter: brightness(1.2);
-  }
-`;
-interface EraseButtonProps {
-  onClick: () => void;
-  eraser: boolean;
-}
-
-const EraseButton = styled.button<EraseButtonProps>`
-  position: relative;
-  z-index: 20;
-  width: 30px;
-  height: 30px;
-  margin-left: 25px;
-  border-radius: 50%;
-  border: none;
-  cursor: grab;
-
-  background-image: ${(props) => (props.eraser ? `url(${eraser})` : `url(${pencil})`)};
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    right: -6px;
-    bottom: -6px;
-    border-radius: 50%;
-    background-color: rgba(0, 0, 0, 0.1);
-    transform: scale(0);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  &:hover::before {
-    transform: scale(1);
-  }
-
-  &:active {
-    filter: brightness(1.2);
-  }
-`;
-
-const UploadButton = styled.input.attrs({
-  type: 'file',
-  accept: 'image/*',
-})`
-  position: relative;
-  z-index: 20;
-  height: 25px;
-  width: 40px;
-  border-radius: 20px;
-  margin-left: 30px;
-
-  &::-webkit-color-swatch {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 20px;
-    padding: 0;
-    pointer-events: none;
-  }
-
-  &::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-  &::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.1);
-    transform: scale(0);
-    transition: transform 0.2s ease-in-out;
-  }
-
-  &:hover::before {
-    transform: scale(1);
-  }
-
-  &:active {
-    filter: brightness(1.2);
-  }
 `;
 
 const CustomContent: React.FC = () => {
@@ -350,6 +165,7 @@ const CustomContent: React.FC = () => {
       };
     }
   };
+
   return (
     <ContentContainer>
       <RangeInputContainer>

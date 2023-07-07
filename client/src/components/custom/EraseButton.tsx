@@ -1,0 +1,51 @@
+import React from 'react';
+import styled from 'styled-components';
+import pencil from '../../assets/images/img_modal/pencil.png';
+import eraser from '../../assets/images/img_modal/eraser.png';
+const Button = styled.button<{ eraser: boolean }>`
+  position: relative;
+  z-index: 20;
+  width: 30px;
+  height: 30px;
+  margin-left: 25px;
+  border-radius: 50%;
+  border: none;
+  cursor: grab;
+
+  background-image: ${(props) => (props.eraser ? `url(${eraser})` : `url(${pencil})`)};
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &:hover::before {
+    transform: scale(1);
+  }
+
+  &:active {
+    filter: brightness(1.2);
+  }
+`;
+
+interface EraseButtonProps {
+  onClick: () => void;
+  eraser: boolean;
+}
+
+const EraseButton: React.FC<EraseButtonProps> = ({ onClick, eraser }) => {
+  return <Button eraser={eraser} onClick={onClick} />;
+};
+
+export default EraseButton;
