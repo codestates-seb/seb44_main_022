@@ -117,8 +117,8 @@ const CustomContent = () => {
               }
               resolve({
                 image,
-                xPos: x - dragStartX + 200,
-                yPos: y - dragStartY + 200 + index * 50,
+                xPos: x - width / 2,
+                yPos: y - height / 2 + index * 50,
               });
             };
 
