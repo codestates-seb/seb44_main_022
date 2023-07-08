@@ -1,8 +1,15 @@
 import styled from 'styled-components';
+import React from 'react';
+
+interface ColorInputProps {
+  id: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
 const ColorInputStyled = styled.input.attrs({
   type: 'color',
-})<{ value: string }>`
+})<ColorInputProps>`
   position: relative;
   z-index: 20;
   height: 25px;
@@ -45,4 +52,7 @@ const ColorInputStyled = styled.input.attrs({
   }
 `;
 
-export default ColorInputStyled;
+const ColorInput: React.FC<ColorInputProps> = ({ id, value, onChange }) => {
+  return <ColorInputStyled id={id} value={value} onChange={onChange} />;
+};
+export default ColorInput;

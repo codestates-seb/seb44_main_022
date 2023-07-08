@@ -1,0 +1,47 @@
+import React from 'react';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  background-color: transparent;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+
+  &:first-child {
+    top: 0;
+  }
+
+  &:last-child {
+    bottom: 0;
+  }
+`;
+
+interface CanvasWrapperProps {
+  children: React.ReactNode;
+  forwardedRef: React.RefObject<HTMLDivElement>;
+}
+
+const CanvasWrapper: React.FC<CanvasWrapperProps> = ({ children, forwardedRef }) => {
+  return <Wrapper ref={forwardedRef}>{children}</Wrapper>;
+};
+
+interface CanvasProps {
+  forwardedRef: React.RefObject<HTMLCanvasElement>;
+  onMouseMove: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
+  onMouseDown: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
+  onMouseUp: () => void;
+}
+
+const Canvas: React.FC<CanvasProps> = ({ forwardedRef, onMouseMove, onMouseDown, onMouseUp }) => {
+  return (
+    <canvas
+      ref={forwardedRef}
+      onMouseMove={onMouseMove}
+      onMouseDown={onMouseDown}
+      onMouseUp={onMouseUp}
+    />
+  );
+};
+
+export { CanvasWrapper, Canvas };

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import drag from '../../assets/images/img_modal/drag.png';
-
 const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;
@@ -39,10 +38,9 @@ const ButtonStyled = styled.button`
   }
 `;
 
-type DragButtonProps = {
+interface DragButtonProps {
   onToggleDrag: () => void;
-};
-
+}
 const DragButton: React.FC<DragButtonProps> = ({ onToggleDrag }) => {
   return <ButtonStyled onClick={onToggleDrag}></ButtonStyled>;
 };

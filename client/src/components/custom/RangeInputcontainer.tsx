@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import React from 'react';
+
+interface RangeInputContainerProps {
+  children: React.ReactNode;
+}
 
 const ContainerStyled = styled.div`
   background-color: transparent;
@@ -11,4 +16,8 @@ const ContainerStyled = styled.div`
   z-index: 15;
 `;
 
-export default ContainerStyled;
+const RangeInputContainer: React.FC<RangeInputContainerProps> = ({ children }) => {
+  return <ContainerStyled>{children}</ContainerStyled>;
+};
+
+export default RangeInputContainer;

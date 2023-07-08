@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import React from 'react';
 const InputStyled = styled.input.attrs({
   type: 'range',
   min: '1',
@@ -9,11 +9,12 @@ const InputStyled = styled.input.attrs({
   z-index: 20;
   -webkit-appearance: none;
   background-color: blue;
-  border-radius: 10px;
+  border-radius: 20px;
   height: 8px;
   width: 27%;
+  right: 15px;
   margin-top: 10px;
-
+  margin-left: 20px;
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -47,5 +48,13 @@ const InputStyled = styled.input.attrs({
 
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 `;
+interface RangeInputProps {
+  id: string;
+  value: number;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-export default InputStyled;
+const RangeInput: React.FC<RangeInputProps> = ({ id, value, onChange }) => {
+  return <InputStyled type="range" id={id} value={value} onChange={onChange} />;
+};
+export default RangeInput;

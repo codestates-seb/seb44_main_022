@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
 import pencil from '../../assets/images/img_modal/pencil.png';
-
 const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;
@@ -38,7 +37,6 @@ const ButtonStyled = styled.button`
     filter: brightness(1.2);
   }
 `;
-
 interface DrawButtonProps {
   onClick: () => void;
 }

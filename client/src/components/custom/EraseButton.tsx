@@ -13,6 +13,7 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   cursor: grab;
 
   background-image: url('${eraser}');
+
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -42,11 +43,10 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
 interface EraseButtonProps {
   onClick: () => void;
   eraser: boolean;
-  drawingMode: boolean;
 }
 
 const EraseButton: React.FC<EraseButtonProps> = ({ eraser, onClick }) => {
-  return <ButtonStyled onClick={onClick} eraser={eraser} />;
+  return <ButtonStyled eraser={eraser} onClick={onClick}></ButtonStyled>;
 };
 
 export default EraseButton;
