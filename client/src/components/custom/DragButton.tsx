@@ -38,6 +38,7 @@ const ButtonStyled = styled.button`
     filter: brightness(1.2);
   }
 `;
+
 type DragButtonProps = {
   onToggleDrag: () => void;
 };
