@@ -27,6 +27,7 @@ const ContentContainer = styled.div`
 `;
 
 const CanvasWrapper = styled.div`
+  background-color: transparent;
   position: relative;
   width: 100%;
   height: 100%;
@@ -57,6 +58,7 @@ const CustomContent = () => {
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [dragStartX, setDragStartX] = useState<number>(0);
   const [dragStartY, setDragStartY] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -97,14 +99,49 @@ const CustomContent = () => {
 
     if (drawingMode && isDragging) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      images.forEach((imageUrl, index) => {
-        const image = new Image();
-        image.src = imageUrl;
-        image.onload = () => {
-          const xPos = 200 + x - dragStartX;
-          const yPos = 200 + y - dragStartY + index * 50;
-          ctx.drawImage(image, xPos, yPos);
-        };
+
+      const loadImagePromises = images.map((imageUrl, index) => {
+        return new Promise<{ image: HTMLImageElement; xPos: number; yPos: number } | null>(
+          (resolve) => {
+            const image = new Image();
+            image.src = imageUrl;
+
+            image.onload = () => {
+              resolve({
+                image,
+                xPos: 200 + x - dragStartX,
+                yPos: 200 + y - dragStartY + index * 50,
+              });
+            };
+
+            image.onerror = () => {
+              resolve(null); // 이미지 로딩 실패 시 null 반환
+            };
+          }
+        );
+      });
+
+      Promise.all(loadImagePromises).then((loadedImages) => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        loadedImages.forEach((loadedImage) => {
+          if (loadedImage) {
+            const { image, xPos, yPos } = loadedImage;
+
+            const naturalWidth = image.naturalWidth;
+            const naturalHeight = image.naturalHeight;
+            const targetWidth = 300;
+            const targetHeight = 300;
+            const aspectRatio = naturalWidth / naturalHeight;
+            let width = targetWidth;
+            let height = targetHeight;
+            if (targetWidth / targetHeight > aspectRatio) {
+              width = targetHeight * aspectRatio;
+            } else {
+              height = targetWidth / aspectRatio;
+            }
+            ctx.drawImage(image, xPos, yPos, width, height);
+          }
+        });
       });
     } else {
       if (event.buttons !== 1) {
@@ -143,8 +180,8 @@ const CustomContent = () => {
       }
 
       setIsDragging(true);
-      setDragStartX(x);
-      setDragStartY(y);
+      setDragStartX(event.clientX);
+      setDragStartY(event.clientY);
     }
   };
 
@@ -155,11 +192,23 @@ const CustomContent = () => {
   };
 
   const handleUploadButtonClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]; // 선택된 파일
+    const file = event.target.files?.[0];
 
     if (file) {
+      setIsLoading(true); // 이미지 로딩 상태로 설정
+
       const url = URL.createObjectURL(file);
-      setImages((prevImages) => [...prevImages, url]);
+      const image = new Image();
+      image.src = url;
+
+      image.onload = () => {
+        setImages((prevImages) => [...prevImages, url]);
+        setIsLoading(false); // 이미지 로딩 완료 상태로 설정
+      };
+
+      image.onerror = () => {
+        setIsLoading(false); // 이미지 로딩 실패 상태로 설정
+      };
     }
   };
 
@@ -272,7 +321,7 @@ const CustomContent = () => {
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <DrawButton onClick={handleDrawButtonClick} />
         <DragButton onToggleDrag={handleToggleDrag} />
-        <UploadButton id="upload-button" onChange={handleUploadButtonClick} />
+        {!isLoading && <UploadButton id="upload-button" onChange={handleUploadButtonClick} />}
       </RangeInputContainer>
       <CanvasWrapper ref={canvasWrapperRef}>
         <Canvas
