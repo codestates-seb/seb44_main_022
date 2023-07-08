@@ -44,7 +44,7 @@ interface DrawButtonProps {
 }
 
 const DrawButton: React.FC<DrawButtonProps> = ({ onClick }) => {
-  return <ButtonStyled onClick={onClick}>Draw</ButtonStyled>;
+  return <ButtonStyled onClick={onClick}></ButtonStyled>;
 };
 
 export default DrawButton;

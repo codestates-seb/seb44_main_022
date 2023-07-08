@@ -324,8 +324,8 @@ const CustomContent = () => {
       <RangeInputContainer>
         <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
-        <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <DrawButton onClick={handleDrawButtonClick} />
+        <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <DragButton onToggleDrag={handleToggleDrag} />
         {!isLoading && <UploadButton id="upload-button" onChange={handleUploadButtonClick} />}
       </RangeInputContainer>

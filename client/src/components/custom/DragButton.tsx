@@ -44,7 +44,7 @@ type DragButtonProps = {
 };
 
 const DragButton: React.FC<DragButtonProps> = ({ onToggleDrag }) => {
-  return <ButtonStyled onClick={onToggleDrag}>Drag</ButtonStyled>;
+  return <ButtonStyled onClick={onToggleDrag}></ButtonStyled>;
 };
 
 export default DragButton;
