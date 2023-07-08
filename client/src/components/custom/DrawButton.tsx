@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import React from 'react';
-import eraser from '../../assets/images/img_modal/eraser.png';
+import pencil from '../../assets/images/img_modal/pencil.png';
 
-const ButtonStyled = styled.button<{ eraser: boolean }>`
+const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;
   width: 30px;
@@ -12,7 +12,7 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   border: none;
   cursor: grab;
 
-  background-image: url('${eraser}');
+  background-image: url(${pencil});
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -39,14 +39,12 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   }
 `;
 
-interface EraseButtonProps {
+interface DrawButtonProps {
   onClick: () => void;
-  eraser: boolean;
-  drawingMode: boolean;
 }
 
-const EraseButton: React.FC<EraseButtonProps> = ({ eraser, onClick }) => {
-  return <ButtonStyled onClick={onClick} eraser={eraser} />;
+const DrawButton: React.FC<DrawButtonProps> = ({ onClick }) => {
+  return <ButtonStyled onClick={onClick}>Draw</ButtonStyled>;
 };
 
-export default EraseButton;
+export default DrawButton;

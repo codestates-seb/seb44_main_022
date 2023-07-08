@@ -6,7 +6,8 @@ import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
 import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
-
+import DragButton from './DragButton';
+import DrawButton from './DrawButton';
 const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
@@ -182,13 +183,17 @@ const CustomContent = () => {
       });
     }
   }, [images]);
-
+  const handleDrawButtonClick = () => {
+    setEraser(false);
+  };
   return (
     <ContentContainer>
       <RangeInputContainer>
         <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
+        <DrawButton onClick={handleDrawButtonClick} />
+
         <UploadButton id="upload-button" onChange={handleUploadButtonClick} />
       </RangeInputContainer>
       <CanvasWrapper ref={canvasWrapperRef}>
@@ -197,5 +202,4 @@ const CustomContent = () => {
     </ContentContainer>
   );
 };
-
 export default CustomContent;

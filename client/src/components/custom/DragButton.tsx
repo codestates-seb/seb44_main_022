@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import drag from '../../assets/images/img_modal/drag.png';
 
-const ButtonStyled = styled.button<{ enabled: boolean }>`
+const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;
   width: 30px;
@@ -39,13 +39,24 @@ const ButtonStyled = styled.button<{ enabled: boolean }>`
   }
 `;
 
-interface DragButtonProps {
-  onClick?: () => void;
-  enabled: boolean;
-}
+const DragButton = ({ onToggleDrag }: { onToggleDrag: () => void }) => {
+  const [isDragging, setIsDragging] = useState(false);
 
-const DragButton: React.FC<DragButtonProps> = ({ enabled, onClick }) => {
-  return <ButtonStyled onClick={onClick} enabled={enabled} />;
+  const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    onToggleDrag();
+  };
+
+  return (
+    <ButtonStyled onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
+      {isDragging ? 'Drawing Mode' : 'Drag Mode'}
+    </ButtonStyled>
+  );
 };
 
 export default DragButton;
