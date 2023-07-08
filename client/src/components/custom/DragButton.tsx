@@ -38,25 +38,12 @@ const ButtonStyled = styled.button`
     filter: brightness(1.2);
   }
 `;
+type DragButtonProps = {
+  onToggleDrag: () => void;
+};
 
-const DragButton = ({ onToggleDrag }: { onToggleDrag: () => void }) => {
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-    onToggleDrag();
-  };
-
-  return (
-    <ButtonStyled onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
-      {isDragging ? 'Drawing Mode' : 'Drag Mode'}
-    </ButtonStyled>
-  );
+const DragButton: React.FC<DragButtonProps> = ({ onToggleDrag }) => {
+  return <ButtonStyled onClick={onToggleDrag}>Drag</ButtonStyled>;
 };
 
 export default DragButton;

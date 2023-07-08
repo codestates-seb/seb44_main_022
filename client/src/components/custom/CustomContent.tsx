@@ -158,6 +158,33 @@ const CustomContent = () => {
         const image = new Image();
         image.src = imageUrl;
         image.onload = () => {
+          const naturalWidth = image.naturalWidth;
+          const naturalHeight = image.naturalHeight;
+          const targetWidth = 300;
+          const targetHeight = 300;
+          const aspectRatio = naturalWidth / naturalHeight;
+          let width = targetWidth;
+          let height = targetHeight;
+          if (targetWidth / targetHeight > aspectRatio) {
+            width = targetHeight * aspectRatio;
+          } else {
+            height = targetWidth / aspectRatio;
+          }
+          ctx.drawImage(image, 200, 200, width, height);
+        };
+      });
+    }
+  }, [images]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (canvas && ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      images.forEach((imageUrl) => {
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
           // 원본 이미지 원래크기 가져오기
           const naturalWidth = image.naturalWidth;
           const naturalHeight = image.naturalHeight;
