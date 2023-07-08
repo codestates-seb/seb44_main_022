@@ -230,7 +230,7 @@ const CustomContent = () => {
     setIsDragging(false);
   };
   const handleToggleDrag = () => {
-    setDrawingMode(false);
+    setDrawingMode(true); // 그리기 모드 활성화
     setIsDragging((prev) => !prev);
     setEraser(false);
   };
