@@ -81,7 +81,6 @@ const CustomContent = () => {
       }
     }
   }, []);
-
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (!canvas) {
@@ -98,8 +97,6 @@ const CustomContent = () => {
     const y = event.clientY - rect.top;
 
     if (drawingMode && isDragging) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
       const loadImagePromises = images.map((imageUrl, index) => {
         return new Promise<{ image: HTMLImageElement; xPos: number; yPos: number } | null>(
           (resolve) => {
@@ -165,6 +162,7 @@ const CustomContent = () => {
       ctx.stroke();
     }
   };
+
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas && !drawingMode) {
