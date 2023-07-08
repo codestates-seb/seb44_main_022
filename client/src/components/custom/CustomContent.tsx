@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import upload from '../../assets/images/img_modal/upload.png';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
@@ -28,7 +27,7 @@ const ContentContainer = styled.div`
 `;
 
 const CanvasWrapper = styled.div`
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   z-index: 10;
@@ -54,6 +53,10 @@ const CustomContent = () => {
   const [color, setColor] = useState<string>('#000000');
   const [eraser, setEraser] = useState<boolean>(false);
   const [images, setImages] = useState<string[]>([]);
+  const [drawingMode, setDrawingMode] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [dragStartX, setDragStartX] = useState<number>(0);
+  const [dragStartY, setDragStartY] = useState<number>(0);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -76,43 +79,50 @@ const CustomContent = () => {
       }
     }
   }, []);
-
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
-    if (canvas) {
-      const rect = canvas.getBoundingClientRect();
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
 
-      if (event.buttons !== 1) return;
+    if (!canvas) {
+      return;
+    }
 
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        const target = eraser ? 'destination-out' : 'source-over';
-        ctx.globalCompositeOperation = target;
-        ctx.lineWidth = size;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      return;
+    }
 
-        if (eraser) {
-          ctx.strokeStyle = 'rgba(0,0,0,1)';
-          // destination-out 때문에 적용(인터넷익스플로러 호환성)
-          const temp = ctx.fillStyle;
-          ctx.fillStyle = 'rgba(0,0,0,0)';
-          ctx.fillRect(x, y, size, size);
-          // destination-out 때문에 적용
-          ctx.fillStyle = temp;
-        } else {
-          ctx.strokeStyle = color;
-        }
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
 
-        ctx.lineTo(x, y);
-        ctx.stroke();
+    if (drawingMode && isDragging) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      images.forEach((imageUrl, index) => {
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
+          const xPos = 200 + x - dragStartX;
+          const yPos = 200 + y - dragStartY + index * 50;
+          ctx.drawImage(image, xPos, yPos);
+        };
+      });
+    } else {
+      if (event.buttons !== 1) {
+        return;
       }
+
+      ctx.globalCompositeOperation = eraser ? 'destination-out' : 'source-over';
+      ctx.lineWidth = size;
+      ctx.strokeStyle = eraser ? 'rgba(0,0,0,1)' : color;
+      ctx.lineTo(x, y);
+      ctx.stroke();
     }
   };
 
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
-    if (canvas) {
+    if (canvas && !drawingMode) {
+      // 그리기 모드가 아닐 때에만 실행
       const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
@@ -125,19 +135,23 @@ const CustomContent = () => {
         ctx.moveTo(x, y);
         if (eraser) {
           const eraserWidth = ctx.lineWidth + 2;
-          // destination-out 때문에 적용(인터넷익스플로러 호환성)
           const temp = ctx.fillStyle;
           ctx.fillStyle = 'rgba(0,0,0,0)';
           ctx.fillRect(x - eraserWidth / 2, y - eraserWidth / 2, eraserWidth, eraserWidth);
-          // destination-out 때문에 적용
           ctx.fillStyle = temp;
         }
       }
+
+      setIsDragging(true);
+      setDragStartX(x);
+      setDragStartY(y);
     }
   };
 
   const handleEraseButtonClick = () => {
-    setEraser((prev) => !prev);
+    setEraser(!eraser);
+    setDrawingMode(false); // 그리기 모드 비활성화
+    setIsDragging(false); // 드래그 상태 해제
   };
 
   const handleUploadButtonClick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -212,6 +226,43 @@ const CustomContent = () => {
   }, [images]);
   const handleDrawButtonClick = () => {
     setEraser(false);
+    setDrawingMode(true);
+    setIsDragging(false);
+  };
+  const handleToggleDrag = () => {
+    setDrawingMode(false);
+    setIsDragging((prev) => !prev);
+    setEraser(false);
+  };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (canvas && ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      images.forEach((imageUrl) => {
+        const image = new Image();
+        image.src = imageUrl;
+        image.onload = () => {
+          const naturalWidth = image.naturalWidth;
+          const naturalHeight = image.naturalHeight;
+          const targetWidth = 300;
+          const targetHeight = 300;
+          const aspectRatio = naturalWidth / naturalHeight;
+          let width = targetWidth;
+          let height = targetHeight;
+          if (targetWidth / targetHeight > aspectRatio) {
+            width = targetHeight * aspectRatio;
+          } else {
+            height = targetWidth / aspectRatio;
+          }
+          ctx.drawImage(image, 200, 200, width, height);
+        };
+      });
+    }
+  }, [images]);
+  const handleMouseUp = () => {
+    setIsDragging(false);
   };
   return (
     <ContentContainer>
@@ -220,11 +271,16 @@ const CustomContent = () => {
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <DrawButton onClick={handleDrawButtonClick} />
-
+        <DragButton onToggleDrag={handleToggleDrag} />
         <UploadButton id="upload-button" onChange={handleUploadButtonClick} />
       </RangeInputContainer>
       <CanvasWrapper ref={canvasWrapperRef}>
-        <Canvas ref={canvasRef} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} />
+        <Canvas
+          ref={canvasRef}
+          onMouseMove={handleMouseMove}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
+        />
       </CanvasWrapper>
     </ContentContainer>
   );
