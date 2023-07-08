@@ -81,9 +81,9 @@ const CustomContent = () => {
       }
     }
   }, []);
+
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
-
     if (!canvas) {
       return;
     }
@@ -107,10 +107,21 @@ const CustomContent = () => {
             image.src = imageUrl;
 
             image.onload = () => {
+              const { naturalWidth, naturalHeight } = image;
+              const targetWidth = 300;
+              const targetHeight = 300;
+              const aspectRatio = naturalWidth / naturalHeight;
+              let width = targetWidth;
+              let height = targetHeight;
+              if (targetWidth / targetHeight > aspectRatio) {
+                width = targetHeight * aspectRatio;
+              } else {
+                height = targetWidth / aspectRatio;
+              }
               resolve({
                 image,
-                xPos: 200 + x - dragStartX,
-                yPos: 200 + y - dragStartY + index * 50,
+                xPos: x - dragStartX + 200,
+                yPos: y - dragStartY + 200 + index * 50,
               });
             };
 
@@ -127,8 +138,7 @@ const CustomContent = () => {
           if (loadedImage) {
             const { image, xPos, yPos } = loadedImage;
 
-            const naturalWidth = image.naturalWidth;
-            const naturalHeight = image.naturalHeight;
+            const { naturalWidth, naturalHeight } = image;
             const targetWidth = 300;
             const targetHeight = 300;
             const aspectRatio = naturalWidth / naturalHeight;
@@ -155,11 +165,9 @@ const CustomContent = () => {
       ctx.stroke();
     }
   };
-
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas && !drawingMode) {
-      // 그리기 모드가 아닐 때에만 실행
       const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
@@ -180,8 +188,8 @@ const CustomContent = () => {
       }
 
       setIsDragging(true);
-      setDragStartX(event.clientX);
-      setDragStartY(event.clientY);
+      setDragStartX(x);
+      setDragStartY(y);
     }
   };
 
