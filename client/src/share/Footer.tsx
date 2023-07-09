@@ -1,4 +1,4 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Item1 = styled.div`
@@ -124,6 +124,7 @@ const FooterContainer = styled.div`
   font-family: var(--font-noto-sans-kr);
   margin-top: auto;
 `;
+
 const Footer: FunctionComponent = () => {
   return (
     <FooterContainer>

@@ -1,12 +1,12 @@
 import { MdLocalPostOffice } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
-import UserInput from '../../components/UserInput/UserInput';
 import { AiFillLock } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserInput from '../../components/UserInput/UserInput';
 import RoundButton from '../../components/RoundButton/RoundButton';
 import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { postSignUp } from '../../api/authApis';
 
 function SignUpForm() {
   const [nickname, setNickname] = useState<string>('');
@@ -20,32 +20,18 @@ function SignUpForm() {
   const handleLoginSubmit: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     if (userIdValid && passwordValid) {
-      console.log(nickname, userId, password);
-      // axios
-      //   .post(
-      //     'https://11e5-218-53-232-194.ngrok-free.app/signup',
-      //     {
-      //       loginId: userId,
-      //       password: password,
-      //       memberName: nickname,
-      //     },
-      //     {
-      //       headers: {
-      //         'ngrok-skip-browser-warning': true,
-      //       },
-      //     }
-      //   )
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
-      axios
-        .post('https://90d0-218-53-232-194.ngrok-free.app/token/refresh', null, {
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          },
-          withCredentials: true,
-        })
+      postSignUp(userId, password, nickname)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
+      // axios
+      //   .post('https://90d0-218-53-232-194.ngrok-free.app/token/refresh', null, {
+      //     headers: {
+      //       'ngrok-skip-browser-warning': true,
+      //     },
+      //     withCredentials: true,
+      //   })
+      //   .then((res) => console.log(res))
+      //   .catch((err) => console.log(err));
       alert('통신 성공');
       navigate('/auth');
       return;

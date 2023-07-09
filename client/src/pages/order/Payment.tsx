@@ -1,4 +1,15 @@
 import { useLocation } from 'react-router';
+import { AiOutlineCheckCircle, AiOutlineCreditCard, AiOutlineShoppingCart } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { CART_CATEGORY_NAME } from '../../assets/constantValue/constantValue';
+import { CartItemType } from '../../assets/interface/Cart.interface';
+import CartItem from '../../components/CartItem/CartItem';
+import { RootState } from '../../redux/store/store';
+import RectangleButton from '../../components/RectangleButton/RectangleButton';
+import { requestPay } from '../../PaymentWindow';
+import { getCartList, postSelectedCartList } from '../../api/orderApis';
 import {
   CartCategory,
   CartCategoryArrow,
@@ -7,60 +18,57 @@ import {
   CartListName,
   TotalPaymentContainer,
 } from './ShoppingCart/ShoppingCart.style';
-import { CART_CATEGORY_NAME } from '../../assets/constantValue/constantValue';
-import { AiOutlineCheckCircle, AiOutlineCreditCard, AiOutlineShoppingCart } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { CartItemType } from '../../assets/interface/Cart.interface';
-import CartItem from '../../components/CartItem/CartItem';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store/store';
-import RectangleButton from '../../components/RectangleButton/RectangleButton';
-import { useNavigate } from 'react-router-dom';
 
 function Payment() {
-  const { state } = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  const idList = useSelector((state: RootState) => state.cartReducer.idList);
+  const idList: number[] = useSelector((state: RootState) => state.cartReducer.idList);
   const [cartList, setCartList] = useState<CartItemType[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [orderUserName, setOrderUserName] = useState<string>('');
   const [shippingAddress, setShippingAddress] = useState<string>('');
-  // const IMP = window.IMP;
-  // IMP.init('imp04163177');
 
   useEffect(() => {
-    if (state === 'all') {
-      axios
-        .get('https://6f8d-220-76-183-16.ngrok-free.app/cart/1', {
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          },
-        })
-        .then((res) => {
-          setCartList(res.data.cartInfos);
-          setTotalPrice(res.data.totalPrice);
-        });
-      return;
-    }
-    axios
-      .post(
-        'https://6f8d-220-76-183-16.ngrok-free.app/cart/1/payment',
-        {
-          cartIds: idList,
-        },
-        {
-          headers: {
-            'ngrok-skip-browser-warning': true,
-          },
-        }
-      )
-      .then((res) => {
+    const handlePopState = (event: PopStateEvent) => {
+      if (event.state) {
+        navigate('/cart');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, [navigate]);
+
+  useEffect(() => {
+    if (location.state === 'all') {
+      getCartList().then((res) => {
         setCartList(res.data.cartInfos);
         setTotalPrice(res.data.totalPrice);
       });
-    return;
+      return;
+    }
+    if (location.state === 'selected') {
+      const storedIdList = localStorage.getItem('idList');
+      const ids = storedIdList ? JSON.parse(storedIdList) : idList;
+      localStorage.setItem('idList', JSON.stringify(ids));
+      postSelectedCartList(ids).then((res) => {
+        setCartList(res.data.cartInfos);
+        setTotalPrice(res.data.totalPrice);
+      });
+      return;
+    }
   }, []);
+
+  useEffect(() => {
+    if (location.state === null) {
+      alert('잘못된 이동 요청입니다.');
+      localStorage.setItem('idList', JSON.stringify([]));
+      navigate('/cart');
+    }
+  }, [location.state]);
 
   return (
     <CartContainer>
@@ -228,10 +236,11 @@ function Payment() {
           <RectangleButton
             text="결제하기"
             types="purple"
-            clickEvent={() => {
-              alert(`결제 준비중\n주문자: ${orderUserName}\n주소: ${shippingAddress}`);
-              return;
-            }}
+            clickEvent={() =>
+              requestPay(orderUserName, shippingAddress, cartList, () =>
+                navigate('/complete', { state: { rightPass: true }, replace: true })
+              )
+            }
           />
         </div>
       </div>

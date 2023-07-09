@@ -1,14 +1,15 @@
 import { MdCheckBox } from 'react-icons/md';
 import { BsFillGearFill } from 'react-icons/bs';
 import { AiOutlineShoppingCart, AiOutlineCreditCard, AiOutlineCheckCircle } from 'react-icons/ai';
-import { CARTLIST } from '../../../components/CartItem/CartItem';
-import CartItem from '../../../components/CartItem/CartItem';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../../redux/store/store';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { RootState } from '../../../redux/store/store';
+import CartItem from '../../../components/CartItem/CartItem';
 import RectangleButton from '../../../components/RectangleButton/RectangleButton';
 import { CART_CATEGORY_NAME } from '../../../assets/constantValue/constantValue';
+import { CartItemType } from '../../../assets/interface/Cart.interface';
+import { deleteCartList, getCartList } from '../../../api/orderApis';
 import {
   CartCategory,
   CartCategoryArrow,
@@ -18,8 +19,6 @@ import {
   EmptyCartListBox,
   TotalPaymentContainer,
 } from './ShoppingCart.style';
-import axios from 'axios';
-import { CartItemType } from '../../../assets/interface/Cart.interface';
 
 function ShoppingCart() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,22 +26,13 @@ function ShoppingCart() {
   const [initialChecked, setInitialChecked] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
-  // 서버 통신때 진짜로 totalPrice를 set하자.
   const location = useLocation();
   const idList = useSelector((state: RootState) => state.cartReducer.idList);
 
   const handleSelectedDelete = () => {
-    // 서버 통신으로 delete 시키고, window.location.reload 처리하기
-    axios
-      .delete('https://6f8d-220-76-183-16.ngrok-free.app/cart/1/delete', {
-        data: {
-          cartIds: idList,
-        },
-      })
+    deleteCartList(idList)
       .then(() => window.location.reload())
       .catch((err) => console.log(err));
-
-    console.log(idList);
   };
 
   const handleAllSelected = () => {
@@ -51,13 +41,9 @@ function ShoppingCart() {
 
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .get('https://6f8d-220-76-183-16.ngrok-free.app/cart/1', {
-        headers: {
-          'ngrok-skip-browser-warning': true,
-        },
-      })
+    getCartList()
       .then((res) => {
+        console.log(res);
         setCartList(res.data.cartInfos);
         setTotalPrice(res.data.totalPrice);
       })
@@ -76,6 +62,10 @@ function ShoppingCart() {
   };
 
   const handleAllSelectedPayment = () => {
+    if (cartList.length === 0) {
+      alert('반드시 한 개 이상의 제품이 있어야 합니다.');
+      return;
+    }
     navigate('/payment', { state: 'all' });
   };
 
@@ -92,7 +82,7 @@ function ShoppingCart() {
         >
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
             <div style={{ fontSize: '22px', fontWeight: 'bold' }}>Cart</div>
-            <div style={{ fontWeight: 'bold' }}>({CARTLIST.length})</div>
+            <div style={{ fontWeight: 'bold' }}>({cartList.length})</div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '23.5rem' }}>
             {CART_CATEGORY_NAME.map((name) => (

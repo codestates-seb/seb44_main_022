@@ -1,6 +1,6 @@
 import { BsArrowDownCircle, BsArrowUpCircle } from 'react-icons/bs';
+import { patchProductCount } from '../../api/orderApis';
 import { DownBtn } from './CountButton.style';
-import axios from 'axios';
 interface CountProps {
   id: number;
   count: number;
@@ -12,11 +12,7 @@ function CountButton({ id, count, setCount, setTotalPrice }: CountProps) {
   const handleDownCount = () => {
     if (count > 1) {
       setCount(count - 1);
-      axios
-        .patch('https://6f8d-220-76-183-16.ngrok-free.app/cart/1', {
-          cartId: id,
-          count: count - 1,
-        })
+      patchProductCount(id, count - 1)
         .then((res) => setTotalPrice(res.data.totalPrice))
         .catch((err) => console.log(err));
 
@@ -28,11 +24,8 @@ function CountButton({ id, count, setCount, setTotalPrice }: CountProps) {
   const handleUpCount = () => {
     if (count < 99) {
       setCount(count + 1);
-      axios
-        .patch('https://6f8d-220-76-183-16.ngrok-free.app/cart/1', {
-          cartId: id,
-          count: count + 1,
-        })
+
+      patchProductCount(id, count + 1)
         .then((res) => setTotalPrice(res.data.totalPrice))
         .catch((err) => console.log(err));
 

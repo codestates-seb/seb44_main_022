@@ -1,47 +1,8 @@
-import tempImg from '../../assets/images/cart_img.png';
+import { useState } from 'react';
 import CheckBox from '../CheckBox';
 import CountButton from '../CountButton/CountButton';
-import { useState } from 'react';
 import { CartItemProps } from '../../assets/interface/Cart.interface';
 import { CartListName } from './CartItem.style';
-
-export const CARTLIST = [
-  {
-    cartId: 1,
-    productImagePath: tempImg,
-    productName: '블루베리 쿠키',
-    productCount: 5,
-    productPrice: 19005,
-  },
-  {
-    cartId: 2,
-    productImagePath: tempImg,
-    productName: '블루베리쿠키',
-    productCount: 5,
-    productPrice: 19040,
-  },
-  {
-    cartId: 3,
-    productImagePath: tempImg,
-    productName: '블루베리   쿠키',
-    productCount: 5,
-    productPrice: 19003,
-  },
-  {
-    cartId: 4,
-    productImagePath: tempImg,
-    productName: '블리 쿠키',
-    productCount: 5,
-    productPrice: 19002,
-  },
-  {
-    cartId: 5,
-    productImagePath: tempImg,
-    productName: '리 쿠키',
-    productCount: 5,
-    productPrice: 19001,
-  },
-];
 
 function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) {
   const [priceCnt, setPriceCnt] = useState<number>(items.productCount);

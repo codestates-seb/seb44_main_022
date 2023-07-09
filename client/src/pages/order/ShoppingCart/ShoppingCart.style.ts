@@ -8,6 +8,10 @@ export const CartContainer = styled.div`
   margin: 11rem auto 10rem auto;
   min-width: 500px;
   height: auto;
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const CartCategoryContainer = styled.div`
