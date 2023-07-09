@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import pencil from '../../assets/images/img_modal/pencil.png';
+import pencil from '../../../assets/images/img_modal/pencil.png';
 const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;

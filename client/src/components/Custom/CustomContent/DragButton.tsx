@@ -1,8 +1,7 @@
-import styled from 'styled-components';
 import React from 'react';
-import eraser from '../../assets/images/img_modal/eraser.png';
-
-const ButtonStyled = styled.button<{ eraser: boolean }>`
+import styled from 'styled-components';
+import drag from '../../../assets/images/img_modal/drag.png';
+const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;
   width: 30px;
@@ -11,12 +10,11 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   border-radius: 50%;
   border: none;
   cursor: grab;
-
-  background-image: url('${eraser}');
-
+  background-image: url(${drag});
+  background-size: contain;
   background-repeat: no-repeat;
-  background-size: cover;
   background-position: center;
+  aspect-ratio: 1/1;
 
   &::before {
     content: '';
@@ -40,13 +38,11 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   }
 `;
 
-interface EraseButtonProps {
-  onClick: () => void;
-  eraser: boolean;
+interface DragButtonProps {
+  onToggleDrag: () => void;
 }
-
-const EraseButton: React.FC<EraseButtonProps> = ({ eraser, onClick }) => {
-  return <ButtonStyled eraser={eraser} onClick={onClick}></ButtonStyled>;
+const DragButton: React.FC<DragButtonProps> = ({ onToggleDrag }) => {
+  return <ButtonStyled onClick={onToggleDrag}></ButtonStyled>;
 };
 
-export default EraseButton;
+export default DragButton;

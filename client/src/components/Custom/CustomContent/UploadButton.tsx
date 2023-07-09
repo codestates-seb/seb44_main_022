@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import upload from '../../assets/images/img_modal/upload.png';
+import upload from '../../../assets/images/img_modal/upload.png';
 const InputStyled = styled.input.attrs({
   type: 'file',
   accept: 'image/*',

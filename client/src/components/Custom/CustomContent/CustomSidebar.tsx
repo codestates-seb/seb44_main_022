@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import modal_cake from '../../assets/images/img_modal/modal_cake.png';
-import custom_icon from '../../assets/images/img_modal/custom_icon.png';
+import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
+import custom_icon from '../../../assets/images/img_modal/custom_icon.png';
 const Sidebar = styled.div`
   position: absolute;
   top: 0;
