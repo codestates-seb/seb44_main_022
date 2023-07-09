@@ -1,9 +1,11 @@
 import React from 'react';
 import Modal from 'react-modal';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import modal_ex from '../assets/images/img_modal/modal_ex.png';
+
+//해야하는 것: 제품을 눌렀을 때 api요청으로 해당 상폼 관련 데이터 받아오기, 이후 뿌려주기 
 
 interface Product {
   productId: number;
@@ -30,17 +32,21 @@ function ModalComponentDetail({
   isOpen,
   onRequestClose,
   contentLabel,
-  children
-}: ModalProps ){
+  children, 
+  closeModal
+}: ModalProps ){  
+  const handleOverlayClick = () => {
+    closeModal();
+  };
   return (
-    <div>
-      {isOpen && <Overlay />}
+    <ModalWrapper>
+      <Overlay onClick={handleOverlayClick} isOpen={isOpen}/>
       <StyledModal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
         contentLabel={contentLabel}
         ariaHideApp={false}
-        shouldCloseOnOverlayClick={true}
+        shouldCloseOnOverlayClick={false}
         overlayClassName="overlay"
       >
         <ModalContainer>
@@ -77,7 +83,7 @@ function ModalComponentDetail({
           </ProductImgContainer>
         </ModalContainer>
       </StyledModal>
-    </div>
+    </ModalWrapper>
   );
 }
 
@@ -132,20 +138,27 @@ const Title = styled.h3`
   top: 30px;
   color: var(--light-black);
 `;
+
 const StyledModal = styled(Modal)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  min-height: 77%;
-  min-width: 77%;
-  border-radius: 40px;
-  box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
-  background-color: rgba(255, 255, 255, 0.9);
-  z-index: 10;
+  ${({ isOpen }) =>
+    isOpen &&
+    css`
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-height: 77%;
+      min-width: 77%;
+      border-radius: 40px;
+      box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
+      background-color: rgba(255, 255, 255, 0.9);
+      z-index: 10;
+      outline: none;
+     border: none;
+    `}
 `;
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -153,6 +166,7 @@ const Overlay = styled.div`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
   z-index: 9;
+  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;
 const ModalContainer = styled.div`
   width: 100%;
@@ -301,4 +315,16 @@ const ProductImgContainer = styled.div`
 const ProductImg = styled.img`
   width: 400px;
   height: 400px;
+`;
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 `;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ModalComponentDetail from '../../share/ModalComponentDetail'
 
 interface Product {
@@ -18,6 +18,18 @@ interface ProductCardProps {
 function ProductCard({data}: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const modalRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleOutsideClose = (e: MouseEvent) => {
+      if (modalOpen && modalRef.current && e.target instanceof Node &&
+        !modalRef.current.contains(e.target)) {
+        closeModal()
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClose);    
+    return () => document.removeEventListener('mousedown', handleOutsideClose);
+  }, [modalOpen]);
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
@@ -26,10 +38,13 @@ function ProductCard({data}: ProductCardProps) {
   const closeModal = () => {
     setModalOpen(false);
   };
+  const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+  };
 
   return (
     <>
-      <ProductContainer>
+      <ProductContainer >
         {data.map((product) => (
             <ProductItem key={product.productId} onClick={() => handleProductClick(product)}>
               <ProductImage src={product.productImage} alt={product.productName}/>
@@ -38,14 +53,18 @@ function ProductCard({data}: ProductCardProps) {
                         ))}
       </ProductContainer>
       {modalOpen && selectedProduct && (
-        <ModalComponentDetail
-        isOpen={modalOpen} 
-        onRequestClose={closeModal} 
-        contentLabel="Modal" 
-        product={selectedProduct} 
-        closeModal={closeModal}
-      >
-      </ModalComponentDetail>
+        <ModalWrapper >
+          <ModalContent ref={modalRef} onClick={handleModalClick}>
+            <ModalComponentDetail
+            isOpen={modalOpen}
+            onRequestClose={closeModal}
+            contentLabel="Modal"
+            product={selectedProduct}
+            closeModal={closeModal}
+                  >
+                  </ModalComponentDetail>
+          </ModalContent>
+        </ModalWrapper>
       )}
 
     </>
@@ -92,4 +111,20 @@ const HoverOverlay = styled.div`
   ${ProductItem}:hover & {
     opacity: 1;
   }
+`;
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ModalContent = styled.div`
+  cursor: default;
+  z-index: 99;
 `;
