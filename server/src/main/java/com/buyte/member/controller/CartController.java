@@ -6,14 +6,17 @@ import com.buyte.member.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.Positive;
 import java.io.IOException;
 
 
 @RestController
 @RequiredArgsConstructor
+@Validated
 public class CartController {
 
     private final CartService cartService;
@@ -33,7 +36,7 @@ public class CartController {
     }
 
     @PostMapping("/store/{store_id}/{custom_item_id}")
-    public ResponseEntity addProduct(@PathVariable(name = "custom_item_id") Long productId) {
+    public ResponseEntity addProduct(@PathVariable(name = "custom_item_id") @Positive Long productId) {
         cartService.addProductToCart(productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -41,7 +44,7 @@ public class CartController {
 
     @PostMapping("/store/{store_id}/{custom_item_id}/custom")
     public ResponseEntity addCustomProduct(@RequestPart(value = "file") MultipartFile file,
-                                           @PathVariable(name = "custom_item_id") Long productId) throws IOException {
+                                           @PathVariable(name = "custom_item_id") @Positive Long productId) throws IOException {
         cartService.addCustomProductToCart(file,productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
