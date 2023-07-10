@@ -33,8 +33,8 @@ public class Category {
     private List<Product> productList = new ArrayList<>();
 
     public enum CategoryName {
-        BAGLE,
         CAKE,
-        COOKIE
+        COOKIE,
+        DONUT
     }
 }
