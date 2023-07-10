@@ -54,7 +54,7 @@ public class CartController {
         return ResponseEntity.ok(patchTotalPrcie);
     }
 
-    @PostMapping("/cart/{member_id}/payment")
+    @PostMapping("/cart/payment")
     public ResponseEntity<CartResDto.CartAllInfo> paymentPorducts(@RequestBody CartReqDto.CartIds cartIds) throws Exception {
         CartResDto.CartAllInfo selectedCart = cartService.paymentSelectedProduct(cartIds);
 
