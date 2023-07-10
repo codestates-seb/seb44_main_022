@@ -98,11 +98,18 @@ public class CartServiceImpl implements CartService{
     @Override
     public CartResDto.CartAllInfo paymentSelectedProduct(CartReqDto.CartIds cartIds) {
         List<Long> selectedCartIds = cartIds.getCartIds();
+
         if (selectedCartIds.isEmpty()) {
             throw new IllegalArgumentException("선택된 카트가 없습니다.");
         }
 
-        List<Cart> cartList = cartRepository.findAllByCartIdIn(cartIds.getCartIds());
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        List<Cart> cartList = cartRepository.findAllByCartIdInAndMemberMemberId(selectedCartIds, authenticatedMemberId);
+
+        if (cartList.size() != selectedCartIds.size()) {
+            throw new BusinessLogicException(ExceptionCode.CART_NOT_FOUND);
+        }
+
         Integer totalPrice = getTotalPrice(cartList);
 
         return getCartAllInfo(cartList, totalPrice);
