@@ -45,13 +45,12 @@ public class CartController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PatchMapping("/cart/{member_id}")
-    public ResponseEntity updateProductCount(@PathVariable(name = "member_id") Long memberId,
-                                             @RequestBody CartReqDto.CartProductCount cartProductCount) throws Exception {
+    @PatchMapping("/cart")
+    public ResponseEntity updateProductCount(@RequestBody CartReqDto.CartProductCount cartProductCount) throws Exception {
         if(cartProductCount.getCount() <= 0) {
             return new ResponseEntity<>("1개 이상",HttpStatus.BAD_REQUEST);
         }
-        CartResDto.PatchTotalPrcie patchTotalPrcie = cartService.updateProductCount(memberId, cartProductCount);
+        CartResDto.PatchTotalPrcie patchTotalPrcie = cartService.updateProductCount(cartProductCount);
         return ResponseEntity.ok(patchTotalPrcie);
     }
 

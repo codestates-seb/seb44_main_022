@@ -65,12 +65,12 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public CartResDto.PatchTotalPrcie updateProductCount(Long memberId, CartReqDto.CartProductCount cartProductCount) throws Exception {
+    public CartResDto.PatchTotalPrcie updateProductCount(CartReqDto.CartProductCount cartProductCount) throws Exception {
         Cart patchCart = cartRepository.findById(cartProductCount.getCartId()).orElseThrow();
         patchCart.updateProductCount(cartProductCount.getCount());
         cartRepository.save(patchCart);
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        List<Cart> cartList = member.getCartList();
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        List<Cart> cartList = cartRepository.findAllByMemberMemberId(authenticatedMemberId);
         Integer totalPrice = getTotalPrice(cartList);
         CartResDto.PatchTotalPrcie patchTotalPrcie = CartResDto.PatchTotalPrcie.builder()
                 .totalPrice(totalPrice).build();
