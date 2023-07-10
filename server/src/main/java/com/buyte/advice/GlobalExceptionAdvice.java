@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleMethodArgumentNotValidException(
-        MethodArgumentNotValidException e) {
+    public ErrorResponse handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         final ErrorResponse response = ErrorResponse.of(e.getBindingResult());
 
         return response;
@@ -28,8 +28,7 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleConstraintViolationException(
-        ConstraintViolationException e) {
+    public ErrorResponse handleConstraintViolationException(ConstraintViolationException e) {
         final ErrorResponse response = ErrorResponse.of(e.getConstraintViolations());
 
         return response;
@@ -39,8 +38,7 @@ public class GlobalExceptionAdvice {
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
         final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
 
-        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode()
-            .getStatus()));
+        return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 
     @ExceptionHandler
@@ -55,9 +53,8 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleHttpMessageNotReadableException(
-        HttpMessageNotReadableException e) {
-        log.error("# Http message not readable Exception",e);
+    public ErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.error("# Http message not readable Exception", e);
 
         final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST,
             "Required request body is missing");
@@ -71,8 +68,7 @@ public class GlobalExceptionAdvice {
         MissingServletRequestParameterException e) {
         log.error("# Missing request parameter Exception", e);
 
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST,
-            e.getMessage());
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage());
 
         return response;
     }
