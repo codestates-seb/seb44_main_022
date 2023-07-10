@@ -38,7 +38,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
   const [drawingMode, setDrawingMode] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [selectedImage, setSelectedImage] = useState<string>(selectedImageProp);
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
   };
@@ -232,7 +232,48 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         };
       }
     }
-  }, [images, selectedImage]);
+  }, [images, selectedImageProp]);
+  const handleDragStart = (event: React.DragEvent<HTMLImageElement>) => {
+    if (selectedImageProp) {
+      const imageUrl = event.currentTarget.src;
+      event.dataTransfer.setData('text/plain', imageUrl);
+    }
+  };
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const imageUrl = event.dataTransfer.getData('text/plain');
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    const image = new Image();
+    image.src = imageUrl;
+    image.onload = () => {
+      const { naturalWidth, naturalHeight } = image;
+      const targetWidth = 300;
+      const targetHeight = 300;
+      const aspectRatio = naturalWidth / naturalHeight;
+      let width = targetWidth;
+      let height = targetHeight;
+      if (targetWidth / targetHeight > aspectRatio) {
+        width = targetHeight * aspectRatio;
+      } else {
+        height = targetWidth / aspectRatio;
+      }
+      ctx.drawImage(image, x - width / 2, y - height / 2, width, height);
+    };
+  };
+
   return (
     <ContentContainer>
       <RangeInputContainer>
@@ -243,7 +284,11 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         <DragButton onToggleDrag={handleToggleDrag} />
         {!isLoading && <UploadButton id="upload-button" onUpload={handleUploadImage} />}
       </RangeInputContainer>
-      <CanvasWrapper forwardedRef={canvasWrapperRef}>
+      <CanvasWrapper
+        forwardedRef={canvasWrapperRef}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
         <Canvas
           forwardedRef={canvasRef}
           onMouseMove={handleMouseMove}

@@ -20,10 +20,21 @@ const Wrapper = styled.div`
 type CanvasWrapperProps = {
   children: React.ReactElement;
   forwardedRef: React.RefObject<HTMLDivElement>;
+  onDragOver: React.DragEventHandler<HTMLDivElement>;
+  onDrop: React.DragEventHandler<HTMLDivElement>;
 };
 
-const CanvasWrapper: React.FC<CanvasWrapperProps> = ({ children, forwardedRef }) => {
-  return <Wrapper ref={forwardedRef}>{children}</Wrapper>;
+const CanvasWrapper: React.FC<CanvasWrapperProps> = ({
+  children,
+  forwardedRef,
+  onDragOver,
+  onDrop,
+}) => {
+  return (
+    <Wrapper ref={forwardedRef} onDragOver={onDragOver} onDrop={onDrop}>
+      {children}
+    </Wrapper>
+  );
 };
 
 type CanvasProps = {

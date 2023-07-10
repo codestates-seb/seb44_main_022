@@ -40,7 +40,6 @@ const ContentItem = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
-  cursor: pointer; /* Added cursor pointer */
 `;
 
 const ContentImage = styled.img`
@@ -67,13 +66,16 @@ const ContentImageContainer = styled.div`
   margin-top: 10px;
   height: 60px;
 `;
+const handleImageDragStart = (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => {
+  event.dataTransfer.setData('text/plain', imageUrl);
+};
 
 type CustomSidebarProps = {
   onImageClick: (imageUrl: string) => void;
   selectedImage: string;
 };
 
-const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick }) => {
+const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick, selectedImage }) => {
   const handleImageClick = (imageUrl: string) => {
     onImageClick(imageUrl);
   };
@@ -88,7 +90,8 @@ const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick }) => {
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              onClick={() => handleImageClick(modal_cake)}
+              draggable="true"
+              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
