@@ -50,7 +50,7 @@ public class CartServiceImpl implements CartService{
         Product product = productRepository.findById(productId).orElseThrow();
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
-        Cart cart = new Cart(product, product.getProductImage(), product.getProductPrice(),member);
+        Cart cart = new Cart(product, product.getProductImage(),member);
 
         cartRepository.save(cart);
 
@@ -65,7 +65,7 @@ public class CartServiceImpl implements CartService{
         String storedFileName = s3Service.upload(file, "customProduct");
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
-        Cart cart = new Cart(product, storedFileName, product.getProductPrice(),member);
+        Cart cart = new Cart(product, storedFileName,member);
         cartRepository.save(cart);
     }
 
@@ -104,7 +104,7 @@ public class CartServiceImpl implements CartService{
     private static Integer getTotalPrice(List<Cart> cartList) {
         Integer totalPrice = 0;
         for(Cart cart : cartList){
-            totalPrice += cart.getCartCustomProductPrice() * cart.getProductCount();
+            totalPrice += cart.getProduct().getProductPrice() * cart.getProductCount();
         }
         return totalPrice;
     }

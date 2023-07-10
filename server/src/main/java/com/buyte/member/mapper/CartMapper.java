@@ -14,7 +14,7 @@ public interface CartMapper {
                 .cartId(cart.getCartId())
                 .productId(cart.getProduct().getProductId())
                 .productName(cart.getProduct().getProductName())
-                .productPrice(cart.getCartCustomProductPrice())
+                .productPrice(cart.getProduct().getProductPrice())
                 .productImagePath(cart.getCartCustomProductImage())
                 .productCount(cart.getProductCount())
                 .build())
