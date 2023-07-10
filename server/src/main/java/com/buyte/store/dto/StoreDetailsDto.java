@@ -1,7 +1,6 @@
 package com.buyte.store.dto;
 
 import com.buyte.product.dto.CustomProductInfoDto;
-import com.buyte.product.dto.ProductInfoDto;
 import com.buyte.product.dto.StandardProductInfoDto;
 import java.util.List;
 import lombok.Builder;

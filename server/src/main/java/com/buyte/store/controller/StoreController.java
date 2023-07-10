@@ -33,7 +33,8 @@ public class StoreController {
     }
 
     @GetMapping
-    public ResponseEntity getStores(@Positive @RequestParam int page,
+    public ResponseEntity getStores(
+        @RequestParam(required = false, defaultValue = "1") int page,
         @RequestParam(required = false) String search) {
 
         StoreInfoPageDto storeInfoPageDto = storeService.getStores(page - 1, search);
@@ -58,10 +59,18 @@ public class StoreController {
     }
 
     @GetMapping("/{store-id}/{product-id}")
-    public ResponseEntity getProductDetails(@PathVariable("product-id") @Positive long productId) {
+    public ResponseEntity getProductDetails(@PathVariable("store-id") @Positive long storeId,
+        @PathVariable("product-id") @Positive long productId) {
 
-        ProductDetailsDto productDetails = productService.getProductDetails(productId);
+        ProductDetailsDto productDetailsDto = productService.getProductDetails(storeId, productId);
 
-        return new ResponseEntity<>(productDetails, HttpStatus.OK);
+        return new ResponseEntity<>(productDetailsDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{store-id}/custom/{product-id}")
+    public ResponseEntity getCustomProductDetails(
+        @PathVariable("product-id") @Positive long productId) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -12,5 +12,4 @@ public class ProductInfoDto {
     private String productImage;
     private String productName;
     private Integer productPrice;
-    private ProductType productType;
 }
