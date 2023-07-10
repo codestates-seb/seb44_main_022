@@ -9,12 +9,7 @@ function CheckBox({ items, initialChecked }: CartCheckProps) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (isChecked) {
-      dispatch(addCartIdList(items.cartId));
-      return;
-    }
-    dispatch(removeCartIdList(items.cartId));
-    return;
+    isChecked ? dispatch(addCartIdList(items.cartId)) : dispatch(removeCartIdList(items.cartId));
   }, [isChecked]);
 
   useEffect(() => {

@@ -48,11 +48,7 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
         minWidth={40}
         style={{ justifyContent: 'flex-start', fontSize: '18px', padding: '0.5rem' }}
       >
-        {initialChecked !== undefined ? (
-          <CheckBox items={items} initialChecked={initialChecked} />
-        ) : (
-          <></>
-        )}
+        {initialChecked !== undefined && <CheckBox items={items} initialChecked={initialChecked} />}
       </CartListName>
     </div>
   );

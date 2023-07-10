@@ -71,3 +71,10 @@ export const TotalPaymentContainer = styled.div`
   align-items: center;
   padding: 3.5rem 0;
 `;
+
+export const CartCategoryName = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+`;

@@ -24,3 +24,10 @@ export const patchProductCount = (cartId: number, count: number) => {
     count,
   });
 };
+
+export const postAfterPayment = (cartIds: number[], impUid: string) => {
+  return axiosInstance.post('/order/payment', {
+    cartIds,
+    impUid,
+  });
+};

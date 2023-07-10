@@ -1,4 +1,4 @@
-export interface CartItemType {
+export interface CartItemTypes {
   cartId: number;
   productImagePath: string;
   productName: string;
@@ -7,13 +7,34 @@ export interface CartItemType {
 }
 
 export interface CartItemProps {
-  items: CartItemType;
+  items: CartItemTypes;
   idx: number;
   initialChecked?: boolean;
   setTotalPrice?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface CartCheckProps {
-  items: CartItemType;
+  items: CartItemTypes;
   initialChecked: boolean;
+}
+
+export interface CartCategoryNameList {
+  name: string;
+  path: string;
+  arrowDesign: boolean;
+  icon: string;
+}
+
+export interface CartItemTabProps {
+  path: string;
+}
+
+export interface CartCategoryListProps {
+  category: CartCategoryNameList;
+  pathname: string;
+}
+
+export interface PriceNumberProps {
+  price: number;
+  priceText: string;
 }

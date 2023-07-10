@@ -1,14 +1,9 @@
 import { BsArrowDownCircle, BsArrowUpCircle } from 'react-icons/bs';
 import { patchProductCount } from '../../api/orderApis';
+import { CountButtonProps } from '../../assets/interface/Button.interface';
 import { DownBtn } from './CountButton.style';
-interface CountProps {
-  id: number;
-  count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
-}
 
-function CountButton({ id, count, setCount, setTotalPrice }: CountProps) {
+function CountButton({ id, count, setCount, setTotalPrice }: CountButtonProps) {
   const handleDownCount = () => {
     if (count > 1) {
       setCount(count - 1);
