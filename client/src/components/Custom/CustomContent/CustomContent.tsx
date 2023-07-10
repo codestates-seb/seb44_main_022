@@ -39,9 +39,10 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>(selectedImageProp);
-  const [drawingActions, setDrawingActions] = useState<
-    { x: number; y: number; color: string; size: number }[]
-  >([]);
+  const [, setDrawingActions] = useState<{ x: number; y: number; color: string; size: number }[]>(
+    []
+  );
+  const [draggedImage, setDraggedImage] = useState<string | null>(null);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -57,8 +58,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
-    setIsDragging(false); // Reset dragging state
+    setIsDragging(false);
 
     const image = new Image();
     image.src = imageUrl;
@@ -76,7 +76,12 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         height = targetWidth / aspectRatio;
       }
 
-      ctx.drawImage(image, 200, 200, width, height);
+      const canvasWidth = canvas.width - width;
+      const canvasHeight = canvas.height - height;
+      const randomX = Math.random() * canvasWidth * 1.5;
+      const randomY = Math.random() * canvasHeight * 0.2;
+
+      ctx.drawImage(image, randomX, randomY, width, height);
 
       setImages((prevImages) => [...prevImages, imageUrl]);
     };
@@ -148,21 +153,41 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         });
       });
     } else {
-      if (event.buttons !== 1) return;
+      if (draggedImage) {
+        const image = new Image();
+        image.src = draggedImage;
 
-      ctx.globalCompositeOperation = eraser ? 'destination-out' : 'source-over';
-      ctx.lineWidth = size;
-      ctx.strokeStyle = eraser ? 'rgba(0,0,0,1)' : color;
-      ctx.lineTo(x, y);
-      ctx.stroke();
+        image.onload = () => {
+          const { naturalWidth, naturalHeight } = image;
+          const targetWidth = 200;
+          const targetHeight = 200;
+          const aspectRatio = naturalWidth / naturalHeight;
+          let width = targetWidth;
+          let height = targetHeight;
+          if (targetWidth / targetHeight > aspectRatio) {
+            width = targetHeight * aspectRatio;
+          } else {
+            height = targetWidth / aspectRatio;
+          }
+          ctx.drawImage(image, x - width / 2, y - height / 2, width, height);
+        };
+      } else {
+        if (event.buttons !== 1) return;
 
-      // Save the drawing action
-      setDrawingActions((prevActions) => [
-        ...prevActions,
-        { x, y, color: eraser ? 'rgba(0,0,0,1)' : color, size },
-      ]);
+        ctx.globalCompositeOperation = eraser ? 'destination-out' : 'source-over';
+        ctx.lineWidth = size;
+        ctx.strokeStyle = eraser ? 'rgba(0,0,0,1)' : color;
+        ctx.lineTo(x, y);
+        ctx.stroke();
+
+        setDrawingActions((prevActions) => [
+          ...prevActions,
+          { x, y, color: eraser ? 'rgba(0,0,0,1)' : color, size },
+        ]);
+      }
     }
   };
+
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas && !drawingMode) {
@@ -195,36 +220,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
     setIsDragging(false);
   };
 
-  const handleDrawButtonClick = () => {
-    setEraser(false);
-    setDrawingMode(true);
-    setIsDragging(false);
-
-    // Redraw all drawing actions except the ones erased by the eraser
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
-    if (canvas && ctx) {
-      // Clear the canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Iterate through drawingActions and redraw all actions
-      drawingActions.forEach((action) => {
-        if (action.color !== 'rgba(0,0,0,1)') {
-          ctx.beginPath();
-          ctx.moveTo(action.x, action.y);
-          ctx.lineWidth = action.size;
-          ctx.strokeStyle = action.color;
-        } else {
-          // Skip eraser actions
-          return;
-        }
-
-        ctx.lineTo(action.x, action.y);
-        ctx.stroke();
-      });
-    }
-  };
-
   const handleToggleDrag = () => {
     setDrawingMode(true);
     setIsDragging((prev) => !prev);
@@ -233,8 +228,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
 
   const handleMouseUp = () => {
     setIsDragging(false);
+    setDraggedImage(null);
   };
-
   useEffect(() => {
     const canvas = canvasRef.current;
     const canvasWrapper = canvasWrapperRef.current;
@@ -293,11 +288,10 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
       }
     }
   }, [images, selectedImageProp]);
-  const handleDragStart = (event: React.DragEvent<HTMLImageElement>) => {
-    if (selectedImageProp) {
-      const imageUrl = event.currentTarget.src;
-      event.dataTransfer.setData('text/plain', imageUrl);
-    }
+  const handleDragStartImage = (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => {
+    event.dataTransfer.setData('text/plain', imageUrl);
+    event.dataTransfer.setData('application/my-app-type', 'image');
+    setDraggedImage(imageUrl);
   };
 
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
@@ -307,6 +301,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const imageUrl = event.dataTransfer.getData('text/plain');
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -333,6 +328,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
       }
       ctx.drawImage(image, x - width / 2, y - height / 2, width, height);
     };
+    setDraggedImage(null);
   };
 
   return (
@@ -349,6 +345,15 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
+        {draggedImage && (
+          <img
+            src={draggedImage}
+            alt="Dragged Image"
+            draggable
+            onDragStart={(event) => handleDragStartImage(event, draggedImage)}
+          />
+        )}
+
         <Canvas
           forwardedRef={canvasRef}
           onMouseMove={handleMouseMove}

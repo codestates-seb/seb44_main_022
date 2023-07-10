@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import custom_icon from '../../../assets/images/img_modal/custom_icon.png';
@@ -68,9 +68,12 @@ const ContentImageContainer = styled.div`
 `;
 
 const CustomSidebar: React.FC = () => {
+  const [draggedImage, setDraggedImage] = useState<string | null>(null);
+
   const handleImageDragStart = (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => {
     event.dataTransfer.setData('text/plain', imageUrl);
     event.dataTransfer.setData('application/my-app-type', 'image');
+    setDraggedImage(imageUrl);
   };
 
   return (
@@ -83,56 +86,56 @@ const CustomSidebar: React.FC = () => {
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              draggable="true"
+              draggable
               onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              draggable="true"
+              draggable
               onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              draggable="true"
+              draggable
               onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              draggable="true"
+              draggable
               onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              draggable="true"
+              draggable
               onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              draggable="true"
+              draggable
               onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
           </ContentImageContainer>
         </ContentItem>
         <ContentText>맛</ContentText>
         <ContentItem>
-          <ContentImage src={modal_cake} alt="Cake Icon" draggable="true" />
+          <ContentImage src={modal_cake} alt="Cake Icon" draggable />
         </ContentItem>
         <ContentText>크림</ContentText>
         <ContentItem>
-          <ContentImage src={modal_cake} alt="Cake Icon" draggable="true" />
+          <ContentImage src={modal_cake} alt="Cake Icon" draggable />
         </ContentItem>
         <ContentText>토핑</ContentText>
         <ContentItem>
-          <ContentImage src={modal_cake} alt="Cake Icon" draggable="true" />
+          <ContentImage src={modal_cake} alt="Cake Icon" draggable />
         </ContentItem>
         <ContentText>그림판</ContentText>
         <ContentItem>
-          <ContentImage src={modal_cake} alt="Cake Icon" draggable="true" />
+          <ContentImage src={modal_cake} alt="Cake Icon" draggable />
         </ContentItem>
       </SidebarContent>
     </Sidebar>

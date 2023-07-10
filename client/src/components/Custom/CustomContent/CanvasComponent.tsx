@@ -18,15 +18,15 @@ const Wrapper = styled.div`
 `;
 
 type CanvasWrapperProps = {
-  children: React.ReactElement;
-  forwardedRef: React.RefObject<HTMLDivElement>;
+  children: React.ReactNode;
+  forwardedRef?: React.RefObject<HTMLDivElement>;
   onDragOver: React.DragEventHandler<HTMLDivElement>;
   onDrop: React.DragEventHandler<HTMLDivElement>;
 };
 
 const CanvasWrapper: React.FC<CanvasWrapperProps> = ({
   children,
-  forwardedRef,
+  forwardedRef = React.createRef<HTMLDivElement>(),
   onDragOver,
   onDrop,
 }) => {
@@ -38,13 +38,18 @@ const CanvasWrapper: React.FC<CanvasWrapperProps> = ({
 };
 
 type CanvasProps = {
-  forwardedRef: React.RefObject<HTMLCanvasElement>;
+  forwardedRef?: React.RefObject<HTMLCanvasElement>;
   onMouseMove: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   onMouseDown: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   onMouseUp: () => void;
 };
 
-const Canvas: React.FC<CanvasProps> = ({ forwardedRef, onMouseMove, onMouseDown, onMouseUp }) => {
+const Canvas: React.FC<CanvasProps> = ({
+  forwardedRef = React.createRef<HTMLCanvasElement>(),
+  onMouseMove,
+  onMouseDown,
+  onMouseUp,
+}) => {
   return (
     <canvas
       ref={forwardedRef}
