@@ -1,5 +1,4 @@
 import { FlattenSimpleInterpolation, css } from 'styled-components';
-import { CartCategoryNameList } from '../interface/Cart.interface';
 
 export const REGEX = {
   nickname: /^[가-힣a-zA-Z0-9]{4,12}$/,
