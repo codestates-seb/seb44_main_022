@@ -51,7 +51,6 @@ public class Ingredient {
         DONUT_BASE,
         CREAM,
         TOPPING,
-        FILLING,
-        LETTERING
+        FILLING
     }
 }
