@@ -17,4 +17,6 @@ public interface CartService {
     void addCustomProductToCart(MultipartFile file, Long productId) throws Exception;
 
     CartResDto.PatchTotalPrcie updateProductCount(Long memberId , CartReqDto.CartProductCount cartProductCount) throws Exception;
+
+    CartResDto.CartAllInfo paymentSelectedProduct(CartReqDto.CartIds cartIds) throws Exception;
 }

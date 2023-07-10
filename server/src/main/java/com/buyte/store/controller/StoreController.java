@@ -1,7 +1,9 @@
 package com.buyte.store.controller;
 
+import com.buyte.product.dto.ProductDetailsDto;
+import com.buyte.product.service.ProductService;
 import com.buyte.store.dto.StoreDetailsDto;
-import com.buyte.store.dto.StoreInfoDto;
+import com.buyte.store.dto.StoreInfoPageDto;
 import com.buyte.store.dto.StoreMapDto;
 import com.buyte.store.service.StoreService;
 import java.util.List;
@@ -23,25 +25,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class StoreController {
 
     private final StoreService storeService;
+    private final ProductService productService;
 
-    public StoreController(StoreService storeService) {
+    public StoreController(StoreService storeService, ProductService productService) {
         this.storeService = storeService;
+        this.productService = productService;
     }
 
     @GetMapping
-    public ResponseEntity getStoreList(@RequestParam(required = false) String storeName) {
+    public ResponseEntity getStores(
+        @RequestParam(required = false, defaultValue = "1") int page,
+        @RequestParam(required = false) String search) {
 
-        List<StoreInfoDto> storeInfoDtoList = storeService.getStoreList(storeName);
+        StoreInfoPageDto storeInfoPageDto = storeService.getStores(page - 1, search);
 
-        return new ResponseEntity<>(storeInfoDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(storeInfoPageDto, HttpStatus.OK);
     }
 
     @GetMapping("/map")
     public ResponseEntity getStoreMap() {
 
-        List<StoreMapDto> storeMapDtoList = storeService.getStoreMap();
+        List<StoreMapDto> storeMapList = storeService.getStoreMap();
 
-        return new ResponseEntity<>(storeMapDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(storeMapList, HttpStatus.OK);
     }
 
     @GetMapping("/{store-id}")
@@ -52,4 +58,19 @@ public class StoreController {
         return new ResponseEntity<>(storeDetails, HttpStatus.OK);
     }
 
+    @GetMapping("/{store-id}/{product-id}")
+    public ResponseEntity getProductDetails(@PathVariable("store-id") @Positive long storeId,
+        @PathVariable("product-id") @Positive long productId) {
+
+        ProductDetailsDto productDetailsDto = productService.getProductDetails(storeId, productId);
+
+        return new ResponseEntity<>(productDetailsDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/{store-id}/custom/{product-id}")
+    public ResponseEntity getCustomProductDetails(
+        @PathVariable("product-id") @Positive long productId) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ProductInfoDto {
+public class CustomProductInfoDto {
 
     private long productId;
     private String productImage;

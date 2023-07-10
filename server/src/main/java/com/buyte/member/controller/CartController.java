@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,6 +53,13 @@ public class CartController {
         }
         CartResDto.PatchTotalPrcie patchTotalPrcie = cartService.updateProductCount(memberId, cartProductCount);
         return ResponseEntity.ok(patchTotalPrcie);
+    }
+
+    @PostMapping("/cart/{member_id}/payment")
+    public ResponseEntity<CartResDto.CartAllInfo> paymentPorducts(@RequestBody CartReqDto.CartIds cartIds) throws Exception {
+        CartResDto.CartAllInfo selectedCart = cartService.paymentSelectedProduct(cartIds);
+
+        return ResponseEntity.ok(selectedCart);
     }
 
 }

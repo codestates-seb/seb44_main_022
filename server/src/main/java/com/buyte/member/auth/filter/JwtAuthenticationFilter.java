@@ -5,18 +5,16 @@ import com.buyte.member.auth.jwt.JwtTokenizer;
 import com.buyte.member.entity.Member;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.Duration;
 
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authenticationManager;
@@ -47,50 +45,25 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) {
         Member member = (Member) authResult.getPrincipal();
 
-        String accessToken = delegateAccessToken(member);
+        String accessToken = jwtTokenizer.delegateAccessToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
-        response.addCookie(createCookie(member));
+        response.addHeader("Set-Cookie", createCookie(member).toString());
     }
 
-    private String delegateAccessToken(Member member) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("memberId", member.getMemberId());
-        claims.put("loginId", member.getLoginId());
-        claims.put("memberName", member.getMemberName());
-        claims.put("memberType", member.getMemberType());
-        claims.put("memberRole", member.getMemberRole());
-
-        String subject = member.getLoginId();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
-        String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
-
-        return accessToken;
-    }
-
-    private String delegateRefreshToken(Member member) {
-        String subject = member.getLoginId();
-        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
-
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
-        String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-
-        return refreshToken;
-    }
-    private Cookie createCookie(Member member){
+    private ResponseCookie createCookie(Member member) {
         String cookieName = "RefreshToken";
-        String cookieValue = delegateRefreshToken(member);
+        String cookieValue = jwtTokenizer.delegateRefreshToken(member);
 
-        Cookie cookie = new Cookie(cookieName, cookieValue);
+        ResponseCookie cookie = ResponseCookie.from(cookieName, cookieValue)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(1))
+                .sameSite("None") // Lax
+//                .domain(".localhost")
+                .build();
 
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(60*60*24);
         return cookie;
     }
 }
