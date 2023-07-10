@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import eraser from '../../../assets/images/img_modal/eraser.png';
+import pencil from '../../../assets/images/img_modal/pencil.png';
 
 const ButtonStyled = styled.button<{ eraser: boolean }>`
   position: relative;
@@ -11,7 +12,7 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   border: none;
   cursor: grab;
 
-  background-image: url('${eraser}');
+  background-image: url(${(props) => (props.eraser ? eraser : pencil)});
 
   background-repeat: no-repeat;
   background-size: cover;

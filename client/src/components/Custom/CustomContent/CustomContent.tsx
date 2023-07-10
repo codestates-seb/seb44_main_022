@@ -6,7 +6,6 @@ import RangeInput from './RangeInput';
 import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
 import DragButton from './DragButton';
-import DrawButton from './DrawButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 
 const ContentContainer = styled.div`
@@ -39,6 +38,10 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<string>(selectedImageProp);
+  const [drawingActions, setDrawingActions] = useState<
+    { x: number; y: number; color: string; size: number }[]
+  >([]);
+
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
   };
@@ -159,14 +162,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
     setIsDragging(false);
   };
 
-  const handleDrawButtonClick = () => {
-    setEraser(false);
-    setDrawingMode(true);
-    setIsDragging(false);
-  };
-
   const handleToggleDrag = () => {
-    setDrawingMode(true);
+    setDrawingMode(false);
     setIsDragging((prev) => !prev);
     setEraser(false);
   };
@@ -233,12 +230,14 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
       }
     }
   }, [images, selectedImageProp]);
+
   const handleDragStart = (event: React.DragEvent<HTMLImageElement>) => {
     if (selectedImageProp) {
       const imageUrl = event.currentTarget.src;
       event.dataTransfer.setData('text/plain', imageUrl);
     }
   };
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
@@ -280,7 +279,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
-        <DrawButton onClick={handleDrawButtonClick} />
         <DragButton onToggleDrag={handleToggleDrag} />
         {!isLoading && <UploadButton id="upload-button" onUpload={handleUploadImage} />}
       </RangeInputContainer>
