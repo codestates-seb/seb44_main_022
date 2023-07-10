@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
 import upload from '../../../assets/images/img_modal/upload.png';
+
 const InputStyled = styled.input.attrs({
   type: 'file',
   accept: 'image/*',
@@ -42,11 +43,26 @@ const InputStyled = styled.input.attrs({
     filter: brightness(1.2);
   }
 `;
-interface UploadButtonProps {
+
+type UploadButtonProps = {
   id: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
-const UploadButton: React.FC<UploadButtonProps> = ({ id, onChange }) => {
-  return <InputStyled type="file" id={id} onChange={onChange} />;
+  onUpload: (imageUrl: string) => void;
 };
+
+const UploadButton: React.FC<UploadButtonProps> = ({ id, onUpload }) => {
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageUrl = e.target?.result as string;
+        onUpload(imageUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  return <InputStyled type="file" id={id} onChange={handleUpload} />;
+};
+
 export default UploadButton;

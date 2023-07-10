@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import custom_icon from '../../../assets/images/img_modal/custom_icon.png';
+
 const Sidebar = styled.div`
   position: absolute;
   top: 0;
@@ -39,6 +40,7 @@ const ContentItem = styled.div`
   display: flex;
   align-items: center;
   padding: 10px;
+  cursor: pointer; /* Added cursor pointer */
 `;
 
 const ContentImage = styled.img`
@@ -47,6 +49,7 @@ const ContentImage = styled.img`
   margin-right: 10px;
   border: 1px solid var(--light-gray);
   border-radius: 4px;
+  pointer-events: auto;
 `;
 
 const ContentText = styled.p`
@@ -64,41 +67,75 @@ const ContentImageContainer = styled.div`
   margin-top: 10px;
   height: 60px;
 `;
-function CustomSidebar() {
+
+type CustomSidebarProps = {
+  onImageClick: (imageUrl: string) => void;
+  selectedImage: string;
+};
+
+const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick }) => {
+  const handleImageClick = (imageUrl: string) => {
+    onImageClick(imageUrl);
+  };
+
   return (
     <Sidebar>
       <SidebarContent>
         <CustomIcon src={custom_icon} alt="Custom Icon" />
         <ContentText>베이스</ContentText>
-        <ContentItem>
+        <ContentItem onClick={() => handleImageClick(modal_cake)}>
           <ContentImageContainer>
-            <ContentImage src={modal_cake} alt="Cake Icon" />
-            <ContentImage src={modal_cake} alt="Cake Icon" />
-            <ContentImage src={modal_cake} alt="Cake Icon" />
-            <ContentImage src={modal_cake} alt="Cake Icon" />
-            <ContentImage src={modal_cake} alt="Cake Icon" />
-            <ContentImage src={modal_cake} alt="Cake Icon" />
+            <ContentImage
+              src={modal_cake}
+              alt="Cake Icon"
+              onClick={() => handleImageClick(modal_cake)}
+            />
+            <ContentImage
+              src={modal_cake}
+              alt="Cake Icon"
+              onClick={() => handleImageClick(modal_cake)}
+            />
+            <ContentImage
+              src={modal_cake}
+              alt="Cake Icon"
+              onClick={() => handleImageClick(modal_cake)}
+            />
+            <ContentImage
+              src={modal_cake}
+              alt="Cake Icon"
+              onClick={() => handleImageClick(modal_cake)}
+            />
+            <ContentImage
+              src={modal_cake}
+              alt="Cake Icon"
+              onClick={() => handleImageClick(modal_cake)}
+            />
+            <ContentImage
+              src={modal_cake}
+              alt="Cake Icon"
+              onClick={() => handleImageClick(modal_cake)}
+            />
           </ContentImageContainer>
         </ContentItem>
         <ContentText>맛</ContentText>
-        <ContentItem>
+        <ContentItem onClick={() => handleImageClick(modal_cake)}>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
         <ContentText>크림</ContentText>
-        <ContentItem>
+        <ContentItem onClick={() => handleImageClick(modal_cake)}>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
         <ContentText>토핑</ContentText>
-        <ContentItem>
+        <ContentItem onClick={() => handleImageClick(modal_cake)}>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
         <ContentText>그림판</ContentText>
-        <ContentItem>
+        <ContentItem onClick={() => handleImageClick(modal_cake)}>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
       </SidebarContent>
     </Sidebar>
   );
-}
+};
 
 export default CustomSidebar;

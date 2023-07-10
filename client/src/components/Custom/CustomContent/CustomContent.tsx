@@ -28,7 +28,7 @@ const ContentContainer = styled.div`
   overflow: hidden;
 `;
 
-const CustomContent: React.FC = () => {
+const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageProp }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<number>(5);
@@ -38,13 +38,17 @@ const CustomContent: React.FC = () => {
   const [drawingMode, setDrawingMode] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const [selectedImage, setSelectedImage] = useState<string>('');
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
   };
 
   const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setColor(event.target.value);
+  };
+
+  const handleUploadImage = (imageUrl: string) => {
+    setImages((prevImages) => [...prevImages, imageUrl]);
   };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
@@ -85,7 +89,7 @@ const CustomContent: React.FC = () => {
             };
 
             image.onerror = () => {
-              resolve(null); // 이미지 로딩 실패 시 null 반환
+              resolve(null); // Return null on image loading failure
             };
           }
         );
@@ -155,27 +159,6 @@ const CustomContent: React.FC = () => {
     setIsDragging(false);
   };
 
-  const handleUploadButtonClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-
-    if (file) {
-      setIsLoading(true);
-
-      const url = URL.createObjectURL(file);
-      const image = new Image();
-      image.src = url;
-
-      image.onload = () => {
-        setImages((prevImages) => [...prevImages, url]);
-        setIsLoading(false);
-      };
-
-      image.onerror = () => {
-        setIsLoading(false);
-      };
-    }
-  };
-
   const handleDrawButtonClick = () => {
     setEraser(false);
     setDrawingMode(true);
@@ -230,9 +213,26 @@ const CustomContent: React.FC = () => {
           ctx.drawImage(image, 200, 200, width, height);
         };
       });
+      if (selectedImageProp !== '') {
+        const image = new Image();
+        image.src = selectedImageProp;
+        image.onload = () => {
+          const { naturalWidth, naturalHeight } = image;
+          const targetWidth = 300;
+          const targetHeight = 300;
+          const aspectRatio = naturalWidth / naturalHeight;
+          let width = targetWidth;
+          let height = targetHeight;
+          if (targetWidth / targetHeight > aspectRatio) {
+            width = targetHeight * aspectRatio;
+          } else {
+            height = targetWidth / aspectRatio;
+          }
+          ctx.drawImage(image, 200, 200, width, height);
+        };
+      }
     }
-  }, [images]);
-
+  }, [images, selectedImage]);
   return (
     <ContentContainer>
       <RangeInputContainer>
@@ -241,7 +241,7 @@ const CustomContent: React.FC = () => {
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <DrawButton onClick={handleDrawButtonClick} />
         <DragButton onToggleDrag={handleToggleDrag} />
-        {!isLoading && <UploadButton id="upload-button" onChange={handleUploadButtonClick} />}
+        {!isLoading && <UploadButton id="upload-button" onUpload={handleUploadImage} />}
       </RangeInputContainer>
       <CanvasWrapper forwardedRef={canvasWrapperRef}>
         <Canvas

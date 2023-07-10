@@ -17,21 +17,21 @@ const Wrapper = styled.div`
   }
 `;
 
-interface CanvasWrapperProps {
-  children: React.ReactNode;
+type CanvasWrapperProps = {
+  children: React.ReactElement;
   forwardedRef: React.RefObject<HTMLDivElement>;
-}
+};
 
 const CanvasWrapper: React.FC<CanvasWrapperProps> = ({ children, forwardedRef }) => {
   return <Wrapper ref={forwardedRef}>{children}</Wrapper>;
 };
 
-interface CanvasProps {
+type CanvasProps = {
   forwardedRef: React.RefObject<HTMLCanvasElement>;
   onMouseMove: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   onMouseDown: (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => void;
   onMouseUp: () => void;
-}
+};
 
 const Canvas: React.FC<CanvasProps> = ({ forwardedRef, onMouseMove, onMouseDown, onMouseUp }) => {
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import CustomSidebar from '../components/Custom/CustomContent/CustomSidebar';
@@ -55,19 +55,6 @@ const ModalContainer = styled.div`
   flex-direction: column;
 `;
 
-const CloseButton = styled.button`
-  position: absolute;
-  width: 70px;
-  height: 50px;
-  top: 0px;
-  right: 0px;
-  padding: 10px;
-  border: none;
-  background-color: rgba(20, 46, 56, 0.9);
-  color: white;
-  border-radius: 0px 20px 0px 0px;
-`;
-
 const CustomContainer = styled.div`
   position: absolute;
   top: 50%;
@@ -85,6 +72,11 @@ const CustomContainer = styled.div`
 `;
 
 const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentLabel }) => {
+  const [selectedImage, setSelectedImage] = useState<string>('');
+
+  const handleImageClick = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+  };
   return (
     <ModalContainer>
       {isOpen && <Overlay />}
@@ -98,8 +90,12 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentL
       >
         <CustomContainer>
           <Title>BUYTE</Title>
-          <CustomSidebar />
-          <CustomContent />
+          <CustomSidebar
+            onImageClick={handleImageClick}
+            selectedImage={selectedImage}
+            setSelectedImage={setSelectedImage}
+          />
+          <CustomContent selectedImageProp={selectedImage} />
         </CustomContainer>
         <ModalButtons onRequestClose={onRequestClose} />
       </StyledModal>
