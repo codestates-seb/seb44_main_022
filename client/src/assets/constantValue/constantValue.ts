@@ -1,5 +1,5 @@
 import { FlattenSimpleInterpolation, css } from 'styled-components';
-import { AiOutlineShoppingCart, AiOutlineCreditCard, AiOutlineCheckCircle } from 'react-icons/ai';
+import { CartCategoryNameList } from '../interface/Cart.interface';
 
 export const REGEX = {
   nickname: /^[가-힣a-zA-Z0-9]{4,12}$/,
@@ -84,3 +84,5 @@ export const CART_CATEGORY_NAME = [
     icon: 'order',
   },
 ];
+
+export const DELIVERY_FEE = 3500;

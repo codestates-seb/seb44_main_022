@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { ErrorBox, Icons, InputBox, UserInputWrapper } from './UserInput.style';
 import { InputProps } from '../../assets/interface/Input.interface';
+import { ErrorBox, Icons, InputBox, UserInputWrapper } from './UserInput.style';
 
 function UserInput({
   setState,

@@ -3,8 +3,8 @@ import { FcGoogle } from 'react-icons/fc';
 import LoginForm from '../LoginForm';
 import RoundButton from '../../../components/RoundButton/RoundButton';
 import SignUpForm from '../SignUpForm';
-import { AuthCategory, AuthContainer, AuthContentContainer, AuthImage } from './Auth.style';
 import Logo from '../../../components/Logo/Logo';
+import { AuthCategory, AuthContainer, AuthContentContainer, AuthImage } from './Auth.style';
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);

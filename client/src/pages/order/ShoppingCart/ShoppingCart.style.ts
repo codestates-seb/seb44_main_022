@@ -8,6 +8,10 @@ export const CartContainer = styled.div`
   margin: 11rem auto 10rem auto;
   min-width: 500px;
   height: auto;
+
+  @media screen and (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const CartCategoryContainer = styled.div`
@@ -66,4 +70,11 @@ export const TotalPaymentContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 3.5rem 0;
+`;
+
+export const CartCategoryName = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
 `;

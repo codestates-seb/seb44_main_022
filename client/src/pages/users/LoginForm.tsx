@@ -1,13 +1,13 @@
 import { MdLocalPostOffice } from 'react-icons/md';
-import UserInput from '../../components/UserInput/UserInput';
 import { AiFillLock } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import UserInput from '../../components/UserInput/UserInput';
 import RoundButton from '../../components/RoundButton/RoundButton';
 import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
-import { useDispatch } from 'react-redux';
 import { setAccessToken } from '../../redux/reducer/loginReducer';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { postLogin } from '../../api/authApis';
 
 function LoginForm() {
   const [userId, setUserId] = useState<string>('');
@@ -20,14 +20,18 @@ function LoginForm() {
   const handleLoginSubmit: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     if (userIdValid && passwordValid) {
-      // 통신 코드 예정
+      postLogin(userId, password)
+        .then((res) => {
+          dispatch(setAccessToken(res.headers['authorization']));
+          navigate('/');
+          alert('통신 성공');
+          return;
+        })
+        .catch((err) => console.log(err));
       // axios
       //   .post(
-      //     'https://604b-218-53-232-194.ngrok-free.app/login',
-      //     {
-      //       loginId: userId,
-      //       password: password,
-      //     },
+      //     'https://11e5-218-53-232-194.ngrok-free.app/token/refresh',
+      //     {},
       //     {
       //       headers: {
       //         'ngrok-skip-browser-warning': true,
@@ -36,11 +40,6 @@ function LoginForm() {
       //   )
       //   .then((res) => console.log(res))
       //   .catch((err) => console.log(err));
-      dispatch(setAccessToken('AccessToken'));
-      document.cookie = `refreshToken=refreshToken; Secure; Path=/;`;
-      console.log(userId, password);
-      navigate('/');
-      alert('통신 성공');
       return;
     }
   };

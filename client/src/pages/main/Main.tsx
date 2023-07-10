@@ -1,9 +1,9 @@
 import styled, { keyframes } from 'styled-components';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import Slider from 'react-slick';
 import Header from '../../share/Header';
 import Footer from '../../share/Footer';
-import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -197,7 +197,7 @@ const Section2Text = styled.div`
   color: black;
   font-family: sans-serif;
   position: absolute;
-  bottom: -30%;
+  top: 40%;
   left: 10%;
   animation: ${slideAnimation} 2s ease-in-out forwards;
 
@@ -288,7 +288,6 @@ const Main: React.FunctionComponent = () => {
           </Section4Container>
         </Section4>
       </Body>
-      <Footer />
     </MainRoot>
   );
 };
