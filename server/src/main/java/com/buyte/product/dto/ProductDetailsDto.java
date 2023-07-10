@@ -15,5 +15,4 @@ public class ProductDetailsDto {
     private String productIntroduction;
     private String productImage;
     private List<IngredientOriginDto> ingredientOriginList;
-    private List<AllergyIngredientDto> allergyIngredientList;
 }
