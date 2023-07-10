@@ -9,6 +9,7 @@ public enum ExceptionCode {
     STORE_NOT_FOUND(404, "Store not found"),
     PRODUCT_NOT_FOUND(404, "Product not found"),
     PRODUCT_TYPE_CUSTOM_FORBIDDEN(403, "Access to product details for custom products is forbidden"),
+    PRODUCT_TYPE_STANDARD_FORBIDDEN(403, "Access to product details for standard products is forbidden"),
     LOGOUT(401, "Logout"),
     NO_COOKIE(403, "No Cookie"),
     INVALID_REFRESH_TOKEN_STATE(403, "Invalid Refresh Token State"),
