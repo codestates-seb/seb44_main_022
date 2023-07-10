@@ -1,9 +1,8 @@
 package com.buyte.product.controller;
 
-import com.buyte.product.dto.PreferenceProductDto;
+import com.buyte.product.dto.PreferenceProductPageDto;
 import com.buyte.product.service.ProductService;
-import com.buyte.store.dto.StoreInfoDto;
-import java.util.List;
+import javax.validation.constraints.Positive;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +25,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity getPreferenceProductList(@RequestParam(required = false) String category) {
+    public ResponseEntity getPreferenceProducts(@Positive @RequestParam(required = false, defaultValue = "1") int page) {
 
-        List<PreferenceProductDto> preferenceProductDtoList = productService.getPreferenceProductList(category);
+        PreferenceProductPageDto preferenceProductPageDto = productService.getPreferenceProducts(page - 1);
 
-        return new ResponseEntity<>(preferenceProductDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(preferenceProductPageDto, HttpStatus.OK);
     }
 }
