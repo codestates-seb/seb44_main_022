@@ -6,6 +6,7 @@ import RangeInput from './RangeInput';
 import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
 import DragButton from './DragButton';
+import DrawButton from './DrawButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 
 const ContentContainer = styled.div`
@@ -51,7 +52,34 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
   };
 
   const handleUploadImage = (imageUrl: string) => {
-    setImages((prevImages) => [...prevImages, imageUrl]);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    setIsDragging(false); // Reset dragging state
+
+    const image = new Image();
+    image.src = imageUrl;
+
+    image.onload = () => {
+      const { naturalWidth, naturalHeight } = image;
+      const targetWidth = 200;
+      const targetHeight = 200;
+      const aspectRatio = naturalWidth / naturalHeight;
+      let width = targetWidth;
+      let height = targetHeight;
+      if (targetWidth / targetHeight > aspectRatio) {
+        width = targetHeight * aspectRatio;
+      } else {
+        height = targetWidth / aspectRatio;
+      }
+
+      ctx.drawImage(image, 200, 200, width, height);
+
+      setImages((prevImages) => [...prevImages, imageUrl]);
+    };
   };
 
   const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
@@ -74,8 +102,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
 
             image.onload = () => {
               const { naturalWidth, naturalHeight } = image;
-              const targetWidth = 300;
-              const targetHeight = 300;
+              const targetWidth = 200;
+              const targetHeight = 200;
               const aspectRatio = naturalWidth / naturalHeight;
               let width = targetWidth;
               let height = targetHeight;
@@ -105,8 +133,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
             const { image, xPos, yPos } = loadedImage;
 
             const { naturalWidth, naturalHeight } = image;
-            const targetWidth = 300;
-            const targetHeight = 300;
+            const targetWidth = 200;
+            const targetHeight = 200;
             const aspectRatio = naturalWidth / naturalHeight;
             let width = targetWidth;
             let height = targetHeight;
@@ -127,9 +155,14 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
       ctx.strokeStyle = eraser ? 'rgba(0,0,0,1)' : color;
       ctx.lineTo(x, y);
       ctx.stroke();
+
+      // Save the drawing action
+      setDrawingActions((prevActions) => [
+        ...prevActions,
+        { x, y, color: eraser ? 'rgba(0,0,0,1)' : color, size },
+      ]);
     }
   };
-
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
     if (canvas && !drawingMode) {
@@ -162,8 +195,38 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
     setIsDragging(false);
   };
 
+  const handleDrawButtonClick = () => {
+    setEraser(false);
+    setDrawingMode(true);
+    setIsDragging(false);
+
+    // Redraw all drawing actions except the ones erased by the eraser
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext('2d');
+    if (canvas && ctx) {
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Iterate through drawingActions and redraw all actions
+      drawingActions.forEach((action) => {
+        if (action.color !== 'rgba(0,0,0,1)') {
+          ctx.beginPath();
+          ctx.moveTo(action.x, action.y);
+          ctx.lineWidth = action.size;
+          ctx.strokeStyle = action.color;
+        } else {
+          // Skip eraser actions
+          return;
+        }
+
+        ctx.lineTo(action.x, action.y);
+        ctx.stroke();
+      });
+    }
+  };
+
   const handleToggleDrag = () => {
-    setDrawingMode(false);
+    setDrawingMode(true);
     setIsDragging((prev) => !prev);
     setEraser(false);
   };
@@ -197,8 +260,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         image.onload = () => {
           const naturalWidth = image.naturalWidth;
           const naturalHeight = image.naturalHeight;
-          const targetWidth = 300;
-          const targetHeight = 300;
+          const targetWidth = 200;
+          const targetHeight = 200;
           const aspectRatio = naturalWidth / naturalHeight;
           let width = targetWidth;
           let height = targetHeight;
@@ -215,8 +278,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         image.src = selectedImageProp;
         image.onload = () => {
           const { naturalWidth, naturalHeight } = image;
-          const targetWidth = 300;
-          const targetHeight = 300;
+          const targetWidth = 200;
+          const targetHeight = 200;
           const aspectRatio = naturalWidth / naturalHeight;
           let width = targetWidth;
           let height = targetHeight;
@@ -230,7 +293,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
       }
     }
   }, [images, selectedImageProp]);
-
   const handleDragStart = (event: React.DragEvent<HTMLImageElement>) => {
     if (selectedImageProp) {
       const imageUrl = event.currentTarget.src;
@@ -259,8 +321,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
     image.src = imageUrl;
     image.onload = () => {
       const { naturalWidth, naturalHeight } = image;
-      const targetWidth = 300;
-      const targetHeight = 300;
+      const targetWidth = 200;
+      const targetHeight = 200;
       const aspectRatio = naturalWidth / naturalHeight;
       let width = targetWidth;
       let height = targetHeight;
