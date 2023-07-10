@@ -4,6 +4,7 @@ import styled, {css} from 'styled-components';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import modal_ex from '../assets/images/img_modal/modal_ex.png';
+import ProductCartAlert from '../components/ProductCard/ProductCartAlert';
 
 //해야하는 것: 제품을 눌렀을 때 api요청으로 해당 상폼 관련 데이터 받아오기, 이후 뿌려주기 
 
@@ -49,6 +50,7 @@ function ModalComponentDetail({
         shouldCloseOnOverlayClick={false}
         overlayClassName="overlay"
       >
+        <ProductCartAlert/>
         <ModalContainer>
           <Title>BUYTE</Title>
           <Product>
@@ -66,6 +68,7 @@ function ModalComponentDetail({
           </TextContainer>
           <CircleShape />
           <Rectangle />
+          
           <ModalContent>{children}</ModalContent>
           <ModalButtons>
             <CloseButton onClick={onRequestClose}>X</CloseButton>
@@ -154,7 +157,7 @@ const StyledModal = styled(Modal)`
       background-color: rgba(255, 255, 255, 0.9);
       z-index: 10;
       outline: none;
-     border: none;
+      border: none;
     `}
 `;
 

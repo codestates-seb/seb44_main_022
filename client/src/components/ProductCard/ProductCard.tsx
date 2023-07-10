@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useState, useRef, useEffect } from 'react';
 import ModalComponentDetail from '../../share/ModalComponentDetail'
-
 interface Product {
   productId: number;
   productImage: string;
