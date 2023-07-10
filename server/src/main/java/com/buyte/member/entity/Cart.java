@@ -41,12 +41,12 @@ public class Cart {
     @Column(name = "product_count")
     private Integer productCount;
 
-    @Builder //나중에 바꾸기
-    public Cart( Product product, String cartCustomProductImage, Integer cartCustomProductPrice) {
+    public Cart( Product product, String cartCustomProductImage, Integer cartCustomProductPrice, Member member) {
 
         this.product = product;
         this.cartCustomProductImage = cartCustomProductImage;
         this.cartCustomProductPrice = cartCustomProductPrice;
+        this.member = member;
         this.productCount = 1;
     }
 

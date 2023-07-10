@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,7 +48,9 @@ public class CartServiceImpl implements CartService{
     @Override
     public void addProductToCart(Long productId) throws Exception {
         Product product = productRepository.findById(productId).orElseThrow();
-        Cart cart = new Cart(product, product.getProductImage(), product.getProductPrice());
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
+        Cart cart = new Cart(product, product.getProductImage(), product.getProductPrice(),member);
 
         cartRepository.save(cart);
 
@@ -60,7 +63,9 @@ public class CartServiceImpl implements CartService{
             throw new IllegalArgumentException("파일이 존재하지 않습니다.");
         }
         String storedFileName = s3Service.upload(file, "customProduct");
-        Cart cart = new Cart(product, storedFileName, product.getProductPrice());
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
+        Cart cart = new Cart(product, storedFileName, product.getProductPrice(),member);
         cartRepository.save(cart);
     }
 
