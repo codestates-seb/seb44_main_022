@@ -28,7 +28,7 @@ public class CartController {
         return ResponseEntity.ok(memberCart);
     }
 
-    @DeleteMapping("/cart/delete") //cartid를 위조해서 보낼시 다른사람 카트 목록 삭제???
+    @DeleteMapping("/cart/delete")
     public ResponseEntity deletePorducts(@RequestBody CartReqDto.CartIds cartIds) {
         cartService.deleteSelectedProducts(cartIds);
 

@@ -44,7 +44,8 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void deleteSelectedProducts(CartReqDto.CartIds cartIds)  {
-        cartRepository.deleteByCartIdIn(cartIds.getCartIds());
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        cartRepository.deleteByCartIdInaAndMemberMemberId(cartIds.getCartIds(),authenticatedMemberId);
     }
 
     @Override
