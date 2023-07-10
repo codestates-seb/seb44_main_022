@@ -85,7 +85,7 @@ const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick }) => {
       <SidebarContent>
         <CustomIcon src={custom_icon} alt="Custom Icon" />
         <ContentText>베이스</ContentText>
-        <ContentItem onClick={() => handleImageClick(modal_cake)}>
+        <ContentItem>
           <ContentImageContainer>
             <ContentImage
               src={modal_cake}
@@ -96,44 +96,44 @@ const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick }) => {
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              onClick={() => handleImageClick(modal_cake)}
+              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              onClick={() => handleImageClick(modal_cake)}
+              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              onClick={() => handleImageClick(modal_cake)}
+              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              onClick={() => handleImageClick(modal_cake)}
+              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
               src={modal_cake}
               alt="Cake Icon"
-              onClick={() => handleImageClick(modal_cake)}
+              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
           </ContentImageContainer>
         </ContentItem>
         <ContentText>맛</ContentText>
-        <ContentItem onClick={() => handleImageClick(modal_cake)}>
+        <ContentItem>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
         <ContentText>크림</ContentText>
-        <ContentItem onClick={() => handleImageClick(modal_cake)}>
+        <ContentItem>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
         <ContentText>토핑</ContentText>
-        <ContentItem onClick={() => handleImageClick(modal_cake)}>
+        <ContentItem>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
         <ContentText>그림판</ContentText>
-        <ContentItem onClick={() => handleImageClick(modal_cake)}>
+        <ContentItem>
           <ContentImage src={modal_cake} alt="Cake Icon" />
         </ContentItem>
       </SidebarContent>
