@@ -16,9 +16,9 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/cart/{member_id}")
-    public ResponseEntity<CartResDto.CartAllInfo> getCartInfo(@PathVariable(name = "member_id") Long memberId) throws Exception {
-        CartResDto.CartAllInfo memberCart = cartService.getInfoMemberCart(memberId);
+    @GetMapping("/cart")
+    public ResponseEntity<CartResDto.CartAllInfo> getCartInfo() throws Exception {
+        CartResDto.CartAllInfo memberCart = cartService.getInfoMemberCart();
 
         return ResponseEntity.ok(memberCart);
     }

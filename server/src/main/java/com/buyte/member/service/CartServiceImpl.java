@@ -1,6 +1,7 @@
 package com.buyte.member.service;
 
 import com.buyte.config.S3Service;
+import com.buyte.member.auth.utils.SecurityUtil;
 import com.buyte.member.dto.CartReqDto;
 import com.buyte.member.dto.CartResDto;
 import com.buyte.member.entity.Cart;
@@ -30,9 +31,9 @@ public class CartServiceImpl implements CartService{
     private final S3Service s3Service;
 
     @Override
-    public CartResDto.CartAllInfo getInfoMemberCart(Long memberId) throws Exception {
-        Member member = memberRepository.findById(memberId).orElseThrow();
-        List<Cart> cartList = member.getCartList();
+    public CartResDto.CartAllInfo getInfoMemberCart() throws Exception {
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        List<Cart> cartList = cartRepository.findAllByMemberMemberId(authenticatedMemberId);
         Integer totalPrice = getTotalPrice(cartList);
 
         return getCartAllInfo(cartList, totalPrice);

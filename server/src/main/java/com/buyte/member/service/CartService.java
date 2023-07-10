@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CartService {
 
-    CartResDto.CartAllInfo getInfoMemberCart(Long memberId) throws Exception;
+    CartResDto.CartAllInfo getInfoMemberCart() throws Exception;
 
     void deleteSelectedProducts(CartReqDto.CartIds cartIds) throws Exception;
 
