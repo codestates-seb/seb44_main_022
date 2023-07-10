@@ -1,5 +1,6 @@
 package com.buyte.member.controller;
 
+import com.buyte.member.auth.utils.SecurityUtil;
 import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
 import com.buyte.member.mapper.MemberMapper;
@@ -41,5 +42,24 @@ public class MemberController {
     public ResponseEntity logout(HttpServletRequest request) {
         memberService.logout(request);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/members")
+    public ResponseEntity memberDetails() {
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        Member member = memberService.getMemberDetails(authenticatedMemberId);
+
+        return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.OK);
+    }
+
+    @PatchMapping("/members")
+    public ResponseEntity updateMemberDetails(@RequestBody @Valid MemberDto.Patch memberPatchDto) {
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        memberPatchDto.setMemberId(authenticatedMemberId);
+
+        Member member = mapper.memberPatchToMember(memberPatchDto);
+        Member updatedMember = memberService.updateMember(member);
+
+        return new ResponseEntity<>(mapper.memberToMemberResponseDto(updatedMember), HttpStatus.OK);
     }
 }

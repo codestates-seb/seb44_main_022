@@ -29,9 +29,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration implements WebMvcConfigurer {
-    private final RedisTemplate redisTemplate;
+    private final RedisTemplate<Object, Object> redisTemplate;
 
-    public SecurityConfiguration(RedisTemplate redisTemplate) {
+    public SecurityConfiguration(RedisTemplate<Object, Object> redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
@@ -52,7 +52,9 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .apply(new CustomFilterConfigurer())
                 .and()
                 .logout().disable()
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll());
+                .authorizeHttpRequests(authorize -> authorize
+                        .antMatchers("/members/**").authenticated()
+                        .anyRequest().permitAll());
 
         return http.build();
     }
@@ -85,14 +87,17 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                     .addFilterAfter(jwtVerificationFilter, JwtAuthenticationFilter.class);
         }
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+
     @Bean
     public JwtUtils jwtUtils() {
         return new JwtUtils(jwtTokenizer());
     }
+
     @Bean
     public JwtTokenizer jwtTokenizer() {
         return new JwtTokenizer(redisTemplate);

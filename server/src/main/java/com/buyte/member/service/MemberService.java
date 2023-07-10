@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Transactional
@@ -50,7 +51,7 @@ public class MemberService {
         String refreshToken = getCookieValue(request, "RefreshToken");
         String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
 
-        RedisTemplate redisTemplate = jwtTokenizer.getRedisTemplate();
+        RedisTemplate<Object, Object> redisTemplate = jwtTokenizer.getRedisTemplate();
         String findRefreshToken = (String) redisTemplate.opsForValue().get(memberId);
 
         if (findRefreshToken.equals(refreshToken)) {
@@ -79,8 +80,29 @@ public class MemberService {
         String refreshToken = getCookieValue(request, "RefreshToken");
         String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
 
-        RedisTemplate redisTemplate = jwtTokenizer.getRedisTemplate();
+        RedisTemplate<Object, Object> redisTemplate = jwtTokenizer.getRedisTemplate();
         redisTemplate.opsForValue().set(accessToken, "logout", 5, TimeUnit.MINUTES);
         redisTemplate.opsForValue().set(memberId, "logout", 300, TimeUnit.MINUTES);
+    }
+
+    public Member getMemberDetails(long memberId){
+        Member member = findVerifiedMember(memberId);
+        return member;
+    }
+
+    public Member updateMember(Member member) {
+        Member findMember = findVerifiedMember(member.getMemberId());
+        Optional.ofNullable(member.getPassword())
+                .ifPresent(password -> findMember.setPassword(passwordEncoder.encode(password)));
+        Optional.ofNullable(member.getMemberName())
+                .ifPresent(memberName -> findMember.setMemberName(memberName));
+
+        return memberRepository.save(findMember);
+    }
+
+    private Member findVerifiedMember(long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        return member;
     }
 }
