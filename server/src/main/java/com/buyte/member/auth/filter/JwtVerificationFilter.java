@@ -1,6 +1,8 @@
 package com.buyte.member.auth.filter;
 
-import com.buyte.member.auth.jwt.JwtTokenizer;
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
+import com.buyte.member.auth.utils.JwtUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -19,24 +21,28 @@ import java.io.IOException;
 
 @Slf4j
 public class JwtVerificationFilter extends OncePerRequestFilter {
-    private final JwtTokenizer jwtTokenizer;
+    private final JwtUtils jwtUtils;
 
-    public JwtVerificationFilter(JwtTokenizer jwtTokenizer) {
-        this.jwtTokenizer = jwtTokenizer;
+    public JwtVerificationFilter(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            Jws<Claims> claims = verifyJws(request);
+            jwtUtils.checkLogout(request);
+            Jws<Claims> claims = jwtUtils.verifyJws(request);
             setAuthenticationToContext(claims);
         } catch (SignatureException se) {
             log.info("Exception, {}", se.getMessage());
-            request.setAttribute("exception", se);
+            BusinessLogicException be = new BusinessLogicException(ExceptionCode.INVALID_ACCESS_TOKEN_STATE);
+            request.setAttribute("exception", be);
         } catch (ExpiredJwtException ee) {
             log.info("ExpiredJwtException: {}", ee.getMessage());
-            request.setAttribute("exception", ee);
+            BusinessLogicException be = new BusinessLogicException(ExceptionCode.ACCESS_TOKEN_EXPIRED);
+            request.setAttribute("exception", be);
         } catch (Exception e) {
             log.info("Exception, {}", e.getMessage());
             request.setAttribute("exception", e);
@@ -56,12 +62,5 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         String loginId = (String) claims.getBody().get("loginId");
         Authentication authentication = new UsernamePasswordAuthenticationToken(loginId, null, null);
         SecurityContextHolder.getContext().setAuthentication(authentication);
-    }
-
-    private Jws<Claims> verifyJws(HttpServletRequest request) {
-        String jws = request.getHeader("Authorization").replace("Bearer", "");
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-        Jws<Claims> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey);
-        return claims;
     }
 }
