@@ -1,6 +1,8 @@
 package com.buyte.member.service;
 
 import com.buyte.config.S3Service;
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.member.auth.utils.SecurityUtil;
 import com.buyte.member.dto.CartReqDto;
 import com.buyte.member.dto.CartResDto;
@@ -41,15 +43,17 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public void deleteSelectedProducts(CartReqDto.CartIds cartIds) throws Exception {
+    public void deleteSelectedProducts(CartReqDto.CartIds cartIds)  {
         cartRepository.deleteByCartIdIn(cartIds.getCartIds());
     }
 
     @Override
-    public void addProductToCart(Long productId) throws Exception {
-        Product product = productRepository.findById(productId).orElseThrow();
+    public void addProductToCart(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
-        Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
+        Member member = memberRepository.findById(authenticatedMemberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Cart cart = new Cart(product, product.getProductImage(),member);
 
         cartRepository.save(cart);
@@ -58,20 +62,23 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void addCustomProductToCart(MultipartFile file, Long productId) throws IOException {
-        Product product = productRepository.findById(productId).orElseThrow();
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
         if(file.isEmpty()) {
             throw new IllegalArgumentException("파일이 존재하지 않습니다.");
         }
         String storedFileName = s3Service.upload(file, "customProduct");
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
-        Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
+        Member member = memberRepository.findById(authenticatedMemberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Cart cart = new Cart(product, storedFileName,member);
         cartRepository.save(cart);
     }
 
     @Override
-    public CartResDto.PatchTotalPrcie updateProductCount(CartReqDto.CartProductCount cartProductCount) throws Exception {
-        Cart patchCart = cartRepository.findById(cartProductCount.getCartId()).orElseThrow();
+    public CartResDto.PatchTotalPrcie updateProductCount(CartReqDto.CartProductCount cartProductCount) {
+        Cart patchCart = cartRepository.findById(cartProductCount.getCartId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.CART_NOT_FOUND));
         patchCart.updateProductCount(cartProductCount.getCount());
         cartRepository.save(patchCart);
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
@@ -84,7 +91,12 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public CartResDto.CartAllInfo paymentSelectedProduct(CartReqDto.CartIds cartIds) throws Exception {
+    public CartResDto.CartAllInfo paymentSelectedProduct(CartReqDto.CartIds cartIds) {
+        List<Long> selectedCartIds = cartIds.getCartIds();
+        if (selectedCartIds.isEmpty()) {
+            throw new IllegalArgumentException("선택된 카트가 없습니다.");
+        }
+
         List<Cart> cartList = cartRepository.findAllByCartIdIn(cartIds.getCartIds());
         Integer totalPrice = getTotalPrice(cartList);
 

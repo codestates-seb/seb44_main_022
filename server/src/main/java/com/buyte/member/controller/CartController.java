@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -24,14 +26,14 @@ public class CartController {
     }
 
     @DeleteMapping("/cart/delete") //cartid를 위조해서 보낼시 다른사람 카트 목록 삭제???
-    public ResponseEntity deletePorducts(@RequestBody CartReqDto.CartIds cartIds) throws Exception {
+    public ResponseEntity deletePorducts(@RequestBody CartReqDto.CartIds cartIds) {
         cartService.deleteSelectedProducts(cartIds);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/store/{store_id}/{custom_item_id}")
-    public ResponseEntity addProduct(@PathVariable(name = "custom_item_id") Long productId) throws Exception {
+    public ResponseEntity addProduct(@PathVariable(name = "custom_item_id") Long productId) {
         cartService.addProductToCart(productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -39,14 +41,14 @@ public class CartController {
 
     @PostMapping("/store/{store_id}/{custom_item_id}/custom")
     public ResponseEntity addCustomProduct(@RequestPart(value = "file") MultipartFile file,
-                                           @PathVariable(name = "custom_item_id") Long productId) throws Exception {
+                                           @PathVariable(name = "custom_item_id") Long productId) throws IOException {
         cartService.addCustomProductToCart(file,productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/cart")
-    public ResponseEntity updateProductCount(@RequestBody CartReqDto.CartProductCount cartProductCount) throws Exception {
+    public ResponseEntity updateProductCount(@RequestBody CartReqDto.CartProductCount cartProductCount) {
         if(cartProductCount.getCount() <= 0) {
             return new ResponseEntity<>("1개 이상",HttpStatus.BAD_REQUEST);
         }
@@ -55,7 +57,7 @@ public class CartController {
     }
 
     @PostMapping("/cart/payment")
-    public ResponseEntity<CartResDto.CartAllInfo> paymentPorducts(@RequestBody CartReqDto.CartIds cartIds) throws Exception {
+    public ResponseEntity<CartResDto.CartAllInfo> paymentPorducts(@RequestBody CartReqDto.CartIds cartIds) {
         CartResDto.CartAllInfo selectedCart = cartService.paymentSelectedProduct(cartIds);
 
         return ResponseEntity.ok(selectedCart);
