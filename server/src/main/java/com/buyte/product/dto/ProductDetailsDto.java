@@ -1,6 +1,5 @@
 package com.buyte.product.dto;
 
-import com.buyte.ingredient.dto.AllergyIngredientDto;
 import com.buyte.ingredient.dto.IngredientOriginDto;
 import java.util.List;
 import lombok.Builder;
