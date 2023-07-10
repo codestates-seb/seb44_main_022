@@ -1,17 +1,18 @@
-import styled from 'styled-components';
 import React from 'react';
-import pencil from '../../../assets/images/img_modal/pencil.png';
+import styled from 'styled-components';
+import undo from '../../../assets/images/img_modal/undo.png';
+
 const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   margin-left: 20px;
-  border-radius: 10%;
   border: none;
   cursor: grab;
 
-  background-image: url(${pencil});
+  background-image: url('${undo}');
+
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -37,12 +38,13 @@ const ButtonStyled = styled.button`
     filter: brightness(1.2);
   }
 `;
-interface DrawButtonProps {
-  onClick: () => void;
+
+interface UndoButtonProps {
+  onUndo: () => void;
 }
 
-const DrawButton: React.FC<DrawButtonProps> = ({ onClick }) => {
-  return <ButtonStyled onClick={onClick}></ButtonStyled>;
+const UndoButton: React.FC<UndoButtonProps> = ({ onUndo }) => {
+  return <ButtonStyled onClick={onUndo}></ButtonStyled>;
 };
 
-export default DrawButton;
+export default UndoButton;

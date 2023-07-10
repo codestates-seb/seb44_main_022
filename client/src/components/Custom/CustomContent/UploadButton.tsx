@@ -8,8 +8,8 @@ const InputStyled = styled.input.attrs({
 })`
   position: relative;
   z-index: 20;
-  height: 33px;
-  width: 41px;
+  height: 30px;
+  width: 30px;
   border-radius: 10px;
   margin-left: 20px;
   background-image: url(${upload});

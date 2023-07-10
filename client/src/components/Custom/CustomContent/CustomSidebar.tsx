@@ -75,7 +75,7 @@ type CustomSidebarProps = {
   selectedImage: string;
 };
 
-const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick, selectedImage }) => {
+const CustomSidebar: React.FC<CustomSidebarProps> = ({ onImageClick }) => {
   const handleImageClick = (imageUrl: string) => {
     onImageClick(imageUrl);
   };

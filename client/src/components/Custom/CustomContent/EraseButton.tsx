@@ -8,7 +8,6 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   width: 30px;
   height: 30px;
   margin-left: 20px;
-  border-radius: 50%;
   border: none;
   cursor: grab;
 
