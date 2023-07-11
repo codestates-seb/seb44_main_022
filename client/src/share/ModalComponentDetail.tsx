@@ -1,12 +1,78 @@
-import React from 'react';
 import Modal from 'react-modal';
+import axios from 'axios';
 import styled, {css} from 'styled-components';
+import { useState } from 'react';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
-import modal_ex from '../assets/images/img_modal/modal_ex.png';
-import ProductCartAlert from '../components/ProductCard/ProductCartAlert';
+import ProductCartAlert from '../share/ProductCartAlert';
 
-//해야하는 것: 제품을 눌렀을 때 api요청으로 해당 상폼 관련 데이터 받아오기, 이후 뿌려주기 
+//해야하는 것: 처음 제품을 눌렀을 때 api요청으로 해당 상폼 관련 데이터 받아오기, 이후 뿌려주기
+//useEffect?
+interface ProductImgContainerProps {
+  backgroundImage: string | undefined;
+}
+const ProductData = {
+  "memberId": 1,
+  "storename": "세상제일제과점",
+  "productInfoList": [
+          {
+              "productId": 1,
+              "productImage": "https://plus.unsplash.com/premium_photo-1668784193175-b16306c81100?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+              "productName": "옐로우 스마일",
+              "productPrice": 22000,
+              "productType": "STANDARD",
+              "productDetail": "입안에서 살살 녹는 옐로우 스마일 쿠키. 웃고 있는 쿠키 모양을 본따서 만들었기 때문에 즐거움을 줄 수 있습니다."
+          },
+          {
+              "productId": 2,
+              "productImage": "https://images.unsplash.com/photo-1506184341422-6cc152ae474b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+              "productName": "마시멜로",
+              "productPrice": 35000,
+              "productType": "STANDARD",
+              "productDetail": "부드러워진 젤라틴, 포도당, 계란 흰자, 조미료 등으로 거품을 일으킨 다음 설탕이나 콘 시럽, 물로 굳혀서 만드는 스펀지 형태의 폭신폭신한 사탕류 식품이다. 식용 색소를 넣어 색깔을 입히는 경우도 있다. "
+          },
+          {
+            "productId": 3,
+            "productImage": "https://images.unsplash.com/photo-1562777717-dc6984f65a63?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+            "productName": "달콤사탕",
+            "productPrice": 8000,
+            "productType": "STANDARD",
+            "productDetail": "세상에서 제일 달콤한 사탕을 맛보세요!"
+        },
+        {
+          "productId": 4,
+          "productImage": "https://plus.unsplash.com/premium_photo-1675881736302-af0425d8b9c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+          "productName": "쿠키 & 초코파이",
+          "productPrice": 15000,
+          "productType": "STANDARD",
+          "productDetail": "체적으로 크라운보다 더 달고 뻑뻑하며, 마시멜로가 쫄깃하다. 오리온 초코파이 항목에서 언급된 원조 상품인 미국의 문파이랑 비슷한 맛이라 생각하면 될 듯 하다."
+      },
+        {
+          "productId": 5,
+          "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+          "productName": "쿠키",
+          "productPrice": 5300,
+          "productType": "STANDARD",
+          "productDetail": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
+       },
+       {
+        "productId": 6,
+        "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+        "productName": "쿠키",
+        "productPrice": 5300,
+        "productType": "STANDARD",
+        "productDetail": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
+     },
+     {
+      "productId": 7,
+      "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+      "productName": "쿠키",
+      "productPrice": 5300,
+      "productType": "STANDARD",
+      "productDetail": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
+   }
+      ]
+}
 
 interface Product {
   productId: number;
@@ -15,17 +81,16 @@ interface Product {
   productPrice: number;
   productType: string;
 }
-
 interface ModalComponentDetailProps {
   product: Product;
   closeModal: () => void;
+  storeId: string;
+  productId: string;
 }
-
 interface ModalProps extends ModalComponentDetailProps {
   isOpen: boolean;
   onRequestClose: () => void;
   contentLabel: string;
-  children: React.ReactNode;
   overlay?: boolean;
 }
 
@@ -33,33 +98,54 @@ function ModalComponentDetail({
   isOpen,
   onRequestClose,
   contentLabel,
-  children, 
-  closeModal
-}: ModalProps ){  
+  closeModal,
+  storeId,
+  productId,
+}: ModalProps){  
+
+  const [isProductCartAlertVisible, setProductCartAlertVisible] = useState(false);
+  const product = ProductData.productInfoList.find(item => item.productId === parseInt(productId));
+  const handleSubmit = async () => {
+    const formData = {
+      storeId: storeId,
+      productId: productId,
+    };
+    try {
+      await axios.post('/api/post-endpoint', formData);
+      //axios 주소 바꿔치기
+      setProductCartAlertVisible(true);
+      console.log('POST 요청 성공');
+    } catch (error) {
+      console.error('POST 요청 실패:', error);
+    }
+  };
   const handleOverlayClick = () => {
     closeModal();
   };
+
   return (
     <ModalWrapper>
-      <Overlay onClick={handleOverlayClick} isOpen={isOpen}/>
+      <Overlay onClick={handleOverlayClick} isOpen={isOpen}/>    
       <StyledModal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
         contentLabel={contentLabel}
         ariaHideApp={false}
         shouldCloseOnOverlayClick={false}
-        overlayClassName="overlay"
-      >
-        <ProductCartAlert/>
+        overlayClassName="overlay"      
+        >
+        <AlertBox>
+         {isProductCartAlertVisible &&<ProductCartAlert closeModal={closeModal}/>}
+        </AlertBox>       
         <ModalContainer>
           <Title>BUYTE</Title>
           <Product>
-            <StoreName>매장 이름</StoreName>
-            <ProductName>제품 이름</ProductName>
+            <StoreName>{ProductData.storename}</StoreName>
+            <ProductName>{product?.productName}</ProductName>
             <ProductDetail>
-              제품설명제품설명제품설명제품설명제품설명제품설명제품설명제품설명제품설명
+            {product?.productDetail}
             </ProductDetail>
-            <ProductDetailTwo>ProductDetailTwo</ProductDetailTwo>
+            <ProductDetailTwo>{product?.productPrice}원</ProductDetailTwo>
           </Product>
           <TextContainer>
             <Text>Sweet</Text>
@@ -67,23 +153,19 @@ function ModalComponentDetail({
             <Text>Fresh</Text>
           </TextContainer>
           <CircleShape />
-          <Rectangle />
-          
-          <ModalContent>{children}</ModalContent>
+          <Rectangle />          
           <ModalButtons>
             <CloseButton onClick={onRequestClose}>X</CloseButton>
             <ImageBox>
               <Image src={modal_cake} alt="Cart" />
             </ImageBox>
-            <CartButton>
+            <CartButton onClick={handleSubmit}>
               <CartImage src={modal_cart} alt="Cart" />
-              <CartButtonText>장바구니 담기</CartButtonText>
+              <CartButtonText >장바구니 담기</CartButtonText>
             </CartButton>
             <Line />
           </ModalButtons>
-          <ProductImgContainer>
-            <ProductImg src={modal_ex} alt="Example" />
-          </ProductImgContainer>
+          <ProductImgContainer backgroundImage={product?.productImage}/>
         </ModalContainer>
       </StyledModal>
     </ModalWrapper>
@@ -92,8 +174,13 @@ function ModalComponentDetail({
 
 export default ModalComponentDetail;
 
-
-
+const AlertBox= styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+`
 const CircleShape = styled.div`
   position: absolute;
   width: 260px;
@@ -168,7 +255,7 @@ const Overlay = styled.div<{ isOpen: boolean }>`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 9;
+  z-index: 999;
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;
 const ModalContainer = styled.div`
@@ -176,12 +263,6 @@ const ModalContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-`;
-
-const ModalContent = styled.div`
-  flex: 1;
-  overflow: auto;
-  padding: 10px;
 `;
 
 const ModalButtons = styled.div`
@@ -243,23 +324,24 @@ const ImageBox = styled.div`
   width: 155px;
   height: 75px;
   bottom: 0px;
-  right: calc(10%);
+  right: 115px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 40px 0px 0px 0px;
 `;
+
 const Image = styled.img`
   width: 50px;
   height: 50px;
 `;
+
 const Product = styled.div`
   position: absolute;
-  top: 30%;
+  top: 9rem;
   left: 10%;
   display: block;
-  width: 30%;
-
+  width: 40%;
   > * + * {
     margin-top: 40px;
   }
@@ -269,6 +351,7 @@ const StoreName = styled.h2`
   justify-content: center;
   align-items: center;
   font-family: 'Open Sans', cursive;
+  font-weight: 500;
   font-size: 15px;
   color: #244030;
   border-radius: 214px;
@@ -282,26 +365,28 @@ const ProductName = styled.h2`
   font-size: 45px;
   font-weight: bold;
   color: var(--light-black);
+  margin-left: 2rem;
 `;
-const ProductDetail = styled.h2`
-  font-family: 'Open Sans', cursive;
-  font-size: 15px;
+const ProductDetail = styled.h3`
+  font-size: 17px;
+  font-weight: 600;
   color: var(--light-black);
+  width: 400px;
+  line-height: 1.7;
 `;
 const ProductDetailTwo = styled.h2`
   display: flex;
-  font-family: 'Open Sans', cursive;
-  font-size: 15px;
+  font-size: 19px;
   color: var(--white);
   background-color: #665d49;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  width: 180px;
-  height: 35px;
+  width: 300px;
+  padding: 18px;
 `;
 
-const ProductImgContainer = styled.div`
+const ProductImgContainer = styled.div<ProductImgContainerProps>`
   position: absolute;
   top: 50%;
   right: 10%;
@@ -313,11 +398,12 @@ const ProductImgContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-
-const ProductImg = styled.img`
-  width: 400px;
-  height: 400px;
+  ${({ backgroundImage }) =>
+    css`
+      background-image: url(${backgroundImage});
+      background-repeat: no-repeat;
+      background-size: cover;
+    `}
 `;
 
 const ModalWrapper = styled.div`

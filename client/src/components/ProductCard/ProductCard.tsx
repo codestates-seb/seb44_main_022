@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import { useState, useRef, useEffect } from 'react';
-import ModalComponentDetail from '../../share/ModalComponentDetail'
+import { useState } from 'react';
+import ModalComponentDetail from '../../share/ModalComponentDetail';
+import ModalComponentCustom from '../../share/ModalComponentCustom';
+
 interface Product {
   productId: number;
   productImage: string;
@@ -11,31 +13,18 @@ interface Product {
 
 interface ProductCardProps {
   data: Product[];
+  storeId: number;
 }
-//인터페이스 정리 필요
-
-function ProductCard({data}: ProductCardProps) {
+function ProductCard({data, storeId}: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const modalRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const handleOutsideClose = (e: MouseEvent) => {
-      if (modalOpen && modalRef.current && e.target instanceof Node &&
-        !modalRef.current.contains(e.target)) {
-        closeModal()
-      }
-    };
-    document.addEventListener('mousedown', handleOutsideClose);    
-    return () => document.removeEventListener('mousedown', handleOutsideClose);
-  }, [modalOpen]);
-
-  const handleProductClick = (product: Product) => {
+  const handleProductClick = (product: Product) => {    
     setSelectedProduct(product);
-    setModalOpen(true)
+    setModalOpen(true);
   }
   const closeModal = () => {
     setModalOpen(false);
+    setSelectedProduct(null)
   };
   const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -53,15 +42,29 @@ function ProductCard({data}: ProductCardProps) {
       </ProductContainer>
       {modalOpen && selectedProduct && (
         <ModalWrapper >
-          <ModalContent ref={modalRef} onClick={handleModalClick}>
-            <ModalComponentDetail
-            isOpen={modalOpen}
-            onRequestClose={closeModal}
-            contentLabel="Modal"
-            product={selectedProduct}
-            closeModal={closeModal}
-                  >
-                  </ModalComponentDetail>
+          <ModalContent onClick={handleModalClick}>
+          {selectedProduct.productType === "STANDARD" ? (
+              <ModalComponentDetail
+                isOpen={modalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Modal"
+                product={selectedProduct}
+                closeModal={closeModal}
+                storeId={storeId.toString()}
+                productId={selectedProduct.productId.toString()}
+              />
+            ) : (
+              <ModalComponentCustom
+                isOpen={modalOpen}
+                onRequestClose={closeModal}
+                contentLabel="Modal"
+                //product={selectedProduct}
+                //여긴 ModalComponentCustom쪽과 논의 필요해보임
+                //closeModal={closeModal}
+                //storeId={storeId.toString()}
+               //productId={selectedProduct.productId.toString()}
+              />
+            )}
           </ModalContent>
         </ModalWrapper>
       )}
