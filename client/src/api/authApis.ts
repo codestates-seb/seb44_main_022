@@ -1,10 +1,16 @@
 import axiosInstance from './api';
 
 export const postLogin = (loginId: string, password: string) => {
-  return axiosInstance.post('/login', {
-    loginId,
-    password,
-  });
+  return axiosInstance.post(
+    '/login',
+    {
+      loginId,
+      password,
+    },
+    {
+      withCredentials: true,
+    }
+  );
 };
 
 export const postSignUp = (loginId: string, password: string, memberName: string) => {

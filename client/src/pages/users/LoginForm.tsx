@@ -19,6 +19,7 @@ function LoginForm() {
 
   const handleLoginSubmit: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (userIdValid && passwordValid) {
       postLogin(userId, password)
         .then((res) => {
