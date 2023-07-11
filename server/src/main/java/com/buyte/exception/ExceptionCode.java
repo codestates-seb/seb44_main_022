@@ -14,7 +14,8 @@ public enum ExceptionCode {
     NO_COOKIE(403, "No Cookie"),
     INVALID_REFRESH_TOKEN_STATE(403, "Invalid Refresh Token State"),
     INVALID_ACCESS_TOKEN_STATE(403, "Invalid Access Token State"),
-    ACCESS_TOKEN_EXPIRED(401, "Access Token Expired");
+    ACCESS_TOKEN_EXPIRED(401, "Access Token Expired"),
+    CART_NOT_FOUND(404, "Cart not found");
 
     @Getter
     private int status;
