@@ -7,15 +7,16 @@ interface Product {
   productId: number;
   productImage: string;
   productName: string;
-  productPrice: number;
   productType: string;
 }
 
 interface ProductCardProps {
   data: Product[];
   storeId: number;
+  storeName: string;
 }
-function ProductCard({data, storeId}: ProductCardProps) {
+
+function ProductCard({data, storeId, storeName}: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const handleProductClick = (product: Product) => {    
@@ -51,6 +52,7 @@ function ProductCard({data, storeId}: ProductCardProps) {
                 product={selectedProduct}
                 closeModal={closeModal}
                 storeId={storeId.toString()}
+                storeName={storeName}
                 productId={selectedProduct.productId.toString()}
               />
             ) : (
@@ -62,6 +64,7 @@ function ProductCard({data, storeId}: ProductCardProps) {
                 //여긴 ModalComponentCustom쪽과 논의 필요해보임
                 //closeModal={closeModal}
                 //storeId={storeId.toString()}
+                //storeName={storeName}
                //productId={selectedProduct.productId.toString()}
               />
             )}

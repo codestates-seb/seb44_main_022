@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import axios from 'axios';
 import styled, {css} from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import ProductCartAlert from '../share/ProductCartAlert';
@@ -12,8 +12,6 @@ interface ProductImgContainerProps {
   backgroundImage: string | undefined;
 }
 const ProductData = {
-  "memberId": 1,
-  "storename": "세상제일제과점",
   "productInfoList": [
           {
               "productId": 1,
@@ -21,7 +19,7 @@ const ProductData = {
               "productName": "옐로우 스마일",
               "productPrice": 22000,
               "productType": "STANDARD",
-              "productDetail": "입안에서 살살 녹는 옐로우 스마일 쿠키. 웃고 있는 쿠키 모양을 본따서 만들었기 때문에 즐거움을 줄 수 있습니다."
+              "productIntroduction": "입안에서 살살 녹는 옐로우 스마일 쿠키. 웃고 있는 쿠키 모양을 본따서 만들었기 때문에 즐거움을 줄 수 있습니다."
           },
           {
               "productId": 2,
@@ -29,7 +27,7 @@ const ProductData = {
               "productName": "마시멜로",
               "productPrice": 35000,
               "productType": "STANDARD",
-              "productDetail": "부드러워진 젤라틴, 포도당, 계란 흰자, 조미료 등으로 거품을 일으킨 다음 설탕이나 콘 시럽, 물로 굳혀서 만드는 스펀지 형태의 폭신폭신한 사탕류 식품이다. 식용 색소를 넣어 색깔을 입히는 경우도 있다. "
+              "productIntroduction": "부드러워진 젤라틴, 포도당, 계란 흰자, 조미료 등으로 거품을 일으킨 다음 설탕이나 콘 시럽, 물로 굳혀서 만드는 스펀지 형태의 폭신폭신한 사탕류 식품이다. 식용 색소를 넣어 색깔을 입히는 경우도 있다. "
           },
           {
             "productId": 3,
@@ -37,7 +35,7 @@ const ProductData = {
             "productName": "달콤사탕",
             "productPrice": 8000,
             "productType": "STANDARD",
-            "productDetail": "세상에서 제일 달콤한 사탕을 맛보세요!"
+            "productIntroduction": "세상에서 제일 달콤한 사탕을 맛보세요!"
         },
         {
           "productId": 4,
@@ -45,46 +43,49 @@ const ProductData = {
           "productName": "쿠키 & 초코파이",
           "productPrice": 15000,
           "productType": "STANDARD",
-          "productDetail": "체적으로 크라운보다 더 달고 뻑뻑하며, 마시멜로가 쫄깃하다. 오리온 초코파이 항목에서 언급된 원조 상품인 미국의 문파이랑 비슷한 맛이라 생각하면 될 듯 하다."
+          "productIntroduction": "체적으로 크라운보다 더 달고 뻑뻑하며, 마시멜로가 쫄깃하다. 오리온 초코파이 항목에서 언급된 원조 상품인 미국의 문파이랑 비슷한 맛이라 생각하면 될 듯 하다."
       },
+            {
+              "productId": 5,
+              "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+              "productName": "쿠키",
+              "productPrice": 5300,
+              "productType": "STANDARD",
+              "productIntroduction": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
+          },
+          {
+            "productId": 6,
+            "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+            "productName": "쿠키",
+            "productPrice": 5300,
+            "productType": "STANDARD",
+            "productIntroduction": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
+        },
         {
-          "productId": 5,
+          "productId": 7,
           "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
           "productName": "쿠키",
           "productPrice": 5300,
           "productType": "STANDARD",
-          "productDetail": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
-       },
-       {
-        "productId": 6,
-        "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-        "productName": "쿠키",
-        "productPrice": 5300,
-        "productType": "STANDARD",
-        "productDetail": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
-     },
-     {
-      "productId": 7,
-      "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-      "productName": "쿠키",
-      "productPrice": 5300,
-      "productType": "STANDARD",
-      "productDetail": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
-   }
+          "productIntroduction": "갓 구워내 바삭바삭한 엄마 손맛 쿠키."
+      }
       ]
-}
+}  //서버와 통신시 지워야 하는 부분
+  
 
 interface Product {
   productId: number;
   productImage: string;
   productName: string;
-  productPrice: number;
   productType: string;
+  productIntroduction: string;
+  productPrice: number;
 }
 interface ModalComponentDetailProps {
   product: Product;
   closeModal: () => void;
   storeId: string;
+  storeName: string
   productId: string;
 }
 interface ModalProps extends ModalComponentDetailProps {
@@ -100,15 +101,37 @@ function ModalComponentDetail({
   contentLabel,
   closeModal,
   storeId,
+  storeName,
   productId,
 }: ModalProps){  
-
   const [isProductCartAlertVisible, setProductCartAlertVisible] = useState(false);
-  const product = ProductData.productInfoList.find(item => item.productId === parseInt(productId));
+  //const product = ProductData.productInfoList.find(item => item.productId === parseInt(productId));
+  const [product, setProduct] = useState<Product | null>(null);
+    useEffect(() => {
+      fetchData();
+    }, []);
+    const fetchData = async () => {  
+        try {
+          const url = `https://buyte.org/store/${storeId}/${productId}`;
+          const response = await axios.get(url, {
+            headers: {
+              'Content-Type': 'application/json',
+              'ngrok-skip-browser-warning': '69420',
+            },
+          });      
+          const data = response.data;      
+          console.log(data)
+          setProduct(data[0]);
+        } catch (error) {
+          console.error('Error fetching store data:', error);
+        }
+      };
+  
   const handleSubmit = async () => {
     const formData = {
       storeId: storeId,
       productId: productId,
+      //여기 뭐 토큰도 같이 보내야 하냐고 여쭤보기
     };
     try {
       await axios.post('/api/post-endpoint', formData);
@@ -140,10 +163,10 @@ function ModalComponentDetail({
         <ModalContainer>
           <Title>BUYTE</Title>
           <Product>
-            <StoreName>{ProductData.storename}</StoreName>
+            <StoreName>{storeName}</StoreName>
             <ProductName>{product?.productName}</ProductName>
             <ProductDetail>
-            {product?.productDetail}
+            {product?.productIntroduction}
             </ProductDetail>
             <ProductDetailTwo>{product?.productPrice}원</ProductDetailTwo>
           </Product>
@@ -239,7 +262,7 @@ const StyledModal = styled(Modal)`
       transform: translate(-50%, -50%);
       min-height: 77%;
       min-width: 77%;
-      border-radius: 40px;
+      border-radius: 20px;
       box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
       background-color: rgba(255, 255, 255, 0.9);
       z-index: 10;
@@ -258,6 +281,7 @@ const Overlay = styled.div<{ isOpen: boolean }>`
   z-index: 999;
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;
+
 const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -281,7 +305,7 @@ const CloseButton = styled.button`
   border: none;
   background-color: rgba(20, 46, 56, 0.9);
   color: white;
-  border-radius: 0px 40px 0px 0px;
+  border-radius: 0px 20px 0px 0px;
 `;
 
 const CartButton = styled.button`
@@ -294,7 +318,7 @@ const CartButton = styled.button`
   border: none;
   background-color: transparent;
   border: 1px solid var(--light-black);
-  border-radius: 0px 0px 40px 0px;
+  border-radius: 0px 0px 20px 0px;
   background-color: rgba(20, 46, 56, 0.9);
   display: flex;
   flex-direction: column;
