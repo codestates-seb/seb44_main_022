@@ -28,3 +28,7 @@ export const postRefreshToken = async () => {
 
   return response;
 };
+
+export const postGoogleOAuth = (code: string) => {
+  return axiosInstance.post('/oauth2/authorization/google', { code });
+};

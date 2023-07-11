@@ -2,10 +2,18 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import { useState } from 'react';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
 import Marker from '../../assets/images/marker.png';
+import { POSITIONS } from '../../assets/constantValue/constantValue';
+import MapModal from './MapModal';
 
 function MapPage() {
   const { lat, lng } = useCurrentLocation();
-  const [hoverMarker, setHoverMarker] = useState(false);
+  const [toggle, setToggle] = useState(false);
+  const [id, setId] = useState(0);
+  const [isClose, setIsClose] = useState(true);
+
+  const closeModal = () => {
+    setTimeout(() => setToggle(!toggle), 290);
+  };
 
   return (
     <Map
@@ -15,48 +23,43 @@ function MapPage() {
         width: '100%',
         height: '100%',
       }}
+      level={3}
     >
-      <MapMarker
-        position={{ lat: lat, lng: lng }}
-        image={{
-          src: Marker,
-          size: {
-            width: 35,
-            height: 35,
-          },
-        }}
-        clickable={true}
-        onClick={() => setHoverMarker(!hoverMarker)}
-      ></MapMarker>
-      {hoverMarker && (
-        <div
-          style={{
-            position: 'absolute',
-            zIndex: 10,
-            border: '1px solid red',
-            width: '15vw',
-            height: '40%',
-            top: '60%',
-            right: '5%',
-            transform: 'translate(0%, -50%)',
-            backgroundColor: 'white',
-            borderRadius: '28px',
-            minWidth: '250px',
-            maxWidth: '315px',
-            padding: '1rem',
+      {POSITIONS.map((position, idx) => (
+        <MapMarker
+          key={idx}
+          position={position.latlng}
+          image={{
+            src: Marker,
+            size: {
+              width: 35,
+              height: 35,
+            },
           }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              right: '5%',
-            }}
-            onClick={() => setHoverMarker(false)}
-          >
-            x
-          </div>
-          여기 가게 이름
-        </div>
+          clickable={true}
+          onClick={() => {
+            console.log(id, position.id, isClose, toggle);
+            if (!isClose) {
+              if (id === position.id) {
+                setIsClose(true);
+                closeModal();
+                return;
+              }
+            }
+            setToggle(true);
+            setId(position.id);
+            setIsClose(false);
+          }}
+        ></MapMarker>
+      ))}
+
+      {toggle && id !== 0 && (
+        <MapModal
+          position={POSITIONS[id - 1]}
+          isClose={isClose}
+          setIsClose={setIsClose}
+          CheckState={closeModal}
+        />
       )}
     </Map>
   );
