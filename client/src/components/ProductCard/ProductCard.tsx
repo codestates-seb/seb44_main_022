@@ -1,7 +1,12 @@
-import styled from 'styled-components';
 import { useState } from 'react';
 import ModalComponentDetail from '../../share/ModalComponentDetail';
 import ModalComponentCustom from '../../share/ModalComponentCustom';
+import {
+  ProductContainer,
+  ProductImage,
+  HoverOverlay,
+  ModalWrapper
+} from './ProductCard.style';
 
 interface Product {
   productId: number;
@@ -35,15 +40,15 @@ function ProductCard({data, storeId, storeName}: ProductCardProps) {
     <>
       <ProductContainer >
         {data.map((product) => (
-            <ProductItem key={product.productId} onClick={() => handleProductClick(product)}>
+            <li key={product.productId} style={{minWidth:'200px', height:'320px', width:'100%', position:'relative'}} onClick={() => handleProductClick(product)}>
               <ProductImage src={product.productImage} alt={product.productName}/>
               <HoverOverlay />
-            </ProductItem>
+            </li>
                         ))}
       </ProductContainer>
       {modalOpen && selectedProduct && (
         <ModalWrapper >
-          <ModalContent onClick={handleModalClick}>
+          <div style={{cursor:'default', zIndex:'99'}} onClick={handleModalClick}>
           {selectedProduct.productType === "STANDARD" ? (
               <ModalComponentDetail
                 isOpen={modalOpen}
@@ -68,7 +73,7 @@ function ProductCard({data, storeId, storeName}: ProductCardProps) {
                //productId={selectedProduct.productId.toString()}
               />
             )}
-          </ModalContent>
+          </div>
         </ModalWrapper>
       )}
 
@@ -76,60 +81,3 @@ function ProductCard({data, storeId, storeName}: ProductCardProps) {
   );
 }
 export default ProductCard;
-
-const ProductContainer = styled.ul`
-  margin-top: 1rem;
-  margin-bottom: 7rem;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  grid-gap: 0; 
-  justify-items: center; 
-  align-items: center; 
-  grid-row-gap: 3rem;
-`
-
-const ProductItem = styled.li`
-  min-width: 200px;
-  height: 320px; 
-  width: 100%;
-  position: relative;
-`
-
-const ProductImage = styled.img`
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
-  cursor: pointer;
-`
-const HoverOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.2);
-  opacity: 0;
-  transition: opacity 0.5s;
-  pointer-events: none;
-  ${ProductItem}:hover & {
-    opacity: 1;
-  }
-`;
-
-const ModalWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ModalContent = styled.div`
-  cursor: default;
-  z-index: 99;
-`;

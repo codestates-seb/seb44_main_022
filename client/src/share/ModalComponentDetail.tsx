@@ -1,16 +1,31 @@
-import Modal from 'react-modal';
 import axios from 'axios';
-import styled, {css} from 'styled-components';
 import { useState, useEffect } from 'react';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import ProductCartAlert from '../share/ProductCartAlert';
-
-//해야하는 것: 처음 제품을 눌렀을 때 api요청으로 해당 상폼 관련 데이터 받아오기, 이후 뿌려주기
-//useEffect?
-interface ProductImgContainerProps {
-  backgroundImage: string | undefined;
-}
+import {
+  AlertBox,
+  CircleShape,
+  Rectangle,
+  DecorationTextContainer,
+  DecorationText,
+  Title,
+  StyledModal,
+  Overlay,
+  ModalContainer,
+  ModalButtons,
+  CloseButton,
+  CartButton,
+  Line,
+  ImageBox,
+  Product,
+  StoreName,
+  ProductName,
+  ProductDetail,
+  ProductPrice,
+  ProductImgContainer,
+  ModalWrapper
+} from './ModalComponentDetail.style';
 const ProductData = {
   "productInfoList": [
           {
@@ -105,11 +120,9 @@ function ModalComponentDetail({
   productId,
 }: ModalProps){  
   const [isProductCartAlertVisible, setProductCartAlertVisible] = useState(false);
-  //const product = ProductData.productInfoList.find(item => item.productId === parseInt(productId));
-  const [product, setProduct] = useState<Product | null>(null);
-    useEffect(() => {
-      fetchData();
-    }, []);
+  const product = ProductData.productInfoList.find(item => item.productId === parseInt(productId));
+  //const [product, setProduct] = useState<Product | null>(null);
+    
     const fetchData = async () => {  
         try {
           const url = `https://buyte.org/store/${storeId}/${productId}`;
@@ -121,12 +134,14 @@ function ModalComponentDetail({
           });      
           const data = response.data;      
           console.log(data)
-          setProduct(data[0]);
+          //setProduct(data[0]);
         } catch (error) {
           console.error('Error fetching store data:', error);
         }
       };
-  
+    useEffect(() => {
+        fetchData();
+      }, []);
   const handleSubmit = async () => {
     const formData = {
       storeId: storeId,
@@ -168,23 +183,23 @@ function ModalComponentDetail({
             <ProductDetail>
             {product?.productIntroduction}
             </ProductDetail>
-            <ProductDetailTwo>{product?.productPrice}원</ProductDetailTwo>
+            <ProductPrice>{product?.productPrice}원</ProductPrice>
           </Product>
-          <TextContainer>
-            <Text>Sweet</Text>
-            <Text>Delicious</Text>
-            <Text>Fresh</Text>
-          </TextContainer>
+          <DecorationTextContainer>
+            <DecorationText>Sweet</DecorationText>
+            <DecorationText>Delicious</DecorationText>
+            <DecorationText>Fresh</DecorationText>
+          </DecorationTextContainer>
           <CircleShape />
           <Rectangle />          
           <ModalButtons>
             <CloseButton onClick={onRequestClose}>X</CloseButton>
             <ImageBox>
-              <Image src={modal_cake} alt="Cart" />
+              <img src={modal_cake} style={{width: '50px', height: '50px'}} alt="Cart" />
             </ImageBox>
             <CartButton onClick={handleSubmit}>
-              <CartImage src={modal_cart} alt="Cart" />
-              <CartButtonText >장바구니 담기</CartButtonText>
+              <img src={modal_cart} style={{width: '30px', height: '30px', marginBottom:'8px'}} alt="Cart" />
+              <span style={{color: 'var(--white)', fontSize: '6px'}}>장바구니 담기</span>
             </CartButton>
             <Line />
           </ModalButtons>
@@ -196,248 +211,3 @@ function ModalComponentDetail({
 }
 
 export default ModalComponentDetail;
-
-const AlertBox= styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-`
-const CircleShape = styled.div`
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background-color: rgba(49, 129, 97, 0.25);
-  box-shadow: 10px 14px 104px rgba(0, 0, 0, 0.12);
-  filter: blur(100px);
-  top: 150px;
-  left: calc(15%);
-`;
-const Rectangle = styled.div`
-  position: absolute;
-  width: 100px;
-  height: 700px;
-  background-color: #f9e1c3;
-  box-shadow: 10px 14px 104px rgba(0, 0, 0, 0.12);
-  filter: blur(100px);
-  transform: rotate(38.26deg);
-  transform-origin: 0 0;
-  top: 20px;
-  left: calc(82%);
-`;
-const TextContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`;
-
-const Text = styled.h2`
-  font-family: 'Open Sans', cursive;
-  font-size: 15px;
-  margin: 28px;
-  margin-bottom: 70px;
-  color: var(--light-black);
-`;
-const Title = styled.h3`
-  font-family: 'Just Another Hand', cursive;
-  margin-bottom: 20px;
-  font-size: 40px;
-  align-self: flex-end;
-  position: absolute;
-  left: 50px;
-  top: 30px;
-  color: var(--light-black);
-`;
-
-const StyledModal = styled(Modal)`
-  ${({ isOpen }) =>
-    isOpen &&
-    css`
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-height: 77%;
-      min-width: 77%;
-      border-radius: 20px;
-      box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
-      background-color: rgba(255, 255, 255, 0.9);
-      z-index: 10;
-      outline: none;
-      border: none;
-    `}
-`;
-
-const Overlay = styled.div<{ isOpen: boolean }>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  z-index: 999;
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
-`;
-
-const ModalContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ModalButtons = styled.div`
-  align-self: flex-end;
-  padding: 10px;
-  margin-top: auto;
-`;
-
-const CloseButton = styled.button`
-  position: absolute;
-  width: 70px;
-  height: 50px;
-  top: 0px;
-  right: 0px;
-  padding: 10px;
-  border: none;
-  background-color: rgba(20, 46, 56, 0.9);
-  color: white;
-  border-radius: 0px 20px 0px 0px;
-`;
-
-const CartButton = styled.button`
-  position: absolute;
-  width: 115px;
-  height: 75px;
-  bottom: 0px;
-  right: 0px;
-  padding: 10px;
-  border: none;
-  background-color: transparent;
-  border: 1px solid var(--light-black);
-  border-radius: 0px 0px 20px 0px;
-  background-color: rgba(20, 46, 56, 0.9);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const Line = styled.div`
-  width: 1px;
-  height: 160px;
-  background-color: rgba(20, 46, 56, 0.7);
-  margin-top: 250px;
-  margin-right: 15px;
-`;
-const CartImage = styled.img`
-  width: 30px;
-  height: 30px;
-  margin-bottom: 8px;
-`;
-const CartButtonText = styled.span`
-  color: var(--white);
-  font-size: 6px;
-`;
-
-const ImageBox = styled.div`
-  position: absolute;
-  background-color: #fab65d;
-  width: 155px;
-  height: 75px;
-  bottom: 0px;
-  right: 115px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 40px 0px 0px 0px;
-`;
-
-const Image = styled.img`
-  width: 50px;
-  height: 50px;
-`;
-
-const Product = styled.div`
-  position: absolute;
-  top: 9rem;
-  left: 10%;
-  display: block;
-  width: 40%;
-  > * + * {
-    margin-top: 40px;
-  }
-`;
-const StoreName = styled.h2`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Open Sans', cursive;
-  font-weight: 500;
-  font-size: 15px;
-  color: #244030;
-  border-radius: 214px;
-  background-color: #dcd2bd;
-  border: none;
-  width: 300px;
-  height: 30px;
-`;
-const ProductName = styled.h2`
-  font-family: 'Open Sans', cursive;
-  font-size: 45px;
-  font-weight: bold;
-  color: var(--light-black);
-  margin-left: 2rem;
-`;
-const ProductDetail = styled.h3`
-  font-size: 17px;
-  font-weight: 600;
-  color: var(--light-black);
-  width: 400px;
-  line-height: 1.7;
-`;
-const ProductDetailTwo = styled.h2`
-  display: flex;
-  font-size: 19px;
-  color: var(--white);
-  background-color: #665d49;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
-  width: 300px;
-  padding: 18px;
-`;
-
-const ProductImgContainer = styled.div<ProductImgContainerProps>`
-  position: absolute;
-  top: 50%;
-  right: 10%;
-  transform: translate(0, -50%);
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background-color: #fab65d;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ${({ backgroundImage }) =>
-    css`
-      background-image: url(${backgroundImage});
-      background-repeat: no-repeat;
-      background-size: cover;
-    `}
-`;
-
-const ModalWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-`;
