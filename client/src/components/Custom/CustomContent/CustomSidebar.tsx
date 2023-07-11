@@ -90,10 +90,10 @@ const CustomSidebar: React.FC = () => {
               onDragStart={(event) => handleImageDragStart(event, modal_cake)}
             />
             <ContentImage
-              src={modal_cake}
+              src={custom_icon}
               alt="Cake Icon"
               draggable
-              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
+              onDragStart={(event) => handleImageDragStart(event, custom_icon)}
             />
             <ContentImage
               src={modal_cake}
