@@ -2,8 +2,6 @@ import styled, { keyframes } from 'styled-components';
 import { useEffect } from 'react';
 import { useRef } from 'react';
 import Slider from 'react-slick';
-import Header from '../../share/Header';
-import Footer from '../../share/Footer';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -245,7 +243,6 @@ const Main: React.FunctionComponent = () => {
   ];
   return (
     <MainRoot>
-      <Header />
       <Body>
         <Section1>
           <Slider {...settings}>

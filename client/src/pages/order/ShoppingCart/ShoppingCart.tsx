@@ -37,6 +37,7 @@ function ShoppingCart() {
   };
 
   useEffect(() => {
+    console.log(totalPrice, cartList);
     setIsLoading(true);
     getCartList()
       .then((res) => {
@@ -63,7 +64,7 @@ function ShoppingCart() {
         <CartCategoryName>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
             <div style={{ fontSize: '22px', fontWeight: 'bold' }}>Cart</div>
-            <div style={{ fontWeight: 'bold' }}>({cartList.length})</div>
+            <div style={{ fontWeight: 'bold' }}>({cartList !== undefined && cartList.length})</div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '23.5rem' }}>
             {CART_CATEGORY_NAME.map((category) => (
@@ -74,7 +75,7 @@ function ShoppingCart() {
         <CartItemTab path="cart" />
         {isLoading ? (
           <div>로딩중</div>
-        ) : cartList.length > 0 ? (
+        ) : cartList !== undefined && cartList.length > 0 ? (
           cartList.map((e, idx) => (
             <CartItem
               items={e}
@@ -104,7 +105,10 @@ function ShoppingCart() {
         </div>
         <TotalPaymentContainer>
           <div style={{ fontSize: '22px', fontWeight: 'bold', margin: '0.5rem 0' }}>
-            <span style={{ color: 'var(--gold)' }}>{totalPrice.toLocaleString()}</span>원
+            <span style={{ color: 'var(--gold)' }}>
+              {totalPrice !== undefined && totalPrice.toLocaleString()}
+            </span>
+            원
           </div>
           <div style={{ margin: '0.5rem 0', fontWeight: 'bold' }}>주문금액</div>
         </TotalPaymentContainer>
