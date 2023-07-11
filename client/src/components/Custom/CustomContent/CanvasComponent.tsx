@@ -6,6 +6,7 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  margin-bottom: 0%;
   z-index: 10;
 
   &:first-child {

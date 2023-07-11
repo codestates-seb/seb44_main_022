@@ -10,7 +10,7 @@ const ContainerStyled = styled.div`
   position: absolute;
   width: 100%;
   bottom: 26%;
-  right: 11%;
+  right: 14%;
   display: flex;
   justify-content: center;
   z-index: 15;
