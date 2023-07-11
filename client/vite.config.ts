@@ -10,7 +10,12 @@ export default defineConfig({
     postcss: {
       plugins: [
         autoprefixer({
-          overrideBrowserslist: ['chrome87', 'edge88', 'es2020', 'firefox78', 'safari14'],
+          overrideBrowserslist: [
+            'last 2 Chrome versions',
+            'last 2 Firefox versions',
+            'last 2 Safari versions',
+            'last 2 Edge versions',
+          ],
         }),
         postcssNesting(),
       ],
