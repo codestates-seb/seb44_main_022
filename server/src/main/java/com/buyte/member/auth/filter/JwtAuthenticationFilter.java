@@ -60,8 +60,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .secure(true)
                 .path("/")
                 .maxAge(Duration.ofDays(1))
-                .sameSite("None") // Lax
-//                .domain(".localhost")
+                .sameSite("None")
                 .build();
 
         return cookie;
