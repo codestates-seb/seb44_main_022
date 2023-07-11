@@ -46,6 +46,9 @@ export const DecorationText = styled.h2`
   margin: 28px;
   margin-bottom: 70px;
   color: var(--light-black);
+  @media (max-width: 910px) {
+    opacity: 0;
+    }
 `;
 export const Title = styled.h3`
   font-family: 'Just Another Hand', cursive;
@@ -160,6 +163,11 @@ export const Product = styled.div`
   > * + * {
     margin-top: 40px;
   }
+  @media (max-width: 910px) {
+    >*+*{
+      margin-top: 30px
+    }
+    }
 `;
 export const StoreName = styled.h2`
   display: flex;
@@ -174,13 +182,23 @@ export const StoreName = styled.h2`
   border: none;
   width: 300px;
   height: 30px;
+  @media (max-width: 910px) {
+    width: 270px;
+    }
 `;
+
 export const ProductName = styled.h2`
   font-family: 'Open Sans', cursive;
   font-size: 45px;
   font-weight: bold;
   color: var(--light-black);
   margin-left: 2rem;
+  @media (max-width: 1190px) {
+    font-size: 36px;
+    }
+  @media (max-width: 910px) {
+    font-size: 30px;
+    }
 `;
 
 export const ProductDetail = styled.h3`
@@ -189,6 +207,15 @@ export const ProductDetail = styled.h3`
   color: var(--light-black);
   width: 400px;
   line-height: 1.7;
+  @media (max-width: 1190px) {
+    font-size: 15px;
+      width: 300px;
+      line-height: 1.4;
+    }
+    @media (max-width: 910px) {
+    font-size: 14px;
+    width: 250px;
+    }
 `;
 export const ProductPrice = styled.h2`
   display: flex;
@@ -200,6 +227,17 @@ export const ProductPrice = styled.h2`
   border-radius: 10px;
   width: 300px;
   padding: 18px;
+  @media (max-width: 1190px) {
+    font-size: 17px;
+    width: 230px;
+    margin-left: 15px;
+    }
+    @media (max-width: 910px) {
+    font-size: 15px;
+    width: 150px;
+    height: 30px;
+    margin-left: 35px;
+    }
 `;
 
 export const ProductImgContainer = styled.div<ProductImgContainerProps>`
@@ -220,6 +258,18 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
       background-repeat: no-repeat;
       background-size: cover;
     `}
+    @media (max-width: 1320px) {
+      width: 300px;
+      height: 300px
+    }
+    @media (max-width: 1190px) {
+      width: 230px;
+      height: 230px
+    }
+    @media (max-width: 910px) {
+    width: 20%;
+    border-radius:30px;
+    }
 `;
 
 export const ModalWrapper = styled.div`

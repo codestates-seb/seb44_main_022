@@ -9,7 +9,8 @@ import {
   StoreDetails,
   StoreDetailSection,
   DetailInfo,
-  Detail
+  DetailTitle,
+  DetailWrapper
 } from './StoreDetail.style';
 
 interface Product {
@@ -169,15 +170,18 @@ const data: Store =
           </Link>     
             <StoreDetails>            
                 <div style={{backgroundImage:`url('${data.storeImage}')`, width: '280px', height: '280px', borderRadius: '50%', backgroundSize:'cover'}}></div>
-                <div style={{marginLeft:'8rem'}}>
+                <DetailWrapper>
                     <h3 style={{fontWeight:'600', fontSize: '18px', color: 'var(--bright-black)', marginBottom: '1rem'}}>{data.storeName}</h3>
-                    <Detail>소개</Detail>
+                    <DetailTitle>소개</DetailTitle>
                     <DetailInfo>{data.storeIntroduction}</DetailInfo>                   
-                    <Detail>주소</Detail><Link to='/*지도보기?*/'><span style={{color: 'var(--light-gray)', fontSize: '13px'}}>[지도보기]</span></Link>
+                    <DetailTitle>주소</DetailTitle>
+                    <Link to='/*지도보기?*/'>
+                      <span style={{color: 'var(--light-gray)', fontSize: '13px'}}>[지도보기]</span>
+                    </Link>
                     <DetailInfo>{data.storeAddress}</DetailInfo>                    
-                    <Detail>전화번호</Detail>
+                    <DetailTitle>전화번호</DetailTitle>
                     <span style={{ color: 'var(--bright-black)',fontWeight: '500',fontSize: '13px'}}>{data.storePhone}</span>
-                </div>
+                </DetailWrapper>
             </StoreDetails>
         </StoreDetailSection>
         <StoreProductSection>
