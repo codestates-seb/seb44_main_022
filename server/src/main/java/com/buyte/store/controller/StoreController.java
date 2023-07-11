@@ -1,5 +1,6 @@
 package com.buyte.store.controller;
 
+import com.buyte.product.dto.CustomProductDetailsDto;
 import com.buyte.product.dto.ProductDetailsDto;
 import com.buyte.product.service.ProductService;
 import com.buyte.store.dto.StoreDetailsDto;
@@ -68,9 +69,11 @@ public class StoreController {
     }
 
     @GetMapping("/{store-id}/custom/{product-id}")
-    public ResponseEntity getCustomProductDetails(
+    public ResponseEntity getCustomProductDetails(@PathVariable("store-id") @Positive long storeId,
         @PathVariable("product-id") @Positive long productId) {
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        CustomProductDetailsDto customProductIngredientDto = productService.getCustomProductDetails(storeId, productId);
+
+        return new ResponseEntity<>(customProductIngredientDto, HttpStatus.OK);
     }
 }

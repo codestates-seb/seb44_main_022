@@ -8,7 +8,7 @@ import lombok.Data;
 public class CustomProductInfoDto {
 
     private long productId;
-    private String productImage;
     private String productName;
+    private String productImage;
     private Integer productPrice;
 }
