@@ -1,12 +1,10 @@
 import { MdLocalPostOffice } from 'react-icons/md';
 import { AiFillLock } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import UserInput from '../../components/UserInput/UserInput';
 import RoundButton from '../../components/RoundButton/RoundButton';
 import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
-import { setAccessToken } from '../../redux/reducer/loginReducer';
 import { postLogin } from '../../api/authApis';
 
 function LoginForm() {
@@ -14,16 +12,15 @@ function LoginForm() {
   const [password, setPassword] = useState<string>('');
   const [userIdValid, setUserIdValid] = useState<boolean>(false);
   const [passwordValid, setPasswordValid] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLoginSubmit: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
-    e.stopPropagation();
     if (userIdValid && passwordValid) {
       postLogin(userId, password)
         .then((res) => {
-          dispatch(setAccessToken(res.headers['authorization']));
+          const accessToken = res.headers['authorization'];
+          localStorage.setItem('AccessToken', accessToken);
           navigate('/');
           alert('통신 성공');
           return;

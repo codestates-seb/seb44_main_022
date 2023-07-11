@@ -21,8 +21,10 @@ export const postSignUp = (loginId: string, password: string, memberName: string
   });
 };
 
-export const postAccessToken = () => {
-  return axiosInstance.post('/token/refresh', null, {
+export const postRefreshToken = async () => {
+  const response = await axiosInstance.post('/token/refresh', null, {
     withCredentials: true,
   });
+
+  return response;
 };

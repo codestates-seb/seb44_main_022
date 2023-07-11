@@ -1,15 +1,21 @@
 // import { useGoogleLogin } from '@react-oauth/google';
 import { ButtonProps } from '../../assets/interface/Button.interface';
-import { postAccessToken } from '../../api/authApis';
+// import { postAccessToken } from '../../api/authApis';
+import { getMembers } from '../../api/memberApis';
 import { Icons, RoundButtonStyle } from './RoundButton.style';
 
 function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   const handleClick = () => {
-    // if (types === 'google') handleGoogleLogin();
+    console.log('a');
+    if (types === 'google')
+      getMembers()
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    // handleGoogleLogin();
 
-    postAccessToken()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    // postAccessToken()
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
   };
 
   // const handleGoogleLogin = useGoogleLogin({
@@ -31,7 +37,11 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   // });
 
   return (
-    <RoundButtonStyle types={types} disabled={enabled === false && true} onClick={handleClick}>
+    <RoundButtonStyle
+      types={types}
+      disabled={enabled === false && true}
+      onClick={() => handleClick()}
+    >
       {icon && <Icons>{icon}</Icons>}
       {title}
     </RoundButtonStyle>
