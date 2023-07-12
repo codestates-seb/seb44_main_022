@@ -1,5 +1,6 @@
 package com.buyte.member.controller;
 
+import com.buyte.member.auth.oauth.OauthService;
 import com.buyte.member.auth.utils.SecurityUtil;
 import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
@@ -18,10 +19,12 @@ import javax.validation.Valid;
 public class MemberController {
     private final MemberMapper mapper;
     private final MemberService memberService;
+    private final OauthService oauthService;
 
-    public MemberController(MemberMapper mapper, MemberService memberService) {
+    public MemberController(MemberMapper mapper, MemberService memberService, OauthService oauthService) {
         this.mapper = mapper;
         this.memberService = memberService;
+        this.oauthService = oauthService;
     }
 
     @PostMapping("/signup")
@@ -30,6 +33,12 @@ public class MemberController {
         Member savedMember = memberService.createMember(member);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/signup/oauth2")
+    public ResponseEntity googleSignUpWithAuthorization(@RequestParam String authorization){
+        Member member = oauthService.socialSignUpWithAuthorization(authorization);
+        return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.CREATED);
     }
 
     @PostMapping("/token/refresh")
