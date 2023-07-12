@@ -273,6 +273,7 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
 `;
 
 export const ModalWrapper = styled.div`
+  background-color:red; 
   position: fixed;
   top: 0;
   left: 0;

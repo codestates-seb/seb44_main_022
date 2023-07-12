@@ -1,10 +1,5 @@
+import { RectangleButtonProps } from '../../assets/interface/Button.interface';
 import { RectangleButtonStyle } from './RectangleButton.style';
-
-interface RectangleButtonProps {
-  text: string;
-  types: string;
-  clickEvent: () => void;
-}
 
 function RectangleButton({ text, types, clickEvent }: RectangleButtonProps) {
   return (

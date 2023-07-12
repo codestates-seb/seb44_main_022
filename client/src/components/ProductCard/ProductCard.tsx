@@ -5,7 +5,7 @@ import {
   ProductContainer,
   ProductImage,
   HoverOverlay,
-  ModalWrapper,
+  ModalContainer,
   ProductTitle
 } from './ProductCard.style';
 
@@ -49,8 +49,7 @@ function ProductCard({data, storeId, storeName}: ProductCardProps) {
                         ))}
       </ProductContainer>
       {modalOpen && selectedProduct && (
-        <ModalWrapper >
-          <div style={{cursor:'default', zIndex:'99'}} onClick={handleModalClick}>
+        <ModalContainer onClick={handleModalClick}>
           {selectedProduct.productType === "STANDARD" ? (
               <ModalComponentDetail
                 isOpen={modalOpen}
@@ -75,8 +74,7 @@ function ProductCard({data, storeId, storeName}: ProductCardProps) {
                //productId={selectedProduct.productId.toString()}
               />
             )}
-          </div>
-        </ModalWrapper>
+        </ModalContainer>
       )}
 
     </>

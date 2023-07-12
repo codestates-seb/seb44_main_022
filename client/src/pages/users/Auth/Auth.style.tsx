@@ -35,3 +35,30 @@ export const AuthCategory = styled.div<{ isSignUp: boolean; types: string }>`
     types === 'login' ? (isSignUp ? css`0.6` : css`1`) : isSignUp ? css`1` : css`0.6`};
   cursor: pointer;
 `;
+
+export const LinkText = styled.a`
+  color: var(--bright-black);
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  text-decoration-line: underline;
+`;
+
+export const AuthForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 20rem;
+`;
+
+export const AuthCategoryContainer = styled.div`
+  margin-top: 100px;
+  display: flex;
+  width: 100%;
+  padding: 1rem 0;
+  margin: 1.5rem;
+  border-bottom: 2px solid var(--normal-gray);
+  justify-content: space-around;
+`;

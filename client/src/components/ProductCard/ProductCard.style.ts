@@ -41,7 +41,7 @@ export const HoverOverlay = styled.div`
   }
 `;
 
-export const ModalWrapper = styled.div`
+export const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;

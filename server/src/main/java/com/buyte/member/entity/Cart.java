@@ -2,7 +2,6 @@ package com.buyte.member.entity;
 
 import com.buyte.product.entity.Product;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -35,18 +34,14 @@ public class Cart {
     @Column(name = "cart_custom_product_image")
     private String cartCustomProductImage;
 
-    @Column(name = "cart_custom_product_price")
-    private Integer cartCustomProductPrice;
-
     @Column(name = "product_count")
     private Integer productCount;
 
-    @Builder //나중에 바꾸기
-    public Cart( Product product, String cartCustomProductImage, Integer cartCustomProductPrice) {
+    public Cart( Product product, String cartCustomProductImage, Member member) {
 
         this.product = product;
         this.cartCustomProductImage = cartCustomProductImage;
-        this.cartCustomProductPrice = cartCustomProductPrice;
+        this.member = member;
         this.productCount = 1;
     }
 

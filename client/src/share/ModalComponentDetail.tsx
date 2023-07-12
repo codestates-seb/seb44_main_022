@@ -139,18 +139,18 @@ function ModalComponentDetail({
           console.error('Error fetching store data:', error);
         }
       };
+
     useEffect(() => {
         fetchData();
       }, []);
+
   const handleSubmit = async () => {
     const formData = {
-      storeId: storeId,
       productId: productId,
-      //여기 뭐 토큰도 같이 보내야 하냐고 여쭤보기
     };
     try {
-      await axios.post('/api/post-endpoint', formData);
-      //axios 주소 바꿔치기
+      const url= `https://buyte.org/store/${storeId}/${productId}`;
+      await axios.post(url, formData);
       setProductCartAlertVisible(true);
       console.log('POST 요청 성공');
     } catch (error) {

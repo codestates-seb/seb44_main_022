@@ -1,35 +1,34 @@
-import { Route, Routes, useLocation } from 'react-router-dom';
-import Main from './pages/main/Main';
-import Auth from './pages/users/Auth/Auth';
-import Mypage from './pages/mypage/Mypage';
-import ShoppingCart from './pages/order/ShoppingCart/ShoppingCart';
-import Store from './pages/store/Store';
-import Map from './pages/map/Map';
-import SelectStore from './pages/store/SelectStore';
-import Header from './share/Header';
-import Footer from './share/Footer';
-import Payment from './pages/order/Payment';
-import StoreDetail from './pages/store/StoreDetail';
+import { useEffect, useState } from 'react';
+import { Routes, useLocation } from 'react-router-dom';
+import { authRoute, mainRoutes } from './Routes';
 
 function App() {
   const location = useLocation();
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionStage, setTransitionStage] = useState('fadeIn');
+
+  useEffect(() => {
+    if (location !== displayLocation) {
+      setTransitionStage('fadeOut');
+    }
+  }, [location]);
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-        {location.pathname !== '/auth' && <Header />}
-        <Routes>
-          <Route path="/store/:1" element={<StoreDetail />}/>
-          <Route path="/" element={<Main />} />
-          <Route path="/mypage/:id" element={<Mypage />} />
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/cart" element={<ShoppingCart />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/store" element={<Store />} />
-          <Route path="/map" element={<Map />} />
-          <Route path="/select" element={<SelectStore />} />
+      <div
+        className={`${transitionStage}`}
+        style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
+        onAnimationEnd={() => {
+          if (transitionStage === 'fadeOut') {
+            setTransitionStage('fadeIn');
+            setDisplayLocation(location);
+          }
+        }}
+      >
+        <Routes location={displayLocation}>
+          {mainRoutes}
+          {authRoute}
         </Routes>
-        {location.pathname !== '/auth' && <Footer />}
       </div>
     </>
   );

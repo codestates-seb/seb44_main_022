@@ -145,7 +145,6 @@ const data: Store =
 //   const fetchData = async () => {  
 //       try {
 //         const url = `https://buyte.org/store/${storeId}`;
-//         //stordId를 storeList측에서 넘겨야 하는듯?
 //         const response = await axios.get(url, {
 //         headers: {
 //           'Content-Type': 'application/json',
