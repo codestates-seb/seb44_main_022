@@ -9,5 +9,7 @@ import org.mapstruct.MappingConstants;
 public interface MemberMapper {
     Member memberPostDtoToMember(MemberDto.Post memberPostDto);
 
+    Member memberPatchToMember(MemberDto.Patch memberPatchDto);
+
     MemberDto.Response memberToMemberResponseDto(Member member);
 }

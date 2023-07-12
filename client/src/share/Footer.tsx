@@ -124,6 +124,7 @@ const FooterContainer = styled.div`
   font-family: var(--font-noto-sans-kr);
   margin-top: auto;
 `;
+
 const Footer: FunctionComponent = () => {
   return (
     <FooterContainer>

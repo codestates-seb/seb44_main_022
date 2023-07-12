@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
-import StoreCard from '../../components/storeCard';
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import axios from 'axios';
+import StoreCard from '../../components/storeCard';
 interface Store {
   storeId: number;
   storeName: string;

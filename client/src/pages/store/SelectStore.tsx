@@ -1,10 +1,8 @@
 /* eslint-disable react/no-children-prop */
 import styled from 'styled-components';
-import Header from '../../share/Header';
-import Footer from '../../share/Footer';
-import ModalComponentDetail from '../../share/ModalComponentDetail';
-import ModalComponentCustom from '../../share/ModalComponentCustom';
 import { useState } from 'react';
+import Header from '../../share/Header';
+import ModalComponentCustom from '../../share/ModalComponentCustom';
 
 import SelectStoreImg from '../../assets/images/img_select/select_store.png';
 import SelectMenuImg from '../../assets/images/img_select/select_menu.png';
@@ -15,13 +13,12 @@ const MainRoot = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  min-height: 100vh;
   font-size: 22px;
   position: relative;
 `;
 
 const OrderText = styled.h1`
-  margin-top: 210px;
+  margin-top: 220px;
   font-size: 28px;
   font-weight: bold;
   text-align: center;
@@ -31,7 +28,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 100px;
 `;
 
 const ContentContainer = styled.div`
@@ -73,14 +70,6 @@ const Button = styled.button`
   color: var(--purple);
 `;
 
-const ModalContainer = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-`;
-
 const SelectStore: React.FunctionComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => {
@@ -119,7 +108,6 @@ const SelectStore: React.FunctionComponent = () => {
         contentLabel="매장 리스트"
         children={undefined}
       />
-      <Footer />
     </MainRoot>
   );
 };

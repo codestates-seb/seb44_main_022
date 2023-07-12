@@ -34,10 +34,6 @@ public class Product extends Auditable {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
     @Column(name = "product_name")
     private String productName;
 
@@ -50,9 +46,13 @@ public class Product extends Auditable {
     @Column(name = "product_image")
     private String productImage;
 
+    @Column(name = "product_category")
+    @Enumerated(EnumType.STRING)
+    private ProductCategory productCategory;
+
     @Column(name = "product_preference")
     @Enumerated(EnumType.STRING)
-    private ProductPreference productPreference;
+    private PreferenceProduct preferenceProduct;
 
     @Column(name = "product_type")
     @Enumerated(EnumType.STRING)
@@ -67,7 +67,7 @@ public class Product extends Auditable {
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<OrderProduct> orderProductList = new ArrayList<>();
 
-    public enum ProductPreference {
+    public enum PreferenceProduct {
         PREFERRED,
         NOT_PREFERRED
     }
@@ -75,5 +75,11 @@ public class Product extends Auditable {
     public enum ProductType {
         CUSTOM,
         STANDARD
+    }
+
+    public enum ProductCategory {
+        CAKE,
+        COOKIE,
+        DONUT
     }
 }

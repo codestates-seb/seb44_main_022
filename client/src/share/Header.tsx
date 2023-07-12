@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import login_img from '../assets/images/cart_img.png';
 import cart_img from '../assets/images/login_img.png';
 import logo from '../assets/images/logo.png';
+import Logo from '../components/Logo/Logo';
 
 const LoginIcon = styled(Link)`
   position: absolute;
@@ -87,7 +88,7 @@ const LinkMypage = styled.div`
 `;
 const Buyte = styled.div`
   position: absolute;
-  top: 49px;
+  top: 85px;
   right: 50%;
   transform: translateX(50%);
   line-height: 60px;
@@ -97,12 +98,7 @@ const Buyte = styled.div`
   align-items: center;
   height: 37px;
 `;
-const BuyteLink = styled(Link)`
-  font-family: 'Just Another Hand', cursive;
-  font-size: 3rem;
-  color: inherit;
-  text-decoration: none;
-`;
+
 const Cart = styled.div`
   position: absolute;
   top: 43.54px;
@@ -173,7 +169,7 @@ const Header: FunctionComponent = () => {
         <Link to="/mypage/:id">Mypage</Link>
       </LinkMypage>
       <Buyte>
-        <BuyteLink to="/">BUYTE</BuyteLink>
+        <Logo />
       </Buyte>
       <CartContainer>
         <CartIcon to="/cart">
