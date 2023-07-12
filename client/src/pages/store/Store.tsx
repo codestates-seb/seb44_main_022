@@ -1,14 +1,24 @@
-import styled from 'styled-components';
 import { FaSearch } from 'react-icons/fa';
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
 import axios from 'axios';
 import StoreCard from '../../components/storeCard';
+import { 
+  StyledInput, 
+  StoreSection,
+  StoreListSection,
+  StoreText,
+  Search,
+  SearchSection
+ } from './Store.style';
+
 interface Store {
   storeId: number;
   storeName: string;
   storeAddress: string;
   storeImage: string;
 }
+
+
 function Store() {  
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredData, setFilteredData] = useState<Store[]>([]);
@@ -57,11 +67,11 @@ function Store() {
     fetchDataAndActivateObserver();
   }, [page, searchTerm]);
 
-  const fetchData = async (page?: number, searchTerm?: string) => {  
+  const fetchData = async (page: number, searchTerm?: string) => {  
     try {
-      let url = `https://11e5-218-53-232-194.ngrok-free.app/v1/store`;     
+      let url = `https://buyte.site/store?page=${page}`;     
       if (searchTerm && searchTerm.trim() !=='') {
-        url += `?storeName=${searchTerm}`;
+        url += `&search=${searchTerm}`;
       } 
       console.log(url)
       const response = await axios.get(url, {
@@ -149,94 +159,3 @@ function Store() {
   );
 }
 export default Store;
-
-const StyledInput = styled.input`
-  outline: 1px solid var(--white);
-  &:focus {
-    outline: 1px solid var(--purple);
-  }
-`;
-
-const StoreSection = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center; 
-  flex-direction: column;
-  margin-top:240px;
-  @media (max-width: 772px) {
-    margin-top: 120px;
-  }
-`;
-
-const StoreListSection = styled.section`
-  width: 100%;
-  section {
-    display: flex;
-    width: 70%;
-  }
-`;
-
-const StoreText = styled.div`
-  width: 70%;
-  padding: 1rem 0; 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  h2 {
-    font-size: 30px;
-    margin-bottom: 40px;
-    font-weight: 600;
-    font-family: inherit;
-    color: var(--light-black);  
-  }
-
-  p {
-    font-size: 14px;
-    margin-bottom: 50px;
-    color: var(--light-black); 
-  }
-`;
-
-const Search = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 0.5rem 2.9rem;
-  align-items: center;
-  span {
-    color: var(--light-gray);
-    font-size: 13px;
-  }
-  @media (max-width: 772px) {
-    span {
-      display: none;
-    }
-  }
-  input {
-    background-color: var(--gray);  
-    border: none;
-    border-radius: 20px;
-    padding: 7px 20px;
-    width: 300px;
-    font-family: inherit;
-    color: var(--dark-gray)
-  }
-  @media (max-width: 772px) {
-    flex-direction: column;
-    align-items: center;
-    margin: 0.5rem auto; 
-    padding-bottom: 1rem; 
-  }
-`;
-
-const SearchSection =styled.section`
-  margin: 30px 0;
-  &::after {
-    content:"";
-    display: block;
-    background-color: var(--light-purple);
-    height: 1.5px;
-    width: 100%;
-    margin-top: 20px;
-  }
-`;
