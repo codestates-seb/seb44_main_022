@@ -1,8 +1,9 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BiArrowBack} from 'react-icons/bi';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import axiosInstance from '../../api/api';
+
 import {
   StoreProductSection,
   ProductListTitle,
@@ -21,18 +22,18 @@ interface Product {
 }
 
 interface Store {
-  storeId: number;
+  //storeId: number;
   storeName: string;
   storeAddress: string;
   storeIntroduction: string;
-  storePhone: string;
+  storePhoneNumber: string;
   storeImage: string;
   customProductInfoList: Product[];
   standardProductInfoList: Product[];
 }
 
 function StoreDetail() {    
-const data: Store = 
+/*const data: Store = 
   {   "storeId": 1, 
   //storeId는 Props로 받아오기
       "storeName": "반짝제과제빵",
@@ -136,27 +137,25 @@ const data: Store =
       ]
   }
   //서버와 통신시 지워야 하는 부분
-  
+  */
 
-// const [data, setData] = useState<Store | null>(null);
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-//   const fetchData = async () => {  
-//       try {
-//         const url = `https://buyte.org/store/${storeId}`;
-//         const response = await axios.get(url, {
-//         headers: {
-//           'Content-Type': 'application/json',
-//           'ngrok-skip-browser-warning': '69420',
-//         },
-//   });      
-//         const data = response.data;      
-//         setData(data[0]);
-//       } catch (error) {
-//         console.error('Error fetching store data:', error);
-//       }
-//   };
+const [data, setData] = useState<Store | null>(null);
+const storeId=1;
+//임시로 넣어둔 거임 나중에 받아야 됨.
+   useEffect(() => {
+     fetchData();
+   }, []);
+  const fetchData = async () => {  
+      try {
+        const url = `/v1/store/${storeId}`;
+        //storeId받을 수 있냐고 물어보고... 
+        const response = await axiosInstance.get(url);      
+        const data = response.data;      
+        setData(data);
+      } catch (error) {
+        console.error('Error fetching store data:', error);
+      }
+  };
     
   if (!data) {
     return <div>입점을 준비 중입니다!</div>;
@@ -179,16 +178,17 @@ const data: Store =
                     </Link>
                     <DetailInfo>{data.storeAddress}</DetailInfo>                    
                     <DetailTitle>전화번호</DetailTitle>
-                    <span style={{ color: 'var(--bright-black)',fontWeight: '500',fontSize: '13px'}}>{data.storePhone}</span>
+                    <span style={{ color: 'var(--bright-black)',fontWeight: '500',fontSize: '13px'}}>{data.storePhoneNumber}</span>
                 </DetailWrapper>
             </StoreDetails>
         </StoreDetailSection>
         <StoreProductSection>
             <div style={{width: '80%'}}>
                 <ProductListTitle>Custom</ProductListTitle>
-                <ProductCard data={data.customProductInfoList} storeId={data.storeId} storeName={data.storeName}/>                
+                <ProductCard data={data.customProductInfoList} storeId={storeId} storeName={data.storeName}/>                
                 <ProductListTitle>We Made It</ProductListTitle>
-                <ProductCard data={data.standardProductInfoList} storeId={data.storeId} storeName={data.storeName}/>
+                <ProductCard data={data.standardProductInfoList} storeId={storeId} storeName={data.storeName}/>
+                {/*여기도 두 개 임시로 넣어둔 거임. data.stoeId로 받아야 됨.*/}
             </div>
         </StoreProductSection>
     </>

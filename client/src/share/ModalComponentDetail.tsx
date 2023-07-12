@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import ProductCartAlert from '../share/ProductCartAlert';
+import axiosInstance from '../api/api';
 import {
   AlertBox,
   CircleShape,
@@ -26,7 +26,7 @@ import {
   ProductImgContainer,
   ModalWrapper
 } from './ModalComponentDetail.style';
-const ProductData = {
+/*const ProductData = {
   "productInfoList": [
           {
               "productId": 1,
@@ -86,7 +86,7 @@ const ProductData = {
       }
       ]
 }  //서버와 통신시 지워야 하는 부분
-  
+*/
 
 interface Product {
   productId: number;
@@ -103,6 +103,7 @@ interface ModalComponentDetailProps {
   storeName: string
   productId: string;
 }
+
 interface ModalProps extends ModalComponentDetailProps {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -119,22 +120,16 @@ function ModalComponentDetail({
   storeName,
   productId,
 }: ModalProps){  
+
   const [isProductCartAlertVisible, setProductCartAlertVisible] = useState(false);
-  const product = ProductData.productInfoList.find(item => item.productId === parseInt(productId));
-  //const [product, setProduct] = useState<Product | null>(null);
-    
-    const fetchData = async () => {  
+  // const product = ProductData.productInfoList.find(item => item.productId === parseInt(productId));
+  const [product, setProduct] = useState<Product | null>(null);    
+  const fetchData = async () => {  
         try {
-          const url = `https://buyte.org/store/${storeId}/${productId}`;
-          const response = await axios.get(url, {
-            headers: {
-              'Content-Type': 'application/json',
-              'ngrok-skip-browser-warning': '69420',
-            },
-          });      
-          const data = response.data;      
-          console.log(data)
-          //setProduct(data[0]);
+          const url = `/v1/store/${storeId}/${productId}`;
+          const response = await axiosInstance.get(url);      
+          const data = response.data;    
+          setProduct(data);
         } catch (error) {
           console.error('Error fetching store data:', error);
         }
@@ -146,11 +141,12 @@ function ModalComponentDetail({
 
   const handleSubmit = async () => {
     const formData = {
+      storeId: storeId,
       productId: productId,
     };
     try {
-      const url= `https://buyte.org/store/${storeId}/${productId}`;
-      await axios.post(url, formData);
+      const url= `/store/${storeId}/${productId}`;
+      await axiosInstance.post(url, formData);
       setProductCartAlertVisible(true);
       console.log('POST 요청 성공');
     } catch (error) {
