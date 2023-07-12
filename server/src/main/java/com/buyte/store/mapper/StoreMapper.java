@@ -20,6 +20,7 @@ public interface StoreMapper {
             .storeAddress(store.getStoreAddress())
             .storeImage(store.getStoreImage())
             .storeIntroduction(store.getStoreIntroduction())
+            .storePhoneNumber(store.getStorePhoneNumber())
             .build();
     }
 

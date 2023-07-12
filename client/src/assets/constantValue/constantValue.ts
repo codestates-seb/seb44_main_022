@@ -1,5 +1,4 @@
 import { FlattenSimpleInterpolation, css } from 'styled-components';
-import { CartCategoryNameList } from '../interface/Cart.interface';
 
 export const REGEX = {
   nickname: /^[가-힣a-zA-Z0-9]{4,12}$/,
@@ -86,3 +85,21 @@ export const CART_CATEGORY_NAME = [
 ];
 
 export const DELIVERY_FEE = 3500;
+
+export const POSITIONS = [
+  {
+    id: 1,
+    title: '수원 종합 운동장',
+    latlng: { lat: 37.301011, lng: 127.012222 },
+  },
+  {
+    id: 2,
+    title: '구리시',
+    latlng: { lat: 37.591625, lng: 127.131863 },
+  },
+  {
+    id: 3,
+    title: '김포시',
+    latlng: { lat: 37.612458, lng: 126.717777 },
+  },
+];

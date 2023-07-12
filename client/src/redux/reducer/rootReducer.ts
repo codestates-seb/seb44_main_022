@@ -1,9 +1,7 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import loginReducer from './loginReducer';
 import cartReducer from './cartReducer';
 
 const reducer = combineReducers({
-  loginReducer,
   cartReducer,
 });
 

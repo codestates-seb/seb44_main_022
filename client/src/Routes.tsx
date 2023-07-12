@@ -5,7 +5,7 @@ import Auth from './pages/users/Auth/Auth';
 import Mypage from './pages/mypage/Mypage';
 import ShoppingCart from './pages/order/ShoppingCart/ShoppingCart';
 import Store from './pages/store/Store';
-import Map from './pages/map/Map';
+import Map from './pages/map/MapPage';
 import SelectStore from './pages/store/SelectStore';
 import Header from './share/Header';
 import Footer from './share/Footer';

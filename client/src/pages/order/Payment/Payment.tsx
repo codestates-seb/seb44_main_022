@@ -7,7 +7,6 @@ import { CartItemTypes } from '../../../assets/interface/Cart.interface';
 import CartItem from '../../../components/CartItem/CartItem';
 import { RootState } from '../../../redux/store/store';
 import RectangleButton from '../../../components/RectangleButton/RectangleButton';
-import { requestPay } from '../../../PaymentWindow';
 import { getCartList, postSelectedCartList } from '../../../api/orderApis';
 import useGoBackRestrict from '../../../hooks/useGoBackRestrict';
 import CartCategoryList from '../../../components/CartCategoryList';
@@ -19,6 +18,7 @@ import {
 import CartItemTab from '../../../components/CartItem/CartItemTab';
 import OrderInput from '../../../components/UserInput/OrderInput';
 import PriceNumberText from '../../../components/PriceNumberText';
+import { requestPay } from './PaymentWindow';
 import { OrderInfoContainer } from './Payment.style';
 
 function Payment() {

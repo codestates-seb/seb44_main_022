@@ -1,14 +1,16 @@
 import { MdLocalPostOffice } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
 import { AiFillLock } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInput from '../../components/UserInput/UserInput';
 import RoundButton from '../../components/RoundButton/RoundButton';
-import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
+import { AUTH_FAILED_MESSAGE } from '../../assets/constantValue/constantValue';
 import { postSignUp } from '../../api/authApis';
+import useChangeText from '../../hooks/useChangeText';
+import { SignUpFormProps } from '../../assets/interface/Auth.interface';
 
-function SignUpForm() {
+function SignUpForm({ setIsSignUp }: SignUpFormProps) {
   const [nickname, setNickname] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -21,44 +23,18 @@ function SignUpForm() {
     e.preventDefault();
     if (userIdValid && passwordValid) {
       postSignUp(userId, password, nickname)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
-      // axios
-      //   .post('https://90d0-218-53-232-194.ngrok-free.app/token/refresh', null, {
-      //     headers: {
-      //       'ngrok-skip-browser-warning': true,
-      //     },
-      //     withCredentials: true,
-      //   })
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
-      alert('통신 성공');
-      navigate('/auth');
-      return;
+        .then(() => {
+          alert('회원가입에 성공하셨습니다.');
+          setIsSignUp(false);
+          navigate('/auth');
+        })
+        .catch(() => alert('데이터를 잘못 입력했음 ㅇㅇ'));
     }
   };
 
-  const strCheck = (str: string, type: string) => {
-    if (type === 'id') {
-      return REGEX.id.test(str);
-    }
-    if (type === 'password') {
-      return REGEX.password.test(str);
-    }
-    return REGEX.nickname.test(str);
-  };
-
-  useEffect(() => {
-    setNicknameValid(strCheck(nickname, 'nickname'));
-  }, [nickname]);
-
-  useEffect(() => {
-    setUserIdValid(strCheck(userId, 'id'));
-  }, [userId]);
-
-  useEffect(() => {
-    setPasswordValid(strCheck(password, 'password'));
-  }, [password]);
+  useChangeText(nickname, setNicknameValid, 'nickname');
+  useChangeText(userId, setUserIdValid, 'id');
+  useChangeText(password, setPasswordValid, 'password');
 
   return (
     <form onSubmit={handleLoginSubmit}>
