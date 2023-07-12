@@ -35,10 +35,16 @@ public class MemberController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/signup/oauth2")
+    @PostMapping("/signup/oauth")
     public ResponseEntity googleSignUpWithAuthorization(@RequestParam String authorization){
         Member member = oauthService.socialSignUpWithAuthorization(authorization);
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login/oauth")
+    public ResponseEntity googleLogInWithAuthorization(HttpServletRequest request, HttpServletResponse response) {
+        response = oauthService.socialLogInWithAuthorization(request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/token/refresh")
