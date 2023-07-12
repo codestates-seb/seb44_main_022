@@ -23,7 +23,7 @@ function StoreCard({data}: StoreCardProps) {
       <CardListContainer>
             {data.map((store) => (
               <Cards key={store.storeId}>
-                <Link style={{ height: '100%', width: '100%' }} to={`/${store.storeId}`}>
+                <Link style={{ height: '100%', width: '100%' }} to={`/store/${store.storeId}`}>
                   <div style={{ position: 'relative', height: '100%', width: '100%' }}>
                     <img
                       src={store.storeImage}
@@ -38,10 +38,10 @@ function StoreCard({data}: StoreCardProps) {
                   </div>
                 </Link>
                 <StoreTitleInfo>
-                  <p style={{ fontSize: '14px', marginBottom: '0.4rem'  }}>
-                    <Link to={`/${store.storeId}`} style={{color: 'var(--light-black)'}}>{store.storeName}</Link>
+                  <p style={{ fontSize: '15px', marginBottom: '0.4rem'  }}>
+                    <Link to={`/store/${store.storeId}`} style={{color: 'var(--light-black)'}}>{store.storeName}</Link>
                   </p>
-                  <p style={{ fontSize: '11px', color: 'var(--light-gray)', marginRight:'0.3rem'}}>
+                  <p style={{ fontSize: '13px', color: 'var(--light-gray)', marginRight:'0.3rem', lineHeight:'1.3'}}>
                     <FiMapPin style={{ marginRight: '0.1rem', alignItems: 'center' }} />
                     {store.storeAddress}
                   </p>

@@ -63,7 +63,7 @@ function Store() {
 
   const fetchData = async (page: number, searchTerm?: string) => {  
     try {
-      let url = `/store?page=${page}`;     
+      let url = `/v1/store?page=${page}`;     
       if (searchTerm && searchTerm.trim() !=='') {
         url += `&search=${searchTerm}`;
       } 
