@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import Draggable from 'react-draggable';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
 import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
 import DragButton from './DragButton';
-import DrawButton from './DrawButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
-
+import UndoButton from './UndoButton';
 const ContentContainer = styled.div`
   margin-left: 20%;
   width: 80%;
@@ -28,7 +28,7 @@ const ContentContainer = styled.div`
   overflow: hidden;
 `;
 
-const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageProp }) => {
+const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<number>(5);
@@ -37,16 +37,14 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
   const [images, setImages] = useState<
     { imageUrl: string; x: number; y: number; width: number; height: number }[]
   >([]);
-
   const [drawingMode, setDrawingMode] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [selectedImage, setSelectedImage] = useState<string>(selectedImageProp);
   const [, setDrawingActions] = useState<{ x: number; y: number; color: string; size: number }[]>(
     []
   );
   const [draggedImage, setDraggedImage] = useState<string | null>(null);
   const [draggedImageIndex, setDraggedImageIndex] = useState<number>(-1);
+  const [canvasStates, setCanvasStates] = useState<Array<string>>([]); // 캔버스 상태 저장 배열
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -80,7 +78,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         height = targetWidth / aspectRatio;
       }
 
-      ctx.drawImage(image, 200, 200, width, height);
+      ctx.drawImage(image, 20, 20, width, height);
     };
   };
 
@@ -102,7 +100,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
     });
 
     if (draggedIndex !== -1 && !drawingMode) {
-      setIsDragging(true);
+      setIsDragging(true); // 드래그 중임을 나타내는 상태로 설정
       setDraggedImageIndex(draggedIndex);
     } else if (isDragging && draggedImageIndex >= 0) {
       const draggedImage = images[draggedImageIndex];
@@ -317,6 +315,29 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
     setDraggedImage(null);
     setDraggedImageIndex(-1);
   };
+  const handleUndoButtonClick = () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    if (images.length > 0) {
+      // Remove the last image from the images array
+      const updatedImages = [...images];
+      updatedImages.splice(-1, 1);
+      setImages(updatedImages);
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Redraw the remaining images
+    }
+
+    // Reset dragged image and index
+    setDraggedImage(null);
+    setDraggedImageIndex(-1);
+  };
 
   return (
     <ContentContainer>
@@ -325,7 +346,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = ({ selectedImageP
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <DragButton onToggleDrag={handleToggleDrag} />
-        {!isLoading && <UploadButton id="upload-button" onUpload={handleUploadImage} />}
+        <UploadButton id="upload-button" onUpload={handleUploadImage} />
+        <UndoButton onUndo={handleUndoButtonClick} /> {/* UndoButton 추가 */}
       </RangeInputContainer>
       <CanvasWrapper
         forwardedRef={canvasWrapperRef}

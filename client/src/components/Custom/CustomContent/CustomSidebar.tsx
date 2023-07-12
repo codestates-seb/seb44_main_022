@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import custom_icon from '../../../assets/images/img_modal/custom_icon.png';
-
+import base from '../../../assets/images/img_modal/base.png';
 const Sidebar = styled.div`
   position: absolute;
   top: 0;
@@ -96,10 +96,10 @@ const CustomSidebar: React.FC = () => {
               onDragStart={(event) => handleImageDragStart(event, custom_icon)}
             />
             <ContentImage
-              src={modal_cake}
-              alt="Cake Icon"
+              src={base}
+              alt="base"
               draggable
-              onDragStart={(event) => handleImageDragStart(event, modal_cake)}
+              onDragStart={(event) => handleImageDragStart(event, base)}
             />
             <ContentImage
               src={modal_cake}
