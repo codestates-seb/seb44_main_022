@@ -5,7 +5,8 @@ import {
   ProductContainer,
   ProductImage,
   HoverOverlay,
-  ModalWrapper
+  ModalWrapper,
+  ProductTitle
 } from './ProductCard.style';
 
 interface Product {
@@ -42,6 +43,7 @@ function ProductCard({data, storeId, storeName}: ProductCardProps) {
         {data.map((product) => (
             <li key={product.productId} style={{minWidth:'200px', height:'320px', width:'100%', position:'relative'}} onClick={() => handleProductClick(product)}>
               <ProductImage src={product.productImage} alt={product.productName}/>
+              <ProductTitle>{product.productName}</ProductTitle>
               <HoverOverlay />
             </li>
                         ))}
