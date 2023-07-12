@@ -28,7 +28,7 @@ public class CartController {
         return ResponseEntity.ok(memberCart);
     }
 
-    @DeleteMapping("/cart/delete")
+    @DeleteMapping("/cart")
     public ResponseEntity deletePorducts(@RequestBody CartReqDto.CartIds cartIds) {
         cartService.deleteSelectedProducts(cartIds);
 
