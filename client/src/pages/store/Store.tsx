@@ -1,7 +1,7 @@
 import { FaSearch } from 'react-icons/fa';
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from 'react';
-import axios from 'axios';
 import StoreCard from '../../components/storeCard';
+import axiosInstance from '../../api/api';
 import { 
   StyledInput, 
   StoreSection,
@@ -51,17 +51,11 @@ function Store() {
 
   useEffect(() => {
     const fetchDataAndActivateObserver = async () => {
-     setIsObserverActive(true)
-      await fetchData(page, searchTerm);
-    };   
-    fetchDataAndActivateObserver();
-  }, [page, searchTerm]);
-
-  useEffect(() => {
-    const fetchDataAndActivateObserver = async () => {
+      setIsObserverActive(true);
       if (searchTerm.trim() === '') {
         await fetchData(page);
-        setIsObserverActive(true); 
+      } else {
+        await fetchData(page, searchTerm);
       }
     };
     fetchDataAndActivateObserver();
@@ -69,22 +63,22 @@ function Store() {
 
   const fetchData = async (page: number, searchTerm?: string) => {  
     try {
-      let url = `https://buyte.site/store?page=${page}`;     
+      let url = `/store?page=${page}`;     
       if (searchTerm && searchTerm.trim() !=='') {
         url += `&search=${searchTerm}`;
       } 
       console.log(url)
-      const response = await axios.get(url, {
-        headers: {
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': '69420',
-        },
-      });
-      const data = response.data;
+      const response = await axiosInstance.get(url);
+    const { storeInfoList, pageInfo } = response.data;
+    console.log(storeInfoList);
       if (page === 1) {
-        setFilteredData(data);
+        setFilteredData(storeInfoList);
       } else {
-        setFilteredData((prevData) => [...prevData, ...data]);
+        setFilteredData((prevData) => [...prevData, ...storeInfoList]);
+      }
+      if (page === pageInfo.totalPage) {
+        setIsObserverActive(false);
+        //무한 스크롤 중단.
       }
     } catch (error) {
       console.error('Error fetching store data:', error);
