@@ -35,6 +35,9 @@ public class Ingredient {
     @Column(name = "ingredient_image")
     private String ingredientImage;
 
+    @Column(name = "ingredient_count")
+    private Integer ingredientCount;
+
     @Column(name = "ingredient_category")
     @Enumerated(EnumType.STRING)
     private IngredientCategory ingredientCategory;
