@@ -1,4 +1,4 @@
-import axiosInstance from './api';
+import axiosInstance from './apis';
 
 export const postLogin = (loginId: string, password: string) => {
   return axiosInstance.post(

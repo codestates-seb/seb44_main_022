@@ -17,6 +17,5 @@ export interface PositionData {
 export interface MapModalProps {
   position: PositionData;
   isClose: boolean;
-  setIsClose: React.Dispatch<React.SetStateAction<boolean>>;
-  CheckState: () => void;
+  handleCloseModal: () => void;
 }

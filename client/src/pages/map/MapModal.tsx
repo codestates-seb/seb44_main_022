@@ -1,13 +1,8 @@
-import styled from 'styled-components';
 import { MapModalProps } from '../../assets/interface/Map.interface';
 import { STORE_MAP_INTRODUCE_LIMIT } from '../../assets/constantValue/constantValue';
+import { MarkerModal } from './Map.style';
 
-function MapModal({ position, isClose, setIsClose, CheckState }: MapModalProps) {
-  const a = () => {
-    setIsClose(true);
-    CheckState();
-  };
-
+function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
   const sliceText = (text: string) => {
     if (text.length > STORE_MAP_INTRODUCE_LIMIT)
       return text.slice(0, STORE_MAP_INTRODUCE_LIMIT) + '...';
@@ -25,7 +20,7 @@ function MapModal({ position, isClose, setIsClose, CheckState }: MapModalProps) 
           fontSize: '1.5rem',
           fontFamily: 'Just Another Hand, cursive',
         }}
-        onClick={a}
+        onClick={handleCloseModal}
       >
         BUYTE
       </div>
@@ -84,28 +79,5 @@ function MapModal({ position, isClose, setIsClose, CheckState }: MapModalProps) 
     </MarkerModal>
   );
 }
-
-const MarkerModal = styled.div<{ toggle: string }>`
-  position: absolute;
-  z-index: 10;
-  width: 330px;
-  height: 500px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 15px;
-  border: 1px solid var(--normal-gray);
-  top: 25%;
-  right: 15%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  animation: ${(props) => props.toggle} 0.3s;
-  box-shadow: 1px 1px 5px 1px var(--light-gray);
-  @media screen and (max-width: 1000px) {
-    animation: fadeNone 0.3s forwards;
-  }
-  @media screen and (max-height: 950px) {
-    animation: fadeUpNone 0.3s forwards;
-  }
-`;
 
 export default MapModal;

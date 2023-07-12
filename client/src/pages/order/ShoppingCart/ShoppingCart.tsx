@@ -37,7 +37,6 @@ function ShoppingCart() {
   };
 
   useEffect(() => {
-    console.log(totalPrice, cartList);
     setIsLoading(true);
     getCartList()
       .then((res) => {
@@ -100,8 +99,8 @@ function ShoppingCart() {
             justifyContent: 'flex-start',
           }}
         >
-          <RectangleButton text="선택 삭제" types="purple" clickEvent={handleSelectedDelete} />
-          <RectangleButton text="전체 선택" types="dark" clickEvent={handleAllSelected} />
+          <RectangleButton text="선택 삭제" types="purple" handleClick={handleSelectedDelete} />
+          <RectangleButton text="전체 선택" types="dark" handleClick={handleAllSelected} />
         </div>
         <TotalPaymentContainer>
           <div style={{ fontSize: '22px', fontWeight: 'bold', margin: '0.5rem 0' }}>
@@ -123,18 +122,18 @@ function ShoppingCart() {
           <RectangleButton
             text="쇼핑하러가기"
             types="white"
-            clickEvent={() => navigate('/store')}
+            handleClick={() => navigate('/select')}
           />
           <RectangleButton
             text="선택상품주문"
             types="purple"
-            clickEvent={() => handleSelectedPayment(idList, 'selected')}
+            handleClick={() => handleSelectedPayment(idList, 'selected')}
           />
 
           <RectangleButton
             text="&nbsp;&nbsp;&nbsp;전체주문&nbsp;&nbsp;&nbsp;"
             types="dark"
-            clickEvent={() => handleSelectedPayment(cartList, 'all')}
+            handleClick={() => handleSelectedPayment(cartList, 'all')}
           />
         </div>
       </div>

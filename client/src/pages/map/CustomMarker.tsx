@@ -4,11 +4,15 @@ import { PositionData } from '../../assets/interface/Map.interface';
 
 interface MarkerProps {
   markerPosition: PositionData;
-  clickMarker: (position: PositionData) => void;
+  handleClick: (position: PositionData) => void;
 }
 
-function CustomMarker({ markerPosition, clickMarker }: MarkerProps) {
+function CustomMarker({ markerPosition, handleClick }: MarkerProps) {
   const map = useMap();
+  const changePositionCenter = (marker: kakao.maps.Marker) => {
+    map.panTo(marker.getPosition());
+    handleClick(markerPosition);
+  };
 
   return (
     <MapMarker
@@ -22,8 +26,7 @@ function CustomMarker({ markerPosition, clickMarker }: MarkerProps) {
       }}
       clickable={true}
       onClick={(marker) => {
-        map.panTo(marker.getPosition());
-        clickMarker(markerPosition);
+        changePositionCenter(marker);
       }}
     ></MapMarker>
   );

@@ -1,32 +1,37 @@
 import { Map } from 'react-kakao-maps-sdk';
 import { useState } from 'react';
-import styled from 'styled-components';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
-import { POSITIONS } from '../../assets/constantValue/constantValue';
+import { POSITIONS, UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
 import { PositionData } from '../../assets/interface/Map.interface';
 import MapModal from './MapModal';
-import CustomMarker from './Marker';
+import CustomMarker from './CustomMarker';
+import { MapContainer } from './Map.style';
 
 function MapPage() {
   const { lat, lng } = useCurrentLocation();
-  const [toggle, setToggle] = useState(false);
-  const [id, setId] = useState(0);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [clickedId, setClickedId] = useState(0);
   const [isClose, setIsClose] = useState(true);
 
-  const closeModal = () => {
-    setTimeout(() => setToggle(!toggle), 290);
+  const unmountAnimation = () => {
+    setTimeout(() => setIsOpenModal(!isOpenModal), UNMOUNT_ANIMATION_TIME);
   };
 
-  const clickMarker = (position: PositionData) => {
+  const handleCloseModal = () => {
+    setIsClose(true);
+    unmountAnimation();
+  };
+
+  const handleClickMarker = (position: PositionData) => {
     if (!isClose) {
-      if (id === position.storeId) {
+      if (clickedId === position.storeId) {
         setIsClose(true);
-        closeModal();
+        handleCloseModal();
         return;
       }
     }
-    setToggle(true);
-    setId(position.storeId);
+    setIsOpenModal(true);
+    setClickedId(position.storeId);
     setIsClose(false);
   };
 
@@ -62,15 +67,14 @@ function MapPage() {
           level={3}
         >
           {POSITIONS.map((position, idx) => (
-            <CustomMarker key={idx} markerPosition={position} clickMarker={clickMarker} />
+            <CustomMarker key={idx} markerPosition={position} handleClick={handleClickMarker} />
           ))}
 
-          {toggle && id !== 0 && (
+          {isOpenModal && clickedId !== 0 && (
             <MapModal
-              position={POSITIONS[id - 1]}
+              position={POSITIONS[clickedId - 1]}
               isClose={isClose}
-              setIsClose={setIsClose}
-              CheckState={closeModal}
+              handleCloseModal={handleCloseModal}
             />
           )}
         </Map>
@@ -78,15 +82,5 @@ function MapPage() {
     </div>
   );
 }
-
-const MapContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  height: 80%;
-  min-height: 500px;
-  margin-bottom: 2rem;
-`;
 
 export default MapPage;

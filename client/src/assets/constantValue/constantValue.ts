@@ -89,6 +89,8 @@ export const DELIVERY_FEE = 3500;
 
 export const STORE_MAP_INTRODUCE_LIMIT = 70;
 
+export const UNMOUNT_ANIMATION_TIME = 290;
+
 export const POSITIONS = [
   {
     storeId: 1,
@@ -146,3 +148,8 @@ export const POSITIONS = [
     ],
   },
 ];
+
+export const LOCAL_STORAGE_KEY_LIST = {
+  AccessToken: 'AccessToken',
+  IdList: 'IdList',
+};

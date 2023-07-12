@@ -1,5 +1,12 @@
-import { CartItemTypes, RspData } from '../../../assets/interface/Cart.interface';
+import { CartItemTypes } from '../../../assets/interface/Cart.interface';
 import { postAfterPayment } from '../../../api/orderApis';
+import { ImpType, PaymentWindowParams } from '../../../assets/interface/Payment.interface';
+
+declare global {
+  interface Window {
+    IMP: ImpType;
+  }
+}
 
 const { IMP } = window;
 IMP.init('imp04163177');
@@ -14,12 +21,8 @@ const makeMerchantUid = () => {
   return hours + minutes + seconds + milliseconds;
 };
 
-export function requestPay(
-  orderUserName: string,
-  shippingAddress: string,
-  cartList: CartItemTypes[],
-  onSuccess: () => void
-) {
+export function requestPay(params: PaymentWindowParams) {
+  const { orderUserName, shippingAddress, cartList, onSuccess } = params;
   const itemsName = cartList.map((item) => item.productName).join(',');
   const idList = cartList.map((item) => item.cartId);
   const totalAmount = (cartList: CartItemTypes[]) => {
@@ -37,7 +40,7 @@ export function requestPay(
       buyer_name: orderUserName,
       buyer_addr: shippingAddress,
     },
-    (res: RspData) => {
+    (res) => {
       const { success, imp_uid, error_msg } = res;
       if (success) {
         // postAfterPayment(idList, imp_uid)
@@ -47,6 +50,7 @@ export function requestPay(
         //   })
         //   .catch((err) => alert(`결제에 실패하였습니다. 에러 내용: ${err}`));
         alert('결제 성공');
+        onSuccess();
       } else {
         if (error_msg === '이미 결제가 이루어진 거래건입니다.') alert('잠시 후 다시 시도해주세요.');
         else {

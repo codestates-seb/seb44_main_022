@@ -1,4 +1,4 @@
-import axiosInstance from './api';
+import axiosInstance from './apis';
 
 export const deleteCartList = (cartIds: number[]) => {
   return axiosInstance.delete('/cart', {

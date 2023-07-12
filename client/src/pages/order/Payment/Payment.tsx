@@ -2,7 +2,11 @@ import { useLocation } from 'react-router';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { CART_CATEGORY_NAME, DELIVERY_FEE } from '../../../assets/constantValue/constantValue';
+import {
+  CART_CATEGORY_NAME,
+  DELIVERY_FEE,
+  LOCAL_STORAGE_KEY_LIST,
+} from '../../../assets/constantValue/constantValue';
 import { CartItemTypes } from '../../../assets/interface/Cart.interface';
 import CartItem from '../../../components/CartItem/CartItem';
 import { RootState } from '../../../redux/store/store';
@@ -18,6 +22,7 @@ import {
 import CartItemTab from '../../../components/CartItem/CartItemTab';
 import OrderInput from '../../../components/UserInput/OrderInput';
 import PriceNumberText from '../../../components/PriceNumberText';
+import { LocalStorage } from '../../../utils/browserStorage';
 import { requestPay } from './PaymentWindow';
 import { OrderInfoContainer } from './Payment.style';
 
@@ -35,16 +40,16 @@ function Payment() {
   useEffect(() => {
     switch (state) {
       case 'all':
-        localStorage.setItem('idList', JSON.stringify(idList));
+        LocalStorage.set<number[]>(LOCAL_STORAGE_KEY_LIST.IdList, idList);
         getCartList().then((res) => {
           setCartList(res.data.cartInfos);
           setTotalPrice(res.data.totalPrice);
         });
         break;
       case 'selected': {
-        const storedIdList = localStorage.getItem('idList');
-        const ids = storedIdList ? JSON.parse(storedIdList) : idList;
-        localStorage.setItem('idList', JSON.stringify(ids));
+        const storedIdList = LocalStorage.get(LOCAL_STORAGE_KEY_LIST.IdList);
+        const ids = idList !== undefined && idList.length > 0 ? idList : storedIdList;
+        LocalStorage.set<number[]>(LOCAL_STORAGE_KEY_LIST.IdList, ids);
         postSelectedCartList(ids).then((res) => {
           setCartList(res.data.cartInfos);
           setTotalPrice(res.data.totalPrice);
@@ -52,7 +57,7 @@ function Payment() {
         break;
       }
       default: {
-        localStorage.setItem('idList', JSON.stringify([]));
+        LocalStorage.set<number[]>(LOCAL_STORAGE_KEY_LIST.IdList, []);
         navigate('/cart');
       }
     }
@@ -111,17 +116,21 @@ function Payment() {
           <RectangleButton
             text="이전화면"
             types="white"
-            clickEvent={() => {
+            handleClick={() => {
               navigate(-1);
             }}
           />
           <RectangleButton
             text="결제하기"
             types="purple"
-            clickEvent={() =>
-              requestPay(orderUserName, shippingAddress, cartList, () =>
-                navigate('/complete', { state: { rightPass: true }, replace: true })
-              )
+            handleClick={() =>
+              requestPay({
+                orderUserName,
+                shippingAddress,
+                cartList,
+                onSuccess: () =>
+                  navigate('/complete', { state: { rightPass: true }, replace: true }),
+              })
             }
           />
         </div>
