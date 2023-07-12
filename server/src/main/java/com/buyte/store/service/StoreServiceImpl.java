@@ -3,7 +3,7 @@ package com.buyte.store.service;
 import com.buyte.exception.BusinessLogicException;
 import com.buyte.exception.ExceptionCode;
 import com.buyte.product.dto.CustomProductInfoDto;
-import com.buyte.product.dto.ProductInfoDto;
+import com.buyte.product.dto.ProductImageDto;
 import com.buyte.product.dto.StandardProductInfoDto;
 import com.buyte.product.entity.Product;
 import com.buyte.product.entity.Product.PreferenceProduct;
@@ -68,11 +68,11 @@ public class StoreServiceImpl implements StoreService{
         allStoreList.forEach(store -> {
             StoreMapDto storeMapDto = storeMapper.storeToStoreMap(store);
 
-            List<ProductInfoDto> productInfoList = store.getProductList().stream()
+            List<ProductImageDto> productImageList = store.getProductList().stream()
                 .filter(product -> product.getPreferenceProduct() == PreferenceProduct.PREFERRED)
-                .map(productMapper::productToProductInfo).collect(Collectors.toList());
+                .map(productMapper::productToProductImage).collect(Collectors.toList());
 
-            storeMapDto.setProductPreferenceList(productInfoList);
+            storeMapDto.setProductPreferenceList(productImageList);
             storeMapList.add(storeMapDto);
         });
 
