@@ -1,7 +1,10 @@
 package com.buyte.member.auth.jwt;
 
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.member.entity.Member;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -125,12 +128,16 @@ public class JwtTokenizer {
 
     public String getMemberIdFromRefreshToken(String refreshToken) {
         Key key = getKeyFromBase64EncodedKey(encodeBase64SecretKey(getSecretKey()));
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(key)
-                .build()
-                .parseClaimsJws(refreshToken)
-                .getBody();
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJws(refreshToken)
+                    .getBody();
 
-        return claims.getSubject();
+            return claims.getSubject();
+        } catch (ExpiredJwtException e) {
+            throw new BusinessLogicException(ExceptionCode.REFRESH_TOKEN_EXPIRED);
+        }
     }
 }
