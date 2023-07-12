@@ -35,6 +35,7 @@ function Payment() {
   useEffect(() => {
     switch (state) {
       case 'all':
+        localStorage.setItem('idList', JSON.stringify(idList));
         getCartList().then((res) => {
           setCartList(res.data.cartInfos);
           setTotalPrice(res.data.totalPrice);

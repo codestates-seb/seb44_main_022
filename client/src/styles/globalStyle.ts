@@ -149,4 +149,34 @@ html, body, div, span, applet, object, iframe,
       opacity: 0;
     }
   }
+  @keyframes fadeNone {
+    0% {
+      transform: translate(0px, 0px);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(-40px, 0);
+      opacity: 0;
+    }
+  }
+  @keyframes fadeUpNone {
+    0% {
+      transform: translate(0px, 0px);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(0px, -40px);
+      opacity: 0;
+    }
+  }
+  @keyframes fadeDown {
+    0% {
+      transform: translate(0px, -40px);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(0px, 0px);
+      opacity: 1;
+    }
+  }
 `;

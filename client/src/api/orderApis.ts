@@ -13,7 +13,7 @@ export const getCartList = () => {
 };
 
 export const postSelectedCartList = (cartIds: number[]) => {
-  return axiosInstance.post('/payment', {
+  return axiosInstance.post('/cart/payment', {
     cartIds,
   });
 };

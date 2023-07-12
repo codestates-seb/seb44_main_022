@@ -30,5 +30,9 @@ export const postRefreshToken = async () => {
 };
 
 export const postGoogleOAuth = (code: string) => {
-  return axiosInstance.post('/oauth2/authorization/google', { code });
+  return axiosInstance.post(`/signup/oauth?authorization=${code}`);
+};
+
+export const postGoogleOAuthLogin = (code: string) => {
+  return axiosInstance.post(`/login/oauth?authorization=${code}`);
 };
