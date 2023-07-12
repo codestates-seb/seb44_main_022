@@ -30,6 +30,7 @@ public interface ProductMapper {
             .productImage(product.getProductImage())
             .productName(product.getProductName())
             .productPrice(product.getProductPrice())
+            .productType(product.getProductType())
             .build();
     }
 
@@ -39,6 +40,7 @@ public interface ProductMapper {
             .productImage(product.getProductImage())
             .productName(product.getProductName())
             .productPrice(product.getProductPrice())
+            .productType(product.getProductType())
             .build();
     }
 

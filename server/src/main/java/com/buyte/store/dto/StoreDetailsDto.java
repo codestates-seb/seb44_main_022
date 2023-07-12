@@ -15,6 +15,7 @@ public class StoreDetailsDto {
     private String storeAddress;
     private String storeIntroduction;
     private String storeImage;
+    private String storePhoneNumber;
     private List<CustomProductInfoDto> customProductInfoList;
     private List<StandardProductInfoDto> standardProductInfoList;
 }
