@@ -1,22 +1,22 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
 import { ButtonProps } from '../../assets/interface/Button.interface';
+// import { getMembers } from '../../api/memberApis';
 import { Icons, RoundButtonStyle } from './RoundButton.style';
+// import { postGoogleOAuth } from '../../api/authApis';
 
 function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   const handleClick = () => {
+    console.log('a');
     if (types === 'google') handleGoogleLogin();
+    // getMembers()
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
   };
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: ({ code }) => {
       console.log(code);
-      // axios
-      //   .get('https://604b-218-53-232-194.ngrok-free.app/oauth2/authorization/google', {
-      //     headers: {
-      //       'ngrok-skip-browser-warning': true,
-      //     },
-      //   })
+      // postGoogleOAuth(code)
       //   .then((res) => console.log(res))
       //   .catch((err) => console.log(err));
     },
@@ -27,7 +27,11 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   });
 
   return (
-    <RoundButtonStyle types={types} disabled={enabled === false && true} onClick={handleClick}>
+    <RoundButtonStyle
+      types={types}
+      disabled={enabled === false && true}
+      onClick={() => handleClick()}
+    >
       {icon && <Icons>{icon}</Icons>}
       {title}
     </RoundButtonStyle>

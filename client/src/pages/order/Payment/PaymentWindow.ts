@@ -1,7 +1,7 @@
-import { CartItemTypes } from './assets/interface/Cart.interface';
-import { postAfterPayment } from './api/orderApis';
+import { CartItemTypes, RspData } from '../../../assets/interface/Cart.interface';
+import { postAfterPayment } from '../../../api/orderApis';
 
-const IMP = window.IMP;
+const { IMP } = window;
 IMP.init('imp67011510');
 
 const makeMerchantUid = () => {
@@ -13,12 +13,6 @@ const makeMerchantUid = () => {
 
   return hours + minutes + seconds + milliseconds;
 };
-
-interface RspData {
-  success: boolean;
-  error_msg: string;
-  imp_uid: string;
-}
 
 export function requestPay(
   orderUserName: string,
@@ -43,19 +37,19 @@ export function requestPay(
       buyer_name: orderUserName,
       buyer_addr: shippingAddress,
     },
-    (rsp: RspData) => {
-      if (rsp.success) {
-        postAfterPayment(idList, rsp.imp_uid)
+    (res: RspData) => {
+      const { success, imp_uid, error_msg } = res;
+      if (success) {
+        postAfterPayment(idList, imp_uid)
           .then((res) => {
             console.log(res);
             onSuccess();
           })
           .catch((err) => alert(`결제에 실패하였습니다. 에러 내용: ${err}`));
       } else {
-        if (rsp.error_msg === '이미 결제가 이루어진 거래건입니다.')
-          alert('잠시 후 다시 시도해주세요.');
+        if (error_msg === '이미 결제가 이루어진 거래건입니다.') alert('잠시 후 다시 시도해주세요.');
         else {
-          alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+          alert(`결제에 실패하였습니다. 에러 내용: ${error_msg}`);
         }
       }
     }

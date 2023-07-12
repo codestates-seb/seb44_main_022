@@ -13,3 +13,9 @@ export interface CountButtonProps {
   setCount: React.Dispatch<React.SetStateAction<number>>;
   setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
 }
+
+export interface RectangleButtonProps {
+  text: string;
+  types: string;
+  clickEvent: () => void;
+}

@@ -18,7 +18,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "typeRoots": ["./node_modules/@types", "./src/index.d.ts"]
+    "typeRoots": ["./node_modules/@types", "./src/index.d.ts", "kakao.maps.d.ts"]
   },
   "include": ["src", "vite-env.d.ts", "global.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
