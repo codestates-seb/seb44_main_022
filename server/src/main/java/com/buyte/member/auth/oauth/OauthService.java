@@ -43,32 +43,24 @@ public class OauthService {
     @Value("${security.oauth2.google.fe-secret}")
     private String feSecret;
 
-    public Member socialSignUpWithAuthorization(String authorization) {
-
-        log.info("==social sign up==");
-        String accessToken = getAccessTokenWithAuthorization(authorization);
-
-        GoogleUserInfo member = getUserResource(accessToken);
-        log.info(member.getEmail());
-
-        if (memberRepository.findByLoginId(member.getEmail()) == null) {
-        Member newMember = new Member();
-        newMember.setLoginId(member.getEmail());
-        newMember.setMemberName(member.getName());
-        newMember.setMemberType(Member.MemberType.GOOGLE);
-        newMember.setMemberRole(Member.MemberRole.CUSTOMER);
-
-        return memberRepository.save(newMember);
-        } else {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);}
-    }
-
     public HttpServletResponse socialLogInWithAuthorization(HttpServletRequest request, HttpServletResponse response) {
         log.info("==social log in==");
         String authorization = request.getParameter("authorization");
 
         GoogleUserInfo memberInfo = getUserResource(getAccessTokenWithAuthorization(authorization));
-        Member member = findVerifiedMember(memberInfo.getEmail());
+
+        Member member = memberRepository.findByLoginId(memberInfo.getEmail());
+
+        // memberRepository에 회원정보 없으면 회원가입 후 토큰 발급, 있으면 바로 토큰 발급
+        if (member == null) {
+            Member newMember = new Member();
+            newMember.setLoginId(memberInfo.getEmail());
+            newMember.setMemberName(memberInfo.getName());
+            newMember.setMemberType(Member.MemberType.GOOGLE);
+            newMember.setMemberRole(Member.MemberRole.CUSTOMER);
+
+            member = memberRepository.save(newMember);
+        }
 
         String accessToken = jwtTokenizer.delegateAccessToken(member);
 
@@ -125,15 +117,6 @@ public class OauthService {
             return responseEntity.getBody();
         } else {
             throw new RuntimeException("Failed to fetch Google user info");
-        }
-    }
-
-    public Member findVerifiedMember(String email) {
-        Member findMember = memberRepository.findByLoginId(email);
-        if (findMember != null) {
-            return findMember;
-        } else {
-            throw new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         }
     }
 }
