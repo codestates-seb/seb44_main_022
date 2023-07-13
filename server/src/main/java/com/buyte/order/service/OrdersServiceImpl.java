@@ -14,7 +14,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -27,6 +30,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class OrdersServiceImpl implements OrdersService{
 
     private final MemberRepository memberRepository;
@@ -51,25 +55,50 @@ public class OrdersServiceImpl implements OrdersService{
     }
 
     @Override
-    public void createOrders(OrderDto.OrderInfo orderInfo) throws Exception {
+    public ResponseEntity<String> verifyOrder(OrderDto.OrderInfo orderInfo) throws Exception {
 
-        Long authenticatedMemberId = SecurityUtil.getLoginMemberId();
-        Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
-        Orders orders = new Orders(member);
-        Long totalOrderPrice = 0L;
-        ordersRepository.save(orders);
+        String token = getToken();
+        log.info("토큰: {}",token);
 
-        List<Long> cartIds = orderInfo.getCartIds();
-        for (Long cartId : cartIds) {
-            Cart cart = cartRepository.findById(cartId).orElseThrow();
-            OrderProduct orderProduct = new OrderProduct(cart.getProduct(), cart.getCartCustomProductImage(), cart.getProductCount());
-            orderProduct.setOrder(orders);
-            orderProductRepository.save(orderProduct);
-            cartRepository.delete(cart);
-            totalOrderPrice += (long) cart.getProduct().getProductPrice() * cart.getProductCount();
+        int amount = paymentInfo(orderInfo.getImpUid(), token);
+        log.info("결제금액: {}",amount);
+
+        try {
+            List<Long> cartIds = orderInfo.getCartIds();
+            List<Cart> cartList = cartRepository.findAllByCartIdIn(cartIds);
+            Integer totalPrice = 0;
+            for (Cart cart : cartList) {
+                totalPrice += cart.getProduct().getProductPrice() * cart.getProductCount();
+            }
+
+            if (totalPrice + 3500 != amount) {
+                payMentCancle(token, orderInfo.getImpUid(), amount, "결제 금액 오류");
+                return new ResponseEntity<String>("결제 금액 오류, 결제 취소", HttpStatus.BAD_REQUEST);
+            }
+
+            Long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+            Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
+            Orders orders = new Orders(member);
+            Long totalOrderPrice = 0L;
+            ordersRepository.save(orders);
+
+            for (Long cartId : cartIds) {
+                Cart cart = cartRepository.findById(cartId).orElseThrow();
+                OrderProduct orderProduct = new OrderProduct(cart.getProduct(), cart.getCartCustomProductImage(), cart.getProductCount());
+                orderProduct.setOrder(orders);
+                orderProductRepository.save(orderProduct);
+                cartRepository.delete(cart);
+                totalOrderPrice += (long) cart.getProduct().getProductPrice() * cart.getProductCount();
+            }
+            orders.setOrder(totalOrderPrice, orderInfo.getAddress());
+            ordersRepository.save(orders);
+
+            return new ResponseEntity<>("주문이 완료되었습니다", HttpStatus.OK);
+
+        } catch (Exception e) {
+            payMentCancle(token, orderInfo.getImpUid(), amount, "결제 에러");
+            return new ResponseEntity<String>("결제 에러", HttpStatus.BAD_REQUEST);
         }
-        orders.setOrder(totalOrderPrice, orderInfo.getAddress());
-        ordersRepository.save(orders);
     }
 
     public String getToken() throws IOException, IOException {
@@ -100,9 +129,6 @@ public class OrdersServiceImpl implements OrdersService{
         Gson gson = new Gson();
 
         String response = gson.fromJson(br.readLine(), Map.class).get("response").toString();
-
-        System.out.println(response);
-
         String token = gson.fromJson(response, Map.class).get("access_token").toString();
 
         br.close();
@@ -152,7 +178,6 @@ public class OrdersServiceImpl implements OrdersService{
         conn.setRequestProperty("Content-type", "application/json");
         conn.setRequestProperty("Accept", "application/json");
         conn.setRequestProperty("Authorization", access_token);
-
         conn.setDoOutput(true);
 
         JsonObject json = new JsonObject();
