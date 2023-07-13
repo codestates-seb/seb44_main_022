@@ -48,21 +48,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String accessToken = jwtTokenizer.delegateAccessToken(member);
 
         response.setHeader("Authorization", "Bearer " + accessToken);
-        response.addHeader("Set-Cookie", createCookie(member).toString());
-    }
-
-    private ResponseCookie createCookie(Member member) {
-        String cookieName = "RefreshToken";
-        String cookieValue = jwtTokenizer.delegateRefreshToken(member);
-
-        ResponseCookie cookie = ResponseCookie.from(cookieName, cookieValue)
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .maxAge(Duration.ofDays(1))
-                .sameSite("None")
-                .build();
-
-        return cookie;
+        response.addHeader("Set-Cookie", jwtTokenizer.createCookie(member).toString());
     }
 }
