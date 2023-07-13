@@ -53,32 +53,48 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setColor(event.target.value);
   };
+
   const handleUploadImage = (imageUrl: string) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
+
     setIsDragging(false);
 
     const image = new Image();
     image.src = imageUrl;
-    const isDuplicateImage = images.some((imageData) => imageData.imageUrl === imageUrl);
-    if (isDuplicateImage) return;
+
     image.onload = () => {
       const { naturalWidth, naturalHeight } = image;
-      const targetWidth = 200;
-      const targetHeight = 200;
+      const targetWidth = 100; // 변경할 가로 크기
+      const targetHeight = 100; // 변경할 세로 크기
       const aspectRatio = naturalWidth / naturalHeight;
+
       let width = targetWidth;
       let height = targetHeight;
+
       if (targetWidth / targetHeight > aspectRatio) {
-        width = targetHeight * aspectRatio;
-      } else {
+        // 이미지의 가로가 더 긴 경우
         height = targetWidth / aspectRatio;
+      } else {
+        // 이미지의 세로가 더 긴 경우
+        width = targetHeight * aspectRatio;
       }
 
-      ctx.drawImage(image, 20, 20, width, height);
+      const newImages = [
+        ...images,
+        {
+          imageUrl: image.src,
+          x: 250,
+          y: 250,
+          width: width,
+          height: height,
+        },
+      ];
+
+      setImages(newImages);
     };
   };
 
@@ -213,8 +229,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     setIsDragging(false);
   };
   const handleToggleDrag = () => {
-    setDrawingMode(!drawingMode);
-    setIsDragging(false);
+    setDrawingMode(true);
+    setIsDragging((prev) => !prev);
     setEraser(false);
   };
 
@@ -238,15 +254,31 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     }
   }, []);
 
-  const handleImageDragStart = (
-    event: React.DragEvent<HTMLImageElement>,
-    imageUrl: string,
-    index: number
-  ) => {
-    event.dataTransfer.setData('text/plain', imageUrl);
-    event.dataTransfer.setData('application/my-app-type', 'image');
-    setDraggedImageIndex(index);
-    setIsDragging(true);
+  const handleImageDrag = (event: React.DragEvent<HTMLImageElement>, index: number) => {
+    event.preventDefault();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const { clientX, clientY } = event;
+    const rect = canvas.getBoundingClientRect();
+    const offsetX = clientX - rect.left;
+    const offsetY = clientY - rect.top;
+
+    const newImages = images.map((imageData, i) => {
+      if (i === index) {
+        return {
+          ...imageData,
+          x: offsetX - imageData.width / 2,
+          y: offsetY - imageData.height / 2,
+        };
+      }
+      return imageData;
+    });
+
+    setImages(newImages);
   };
 
   const handleImageDragEnd = () => {
@@ -359,8 +391,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
             key={index}
             src={imageData.imageUrl}
             alt="Dragged Image"
-            draggable={drawingMode}
-            onDragStart={(event) => handleImageDragStart(event, imageData.imageUrl, index)}
+            draggable={!isDragging}
+            onDrag={(event) => handleImageDrag(event, index)}
             onDragEnd={handleImageDragEnd}
             style={{
               position: 'absolute',

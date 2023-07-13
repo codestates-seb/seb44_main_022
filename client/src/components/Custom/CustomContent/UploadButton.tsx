@@ -55,8 +55,36 @@ const UploadButton: React.FC<UploadButtonProps> = ({ id, onUpload }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const imageUrl = e.target?.result as string;
-        onUpload(imageUrl);
+        const image = new Image();
+        image.onload = () => {
+          // canvas를 생성하고, 이미지의 너비와 높이를 기반으로 크기를 조절한다
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          const aspectRatio = image.width / image.height;
+          const maxWidth = 200; // 변경할 가로 크기
+          const maxHeight = 200; // 변경할 세로 크기
+
+          let width = maxWidth;
+          let height = maxHeight;
+
+          if (maxWidth / maxHeight > aspectRatio) {
+            // 이미지의 가로가 더 긴 경우
+            height = maxWidth / aspectRatio;
+          } else {
+            // 이미지의 세로가 더 긴 경우
+            width = maxHeight * aspectRatio;
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          ctx?.drawImage(image, 0, 0, width, height);
+
+          const imageUrl = canvas.toDataURL('image/jpeg', 1);
+          onUpload(imageUrl);
+        };
+
+        image.src = e.target?.result as string;
       };
       reader.readAsDataURL(file);
     }
