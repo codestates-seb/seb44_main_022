@@ -1,4 +1,4 @@
-import axiosInstance from './api';
+import axiosInstance from './apis';
 
 export const deleteCartList = (cartIds: number[]) => {
   return axiosInstance.delete('/cart', {
@@ -13,7 +13,7 @@ export const getCartList = () => {
 };
 
 export const postSelectedCartList = (cartIds: number[]) => {
-  return axiosInstance.post('/payment', {
+  return axiosInstance.post('/cart/payment', {
     cartIds,
   });
 };

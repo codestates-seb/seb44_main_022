@@ -1,10 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { CART_CATEGORY_NAME } from '../../../assets/constantValue/constantValue';
+import {
+  CART_CATEGORY_NAME,
+  LOCAL_STORAGE_KEY_LIST,
+} from '../../../assets/constantValue/constantValue';
 import RectangleButton from '../../../components/RectangleButton/RectangleButton';
 import useGoBackRestrict from '../../../hooks/useGoBackRestrict';
 import { CartCategoryName, CartContainer } from '../ShoppingCart/ShoppingCart.style';
 import CartCategoryList from '../../../components/CartCategoryList';
+import { LocalStorage } from '../../../utils/browserStorage';
 import { OrderCompleteMessageContainer } from './OrderComplete.style';
 
 function OrderComplete() {
@@ -15,7 +19,7 @@ function OrderComplete() {
 
   useEffect(() => {
     if (state === null) {
-      localStorage.setItem('idList', JSON.stringify([]));
+      LocalStorage.set<number[]>(LOCAL_STORAGE_KEY_LIST.IdList, []);
       navigate('/cart');
     }
   }, [state]);
@@ -64,14 +68,14 @@ function OrderComplete() {
           <RectangleButton
             text="홈으로 가기"
             types="white"
-            clickEvent={() => {
+            handleClick={() => {
               navigate('/');
             }}
           />
           <RectangleButton
             text="쇼핑하러가기"
             types="purple"
-            clickEvent={() => navigate('/select')}
+            handleClick={() => navigate('/select')}
           />
         </div>
       </div>

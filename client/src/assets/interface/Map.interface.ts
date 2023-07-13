@@ -1,17 +1,21 @@
-export interface Latlng {
-  lat: number;
-  lng: number;
+export interface productPreferenceListItem {
+  productId: number;
+  productImage: string;
 }
 
 export interface PositionData {
-  id: number;
-  title: string;
-  latlng: Latlng;
+  storeId: number;
+  storeLatitude: number;
+  storeLongitude: number;
+  storeAddress: string;
+  storeImage: string;
+  storeName: string;
+  storeIntroduction: string;
+  productPreferenceList: productPreferenceListItem[];
 }
 
 export interface MapModalProps {
   position: PositionData;
   isClose: boolean;
-  setIsClose: React.Dispatch<React.SetStateAction<boolean>>;
-  CheckState: () => void;
+  handleCloseModal: () => void;
 }

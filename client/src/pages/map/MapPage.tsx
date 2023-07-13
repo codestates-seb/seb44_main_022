@@ -1,67 +1,85 @@
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import { Map } from 'react-kakao-maps-sdk';
 import { useState } from 'react';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
-import Marker from '../../assets/images/marker.png';
-import { POSITIONS } from '../../assets/constantValue/constantValue';
+import { POSITIONS, UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
+import { PositionData } from '../../assets/interface/Map.interface';
 import MapModal from './MapModal';
+import CustomMarker from './CustomMarker';
+import { MapContainer } from './Map.style';
 
 function MapPage() {
   const { lat, lng } = useCurrentLocation();
-  const [toggle, setToggle] = useState(false);
-  const [id, setId] = useState(0);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [clickedId, setClickedId] = useState(0);
   const [isClose, setIsClose] = useState(true);
 
-  const closeModal = () => {
-    setTimeout(() => setToggle(!toggle), 290);
+  const unmountAnimation = () => {
+    setTimeout(() => setIsOpenModal(!isOpenModal), UNMOUNT_ANIMATION_TIME);
+  };
+
+  const handleCloseModal = () => {
+    setIsClose(true);
+    unmountAnimation();
+  };
+
+  const handleClickMarker = (position: PositionData) => {
+    if (!isClose) {
+      if (clickedId === position.storeId) {
+        setIsClose(true);
+        handleCloseModal();
+        return;
+      }
+    }
+    setIsOpenModal(true);
+    setClickedId(position.storeId);
+    setIsClose(false);
   };
 
   return (
-    <Map
-      center={{ lat: lat, lng: lng }}
+    <div
       style={{
         marginTop: '160px',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'column',
         width: '100%',
         height: '100%',
+        paddingTop: '2rem',
       }}
-      level={3}
     >
-      {POSITIONS.map((position, idx) => (
-        <MapMarker
-          key={idx}
-          position={position.latlng}
-          image={{
-            src: Marker,
-            size: {
-              width: 35,
-              height: 35,
-            },
+      <div
+        style={{
+          width: '80%',
+          padding: '0 2rem 2rem 2rem',
+        }}
+      >
+        BUYTE에 입점된 매장을 찾아보세요!
+      </div>
+      <MapContainer>
+        <Map
+          center={{ lat: lat, lng: lng }}
+          style={{
+            width: '100%',
+            height: '100%',
+            borderRadius: '40px',
           }}
-          clickable={true}
-          onClick={() => {
-            console.log(id, position.id, isClose, toggle);
-            if (!isClose) {
-              if (id === position.id) {
-                setIsClose(true);
-                closeModal();
-                return;
-              }
-            }
-            setToggle(true);
-            setId(position.id);
-            setIsClose(false);
-          }}
-        ></MapMarker>
-      ))}
+          level={3}
+        >
+          {POSITIONS.map((position, idx) => (
+            <CustomMarker key={idx} markerPosition={position} handleClick={handleClickMarker} />
+          ))}
 
-      {toggle && id !== 0 && (
-        <MapModal
-          position={POSITIONS[id - 1]}
-          isClose={isClose}
-          setIsClose={setIsClose}
-          CheckState={closeModal}
-        />
-      )}
-    </Map>
+          {isOpenModal && clickedId !== 0 && (
+            <MapModal
+              position={POSITIONS[clickedId - 1]}
+              isClose={isClose}
+              handleCloseModal={handleCloseModal}
+            />
+          )}
+        </Map>
+      </MapContainer>
+    </div>
   );
 }
 
