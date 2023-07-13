@@ -13,7 +13,6 @@ import org.springframework.util.ObjectUtils;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class JwtUtils {
 
@@ -45,9 +44,8 @@ public class JwtUtils {
         return accessToken;
     }
 
-    public List<GrantedAuthority> createAuthorities(Jws<Claims> claims) {
-        Object role = claims.getBody().get("memberRole");
-        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
+    public List<GrantedAuthority> createAuthorities(Object memberRole) {
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + memberRole);
         List<GrantedAuthority> authorities = Collections.singletonList(authority);
         return authorities;
     }

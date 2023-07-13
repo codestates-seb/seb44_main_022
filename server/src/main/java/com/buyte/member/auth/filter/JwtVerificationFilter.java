@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.security.SignatureException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,13 +24,9 @@ import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 public class JwtVerificationFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
-
-    public JwtVerificationFilter(JwtUtils jwtUtils) {
-        this.jwtUtils = jwtUtils;
-    }
-
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -63,7 +60,8 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private void setAuthenticationToContext(Jws<Claims> claims) {
         Long memberId = claims.getBody().get("memberId", Long.class);
-        List<GrantedAuthority> authority = jwtUtils.createAuthorities(claims);
+        Object memberRole = claims.getBody().get("memberRole");
+        List<GrantedAuthority> authority = jwtUtils.createAuthorities(memberRole);
         Authentication authentication = new UsernamePasswordAuthenticationToken(memberId, null, authority);
         log.info("# authority: {}", Arrays.toString(authority.toArray()));
         SecurityContextHolder.getContext().setAuthentication(authentication);

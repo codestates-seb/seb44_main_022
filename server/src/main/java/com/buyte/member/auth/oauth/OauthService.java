@@ -1,10 +1,9 @@
 package com.buyte.member.auth.oauth;
 
-import com.buyte.exception.BusinessLogicException;
-import com.buyte.exception.ExceptionCode;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import com.buyte.member.entity.Member;
 import com.buyte.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -18,15 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class OauthService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final MemberRepository memberRepository;
     private final JwtTokenizer jwtTokenizer;
-
-    public OauthService(MemberRepository memberRepository, JwtTokenizer jwtTokenizer) {
-        this.memberRepository = memberRepository;
-        this.jwtTokenizer = jwtTokenizer;
-    }
 
     @Value("${security.oauth2.google.token-uri}")
     private String tokenUri;
@@ -51,7 +46,6 @@ public class OauthService {
 
         Member member = memberRepository.findByLoginId(memberInfo.getEmail());
 
-        // memberRepository에 회원정보 없으면 회원가입 후 토큰 발급, 있으면 바로 토큰 발급
         if (member == null) {
             Member newMember = new Member();
             newMember.setLoginId(memberInfo.getEmail());
