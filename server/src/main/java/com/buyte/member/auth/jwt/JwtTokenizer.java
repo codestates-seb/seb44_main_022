@@ -15,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseCookie;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.Duration;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -139,5 +141,20 @@ public class JwtTokenizer {
         } catch (ExpiredJwtException e) {
             throw new BusinessLogicException(ExceptionCode.REFRESH_TOKEN_EXPIRED);
         }
+    }
+
+    public ResponseCookie createCookie(Member member) {
+        String cookieName = "RefreshToken";
+        String cookieValue = delegateRefreshToken(member);
+
+        ResponseCookie cookie = ResponseCookie.from(cookieName, cookieValue)
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(Duration.ofDays(1))
+                .sameSite("None")
+                .build();
+
+        return cookie;
     }
 }
