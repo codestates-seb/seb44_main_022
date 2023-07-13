@@ -3,9 +3,9 @@ package com.buyte.member.mapper;
 import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
 import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.ReportingPolicy;
 
-@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MemberMapper {
     Member memberPostDtoToMember(MemberDto.Post memberPostDto);
 

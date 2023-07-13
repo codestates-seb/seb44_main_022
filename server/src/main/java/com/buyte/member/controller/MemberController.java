@@ -6,6 +6,7 @@ import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
 import com.buyte.member.mapper.MemberMapper;
 import com.buyte.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,17 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/")
+@RequiredArgsConstructor
 public class MemberController {
     private final MemberMapper mapper;
     private final MemberService memberService;
     private final OauthService oauthService;
-
-    public MemberController(MemberMapper mapper, MemberService memberService, OauthService oauthService) {
-        this.mapper = mapper;
-        this.memberService = memberService;
-        this.oauthService = oauthService;
-    }
 
     @PostMapping("/signup")
     public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto) {
