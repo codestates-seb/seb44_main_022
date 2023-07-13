@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Draggable from 'react-draggable';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
 import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
-import DragButton from './DragButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
 const ContentContainer = styled.div`
@@ -44,7 +42,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   );
   const [draggedImage, setDraggedImage] = useState<string | null>(null);
   const [draggedImageIndex, setDraggedImageIndex] = useState<number>(-1);
-  const [canvasStates, setCanvasStates] = useState<Array<string>>([]); // 캔버스 상태 저장 배열
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -53,7 +50,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setColor(event.target.value);
   };
-
   const handleUploadImage = (imageUrl: string) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -228,11 +224,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     setDrawingMode(false);
     setIsDragging(false);
   };
-  const handleToggleDrag = () => {
-    setDrawingMode(true);
-    setIsDragging((prev) => !prev);
-    setEraser(false);
-  };
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -377,9 +368,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
         <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
         <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
-        <DragButton onToggleDrag={handleToggleDrag} />
         <UploadButton id="upload-button" onUpload={handleUploadImage} />
-        <UndoButton onUndo={handleUndoButtonClick} /> {/* UndoButton 추가 */}
+        <UndoButton onUndo={handleUndoButtonClick} />
       </RangeInputContainer>
       <CanvasWrapper
         forwardedRef={canvasWrapperRef}

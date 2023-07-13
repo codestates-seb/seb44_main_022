@@ -8,8 +8,8 @@ const InputStyled = styled.input.attrs({
 })`
   position: relative;
   z-index: 20;
-  height: 30px;
-  width: 30px;
+  height: 33px;
+  width: 40px;
   border-radius: 10px;
   margin-left: 20px;
   background-image: url(${upload});
@@ -21,15 +21,14 @@ const InputStyled = styled.input.attrs({
   &::-webkit-file-upload-button {
     visibility: hidden;
   }
-
   &::before {
     content: '';
     position: absolute;
-    top: -10px;
-    left: -10px;
-    right: -10px;
-    bottom: -10px;
-    border-radius: 20px;
+    top: -15px;
+    left: -16px;
+    right: -16px;
+    bottom: -16px;
+    border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.1);
     transform: scale(0);
     transition: transform 0.2s ease-in-out;

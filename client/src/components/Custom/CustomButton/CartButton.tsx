@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import modal_cart from '../../../assets/images/img_modal/modal_cart.png';
-
 const CartButtonContainer = styled.button`
   position: absolute;
   width: 115px;

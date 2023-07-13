@@ -5,8 +5,8 @@ import undo from '../../../assets/images/img_modal/undo.png';
 const ButtonStyled = styled.button`
   position: relative;
   z-index: 20;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   margin-left: 20px;
   border: none;
   cursor: grab;

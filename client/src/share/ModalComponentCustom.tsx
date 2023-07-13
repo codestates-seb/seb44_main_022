@@ -72,11 +72,8 @@ const CustomContainer = styled.div`
 `;
 
 const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentLabel }) => {
-  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [selectedImage] = useState<string>('');
 
-  const handleImageClick = (imageUrl: string) => {
-    setSelectedImage(imageUrl);
-  };
   return (
     <ModalContainer>
       {isOpen && <Overlay />}
@@ -90,11 +87,7 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentL
       >
         <CustomContainer>
           <Title>BUYTE</Title>
-          <CustomSidebar
-            onImageClick={handleImageClick}
-            selectedImage={selectedImage}
-            setSelectedImage={setSelectedImage}
-          />
+          <CustomSidebar />
           <CustomContent selectedImageProp={selectedImage} />
         </CustomContainer>
         <ModalButtons onRequestClose={onRequestClose} />
