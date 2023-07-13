@@ -4,6 +4,7 @@ import com.buyte.audit.Auditable;
 import com.buyte.order.entity.Orders;
 import com.buyte.store.entity.Store;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import javax.persistence.OneToOne;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Member extends Auditable {
 
     @Id
