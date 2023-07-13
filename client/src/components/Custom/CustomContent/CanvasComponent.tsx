@@ -1,5 +1,5 @@
 import React from 'react';
-import { CanvasComponentWrapper } from './CanvasWrapper';
+import { CanvasComponentWrapper } from './CanvasComponentWrapper';
 
 type CanvasWrapperProps = {
   children: React.ReactNode;

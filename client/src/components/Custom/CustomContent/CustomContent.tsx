@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
@@ -7,28 +6,10 @@ import RangeInputContainer from './RangeInputContainer';
 import UploadButton from './UploadButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
-const ContentContainer = styled.div`
-  margin-left: 20%;
-  width: 80%;
-  min-height: 100vh;
-  background-color: rgba(255, 255, 255);
-  backdrop-filter: blur(50px);
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-`;
+import { ContentContainer } from './ContentContainer';
 
 const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasWrapperRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState<number>(5);
   const [color, setColor] = useState<string>('#000000');
   const [eraser, setEraser] = useState<boolean>(false);
@@ -37,9 +18,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   >([]);
   const [drawingMode, setDrawingMode] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [, setDrawingActions] = useState<{ x: number; y: number; color: string; size: number }[]>(
-    []
-  );
   const [draggedImage, setDraggedImage] = useState<string | null>(null);
   const [draggedImageIndex, setDraggedImageIndex] = useState<number>(-1);
 
@@ -50,6 +28,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const handleChangeColor = (event: React.ChangeEvent<HTMLInputElement>) => {
     setColor(event.target.value);
   };
+
   const handleUploadImage = (imageUrl: string) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -64,18 +43,16 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
 
     image.onload = () => {
       const { naturalWidth, naturalHeight } = image;
-      const targetWidth = 100; // 변경할 가로 크기
-      const targetHeight = 100; // 변경할 세로 크기
+      const targetWidth = 100;
+      const targetHeight = 100;
       const aspectRatio = naturalWidth / naturalHeight;
 
       let width = targetWidth;
       let height = targetHeight;
 
       if (targetWidth / targetHeight > aspectRatio) {
-        // 이미지의 가로가 더 긴 경우
         height = targetWidth / aspectRatio;
       } else {
-        // 이미지의 세로가 더 긴 경우
         width = targetHeight * aspectRatio;
       }
 
@@ -105,14 +82,13 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    // 이미지 영역 내에서 마우스 이동 감지
     const draggedIndex = images.findIndex((imageData) => {
       const { x: imageX, y: imageY, width, height } = imageData;
       return x >= imageX && x <= imageX + width && y >= imageY && y <= imageY + height;
     });
 
     if (draggedIndex !== -1 && !drawingMode) {
-      setIsDragging(true); // 드래그 중임을 나타내는 상태로 설정
+      setIsDragging(true);
       setDraggedImageIndex(draggedIndex);
     } else if (isDragging && draggedImageIndex >= 0) {
       const draggedImage = images[draggedImageIndex];
@@ -184,11 +160,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       ctx.strokeStyle = eraser ? 'rgba(0,0,0,1)' : color;
       ctx.lineTo(x, y);
       ctx.stroke();
-
-      setDrawingActions((prevActions) => [
-        ...prevActions,
-        { x, y, color: eraser ? 'rgba(0,0,0,1)' : color, size },
-      ]);
     }
   };
 
@@ -232,10 +203,9 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const canvasWrapper = canvasWrapperRef.current;
-    if (canvas && canvasWrapper) {
-      canvas.width = canvasWrapper.clientWidth;
-      canvas.height = canvasWrapper.clientHeight;
+    if (canvas) {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.lineCap = 'round';
@@ -272,10 +242,8 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   };
 
   const handleImageDragEnd = () => {
-    setDraggedImageIndex(-1);
     setIsDragging(false);
   };
-
   const handleDragStartImage = (
     event: React.DragEvent<HTMLImageElement>,
     imageUrl: string,
@@ -285,14 +253,16 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     event.dataTransfer.setData('application/my-app-type', 'image');
     setDraggedImageIndex(index);
   };
-
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
+
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const imageUrl = event.dataTransfer.getData('text/plain');
+    const draggedIndex = draggedImageIndex;
 
+    // 이미지를 드롭한 위치의 좌표
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -303,58 +273,42 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    const image = new Image();
+    // 드래그한 이미지의 정보
+    const draggedImage = images[draggedIndex];
 
-    // 이미지가 로딩이 끝난 후에 실행되는 함수
-    image.onload = () => {
-      const { naturalWidth, naturalHeight } = image;
-      const targetWidth = 100;
-      const targetHeight = 100;
-      const aspectRatio = naturalWidth / naturalHeight;
-      let width = targetWidth;
-      let height = targetHeight;
-      if (targetWidth / targetHeight > aspectRatio) {
-        width = targetHeight * aspectRatio;
-      } else {
-        height = targetWidth / aspectRatio;
+    // 드래그한 이미지의 위치만 변경하여 새로운 images 배열
+    const newImages = images.map((imageData, index) => {
+      if (index === draggedIndex) {
+        return {
+          ...imageData,
+          x: x - draggedImage.width / 2,
+          y: y - draggedImage.height / 2,
+        };
       }
+      return imageData;
+    });
 
-      // 이미지 정보를 저장합니다.
-      setImages((prevImages) => [
-        ...prevImages,
-        {
-          imageUrl: image.src,
-          x: x - width / 2,
-          y: y - height / 2,
-          width: width,
-          height: height,
-        },
-      ]);
-    };
-
-    image.src = imageUrl;
+    setImages(newImages);
 
     setDraggedImage(null);
     setDraggedImageIndex(-1);
   };
+
   const handleUndoButtonClick = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
     if (images.length > 0) {
-      // 이전 이미지에서 하나 제거
       const updatedImages = [...images];
-      updatedImages.splice(-1, 1);
+      updatedImages.pop();
       setImages(updatedImages);
 
-      // 캔버스 초기화
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
-    // 드래그한 이미지 초기화
     setDraggedImage(null);
     setDraggedImageIndex(-1);
   };
@@ -362,17 +316,13 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   return (
     <ContentContainer>
       <RangeInputContainer>
-        <RangeInput id="line-width" value={size} onChange={handleChangeSize} />
-        <ColorInput id="line-color" value={color} onChange={handleChangeColor} />
+        <RangeInput value={size} onChange={handleChangeSize} />
+        <ColorInput value={color} onChange={handleChangeColor} />
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
-        <UploadButton id="upload-button" onUpload={handleUploadImage} />
+        <UploadButton onUpload={handleUploadImage} />
         <UndoButton onUndo={handleUndoButtonClick} />
       </RangeInputContainer>
-      <CanvasWrapper
-        forwardedRef={canvasWrapperRef}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-      >
+      <CanvasWrapper onDragOver={handleDragOver} onDrop={handleDrop}>
         {images.map((imageData, index) => (
           <img
             key={index}
@@ -387,22 +337,9 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
               top: `${imageData.y}px`,
               pointerEvents: isDragging ? 'none' : 'auto',
             }}
+            onDragStart={(event) => handleDragStartImage(event, imageData.imageUrl, index)}
           />
         ))}
-        {draggedImage && (
-          <img
-            src={draggedImage}
-            alt="Dragged Image"
-            draggable
-            onDragStart={(event) => handleDragStartImage(event, draggedImage, draggedImageIndex)}
-            style={{
-              position: 'absolute',
-              left: 20,
-              top: 0,
-              pointerEvents: 'none',
-            }}
-          />
-        )}
         <Canvas
           forwardedRef={canvasRef}
           onMouseMove={handleMouseMove}

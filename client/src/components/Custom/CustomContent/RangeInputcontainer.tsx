@@ -14,10 +14,15 @@ const ContainerStyled = styled.div`
   display: flex;
   justify-content: center;
   z-index: 15;
+
+  @media (max-width: 768px) {
+    bottom: 10%;
+    right: 5%;
+  }
 `;
 
-const RangeInputContainer: React.FC<RangeInputContainerProps> = ({ children }) => {
+function RangeInputContainer({ children }: RangeInputContainerProps) {
   return <ContainerStyled>{children}</ContainerStyled>;
-};
+}
 
 export default RangeInputContainer;

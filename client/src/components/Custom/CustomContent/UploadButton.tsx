@@ -44,11 +44,10 @@ const InputStyled = styled.input.attrs({
 `;
 
 type UploadButtonProps = {
-  id: string;
   onUpload: (imageUrl: string) => void;
 };
 
-const UploadButton: React.FC<UploadButtonProps> = ({ id, onUpload }) => {
+const UploadButton: React.FC<UploadButtonProps> = ({ onUpload }) => {
   const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -56,22 +55,19 @@ const UploadButton: React.FC<UploadButtonProps> = ({ id, onUpload }) => {
       reader.onload = (e) => {
         const image = new Image();
         image.onload = () => {
-          // canvas를 생성하고, 이미지의 너비와 높이를 기반으로 크기를 조절한다
           const canvas = document.createElement('canvas');
           const ctx = canvas.getContext('2d');
 
           const aspectRatio = image.width / image.height;
-          const maxWidth = 200; // 변경할 가로 크기
-          const maxHeight = 200; // 변경할 세로 크기
+          const maxWidth = 200;
+          const maxHeight = 200;
 
           let width = maxWidth;
           let height = maxHeight;
 
           if (maxWidth / maxHeight > aspectRatio) {
-            // 이미지의 가로가 더 긴 경우
             height = maxWidth / aspectRatio;
           } else {
-            // 이미지의 세로가 더 긴 경우
             width = maxHeight * aspectRatio;
           }
 
@@ -89,7 +85,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({ id, onUpload }) => {
     }
   };
 
-  return <InputStyled type="file" id={id} onChange={handleUpload} />;
+  return <InputStyled type="file" onChange={handleUpload} />;
 };
 
 export default UploadButton;

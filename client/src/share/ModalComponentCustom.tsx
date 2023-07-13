@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
-import CustomSidebar from '../components/Custom/CustomContent/CustomSidebar';
+import CustomSidebar from '../components/Custom/CustomSidebar/CustomSidebar';
 import CustomContent from '../components/Custom/CustomContent/CustomContent';
 import ModalButtons from '../components/Custom/CustomButton/ModalButtons';
 type ModalProps = {

@@ -1,9 +1,8 @@
 import styled from 'styled-components';
-import React from 'react';
 import eraser from '../../../assets/images/img_modal/eraser.png';
 import pencil from '../../../assets/images/img_modal/pencil.png';
 
-const ButtonStyled = styled.button<{ eraser: boolean }>`
+const ButtonStyled = styled.div<{ eraser: boolean }>`
   position: relative;
   z-index: 20;
   width: 30px;
@@ -13,7 +12,6 @@ const ButtonStyled = styled.button<{ eraser: boolean }>`
   cursor: grab;
 
   background-image: url(${(props) => (props.eraser ? eraser : pencil)});
-
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -45,8 +43,12 @@ interface EraseButtonProps {
   eraser: boolean;
 }
 
-const EraseButton: React.FC<EraseButtonProps> = ({ eraser, onClick }) => {
-  return <ButtonStyled eraser={eraser} onClick={onClick}></ButtonStyled>;
-};
+function EraseButton({ eraser, onClick }: EraseButtonProps) {
+  const handleButtonClick = () => {
+    onClick();
+  };
+
+  return <ButtonStyled eraser={eraser} onClick={handleButtonClick}></ButtonStyled>;
+}
 
 export default EraseButton;

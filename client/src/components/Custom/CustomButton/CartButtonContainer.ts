@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CartButtonContainer = styled.button`
+export const CartButtonContainer = styled.div`
   position: absolute;
   width: 115px;
   height: 75px;

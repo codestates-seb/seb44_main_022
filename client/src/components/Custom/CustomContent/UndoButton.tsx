@@ -1,8 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import undo from '../../../assets/images/img_modal/undo.png';
 
-const ButtonStyled = styled.button`
+const ButtonStyled = styled.div`
   position: relative;
   z-index: 20;
   width: 30px;
@@ -39,12 +38,12 @@ const ButtonStyled = styled.button`
   }
 `;
 
-interface UndoButtonProps {
+type UndoButtonProps = {
   onUndo: () => void;
-}
-
-const UndoButton: React.FC<UndoButtonProps> = ({ onUndo }) => {
-  return <ButtonStyled onClick={onUndo}></ButtonStyled>;
 };
+
+function UndoButton({ onUndo }: UndoButtonProps) {
+  return <ButtonStyled onClick={onUndo}></ButtonStyled>;
+}
 
 export default UndoButton;

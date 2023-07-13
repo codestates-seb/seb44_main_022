@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
+
 const InputStyled = styled.input.attrs({
   type: 'range',
   min: '1',
@@ -48,13 +49,14 @@ const InputStyled = styled.input.attrs({
 
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 `;
+
 interface RangeInputProps {
-  id: string;
   value: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const RangeInput: React.FC<RangeInputProps> = ({ id, value, onChange }) => {
-  return <InputStyled type="range" id={id} value={value} onChange={onChange} />;
-};
+function RangeInput({ value, onChange }: RangeInputProps) {
+  return <InputStyled type="range" value={value} onChange={onChange} />;
+}
+
 export default RangeInput;
