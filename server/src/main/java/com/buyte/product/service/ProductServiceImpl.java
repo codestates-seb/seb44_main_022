@@ -74,8 +74,6 @@ public class ProductServiceImpl implements ProductService {
             throw new BusinessLogicException(ExceptionCode.PRODUCT_TYPE_CUSTOM_FORBIDDEN);
         }
 
-        log.info("# storeId : {} findStoreId : {}", storeId, findProduct.getStore().getStoreId());
-
         List<IngredientOriginDto> ingredientOriginList = findProduct.getProductIngerdientList()
             .stream()
             .map(productIngerdient -> ingredientMapper.ingredientToIngredientOrigin(

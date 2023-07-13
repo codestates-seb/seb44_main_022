@@ -41,9 +41,7 @@ public class StoreServiceImpl implements StoreService{
     @Transactional(readOnly = true)
     public StoreInfoPageDto getStores(int page, String search) {
 
-        log.info("# storeName : {}", search);
-
-        Pageable pageable = PageRequest.of(page, 20, Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(page, 20, Sort.by("storeId").descending());
         Page<Store> findStorePage = search != null
             ? storeRepository.findByStoreNameContaining(search, pageable)
             : storeRepository.findAll(pageable);
@@ -81,8 +79,6 @@ public class StoreServiceImpl implements StoreService{
 
     @Transactional(readOnly = true)
     public StoreDetailsDto getStoreDetails(long storeId) {
-
-        log.info("# storeId : {}", storeId);
 
         Store findStore = findVerifiedStore(storeId);
 
