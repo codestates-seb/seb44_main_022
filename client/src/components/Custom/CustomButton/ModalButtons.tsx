@@ -36,7 +36,7 @@ const fadeIn = keyframes`
 const PopupContainer = styled.div`
   position: fixed;
   top: 50%;
-  left: 60%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 5px;
@@ -45,21 +45,10 @@ const PopupContainer = styled.div`
 `;
 
 const PopupImage = styled.img`
-  width: 600px;
+  width: 300px;
   height: auto;
 `;
 
-const CloseButtonStyled = styled.button`
-  position: absolute;
-  width: 70px;
-  height: 50px;
-  right: 40%;
-  padding: 10px;
-  border: none;
-  background-color: rgba(20, 46, 56, 0.9);
-  color: white;
-  border-radius: 0px 20px 0px 0px;
-`;
 type ModalButtonsProps = {
   onRequestClose: () => void;
 };
@@ -85,7 +74,7 @@ const ModalButtons: React.FC<ModalButtonsProps> = ({ onRequestClose }) => {
       {showPopup && (
         <PopupContainer>
           <PopupImage src={ExampleImage} alt="Example" />
-          <CloseButtonStyled onClick={handlePopupClose}>닫기</CloseButtonStyled>
+          <button onClick={handlePopupClose}>Close</button>
         </PopupContainer>
       )}
     </>
