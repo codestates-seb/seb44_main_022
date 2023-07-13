@@ -1,22 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Wrapper = styled.div`
-  background-color: transparent;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin-bottom: 0%;
-  z-index: 10;
-
-  &:first-child {
-    top: 0;
-  }
-
-  &:last-child {
-    bottom: 0;
-  }
-`;
+import { CanvasComponentWrapper } from './CanvasWrapper';
 
 type CanvasWrapperProps = {
   children: React.ReactNode;
@@ -25,18 +8,18 @@ type CanvasWrapperProps = {
   onDrop: React.DragEventHandler<HTMLDivElement>;
 };
 
-const CanvasWrapper: React.FC<CanvasWrapperProps> = ({
+function CanvasWrapper({
   children,
   forwardedRef = React.createRef<HTMLDivElement>(),
   onDragOver,
   onDrop,
-}) => {
+}: CanvasWrapperProps) {
   return (
-    <Wrapper ref={forwardedRef} onDragOver={onDragOver} onDrop={onDrop}>
+    <CanvasComponentWrapper ref={forwardedRef} onDragOver={onDragOver} onDrop={onDrop}>
       {children}
-    </Wrapper>
+    </CanvasComponentWrapper>
   );
-};
+}
 
 type CanvasProps = {
   forwardedRef?: React.RefObject<HTMLCanvasElement>;
@@ -45,12 +28,12 @@ type CanvasProps = {
   onMouseUp: () => void;
 };
 
-const Canvas: React.FC<CanvasProps> = ({
+function Canvas({
   forwardedRef = React.createRef<HTMLCanvasElement>(),
   onMouseMove,
   onMouseDown,
   onMouseUp,
-}) => {
+}: CanvasProps) {
   return (
     <canvas
       ref={forwardedRef}
@@ -59,6 +42,6 @@ const Canvas: React.FC<CanvasProps> = ({
       onMouseUp={onMouseUp}
     />
   );
-};
+}
 
 export { CanvasWrapper, Canvas };

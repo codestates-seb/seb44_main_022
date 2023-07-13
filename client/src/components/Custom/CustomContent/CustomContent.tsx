@@ -139,7 +139,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       images.forEach((imageData, index) => {
         if (index !== draggedImageIndex) {
-          // Draw existing images excluding the dragged image
           const img = new Image();
           img.src = imageData.imageUrl;
           img.onload = () => {
@@ -346,18 +345,16 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     if (!ctx) return;
 
     if (images.length > 0) {
-      // Remove the last image from the images array
+      // 이전 이미지에서 하나 제거
       const updatedImages = [...images];
       updatedImages.splice(-1, 1);
       setImages(updatedImages);
 
-      // Clear the canvas
+      // 캔버스 초기화
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Redraw the remaining images
     }
 
-    // Reset dragged image and index
+    // 드래그한 이미지 초기화
     setDraggedImage(null);
     setDraggedImageIndex(-1);
   };

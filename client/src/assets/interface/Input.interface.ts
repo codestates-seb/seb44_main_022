@@ -8,3 +8,10 @@ export interface InputProps {
   icon: ReactElement<ComponentType>;
   vaildMessage: string;
 }
+
+export interface OrderInputProps {
+  id: string;
+  name: string;
+  width: string;
+  setState: React.Dispatch<React.SetStateAction<string>>;
+}

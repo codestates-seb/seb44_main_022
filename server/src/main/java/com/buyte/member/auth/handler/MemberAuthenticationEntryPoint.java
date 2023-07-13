@@ -22,6 +22,6 @@ public class MemberAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
         Exception exception = (Exception) request.getAttribute("exception");
         if(exception == null) ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED);
-        else ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED, exception.getClass().getSimpleName());
+        else ErrorResponder.sendErrorResponse(response, HttpStatus.UNAUTHORIZED, exception.getMessage());
     }
 }

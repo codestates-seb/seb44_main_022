@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import Header from '../../share/Header';
-import ModalComponentDetail from '../../share/ModalComponentDetail';
+
 import ModalComponentCustom from '../../share/ModalComponentCustom';
 
 import SelectStoreImg from '../../assets/images/img_select/select_store.png';

@@ -1,14 +1,16 @@
 import { MdLocalPostOffice } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
-import UserInput from '../../components/UserInput/UserInput';
 import { AiFillLock } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
-import RoundButton from '../../components/RoundButton/RoundButton';
-import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import UserInput from '../../components/UserInput/UserInput';
+import RoundButton from '../../components/RoundButton/RoundButton';
+import { AUTH_FAILED_MESSAGE } from '../../assets/constantValue/constantValue';
+import { postSignUp } from '../../api/authApis';
+import useValidText from '../../hooks/useValidText';
+import { SignUpFormProps } from '../../assets/interface/Auth.interface';
 
-function SignUpForm() {
+function SignUpForm({ setIsSignUp }: SignUpFormProps) {
   const [nickname, setNickname] = useState<string>('');
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -20,50 +22,19 @@ function SignUpForm() {
   const handleLoginSubmit: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     if (userIdValid && passwordValid) {
-      console.log(nickname, userId, password);
-      // axios
-      //   .post(
-      //     'https://604b-218-53-232-194.ngrok-free.app/signup',
-      //     {
-      //       loginId: userId,
-      //       password: password,
-      //       memberName: nickname,
-      //     },
-      //     {
-      //       headers: {
-      //         'ngrok-skip-browser-warning': true,
-      //       },
-      //     }
-      //   )
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
-      alert('통신 성공');
-      navigate('/auth');
-      return;
+      postSignUp(userId, password, nickname)
+        .then(() => {
+          alert('회원가입에 성공하셨습니다.');
+          setIsSignUp(false);
+          navigate('/auth');
+        })
+        .catch(() => alert('데이터를 잘못 입력했음 ㅇㅇ'));
     }
   };
 
-  const strCheck = (str: string, type: string) => {
-    if (type === 'id') {
-      return REGEX.id.test(str);
-    }
-    if (type === 'password') {
-      return REGEX.password.test(str);
-    }
-    return REGEX.nickname.test(str);
-  };
-
-  useEffect(() => {
-    setNicknameValid(strCheck(nickname, 'nickname'));
-  }, [nickname]);
-
-  useEffect(() => {
-    setUserIdValid(strCheck(userId, 'id'));
-  }, [userId]);
-
-  useEffect(() => {
-    setPasswordValid(strCheck(password, 'password'));
-  }, [password]);
+  useValidText(nickname, setNicknameValid, 'nickname');
+  useValidText(userId, setUserIdValid, 'id');
+  useValidText(password, setPasswordValid, 'password');
 
   return (
     <form onSubmit={handleLoginSubmit}>

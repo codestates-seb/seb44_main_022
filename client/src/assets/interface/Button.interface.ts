@@ -6,3 +6,16 @@ export interface ButtonProps {
   icon?: ReactElement<ComponentType>;
   enabled?: boolean;
 }
+
+export interface CountButtonProps {
+  id: number;
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface RectangleButtonProps {
+  text: string;
+  types: string;
+  handleClick: () => void;
+}

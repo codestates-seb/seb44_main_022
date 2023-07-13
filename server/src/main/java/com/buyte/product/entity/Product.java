@@ -34,10 +34,6 @@ public class Product extends Auditable {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
-
     @Column(name = "product_name")
     private String productName;
 
@@ -49,6 +45,10 @@ public class Product extends Auditable {
 
     @Column(name = "product_image")
     private String productImage;
+
+    @Column(name = "product_category")
+    @Enumerated(EnumType.STRING)
+    private ProductCategory productCategory;
 
     @Column(name = "product_preference")
     @Enumerated(EnumType.STRING)
@@ -75,5 +75,11 @@ public class Product extends Auditable {
     public enum ProductType {
         CUSTOM,
         STANDARD
+    }
+
+    public enum ProductCategory {
+        CAKE,
+        COOKIE,
+        DONUT
     }
 }
