@@ -90,3 +90,11 @@ export const SearchSection =styled.section`
     margin-top: 20px;
   }
 `;
+
+export const Loading = styled.div`
+background-image: url(https://img.mk.co.kr/mkde/ic_loading_img.gif);
+background-repeat: no-repeat;
+background-position: center;
+width: 200px;
+height: 200px;
+`
