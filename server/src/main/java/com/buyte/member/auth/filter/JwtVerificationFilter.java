@@ -10,6 +10,7 @@ import io.jsonwebtoken.security.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -18,6 +19,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 public class JwtVerificationFilter extends OncePerRequestFilter {
@@ -60,7 +63,9 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
 
     private void setAuthenticationToContext(Jws<Claims> claims) {
         Long memberId = claims.getBody().get("memberId", Long.class);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(memberId, null, null);
+        List<GrantedAuthority> authority = jwtUtils.createAuthorities(claims);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(memberId, null, authority);
+        log.info("# authority: {}", Arrays.toString(authority.toArray()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }

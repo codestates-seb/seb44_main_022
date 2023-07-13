@@ -6,9 +6,14 @@ import com.buyte.member.auth.jwt.JwtTokenizer;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class JwtUtils {
 
@@ -38,5 +43,12 @@ public class JwtUtils {
         String accessToken = request.getHeader("Authorization").replace("Bearer ", "");
 
         return accessToken;
+    }
+
+    public List<GrantedAuthority> createAuthorities(Jws<Claims> claims) {
+        Object role = claims.getBody().get("memberRole");
+        GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
+        List<GrantedAuthority> authorities = Collections.singletonList(authority);
+        return authorities;
     }
 }
