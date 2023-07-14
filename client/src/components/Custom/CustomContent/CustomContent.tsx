@@ -9,51 +9,7 @@ import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
 import { ContentContainer } from './ContentContainer';
 import SaveImageButton from './SaveImageButton';
-export const handleSaveAsImage = async () => {
-  const canvas = canvasRef.current;
-  if (!canvas) return;
 
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  const loadAndDrawImage = (imageData: ImageData): Promise<void> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.src = imageData.imageUrl;
-      img.onload = () => {
-        ctx.drawImage(img, imageData.x, imageData.y, imageData.width, imageData.height);
-        resolve();
-      };
-    });
-  };
-
-  const promises = images.map((imageData: ImageData) => loadAndDrawImage(imageData));
-
-  await Promise.all(promises);
-
-  const dataUrl = canvas.toDataURL('image/png');
-
-  const byteString = atob(dataUrl.split(',')[1]);
-  const arrayBuffer = new ArrayBuffer(byteString.length);
-  const int8Array = new Uint8Array(arrayBuffer);
-  for (let i = 0; i < byteString.length; i++) {
-    int8Array[i] = byteString.charCodeAt(i);
-  }
-  const blob = new Blob([int8Array], { type: 'image/png' });
-  const file = new File([blob], 'canvas.png', { type: 'image/png' });
-
-  try {
-    const store_id = 1;
-    const product_id = 1;
-    await addCustom(store_id, product_id, file);
-    alert('Image saved successfully.');
-  } catch (error) {
-    alert('Failed to save image.');
-  }
-};
 const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [size, setSize] = useState<number>(5);
@@ -331,6 +287,54 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     y: number;
     width: number;
     height: number;
+  };
+
+  const handleSaveAsImage = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const originalCanvas = document.createElement('canvas');
+    originalCanvas.width = canvas.width;
+    originalCanvas.height = canvas.height;
+    const originalContext = originalCanvas.getContext('2d');
+    originalContext?.drawImage(canvas, 0, 0);
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const loadAndDrawImage = (imageData: ImageData): Promise<void> => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = imageData.imageUrl;
+        img.onload = () => {
+          ctx.drawImage(img, imageData.x, imageData.y, imageData.width, imageData.height);
+          resolve();
+        };
+      });
+    };
+
+    const promises = images.map((imageData: ImageData) => loadAndDrawImage(imageData));
+
+    await Promise.all(promises);
+
+    ctx.drawImage(originalCanvas, 0, 0);
+    const dataUrl = canvas.toDataURL('image/png');
+    const byteString = atob(dataUrl.split(',')[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    const file = new File([blob], 'canvas.png', { type: 'image/png' });
+    try {
+      const store_id = 1;
+      const product_id = 1;
+      await addCustom(store_id, product_id, file);
+      alert('Image saved successfully.');
+    } catch (error) {
+      alert('Failed to save image.');
+    }
   };
 
   return (
