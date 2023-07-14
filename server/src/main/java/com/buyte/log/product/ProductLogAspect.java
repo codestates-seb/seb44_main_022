@@ -1,6 +1,6 @@
-package com.buyte.log.store;
+package com.buyte.log.product;
 
-import java.util.Arrays;
+import com.buyte.log.store.StoreLogAspect;
 import java.util.stream.IntStream;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class StoreLogAspect {
+public class ProductLogAspect {
 
     private static final Logger log = LoggerFactory.getLogger(StoreLogAspect.class);
 
-    @Pointcut("within(com.buyte.store.controller.*) && execution(@org.springframework.web.bind.annotation.GetMapping * *(..))")
+    @Pointcut("within(com.buyte.product.controller.*) && execution(@org.springframework.web.bind.annotation.GetMapping * *(..))")
     public void getRequests() {
     }
 
