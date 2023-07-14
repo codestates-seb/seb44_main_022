@@ -91,6 +91,8 @@ export const STORE_MAP_INTRODUCE_LIMIT = 70;
 
 export const UNMOUNT_ANIMATION_TIME = 290;
 
+export const IMAGE_NUMBER_BUTTON = [0, 1, 2];
+
 export const POSITIONS = [
   {
     storeId: 1,
