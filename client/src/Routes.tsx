@@ -1,4 +1,4 @@
-import { Outlet, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Payment from './pages/order/Payment/Payment';
 import Main from './pages/main/Main';
 import Auth from './pages/users/Auth/Auth';
@@ -7,22 +7,10 @@ import ShoppingCart from './pages/order/ShoppingCart/ShoppingCart';
 import Store from './pages/store/Store';
 import Map from './pages/map/MapPage';
 import SelectStore from './pages/store/SelectStore';
-import Header from './share/Header';
-import Footer from './share/Footer';
 import OrderComplete from './pages/order/OrderComplete/OrderComplete';
 
-function MainLayout() {
-  return (
-    <>
-      <Header />
-      <Outlet />
-      <Footer />
-    </>
-  );
-}
-
 export const mainRoutes = (
-  <Route path="/" element={<MainLayout />}>
+  <>
     <Route path="" element={<Main />} />
     <Route path="mypage/:id" element={<Mypage />} />
     <Route path="cart" element={<ShoppingCart />} />
@@ -31,7 +19,6 @@ export const mainRoutes = (
     <Route path="map" element={<Map />} />
     <Route path="select" element={<SelectStore />} />
     <Route path="complete" element={<OrderComplete />} />
-  </Route>
+    <Route path="auth" element={<Auth />} />
+  </>
 );
-
-export const authRoute = <Route path="auth" element={<Auth />} />;

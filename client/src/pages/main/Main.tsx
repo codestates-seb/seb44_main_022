@@ -37,11 +37,6 @@ const settings = {
   centerPadding: '40px',
 };
 
-const Section2Img = styled.img`
-  margin-top: 30px;
-  width: 100%;
-  object-fit: cover;
-`;
 const Heading2 = styled.div`
   letter-spacing: -0.46px;
   padding: 1.5rem 0;
@@ -124,13 +119,41 @@ const Section1 = styled.div`
 `;
 
 const Section3Icon = styled.img`
-  width: 20%;
-  object-fit: cover;
-`;
-const Section3 = styled.div`
+  position: absolute;
   width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
 `;
+
+const Section3Card = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: 0.4s;
+  transform-style: preserve-3d;
+
+  .back {
+    background: royalblue;
+    transform: rotateY(180deg);
+  }
+`;
+
+const Section3 = styled.div`
+  width: 200px;
+  height: 250px;
+  position: relative;
+  perspective: 1100px;
+  margin: 2rem;
+
+  &:hover ${Section3Card} {
+    transform: rotateY(180deg);
+  }
+`;
+
 const Body = styled.div`
   width: 100%;
   overflow: hidden;
@@ -139,7 +162,7 @@ const Body = styled.div`
 const MainRoot = styled.div`
   background-color: #fffffc;
   width: 100%;
-  margin-top: 160px;
+  margin-top: 80px;
   text-align: left;
   font-size: 22px;
 `;
@@ -256,12 +279,13 @@ const Main: React.FunctionComponent = () => {
         </Section1>
         <Section2>
           <Section2Text ref={section2TextRef}>커스텀할 수 있씀</Section2Text>
-          <Section2Img src={section2} />
+          {/* <Section2Img src={section2} /> */}
         </Section2>
         <Section3>
-          {section3Icons.map((src, index) => (
-            <Section3Icon key={index} src={src} />
-          ))}
+          <Section3Card className="card">
+            <Section3Icon className="front" src={section3_1} />
+            <Section3Icon className="back" src={section3_2} />
+          </Section3Card>
         </Section3>
         <Section4>
           <ReviewText>

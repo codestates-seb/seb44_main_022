@@ -9,7 +9,7 @@ const useValidText = (
   const strCheck = (str: string, type: string) => {
     switch (type) {
       case 'id':
-        return REGEX.id.test(str);
+        return REGEX[type].test(str);
       case 'password':
         return REGEX.password.test(str);
       case 'nickname':

@@ -1,4 +1,5 @@
-import { FunctionComponent } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Item1 = styled.div`
@@ -126,8 +127,29 @@ const FooterContainer = styled.div`
 `;
 
 const Footer: FunctionComponent = () => {
+  const location = useLocation();
+  const initialAnimationState = () => {
+    if (location.pathname === '/auth') {
+      return 'none';
+    }
+    return 'fadeIn';
+  };
+  const [animation, setAnimation] = useState(initialAnimationState);
+
+  useEffect(() => {
+    if (location.pathname === '/auth' && animation === 'fadeIn') {
+      setTimeout(() => setAnimation('none'), 300);
+      setAnimation('fadeOut');
+      return;
+    }
+    if (location.pathname !== '/auth') {
+      setTimeout(() => setAnimation('fadeIn'), 300);
+      return;
+    }
+  }, [location]);
+
   return (
-    <FooterContainer>
+    <FooterContainer className={`${animation}`}>
       <Divcontainer>
         <DivfooterText2>
           <Item1>22팀 | 메인프로젝트 화이팅</Item1>

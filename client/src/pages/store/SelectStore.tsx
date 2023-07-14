@@ -1,7 +1,6 @@
 /* eslint-disable react/no-children-prop */
 import styled from 'styled-components';
 import { useState } from 'react';
-import Header from '../../share/Header';
 import ModalComponentCustom from '../../share/ModalComponentCustom';
 
 import SelectStoreImg from '../../assets/images/img_select/select_store.png';
@@ -80,7 +79,6 @@ const SelectStore: React.FunctionComponent = () => {
   };
   return (
     <MainRoot>
-      <Header />
       <OrderText>ORDER</OrderText>
       <Container>
         <ContentContainer>
