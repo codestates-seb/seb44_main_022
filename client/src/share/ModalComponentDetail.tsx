@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import modal_cart from '../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import ProductCartAlert from '../share/ProductCartAlert';
-import axiosInstance from '../api/api';
+import axiosInstance from '../api/apis';
 import {
   AlertBox,
   CircleShape,

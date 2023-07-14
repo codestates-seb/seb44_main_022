@@ -1,5 +1,6 @@
 package com.buyte.product.dto;
 
+import com.buyte.product.entity.Product.ProductType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,4 +12,5 @@ public class StandardProductInfoDto {
     private String productImage;
     private String productName;
     private Integer productPrice;
+    private ProductType productType;
 }

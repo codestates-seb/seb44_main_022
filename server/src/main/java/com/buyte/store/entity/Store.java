@@ -50,6 +50,9 @@ public class Store extends Auditable {
     @Column(name = "store_image")
     private String storeImage;
 
+    @Column(name = "store_phone_number")
+    private String storePhoneNumber;
+
     @OneToMany(mappedBy = "store", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Product> productList = new ArrayList<>();
 }

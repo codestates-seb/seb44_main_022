@@ -7,7 +7,7 @@ import UserInput from '../../components/UserInput/UserInput';
 import RoundButton from '../../components/RoundButton/RoundButton';
 import { AUTH_FAILED_MESSAGE } from '../../assets/constantValue/constantValue';
 import { postSignUp } from '../../api/authApis';
-import useChangeText from '../../hooks/useChangeText';
+import useValidText from '../../hooks/useValidText';
 import { SignUpFormProps } from '../../assets/interface/Auth.interface';
 
 function SignUpForm({ setIsSignUp }: SignUpFormProps) {
@@ -32,9 +32,9 @@ function SignUpForm({ setIsSignUp }: SignUpFormProps) {
     }
   };
 
-  useChangeText(nickname, setNicknameValid, 'nickname');
-  useChangeText(userId, setUserIdValid, 'id');
-  useChangeText(password, setPasswordValid, 'password');
+  useValidText(nickname, setNicknameValid, 'nickname');
+  useValidText(userId, setUserIdValid, 'id');
+  useValidText(password, setPasswordValid, 'password');
 
   return (
     <form onSubmit={handleLoginSubmit}>

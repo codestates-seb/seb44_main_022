@@ -1,5 +1,5 @@
 function Mypage() {
-  return <div>마이 페이지</div>;
+  return <div style={{ marginTop: '160px' }}></div>;
 }
 
 export default Mypage;

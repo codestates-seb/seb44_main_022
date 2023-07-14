@@ -41,7 +41,7 @@ align-items: center;
     display: block;
     background-color: var(--light-gray);
     height: 1.4px;
-    width: 80%;
+    width: 70%;
     margin-top: 20px;
   }
   @media (max-width: 820px) {

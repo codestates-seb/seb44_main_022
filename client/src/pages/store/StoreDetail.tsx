@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { BiArrowBack} from 'react-icons/bi';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import axiosInstance from '../../api/api';
-
+import axiosInstance from '../../api/apis';
+import {StoreDetailInfo} from '../../assets/interface/Store.interface'
 import {
   StoreProductSection,
   ProductListTitle,
@@ -14,143 +14,21 @@ import {
   DetailWrapper
 } from './StoreDetail.style';
 
-interface Product {
-  productId: number;
-  productImage: string;
-  productName: string;
-  productType: string;
-}
-
-interface Store {
-  //storeId: number;
-  storeName: string;
-  storeAddress: string;
-  storeIntroduction: string;
-  storePhoneNumber: string;
-  storeImage: string;
-  customProductInfoList: Product[];
-  standardProductInfoList: Product[];
-}
 
 function StoreDetail() {    
-/*const data: Store = 
-  {   "storeId": 1, 
-  //storeId는 Props로 받아오기
-      "storeName": "반짝제과제빵",
-      "storeAddress": "서울 송파구 백제고분로45길 3",
-      "storeIntroduction": "프리미엄 디저트카페 노티드 송리단길",
-      "storePhone": "010-2344-2323",
-      "storeImage": "https://images.unsplash.com/photo-1486955535268-e5c3bd81aeb1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-      "customProductInfoList": [
-        {
-          "productId": 12,
-          "productImage": "https://images.unsplash.com/photo-1521624738948-5250b8a7c220?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-          "productName": "케이크",
-          "productType": "CUSTOM",
-        },
-        {
-          "productId": 13,
-          "productImage": "https://images.unsplash.com/photo-1589431683447-2c0abd8d99e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-          "productName": "쿠키",
-          "productType": "CUSTOM",
-        },
-        {
-          "productId": 14,
-          "productImage": "https://images.unsplash.com/photo-1533910534207-90f31029a78e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-          "productName": "도넛",
-          "productType": "CUSTOM",
-        }
-      ],
-      "standardProductInfoList": [
-          {
-              "productId": 1,
-              "productImage": "https://plus.unsplash.com/premium_photo-1668784193175-b16306c81100?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-              "productName": "옐로우 스마일",
-              "productType": "STANDARD",
-          },
-          {
-              "productId": 2,
-              "productImage": "https://images.unsplash.com/photo-1506184341422-6cc152ae474b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-              "productName": "쿠키 & 초코파이",
-              "productType": "STANDARD",
-          },
-          {
-            "productId": 3,
-            "productImage": "https://images.unsplash.com/photo-1562777717-dc6984f65a63?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-            "productName": "쿠키 & 초코파이",
-            "productType": "STANDARD",
-        },
-        {
-          "productId": 4,
-          "productImage": "https://plus.unsplash.com/premium_photo-1675881736302-af0425d8b9c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
-          "productName": "쿠키 & 초코파이",
-          "productType": "STANDARD",
-      },
-        {
-          "productId": 5,
-          "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-          "productName": "쿠키 & 초코파이",
-          "productType": "STANDARD",
-       }, 
-       {
-        "productId": 5,
-        "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-        "productName": "쿠키 & 초코파이",
-        "productType": "STANDARD",
-     }, 
-     {
-      "productId": 6,
-      "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-      "productName": "쿠키 & 초코파이",
-      "productType": "STANDARD",
-   }, 
-    {
-      "productId": 7,
-      "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-      "productName": "쿠키 & 초코파이",
-      "productType": "STANDARD",
-       },   
-       {
-          "productId": 8,
-          "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-          "productName": "쿠키 & 초코파이",
-          "productType": "STANDARD",
-      }, 
-          {
-            "productId": 9,
-            "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-            "productName": "쿠키 & 초코파이",
-            "productType": "STANDARD",
-          }, 
-          {
-            "productId": 10,
-            "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-            "productName": "쿠키 & 초코파이",
-            "productType": "STANDARD",
-          }, 
-          {
-            "productId": 11,
-            "productImage": "https://images.unsplash.com/photo-1629196256546-ff4f3e27f623?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
-            "productName": "쿠키 & 초코파이",
-            "productType": "STANDARD",
-          }, 
-      ]
-  }
-  //서버와 통신시 지워야 하는 부분
-  */
-
-const [data, setData] = useState<Store | null>(null);
-const storeId=1;
-//임시로 넣어둔 거임 나중에 받아야 됨.
+const [data, setData] = useState<StoreDetailInfo | null>(null);
+const { storeId } = useParams();
+console.log(storeId)
    useEffect(() => {
      fetchData();
    }, []);
   const fetchData = async () => {  
       try {
         const url = `/v1/store/${storeId}`;
-        //storeId받을 수 있냐고 물어보고... 
+        console.log(url)
         const response = await axiosInstance.get(url);      
         const data = response.data;      
+        console.log(data)
         setData(data);
       } catch (error) {
         console.error('Error fetching store data:', error);
@@ -173,22 +51,21 @@ const storeId=1;
                     <DetailTitle>소개</DetailTitle>
                     <DetailInfo>{data.storeIntroduction}</DetailInfo>                   
                     <DetailTitle>주소</DetailTitle>
-                    <Link to='/*지도보기?*/'>
+                    <Link to='/map'>
                       <span style={{color: 'var(--light-gray)', fontSize: '13px'}}>[지도보기]</span>
                     </Link>
                     <DetailInfo>{data.storeAddress}</DetailInfo>                    
                     <DetailTitle>전화번호</DetailTitle>
-                    <span style={{ color: 'var(--bright-black)',fontWeight: '500',fontSize: '13px'}}>{data.storePhoneNumber}</span>
+                    <span style={{ color: 'var(--bright-black)', fontWeight: '500',fontSize: '13px'}}>{data.storePhoneNumber}</span>
                 </DetailWrapper>
             </StoreDetails>
         </StoreDetailSection>
         <StoreProductSection>
-            <div style={{width: '80%'}}>
+            <div style={{width: '70%'}}>
                 <ProductListTitle>Custom</ProductListTitle>
-                <ProductCard data={data.customProductInfoList} storeId={storeId} storeName={data.storeName}/>                
+                <ProductCard data={data.customProductInfoList} storeId={data.storeId} storeName={data.storeName}/>                
                 <ProductListTitle>We Made It</ProductListTitle>
-                <ProductCard data={data.standardProductInfoList} storeId={storeId} storeName={data.storeName}/>
-                {/*여기도 두 개 임시로 넣어둔 거임. data.stoeId로 받아야 됨.*/}
+                <ProductCard data={data.standardProductInfoList} storeId={data.storeId} storeName={data.storeName}/>
             </div>
         </StoreProductSection>
     </>

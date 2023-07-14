@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-
 export const ProductContainer = styled.ul`
   margin-top: 1rem;
   margin-bottom: 7rem;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
   grid-gap:12px; 
   justify-items: center; 
   align-items: center; 

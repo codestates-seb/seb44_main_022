@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ModalComponentDetail from '../../share/ModalComponentDetail';
 import ModalComponentCustom from '../../share/ModalComponentCustom';
+import {Product, ProductCardProps} from '../../assets/interface/Store.interface'
 import {
   ProductContainer,
   ProductImage,
@@ -8,20 +9,6 @@ import {
   ModalContainer,
   ProductTitle
 } from './ProductCard.style';
-
-interface Product {
-  productId: number;
-  productImage: string;
-  productName: string;
-  productType: string;
-}
-
-interface ProductCardProps {
-  data: Product[];
-  storeId: number;
-  storeName: string;
-}
-
 function ProductCard({data, storeId, storeName}: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
