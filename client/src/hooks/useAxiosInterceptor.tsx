@@ -49,13 +49,12 @@ const useAxiosInterceptor = () => {
           navigate('/auth');
           break;
         }
-        case 'Invalid Refresh Token State':
-          LocalStorage.clear();
-          navigate('/');
-          break;
         default:
           break;
       }
+    } else if (data.status === 403 && data.message === 'Invalid Refresh Token State') {
+      LocalStorage.clear();
+      navigate('/');
     }
   };
 
