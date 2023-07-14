@@ -1,10 +1,12 @@
 package com.buyte.member.controller;
 
+import com.buyte.member.auth.oauth.OauthService;
 import com.buyte.member.auth.utils.SecurityUtil;
 import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
 import com.buyte.member.mapper.MemberMapper;
 import com.buyte.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,15 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/")
+@RequiredArgsConstructor
 public class MemberController {
     private final MemberMapper mapper;
     private final MemberService memberService;
-
-    public MemberController(MemberMapper mapper, MemberService memberService) {
-        this.mapper = mapper;
-        this.memberService = memberService;
-    }
+    private final OauthService oauthService;
 
     @PostMapping("/signup")
     public ResponseEntity postMember(@RequestBody @Valid MemberDto.Post memberPostDto) {
@@ -30,6 +28,12 @@ public class MemberController {
         Member savedMember = memberService.createMember(member);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login/oauth")
+    public ResponseEntity googleLogInWithAuthorization(HttpServletRequest request, HttpServletResponse response) {
+        response = oauthService.socialLogInWithAuthorization(request, response);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/token/refresh")

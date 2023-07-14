@@ -1,4 +1,3 @@
-import { FunctionComponent, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import login_img from '../assets/images/cart_img.png';
@@ -150,7 +149,7 @@ const HeaderContainer = styled.div`
   z-index: 1;
 `;
 
-const Header: FunctionComponent = () => {
+function Header() {
   return (
     <HeaderContainer>
       <LoginContainer>
@@ -180,6 +179,6 @@ const Header: FunctionComponent = () => {
       <Icon src={logo} alt="Logo" />
     </HeaderContainer>
   );
-};
+}
 
 export default Header;

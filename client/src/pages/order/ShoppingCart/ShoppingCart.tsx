@@ -63,7 +63,7 @@ function ShoppingCart() {
         <CartCategoryName>
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
             <div style={{ fontSize: '22px', fontWeight: 'bold' }}>Cart</div>
-            <div style={{ fontWeight: 'bold' }}>({cartList.length})</div>
+            <div style={{ fontWeight: 'bold' }}>({cartList !== undefined && cartList.length})</div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '23.5rem' }}>
             {CART_CATEGORY_NAME.map((category) => (
@@ -74,7 +74,7 @@ function ShoppingCart() {
         <CartItemTab path="cart" />
         {isLoading ? (
           <div>로딩중</div>
-        ) : cartList.length > 0 ? (
+        ) : cartList !== undefined && cartList.length > 0 ? (
           cartList.map((e, idx) => (
             <CartItem
               items={e}
@@ -99,12 +99,15 @@ function ShoppingCart() {
             justifyContent: 'flex-start',
           }}
         >
-          <RectangleButton text="선택 삭제" types="purple" clickEvent={handleSelectedDelete} />
-          <RectangleButton text="전체 선택" types="dark" clickEvent={handleAllSelected} />
+          <RectangleButton text="선택 삭제" types="purple" handleClick={handleSelectedDelete} />
+          <RectangleButton text="전체 선택" types="dark" handleClick={handleAllSelected} />
         </div>
         <TotalPaymentContainer>
           <div style={{ fontSize: '22px', fontWeight: 'bold', margin: '0.5rem 0' }}>
-            <span style={{ color: 'var(--gold)' }}>{totalPrice.toLocaleString()}</span>원
+            <span style={{ color: 'var(--gold)' }}>
+              {totalPrice !== undefined && totalPrice.toLocaleString()}
+            </span>
+            원
           </div>
           <div style={{ margin: '0.5rem 0', fontWeight: 'bold' }}>주문금액</div>
         </TotalPaymentContainer>
@@ -119,18 +122,18 @@ function ShoppingCart() {
           <RectangleButton
             text="쇼핑하러가기"
             types="white"
-            clickEvent={() => navigate('/store')}
+            handleClick={() => navigate('/select')}
           />
           <RectangleButton
             text="선택상품주문"
             types="purple"
-            clickEvent={() => handleSelectedPayment(idList, 'selected')}
+            handleClick={() => handleSelectedPayment(idList, 'selected')}
           />
 
           <RectangleButton
             text="&nbsp;&nbsp;&nbsp;전체주문&nbsp;&nbsp;&nbsp;"
             types="dark"
-            clickEvent={() => handleSelectedPayment(cartList, 'all')}
+            handleClick={() => handleSelectedPayment(cartList, 'all')}
           />
         </div>
       </div>

@@ -38,3 +38,9 @@ export interface PriceNumberProps {
   price: number;
   priceText: string;
 }
+
+export interface RspData {
+  success: boolean;
+  error_msg: string;
+  imp_uid: string;
+}

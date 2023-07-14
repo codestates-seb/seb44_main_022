@@ -1,7 +1,7 @@
-import axiosInstance from './api';
+import axiosInstance from './apis';
 
 export const deleteCartList = (cartIds: number[]) => {
-  return axiosInstance.post('/cart/1/delete', {
+  return axiosInstance.delete('/cart', {
     data: {
       cartIds,
     },
@@ -9,17 +9,17 @@ export const deleteCartList = (cartIds: number[]) => {
 };
 
 export const getCartList = () => {
-  return axiosInstance.get('/cart/1');
+  return axiosInstance.get('/cart');
 };
 
 export const postSelectedCartList = (cartIds: number[]) => {
-  return axiosInstance.post('/cart/1/payment', {
+  return axiosInstance.post('/cart/payment', {
     cartIds,
   });
 };
 
 export const patchProductCount = (cartId: number, count: number) => {
-  return axiosInstance.patch('/cart/1', {
+  return axiosInstance.patch('/cart', {
     cartId,
     count,
   });

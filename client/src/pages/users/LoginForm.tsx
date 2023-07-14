@@ -1,20 +1,23 @@
 import { MdLocalPostOffice } from 'react-icons/md';
 import { AiFillLock } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInput from '../../components/UserInput/UserInput';
 import RoundButton from '../../components/RoundButton/RoundButton';
-import { AUTH_FAILED_MESSAGE, REGEX } from '../../assets/constantValue/constantValue';
-import { setAccessToken } from '../../redux/reducer/loginReducer';
+import {
+  AUTH_FAILED_MESSAGE,
+  LOCAL_STORAGE_KEY_LIST,
+} from '../../assets/constantValue/constantValue';
 import { postLogin } from '../../api/authApis';
+import useValidText from '../../hooks/useValidText';
+import { LocalStorage } from '../../utils/browserStorage';
+import { LinkText } from './Auth/Auth.style';
 
 function LoginForm() {
   const [userId, setUserId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [userIdValid, setUserIdValid] = useState<boolean>(false);
   const [passwordValid, setPasswordValid] = useState<boolean>(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLoginSubmit: React.FormEventHandler<HTMLElement> = (e) => {
@@ -22,45 +25,18 @@ function LoginForm() {
     if (userIdValid && passwordValid) {
       postLogin(userId, password)
         .then((res) => {
-          dispatch(setAccessToken(res.headers['authorization']));
+          const accessToken = res.headers['authorization'];
+          LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.AccessToken, accessToken);
           navigate('/');
-          alert('통신 성공');
           return;
         })
-        .catch((err) => console.log(err));
-      // axios
-      //   .post(
-      //     'https://11e5-218-53-232-194.ngrok-free.app/token/refresh',
-      //     {},
-      //     {
-      //       headers: {
-      //         'ngrok-skip-browser-warning': true,
-      //       },
-      //     }
-      //   )
-      //   .then((res) => console.log(res))
-      //   .catch((err) => console.log(err));
+        .catch(() => alert('로그인 실패'));
       return;
     }
   };
 
-  const strCheck = (str: string, type: string) => {
-    if (type === 'id') {
-      return REGEX.id.test(str);
-    }
-    if (type === 'password') {
-      return REGEX.password.test(str);
-    }
-    return REGEX.nickname.test(str);
-  };
-
-  useEffect(() => {
-    setUserIdValid(strCheck(userId, 'id'));
-  }, [userId]);
-
-  useEffect(() => {
-    setPasswordValid(strCheck(password, 'password'));
-  }, [password]);
+  useValidText(userId, setUserIdValid, 'id');
+  useValidText(password, setPasswordValid, 'password');
 
   return (
     <form onSubmit={handleLoginSubmit}>
@@ -87,17 +63,7 @@ function LoginForm() {
           margin: '1rem 0',
         }}
       >
-        <a
-          style={{
-            color: 'var(--bright-black)',
-            fontSize: '14px',
-            display: 'flex',
-            justifyContent: 'center',
-            textDecorationLine: 'underline',
-          }}
-        >
-          Forgot password
-        </a>
+        <LinkText>Forgot password</LinkText>
       </div>
       <div>
         <RoundButton title="로그인" types="dark" enabled={userIdValid && passwordValid} />

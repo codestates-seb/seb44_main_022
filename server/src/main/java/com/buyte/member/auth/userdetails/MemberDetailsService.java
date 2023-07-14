@@ -1,7 +1,9 @@
 package com.buyte.member.auth.userdetails;
 
+import com.buyte.member.auth.utils.JwtUtils;
 import com.buyte.member.entity.Member;
 import com.buyte.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +15,10 @@ import java.util.Collection;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
-
-    public MemberDetailsService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+    private final JwtUtils jwtUtils;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -39,7 +39,7 @@ public class MemberDetailsService implements UserDetailsService {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return null;
+            return jwtUtils.createAuthorities(this.getMemberRole());
         }
 
         @Override

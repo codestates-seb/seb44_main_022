@@ -1,4 +1,3 @@
-import { FunctionComponent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const Item1 = styled.div`
@@ -125,7 +124,7 @@ const FooterContainer = styled.div`
   margin-top: auto;
 `;
 
-const Footer: FunctionComponent = () => {
+function Footer() {
   return (
     <FooterContainer>
       <Divcontainer>
@@ -144,6 +143,6 @@ const Footer: FunctionComponent = () => {
       </Divcontainer>
     </FooterContainer>
   );
-};
+}
 
 export default Footer;

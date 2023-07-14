@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Routes, useLocation } from 'react-router-dom';
-import './index.css';
 import { authRoute, mainRoutes } from './Routes';
 
 function App() {
