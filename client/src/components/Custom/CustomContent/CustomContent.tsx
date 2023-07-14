@@ -293,14 +293,12 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    // Make sure the canvas dimensions match its CSS size
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Load and draw all images including dragged images
     const loadAndDrawImage = (imageData: ImageData): Promise<void> => {
       return new Promise((resolve) => {
         const img = new Image();
@@ -314,12 +312,10 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
 
     const promises = images.map((imageData: ImageData) => loadAndDrawImage(imageData));
 
-    // Ensure all images are loaded and drawn on canvas
     await Promise.all(promises);
 
     const dataUrl = canvas.toDataURL('image/png');
 
-    // convert data url to file
     const byteString = atob(dataUrl.split(',')[1]);
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);
