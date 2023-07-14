@@ -52,14 +52,16 @@ function StoreList() {
     };
   }, [isObserverActive, loading, page, pageInfo]);
 
+
   useEffect(() => {
     const fetchDataAndActivateObserver = async () => {
       if (searchTerm.trim() === '') {
         await fetchData(page);
+        setIsObserverActive(true);
       } else {
         await fetchData(1, searchTerm);
-      } 
-      setIsObserverActive(true);
+        setIsObserverActive(false);
+      }       
     };
     fetchDataAndActivateObserver();
   }, [page, isSearchEventTriggered]);
@@ -106,8 +108,7 @@ function StoreList() {
 
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
-    
+    setSearchTerm(e.target.value);    
     if(e.target.value===''){
       showAll();
     }
@@ -143,7 +144,6 @@ function StoreList() {
     setSearchTerm('');
     setPage(1);   
     fetchData(1)
-    console.log("a")
   };
 
 

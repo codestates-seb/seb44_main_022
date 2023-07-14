@@ -8,7 +8,7 @@ import { GlobalStyle } from './styles/globalStyle';
 import store from './redux/store/store';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  //<React.StrictMode>
+  <React.StrictMode>
     <Provider store={store}>
       <GoogleOAuthProvider
         clientId={import.meta.env.VITE_GOOGLE_CLIENT_KEY}
@@ -21,5 +21,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         </BrowserRouter>
       </GoogleOAuthProvider>
     </Provider>
-  //</React.StrictMode>
+  </React.StrictMode>
 );
