@@ -92,9 +92,13 @@ export const SearchSection =styled.section`
 `;
 
 export const Loading = styled.div`
-background-image: url(https://img.mk.co.kr/mkde/ic_loading_img.gif);
-background-repeat: no-repeat;
-background-position: center;
-width: 100%;
-height: 200px;
-`
+  background-image: url(https://musikkforslagvedgravferd.no/v3/kampenes/assets/loader.gif);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;

@@ -186,7 +186,8 @@ function Store() {
           ) : (
             <>
               <StoreCard data={searchTerm.trim() !== '' ? searchResult : filteredStores} />
-              <div style={{ height: '30px', backgroundColor: 'red' }} ref={target}></div>
+              {isLoadingMore && <Loading />} 
+              <div ref={target}></div>
           </>
            )}
           </StoreListSection>      
