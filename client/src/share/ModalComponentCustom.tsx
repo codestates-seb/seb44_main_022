@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import CustomSidebar from '../components/Custom/CustomSidebar/CustomSidebar';
 import CustomContent from '../components/Custom/CustomContent/CustomContent';
 import ModalButtons from '../components/Custom/CustomButton/ModalButtons';
+
 type ModalProps = {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -72,7 +73,12 @@ const CustomContainer = styled.div`
 `;
 
 function ModalComponent({ isOpen, onRequestClose, contentLabel }: ModalProps) {
-  const [selectedImage] = useState<string>('');
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [images, setImages] = useState<
+    { imageUrl: string; x: number; y: number; width: number; height: number }[]
+  >([]);
+  const storeId = 1;
+  const productId = 1;
 
   return (
     <ModalContainer>
@@ -88,9 +94,24 @@ function ModalComponent({ isOpen, onRequestClose, contentLabel }: ModalProps) {
         <CustomContainer>
           <Title>BUYTE</Title>
           <CustomSidebar />
-          <CustomContent selectedImageProp={selectedImage} />
+          <CustomContent
+            canvasRef={canvasRef}
+            updateImages={
+              setImages as React.Dispatch<
+                React.SetStateAction<
+                  { imageUrl: string; x: number; y: number; width: number; height: number }[]
+                >
+              >
+            }
+          />
         </CustomContainer>
-        <ModalButtons onRequestClose={onRequestClose} />
+        <ModalButtons
+          onRequestClose={onRequestClose}
+          canvasRef={canvasRef}
+          images={images}
+          storeId={storeId}
+          productId={productId}
+        />
       </StyledModal>
     </ModalContainer>
   );

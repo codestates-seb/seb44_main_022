@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { addCustom } from '../../../api/customApis';
+import React, { useState, useEffect } from 'react';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
@@ -8,19 +7,26 @@ import UploadButton from './UploadButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
 import { ContentContainer } from './ContentContainer';
-import SaveImageButton from './SaveImageButton';
 
-const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+type ImageData = {
+  imageUrl: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+const CustomContent: React.FC<{
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  updateImages: React.Dispatch<React.SetStateAction<ImageData[]>>;
+}> = ({ canvasRef, updateImages }) => {
   const [size, setSize] = useState<number>(5);
   const [color, setColor] = useState<string>('#000000');
   const [eraser, setEraser] = useState<boolean>(false);
-  const [images, setImages] = useState<
-    { imageUrl: string; x: number; y: number; width: number; height: number }[]
-  >([]);
+  const [images, setImages] = useState<ImageData[]>([]);
   const [drawingMode, setDrawingMode] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [draggedImage, setDraggedImage] = useState<string | null>(null);
+  const [, setDraggedImage] = useState<string | null>(null);
   const [draggedImageIndex, setDraggedImageIndex] = useState<number>(-1);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -70,6 +76,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       ];
 
       setImages(newImages);
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
     };
   };
 
@@ -107,6 +114,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       });
 
       setImages(newImages);
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
     } else {
       if (event.buttons !== 1) return;
 
@@ -197,19 +205,22 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       });
 
       setImages(newImages);
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
     }
   };
 
   const handleImageDragEnd = () => {
     setIsDragging(false);
   };
+
   const handleDragStartImage = (
-    event: React.DragEvent<HTMLImageElement>,
-    imageUrl: string,
+    _event: React.DragEvent<HTMLImageElement>,
+    _imageUrl: string,
     index: number
   ) => {
     setDraggedImageIndex(index);
   };
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
@@ -254,6 +265,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       ];
 
       setImages(newImages);
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
     };
 
     image.src = imageUrl;
@@ -267,6 +279,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       const updatedImages = [...images];
       updatedImages.pop();
       setImages(updatedImages);
+      updateImages(updatedImages); // updateImages 함수를 사용하여 state 업데이트
 
       const canvas = canvasRef.current;
       if (!canvas) return;
@@ -281,62 +294,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     setDraggedImageIndex(-1);
   };
 
-  type ImageData = {
-    imageUrl: string;
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  };
-
-  const handleSaveAsImage = async () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const originalCanvas = document.createElement('canvas');
-    originalCanvas.width = canvas.width;
-    originalCanvas.height = canvas.height;
-    const originalContext = originalCanvas.getContext('2d');
-    originalContext?.drawImage(canvas, 0, 0);
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    const loadAndDrawImage = (imageData: ImageData): Promise<void> => {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.src = imageData.imageUrl;
-        img.onload = () => {
-          ctx.drawImage(img, imageData.x, imageData.y, imageData.width, imageData.height);
-          resolve();
-        };
-      });
-    };
-
-    const promises = images.map((imageData: ImageData) => loadAndDrawImage(imageData));
-
-    await Promise.all(promises);
-
-    ctx.drawImage(originalCanvas, 0, 0);
-    const dataUrl = canvas.toDataURL('image/png');
-    const byteString = atob(dataUrl.split(',')[1]);
-    const arrayBuffer = new ArrayBuffer(byteString.length);
-    const int8Array = new Uint8Array(arrayBuffer);
-    for (let i = 0; i < byteString.length; i++) {
-      int8Array[i] = byteString.charCodeAt(i);
-    }
-    const blob = new Blob([int8Array], { type: 'image/png' });
-    const file = new File([blob], 'canvas.png', { type: 'image/png' });
-    try {
-      const store_id = 1;
-      const product_id = 1;
-      await addCustom(store_id, product_id, file);
-      alert('Image saved successfully.');
-    } catch (error) {
-      alert('Failed to save image.');
-    }
-  };
-
   return (
     <ContentContainer>
       <RangeInputContainer>
@@ -345,7 +302,6 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <UploadButton onUpload={handleUploadImage} />
         <UndoButton onUndo={handleUndoButtonClick} />
-        <SaveImageButton onSave={handleSaveAsImage} />
       </RangeInputContainer>
       <CanvasWrapper onDragOver={handleDragOver} onDrop={handleDrop}>
         {images.map((imageData, index) => (
