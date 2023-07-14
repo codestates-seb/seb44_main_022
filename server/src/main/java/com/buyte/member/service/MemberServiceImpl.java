@@ -42,6 +42,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public HttpServletResponse checkRefreshAndReIssueAccess(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = getCookieValue(request, "RefreshToken");
+        String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
 
         RedisTemplate<Object, Object> redisTemplate = jwtTokenizer.getRedisTemplate();
         String tokenStatus = (String) redisTemplate.opsForValue().get(refreshToken);
@@ -50,11 +51,10 @@ public class MemberServiceImpl implements MemberService {
             throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
         }
         else if (tokenStatus.equals("login")) {
-            String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
             String accessToken = jwtTokenizer.delegateAccessToken(memberRepository.findById(Long.parseLong(memberId)).orElseThrow());
             response.setHeader("Authorization", "Bearer " + accessToken);
         } else {
-            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
+            throw new BusinessLogicException(ExceptionCode.LOGOUT);
         }
         return response;
     }
