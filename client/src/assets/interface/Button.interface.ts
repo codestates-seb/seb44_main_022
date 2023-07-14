@@ -17,5 +17,5 @@ export interface CountButtonProps {
 export interface RectangleButtonProps {
   text: string;
   types: string;
-  clickEvent: () => void;
+  handleClick: () => void;
 }

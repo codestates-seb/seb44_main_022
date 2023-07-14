@@ -28,23 +28,23 @@ public class CartController {
         return ResponseEntity.ok(memberCart);
     }
 
-    @DeleteMapping("/cart/delete")
+    @DeleteMapping("/cart")
     public ResponseEntity deletePorducts(@RequestBody CartReqDto.CartIds cartIds) {
         cartService.deleteSelectedProducts(cartIds);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/store/{store_id}/{custom_item_id}")
-    public ResponseEntity addProduct(@PathVariable(name = "custom_item_id") @Positive Long productId) {
+    @PostMapping("/store/{store_id}/{product_id}")
+    public ResponseEntity addProduct(@PathVariable(name = "product_id") @Positive Long productId) {
         cartService.addProductToCart(productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/store/{store_id}/{custom_item_id}/custom")
+    @PostMapping("/store/{store_id}/custom/{product_id}")
     public ResponseEntity addCustomProduct(@RequestPart(value = "file") MultipartFile file,
-                                           @PathVariable(name = "custom_item_id") @Positive Long productId) throws IOException {
+                                           @PathVariable(name = "product_id") @Positive Long productId) throws IOException {
         cartService.addCustomProductToCart(file,productId);
 
         return new ResponseEntity<>(HttpStatus.CREATED);

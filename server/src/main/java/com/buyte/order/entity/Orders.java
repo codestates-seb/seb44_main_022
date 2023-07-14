@@ -58,12 +58,13 @@ public class Orders extends Auditable {
         COMPLETION
     }
 
-    @Builder
     public Orders(Member member) {
         this.member = member;
     }
 
-    public void setOrderPrice(Long orderPrice) {
+    public void setOrder(Long orderPrice, String orderAddress) {
         this.orderPrice = orderPrice;
+        this.orderAddress = orderAddress;
+        this.orderState = OrderState.SUSPENSION;
     }
 }

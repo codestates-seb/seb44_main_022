@@ -6,6 +6,7 @@ import com.buyte.member.auth.handler.MemberAuthenticationEntryPoint;
 import com.buyte.member.auth.handler.MemberAuthenticationFailureHandler;
 import com.buyte.member.auth.jwt.JwtTokenizer;
 import com.buyte.member.auth.utils.JwtUtils;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,14 +27,11 @@ import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration implements WebMvcConfigurer {
     private final RedisTemplate<Object, Object> redisTemplate;
-
-    public SecurityConfiguration(RedisTemplate<Object, Object> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -65,6 +63,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");
+        configuration.addExposedHeader("Set-Cookie");
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

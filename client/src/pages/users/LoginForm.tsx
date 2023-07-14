@@ -4,9 +4,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserInput from '../../components/UserInput/UserInput';
 import RoundButton from '../../components/RoundButton/RoundButton';
-import { AUTH_FAILED_MESSAGE } from '../../assets/constantValue/constantValue';
+import {
+  AUTH_FAILED_MESSAGE,
+  LOCAL_STORAGE_KEY_LIST,
+} from '../../assets/constantValue/constantValue';
 import { postLogin } from '../../api/authApis';
-import useChangeText from '../../hooks/useChangeText';
+import useValidText from '../../hooks/useValidText';
+import { LocalStorage } from '../../utils/browserStorage';
 import { LinkText } from './Auth/Auth.style';
 
 function LoginForm() {
@@ -22,7 +26,7 @@ function LoginForm() {
       postLogin(userId, password)
         .then((res) => {
           const accessToken = res.headers['authorization'];
-          localStorage.setItem('AccessToken', accessToken);
+          LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.AccessToken, accessToken);
           navigate('/');
           return;
         })
@@ -31,8 +35,8 @@ function LoginForm() {
     }
   };
 
-  useChangeText(userId, setUserIdValid, 'id');
-  useChangeText(password, setPasswordValid, 'password');
+  useValidText(userId, setUserIdValid, 'id');
+  useValidText(password, setPasswordValid, 'password');
 
   return (
     <form onSubmit={handleLoginSubmit}>

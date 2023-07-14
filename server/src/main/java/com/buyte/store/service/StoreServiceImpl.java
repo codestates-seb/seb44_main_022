@@ -43,7 +43,7 @@ public class StoreServiceImpl implements StoreService{
 
         log.info("# storeName : {}", search);
 
-        Pageable pageable = PageRequest.of(page, 20, Sort.by("createdAt").descending());
+        Pageable pageable = PageRequest.of(page, 20, Sort.by("storeId").descending());
         Page<Store> findStorePage = search != null
             ? storeRepository.findByStoreNameContaining(search, pageable)
             : storeRepository.findAll(pageable);

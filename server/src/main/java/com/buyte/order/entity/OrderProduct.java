@@ -35,10 +35,9 @@ public class OrderProduct {
     private String orderProductCustomProductImage;
 
     @Column(name = "order_product_custom_product_count")
-    private Long orderProductCustomProductCount;
+    private Integer orderProductCustomProductCount;
 
-    @Builder
-    public OrderProduct(Product product, String orderProductCustomProductImage, Long orderProductCustomProductCount){
+    public OrderProduct(Product product, String orderProductCustomProductImage, Integer orderProductCustomProductCount){
         this.product = product;
         this.orderProductCustomProductImage = orderProductCustomProductImage;
         this.orderProductCustomProductCount = orderProductCustomProductCount;
