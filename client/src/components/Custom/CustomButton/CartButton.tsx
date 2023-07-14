@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 import modal_cart from '../../../assets/images/img_modal/modal_cart.png';
-import { saveCanvasAsImage } from '../CustomContent/CustomContent';
 import { CartButtonContainer } from './CartButtonContainer';
-
+// import { saveCanvasAsImage } from '../CustomContent/CustomContent';
 const CartImage = styled.img`
   width: 30px;
   height: 30px;
@@ -19,13 +18,9 @@ type CartButtonProps = {
 };
 
 function CartButtonComponent({ onRequestClose }: CartButtonProps) {
-  const handleSaveCanvas = () => {
-    // saveCanvasAsImage(canvasRef);
-  };
-
   return (
     <CartButtonContainer onClick={onRequestClose}>
-      <CartImage src={modal_cart} alt="Cart" onClick={handleSaveCanvas} />
+      <CartImage src={modal_cart} alt="Cart" />
       <CartButtonText>장바구니 담기</CartButtonText>
     </CartButtonContainer>
   );
