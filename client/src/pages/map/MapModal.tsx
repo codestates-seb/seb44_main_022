@@ -1,8 +1,23 @@
+import { useState } from 'react';
+import { FaSearch } from 'react-icons/fa';
+import { BsCircle } from 'react-icons/bs';
 import { MapModalProps } from '../../assets/interface/Map.interface';
-import { STORE_MAP_INTRODUCE_LIMIT } from '../../assets/constantValue/constantValue';
-import { MarkerModal } from './Map.style';
+import {
+  IMAGE_NUMBER_BUTTON,
+  STORE_MAP_INTRODUCE_LIMIT,
+} from '../../assets/constantValue/constantValue';
+import {
+  ExitMapModalButton,
+  ImageCarouselButton,
+  MapModalAddressContainer,
+  MapModalStoreInfoContainer,
+  MapModalTitleContainer,
+  MarkerModal,
+} from './Map.style';
 
 function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
+  const [currentNumber, setCurrentNumber] = useState<number>(0);
+
   const sliceText = (text: string) => {
     if (text.length > STORE_MAP_INTRODUCE_LIMIT)
       return text.slice(0, STORE_MAP_INTRODUCE_LIMIT) + '...';
@@ -10,42 +25,15 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
   };
 
   return (
-    <MarkerModal toggle={isClose ? 'fadeOut' : 'fadeIn'}>
-      <div
-        style={{
-          position: 'absolute',
-          right: '5%',
-          cursor: 'pointer',
-          top: '2%',
-          fontSize: '1.5rem',
-          fontFamily: 'Just Another Hand, cursive',
-        }}
-        onClick={handleCloseModal}
-      >
-        BUYTE
-      </div>
+    <MarkerModal isClose={isClose}>
+      <ExitMapModalButton onClick={handleCloseModal}>BUYTE</ExitMapModalButton>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingLeft: '2rem',
-            paddingTop: '2rem',
-          }}
-        >
+        <MapModalTitleContainer>
           <img
             src={position.storeImage}
             style={{ width: '2.75rem', height: '2.75rem', borderRadius: '50%' }}
           />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              paddingLeft: '1.25rem',
-            }}
-          >
+          <MapModalStoreInfoContainer>
             <div
               style={{
                 fontSize: '14px',
@@ -54,24 +42,45 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
             >
               {position.storeName}
             </div>
-            <div
-              style={{
-                fontSize: '10px',
-                fontWeight: 'normal',
-                color: 'gray',
-                paddingTop: '6px',
-              }}
-            >
+            <MapModalAddressContainer>
+              <FaSearch style={{ paddingLeft: '2px', paddingRight: '5px' }} />
               {position.storeAddress}
-            </div>
+            </MapModalAddressContainer>
+          </MapModalStoreInfoContainer>
+        </MapModalTitleContainer>
+        <div style={{ overflow: 'hidden' }}>
+          <div
+            style={{
+              display: 'flex',
+              transform: `translateX(-${currentNumber * 327.8}px)`,
+              transition: '0.3s',
+            }}
+          >
+            {position.productPreferenceList.map((product) => (
+              <img
+                src={product.productImage}
+                style={{ width: '100%', padding: '1rem 2rem' }}
+                alt="추천 제품 사진"
+                key={product.productId}
+              />
+            ))}
           </div>
         </div>
+        <div
+          style={{ display: 'flex', width: '100%', justifyContent: 'center', columnGap: '1rem' }}
+        >
+          {IMAGE_NUMBER_BUTTON.map((number) => (
+            <ImageCarouselButton
+              imageNumber={number}
+              currentNumber={currentNumber}
+              onClick={() => setCurrentNumber(number)}
+              key={number}
+            >
+              <BsCircle />
+            </ImageCarouselButton>
+          ))}
+        </div>
 
-        <img
-          src={position.productPreferenceList[0].productImage}
-          style={{ width: '100%', padding: '2rem 2rem' }}
-          alt="추천 제품 사진"
-        />
         <div style={{ padding: '1.5rem', fontSize: '14px', lineHeight: '1.25' }}>
           {sliceText(position.storeIntroduction)}
         </div>

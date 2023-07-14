@@ -1,10 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import styled from 'styled-components';
 import { useState } from 'react';
-import Header from '../../share/Header';
-
 import ModalComponentCustom from '../../share/ModalComponentCustom';
-
 import SelectStoreImg from '../../assets/images/img_select/select_store.png';
 import SelectMenuImg from '../../assets/images/img_select/select_menu.png';
 const MainRoot = styled.div`
@@ -124,7 +121,6 @@ function SelectStore() {
   };
   return (
     <MainRoot>
-      <Header />
       <OrderText>ORDER</OrderText>
       <Container>
         <ContentContainer>

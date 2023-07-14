@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Routes, useLocation } from 'react-router-dom';
-import { authRoute, mainRoutes } from './Routes';
+import { mainRoutes } from './Routes';
+import Header from './share/Header/Header';
+import Footer from './share/Footer';
+import { postRefreshToken } from './api/authApis';
+import useAxiosInterceptor from './hooks/useAxiosInterceptor';
 
 function App() {
   const location = useLocation();
@@ -13,8 +17,17 @@ function App() {
     }
   }, [location]);
 
+  useEffect(() => {
+    postRefreshToken()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }, []);
+
+  useAxiosInterceptor();
+
   return (
     <>
+      <Header />
       <div
         className={`${transitionStage}`}
         style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
@@ -25,10 +38,8 @@ function App() {
           }
         }}
       >
-        <Routes location={displayLocation}>
-          {mainRoutes}
-          {authRoute}
-        </Routes>
+        <Routes location={displayLocation}>{mainRoutes}</Routes>
+        <Footer />
       </div>
     </>
   );

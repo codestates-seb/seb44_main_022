@@ -38,13 +38,13 @@ function MapPage() {
   return (
     <div
       style={{
-        marginTop: '160px',
+        marginTop: '80px',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',
         flexDirection: 'column',
         width: '100%',
-        height: '100%',
+        height: '120%',
         paddingTop: '2rem',
       }}
     >
