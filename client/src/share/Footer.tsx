@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -126,7 +126,7 @@ const FooterContainer = styled.div`
   margin-top: auto;
 `;
 
-const Footer: FunctionComponent = () => {
+function Footer() {
   const location = useLocation();
   const initialAnimationState = () => {
     if (location.pathname === '/auth') {
@@ -166,6 +166,6 @@ const Footer: FunctionComponent = () => {
       </Divcontainer>
     </FooterContainer>
   );
-};
+}
 
 export default Footer;

@@ -52,6 +52,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .logout().disable()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/members/**").authenticated()
+                        .antMatchers("/cart/**").authenticated()
                         .anyRequest().permitAll());
 
         return http.build();

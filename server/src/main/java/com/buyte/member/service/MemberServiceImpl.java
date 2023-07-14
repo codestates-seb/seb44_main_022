@@ -45,13 +45,18 @@ public class MemberServiceImpl implements MemberService {
         String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
 
         RedisTemplate<Object, Object> redisTemplate = jwtTokenizer.getRedisTemplate();
-        String findRefreshToken = (String) redisTemplate.opsForValue().get(memberId);
+        String tokenStatus = (String) redisTemplate.opsForValue().get(refreshToken);
 
-        if (findRefreshToken.equals(refreshToken)) {
+        if(tokenStatus == null) {
+            response.setStatus(401);
+            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
+        }
+        else if (tokenStatus.equals("login")) {
             String accessToken = jwtTokenizer.delegateAccessToken(memberRepository.findById(Long.parseLong(memberId)).orElseThrow());
             response.setHeader("Authorization", "Bearer " + accessToken);
         } else {
-            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
+            response.setStatus(401);
+            throw new BusinessLogicException(ExceptionCode.LOGOUT);
         }
         return response;
     }
@@ -60,11 +65,10 @@ public class MemberServiceImpl implements MemberService {
     public void logout(HttpServletRequest request) {
         String accessToken = request.getHeader("Authorization").replace("Bearer ", "");
         String refreshToken = getCookieValue(request, "RefreshToken");
-        String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
 
         RedisTemplate<Object, Object> redisTemplate = jwtTokenizer.getRedisTemplate();
         redisTemplate.opsForValue().set(accessToken, "logout", 5, TimeUnit.MINUTES);
-        redisTemplate.opsForValue().set(memberId, "logout", 300, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(refreshToken, "logout", 300, TimeUnit.MINUTES);
     }
 
     @Override

@@ -15,13 +15,14 @@ public interface StoreMapper {
 
     default StoreDetailsDto storeToStoreDetails(Store store) {
         return StoreDetailsDto.builder()
-            .memberId(store.getMember().getMemberId())
-            .storeName(store.getStoreName())
-            .storeAddress(store.getStoreAddress())
-            .storeImage(store.getStoreImage())
-            .storeIntroduction(store.getStoreIntroduction())
-            .storePhoneNumber(store.getStorePhoneNumber())
-            .build();
+                .memberId(store.getMember().getMemberId())
+                .storeName(store.getStoreName())
+                .storeAddress(store.getStoreAddress())
+                .storeImage(store.getStoreImage())
+                .storeIntroduction(store.getStoreIntroduction())
+                .storePhoneNumber(store.getStorePhoneNumber())
+                .storeId(store.getStoreId())
+                .build();
     }
 
     default StoreInfoDto storeToStoreInfo(Store store) {
@@ -40,6 +41,7 @@ public interface StoreMapper {
             .storeLongitude(store.getStoreLongitude())
             .storeImage(store.getStoreImage())
             .storeName(store.getStoreName())
+            .storeAddress(store.getStoreAddress())
             .storeIntroduction(store.getStoreIntroduction())
             .build();
     }
