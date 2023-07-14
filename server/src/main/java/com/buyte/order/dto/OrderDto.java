@@ -22,4 +22,14 @@ public class OrderDto {
         private Long cartId;
         private Long quantities;
     }
+
+    @Getter
+    @NoArgsConstructor
+    public static class OrderInfo {
+
+        private String impUid;
+        private List<Long> cartIds;
+        private String userName;
+        private String address;
+    }
 }
