@@ -98,7 +98,7 @@ public class JwtTokenizer {
         String base64EncodedSecretKey = encodeBase64SecretKey(getSecretKey());
 
         String refreshToken = generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-        redisTemplate.opsForValue().set(member.getMemberId().toString(), refreshToken, getRefreshTokenExpirationMinutes(), TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(refreshToken, "login", getRefreshTokenExpirationMinutes(), TimeUnit.MINUTES);
 
         return refreshToken;
     }
@@ -139,7 +139,7 @@ public class JwtTokenizer {
 
             return claims.getSubject();
         } catch (ExpiredJwtException e) {
-            throw new BusinessLogicException(ExceptionCode.REFRESH_TOKEN_EXPIRED);
+            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
         }
     }
 

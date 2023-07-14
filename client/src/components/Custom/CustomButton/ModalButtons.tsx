@@ -26,9 +26,10 @@ const Image = styled.img`
 
 type ModalButtonsProps = {
   onRequestClose: () => void;
+  onSaveAsImage: () => void;
 };
 
-const ModalButtons = ({ onRequestClose }: ModalButtonsProps) => {
+const ModalButtons = ({ onSaveAsImage, onRequestClose }: ModalButtonsProps) => {
   const [showPopup, setShowPopup] = useState(false);
   const popupRef = useRef(null);
 
@@ -42,7 +43,7 @@ const ModalButtons = ({ onRequestClose }: ModalButtonsProps) => {
       <ImageBox ref={popupRef}>
         <Image src={modal_cake} alt="Cart" onClick={handleImageClick} />
       </ImageBox>
-      <CartButton onRequestClose={onRequestClose} />
+      <CartButton onSaveAsImage={saveAsImage} />
       {showPopup && <Popup />}
     </>
   );

@@ -9,7 +9,6 @@ import com.buyte.store.dto.StoreMapDto;
 import com.buyte.store.service.StoreService;
 import java.util.List;
 import javax.validation.constraints.Positive;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -20,9 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/v1/store")
+@RequestMapping("/store")
 @Validated
-@Slf4j
 public class StoreController {
 
     private final StoreService storeService;

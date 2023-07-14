@@ -39,7 +39,8 @@ public class MemberController {
     @PostMapping("/token/refresh")
     public ResponseEntity reIssueAccessToken(HttpServletRequest request, HttpServletResponse response) {
         response = memberService.checkRefreshAndReIssueAccess(request, response);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (response.getStatus() == 401) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/logout")
