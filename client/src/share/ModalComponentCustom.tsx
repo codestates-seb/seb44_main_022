@@ -71,7 +71,7 @@ const CustomContainer = styled.div`
   display: flex;
 `;
 
-const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentLabel }) => {
+function ModalComponent({ isOpen, onRequestClose, contentLabel }: ModalProps) {
   const [selectedImage] = useState<string>('');
 
   return (
@@ -94,6 +94,6 @@ const ModalComponent: React.FC<ModalProps> = ({ isOpen, onRequestClose, contentL
       </StyledModal>
     </ModalContainer>
   );
-};
+}
 
 export default ModalComponent;

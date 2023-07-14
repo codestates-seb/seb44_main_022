@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { addCustom } from '../../../api/customApis';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
@@ -7,6 +8,21 @@ import UploadButton from './UploadButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
 import { ContentContainer } from './ContentContainer';
+
+export const saveCanvasAsImage = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
+  const canvas = canvasRef.current;
+  if (!canvas) return;
+
+  // Canvas를 이미지로 변환합니다.
+  const image = new Image();
+  image.src = canvas.toDataURL('image/png');
+
+  // 이미지를 그림 파일로 저장합니다.
+  const link = document.createElement('a');
+  link.href = image.src;
+  link.download = 'canvas_image.png';
+  link.click();
+};
 
 const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
