@@ -1,22 +1,12 @@
 import { FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import { StoreCardProps } from '../assets/interface/Store.interface'
 import { 
   StoreMenuInfo ,
   CardListContainer,
   Cards,
   StoreTitleInfo
  } from './storeCard.style';
-interface Store {
-    storeId: number;
-    storeName: string;
-    storeAddress: string;
-    storeImage: string;
-  }
-  
-  interface StoreCardProps {
-    data: Store[];
-  }
-
 function StoreCard({data}: StoreCardProps) {
   return (
     <>

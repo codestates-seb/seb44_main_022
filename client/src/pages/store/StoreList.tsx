@@ -2,6 +2,7 @@ import { FaSearch } from 'react-icons/fa';
 import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import StoreCard from '../../components/storeCard';
 import axiosInstance from '../../api/api';
+import { Store, PageInfo } from '../../assets/interface/Store.interface';
 import { 
   StyledInput, 
   StoreSection,
@@ -12,19 +13,8 @@ import {
   Loading
  } from './Store.style';
 
-interface Store {
-  storeId: number;
-  storeName: string;
-  storeAddress: string;
-  storeImage: string;
-}
 
-interface PageInfo {
-  currentPage: number;
-  totalPage: number;
-}
-
-function Store() {  
+function StoreList() {  
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -196,4 +186,4 @@ function Store() {
     </>
   );
 }
-export default Store;
+export default StoreList;
