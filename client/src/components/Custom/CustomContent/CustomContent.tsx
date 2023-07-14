@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { addCustom } from '../../../api/customApis';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
@@ -7,6 +8,7 @@ import UploadButton from './UploadButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
 import { ContentContainer } from './ContentContainer';
+import SaveImageButton from './SaveImageButton';
 
 const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -157,8 +159,10 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Make sure the canvas dimensions match its CSS size
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.lineCap = 'round';
@@ -277,6 +281,64 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     setDraggedImageIndex(-1);
   };
 
+  type ImageData = {
+    imageUrl: string;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
+
+  const handleSaveAsImage = async () => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    // Make sure the canvas dimensions match its CSS size
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Load and draw all images including dragged images
+    const loadAndDrawImage = (imageData: ImageData): Promise<void> => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.src = imageData.imageUrl;
+        img.onload = () => {
+          ctx.drawImage(img, imageData.x, imageData.y, imageData.width, imageData.height);
+          resolve();
+        };
+      });
+    };
+
+    const promises = images.map((imageData: ImageData) => loadAndDrawImage(imageData));
+
+    // Ensure all images are loaded and drawn on canvas
+    await Promise.all(promises);
+
+    const dataUrl = canvas.toDataURL('image/png');
+
+    // convert data url to file
+    const byteString = atob(dataUrl.split(',')[1]);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/png' });
+    const file = new File([blob], 'canvas.png', { type: 'image/png' });
+
+    try {
+      const store_id = 1;
+      const product_id = 1;
+      await addCustom(store_id, product_id, file);
+      alert('Image saved successfully.');
+    } catch (error) {
+      alert('Failed to save image.');
+    }
+  };
+
   return (
     <ContentContainer>
       <RangeInputContainer>
@@ -285,6 +347,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <UploadButton onUpload={handleUploadImage} />
         <UndoButton onUndo={handleUndoButtonClick} />
+        <SaveImageButton onSave={handleSaveAsImage} />
       </RangeInputContainer>
       <CanvasWrapper onDragOver={handleDragOver} onDrop={handleDrop}>
         {images.map((imageData, index) => (
