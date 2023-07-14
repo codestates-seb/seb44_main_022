@@ -46,7 +46,10 @@ public class MemberServiceImpl implements MemberService {
         RedisTemplate<Object, Object> redisTemplate = jwtTokenizer.getRedisTemplate();
         String tokenStatus = (String) redisTemplate.opsForValue().get(refreshToken);
 
-        if (tokenStatus.equals("login")) {
+        if(tokenStatus == null) {
+            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
+        }
+        else if (tokenStatus.equals("login")) {
             String memberId = jwtTokenizer.getMemberIdFromRefreshToken(refreshToken);
             String accessToken = jwtTokenizer.delegateAccessToken(memberRepository.findById(Long.parseLong(memberId)).orElseThrow());
             response.setHeader("Authorization", "Bearer " + accessToken);
