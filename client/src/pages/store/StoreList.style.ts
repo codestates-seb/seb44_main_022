@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import loading from '../../assets/images/loading.gif';
 
 export const StyledInput = styled.input`
   outline: 1px solid var(--white);
@@ -92,7 +93,7 @@ export const SearchSection =styled.section`
 `;
 
 export const Loading = styled.div`
-  background-image: url(https://musikkforslagvedgravferd.no/v3/kampenes/assets/loader.gif);
+  background-image: url(${loading});
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;

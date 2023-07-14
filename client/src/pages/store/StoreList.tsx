@@ -11,7 +11,7 @@ import {
   Search,
   SearchSection,
   Loading
- } from './Store.style';
+ } from './StoreList.style';
 
 
 function StoreList() {  
@@ -107,6 +107,7 @@ function StoreList() {
 
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    
     if(e.target.value===''){
       showAll();
     }
@@ -131,7 +132,7 @@ function StoreList() {
       }
       setIsSearchEventTriggered(false);
     }
-  }, [isSearchEventTriggered,]);
+  }, [isSearchEventTriggered]);
   
 
   //완전히 page=1의 정보로 모든 걸 초기화 시키는 세팅.
@@ -142,6 +143,7 @@ function StoreList() {
     setSearchTerm('');
     setPage(1);   
     fetchData(1)
+    console.log("a")
   };
 
 
