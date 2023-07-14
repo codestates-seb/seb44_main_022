@@ -5,7 +5,7 @@ import com.buyte.product.dto.CustomProductInfoDto;
 import com.buyte.product.dto.PreferenceProductDto;
 import com.buyte.product.dto.PreferenceProductPageDto;
 import com.buyte.product.dto.ProductDetailsDto;
-import com.buyte.product.dto.ProductInfoDto;
+import com.buyte.product.dto.ProductImageDto;
 import com.buyte.product.dto.StandardProductInfoDto;
 import com.buyte.product.entity.Product;
 import org.mapstruct.Mapper;
@@ -15,12 +15,10 @@ import org.springframework.data.domain.Page;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface ProductMapper {
 
-    default ProductInfoDto productToProductInfo(Product product) {
-        return ProductInfoDto.builder()
+    default ProductImageDto productToProductImage(Product product) {
+        return ProductImageDto.builder()
             .productId(product.getProductId())
             .productImage(product.getProductImage())
-            .productName(product.getProductName())
-            .productPrice(product.getProductPrice())
             .build();
     }
 

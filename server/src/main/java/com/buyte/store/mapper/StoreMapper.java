@@ -41,6 +41,7 @@ public interface StoreMapper {
             .storeLongitude(store.getStoreLongitude())
             .storeImage(store.getStoreImage())
             .storeName(store.getStoreName())
+            .storeAddress(store.getStoreAddress())
             .storeIntroduction(store.getStoreIntroduction())
             .build();
     }
