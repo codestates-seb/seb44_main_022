@@ -1,6 +1,8 @@
 package com.buyte.member.entity;
 
 import com.buyte.audit.Auditable;
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.order.entity.Orders;
 import com.buyte.store.entity.Store;
 import lombok.Getter;
@@ -71,7 +73,7 @@ public class Member extends Auditable {
 
     public static void checkExistLoginId(Member member){
         if(member != null) {
-            throw new RuntimeException("Member exists");
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
         }
     }
 }

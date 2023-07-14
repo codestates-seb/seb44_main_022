@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.SecureRandom;
 
 @Slf4j
 @Service
@@ -22,6 +24,7 @@ public class OauthService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final MemberRepository memberRepository;
     private final JwtTokenizer jwtTokenizer;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${security.oauth2.google.token-uri}")
     private String tokenUri;
@@ -48,10 +51,12 @@ public class OauthService {
 
         if (member == null) {
             Member newMember = new Member();
+            String password = passwordEncoder.encode(generateRandomString());
             newMember.setLoginId(memberInfo.getEmail());
             newMember.setMemberName(memberInfo.getName());
             newMember.setMemberType(Member.MemberType.GOOGLE);
             newMember.setMemberRole(Member.MemberRole.CUSTOMER);
+            newMember.setPassword(password);
 
             member = memberRepository.save(newMember);
         }
@@ -112,5 +117,19 @@ public class OauthService {
         } else {
             throw new RuntimeException("Failed to fetch Google user info");
         }
+    }
+
+    public static String generateRandomString() {
+        String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        SecureRandom random = new SecureRandom();
+        for (int i = 0; i < 8; i++) {
+            int randomIndex = random.nextInt(CHARACTERS.length());
+            char randomChar = CHARACTERS.charAt(randomIndex);
+            stringBuilder.append(randomChar);
+        }
+
+        return stringBuilder.toString();
     }
 }

@@ -139,7 +139,7 @@ public class JwtTokenizer {
 
             return claims.getSubject();
         } catch (ExpiredJwtException e) {
-            throw new BusinessLogicException(ExceptionCode.REFRESH_TOKEN_EXPIRED);
+            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
         }
     }
 
