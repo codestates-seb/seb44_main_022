@@ -43,14 +43,12 @@ export function requestPay(params: PaymentWindowParams) {
     (res) => {
       const { success, imp_uid, error_msg } = res;
       if (success) {
-        // postAfterPayment(idList, imp_uid)
-        //   .then((res) => {
-        //     console.log(res);
-        //     onSuccess();
-        //   })
-        //   .catch((err) => alert(`결제에 실패하였습니다. 에러 내용: ${err}`));
-        alert('결제 성공');
-        onSuccess();
+        postAfterPayment(idList, imp_uid, orderUserName, shippingAddress)
+          .then(() => {
+            alert('결제 성공');
+            onSuccess();
+          })
+          .catch((err) => alert(`결제에 실패하였습니다. 에러 내용: ${err}`));
       } else {
         if (error_msg === '이미 결제가 이루어진 거래건입니다.') alert('잠시 후 다시 시도해주세요.');
         else {

@@ -3,6 +3,8 @@ import JustAnotherHand from '../assets/fonts/JustAnotherHand-Regular.ttf';
 import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
 import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
 import OpenSans from '../assets/fonts/OpenSans-SemiBold.ttf';
+import { fadeOut } from '../components/UserInput/UserInput.style';
+import { fadeIn } from './keyframes';
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -124,59 +126,12 @@ html, body, div, span, applet, object, iframe,
     box-sizing: border-box;
   }
   .fadeIn {
-    animation: 0.4s fadeIn forwards;
+    animation: 0.3s ${fadeIn} forwards;
   }
   .fadeOut {
-    animation: 0.4s fadeOut forwards;
+    animation: 0.3s ${fadeOut} forwards;
   }
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translate(-40px, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translate(0px, 0px);
-    }
-  }
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-      transform: translate(0px, 0px);
-    }
-    to {
-      transform: translate(40px, 0);
-      opacity: 0;
-    }
-  }
-  @keyframes fadeNone {
-    0% {
-      transform: translate(0px, 0px);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(-40px, 0);
-      opacity: 0;
-    }
-  }
-  @keyframes fadeUpNone {
-    0% {
-      transform: translate(0px, 0px);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(0px, -40px);
-      opacity: 0;
-    }
-  }
-  @keyframes fadeDown {
-    0% {
-      transform: translate(0px, -40px);
-      opacity: 0;
-    }
-    100% {
-      transform: translate(0px, 0px);
-      opacity: 1;
-    }
+  .none {
+    display: none;
   }
 `;
