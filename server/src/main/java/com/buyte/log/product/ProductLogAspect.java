@@ -51,7 +51,7 @@ public class ProductLogAspect {
         String[] parameterNames = methodSignature.getParameterNames();
 
         log.error("### ERROR Exception occurred in {}", joinPoint.getSignature().toShortString());
-        log.error("### ERROR Exception message: {} {}", exception.getMessage());
+        log.error("### ERROR Exception message: {}", exception.getMessage());
 
         Object[] args = joinPoint.getArgs();
         IntStream.range(0, args.length)

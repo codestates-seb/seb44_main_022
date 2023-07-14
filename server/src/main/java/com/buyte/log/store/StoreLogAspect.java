@@ -1,6 +1,5 @@
 package com.buyte.log.store;
 
-import java.util.Arrays;
 import java.util.stream.IntStream;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -51,7 +50,7 @@ public class StoreLogAspect {
         String[] parameterNames = methodSignature.getParameterNames();
 
         log.error("### ERROR Exception occurred in {}", joinPoint.getSignature().toShortString());
-        log.error("### ERROR Exception message: {} {}", exception.getMessage());
+        log.error("### ERROR Exception message: {}", exception.getMessage());
 
         Object[] args = joinPoint.getArgs();
         IntStream.range(0, args.length)
