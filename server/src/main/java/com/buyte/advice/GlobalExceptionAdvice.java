@@ -95,4 +95,14 @@ public class GlobalExceptionAdvice {
 
         return response;
     }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleIllegalArgumentException(IllegalArgumentException e) {
+        log.error("# Illegal argument Exception", e);
+
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage());
+
+        return response;
+    }
 }
