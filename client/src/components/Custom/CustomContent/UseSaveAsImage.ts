@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 import { addCustom } from '../../../api/customApis';
-
+import axiosInstance from '../../../api/apis';
 type ImageData = {
   imageUrl: string;
   x: number;
@@ -17,7 +17,6 @@ const saveAsImage = async (
 ) => {
   const canvas = canvasRef.current;
   if (!canvas) {
-    console.error('Canvas is not available');
     return;
   }
 
@@ -60,9 +59,10 @@ const saveAsImage = async (
   const file = new File([blob], 'canvas.png', { type: 'image/png' });
   try {
     await addCustom(storeId, productId, file);
-    alert('이미지를 성공적으로 저장했습니다.');
+    return true;
   } catch (error) {
     alert('이미지 저장에 실패했습니다.');
+    return false;
   }
 };
 

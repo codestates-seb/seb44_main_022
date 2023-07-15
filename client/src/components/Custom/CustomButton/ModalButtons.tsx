@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import saveAsImage from '../CustomContent/UseSaveAsImage';
+import ProductCartAlert from '../../../share/ProductCartAlert';
 import CloseButton from './CloseButton';
 import CartButton from './CartButton';
 import Popup from './Popup';
@@ -24,7 +25,13 @@ const Image = styled.img`
   height: 50px;
   cursor: pointer;
 `;
-
+const CenteredAlertContainer = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  z-index: 30;
+`;
 type ModalButtonsProps = {
   onRequestClose: () => void;
   images: ImageData[];
@@ -32,7 +39,6 @@ type ModalButtonsProps = {
   storeId: number;
   productId: number;
 };
-
 type ImageData = {
   imageUrl: string;
   x: number;
@@ -49,20 +55,32 @@ const ModalButtons = ({
   productId,
 }: ModalButtonsProps) => {
   const [showPopup, setShowPopup] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
   const popupRef = useRef(null);
+
+  const closeAlert = () => {
+    setShowAlert(false);
+  };
 
   const handleImageClick = () => {
     setShowPopup((prevState) => !prevState);
   };
 
   const onSaveImage = async () => {
-    await saveAsImage(images, canvasRef, storeId, productId);
+    const result = await saveAsImage(images, canvasRef, storeId, productId);
+    if (result) {
+      setShowAlert(true);
+    }
   };
+
   return (
     <>
       <CloseButton onClick={onRequestClose} />
       <ImageBox ref={popupRef}>
         <Image src={modal_cake} alt="Cart" onClick={handleImageClick} />
+        <CenteredAlertContainer>
+          {showAlert && <ProductCartAlert closeModal={closeAlert} />}
+        </CenteredAlertContainer>
       </ImageBox>
       <CartButton onSaveImage={onSaveImage} />
       {showPopup && <Popup />}
