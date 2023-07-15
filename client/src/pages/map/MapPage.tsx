@@ -47,7 +47,7 @@ function MapPage() {
   return (
     <div
       style={{
-        marginTop: '80px',
+        marginTop: '320px',
         display: 'flex',
         justifyContent: 'flex-start',
         alignItems: 'center',

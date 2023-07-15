@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { addCustom } from '../../../api/customApis';
+import React, { useState, useEffect } from 'react';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
@@ -9,32 +8,25 @@ import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
 import { ContentContainer } from './ContentContainer';
 
-export const saveCanvasAsImage = (canvasRef: React.RefObject<HTMLCanvasElement>) => {
-  const canvas = canvasRef.current;
-  if (!canvas) return;
-
-  // Canvas를 이미지로 변환합니다.
-  const image = new Image();
-  image.src = canvas.toDataURL('image/png');
-
-  // 이미지를 그림 파일로 저장합니다.
-  const link = document.createElement('a');
-  link.href = image.src;
-  link.download = 'canvas_image.png';
-  link.click();
+type ImageData = {
+  imageUrl: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 };
 
-const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+const CustomContent: React.FC<{
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+  updateImages: React.Dispatch<React.SetStateAction<ImageData[]>>;
+}> = ({ canvasRef, updateImages }) => {
   const [size, setSize] = useState<number>(5);
   const [color, setColor] = useState<string>('#000000');
   const [eraser, setEraser] = useState<boolean>(false);
-  const [images, setImages] = useState<
-    { imageUrl: string; x: number; y: number; width: number; height: number }[]
-  >([]);
+  const [images, setImages] = useState<ImageData[]>([]);
   const [drawingMode, setDrawingMode] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const [draggedImage, setDraggedImage] = useState<string | null>(null);
+  const [, setDraggedImage] = useState<string | null>(null);
   const [draggedImageIndex, setDraggedImageIndex] = useState<number>(-1);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -84,6 +76,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       ];
 
       setImages(newImages);
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
     };
   };
 
@@ -121,53 +114,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       });
 
       setImages(newImages);
-    } else if (!drawingMode && isDragging && draggedImage) {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      images.forEach((imageData, index) => {
-        if (index !== draggedImageIndex) {
-          const img = new Image();
-          img.src = imageData.imageUrl;
-          img.onload = () => {
-            const { naturalWidth, naturalHeight } = img;
-            const targetWidth = 100;
-            const targetHeight = 100;
-            const aspectRatio = naturalWidth / naturalHeight;
-            let width = targetWidth;
-            let height = targetHeight;
-            if (targetWidth / targetHeight > aspectRatio) {
-              width = targetHeight * aspectRatio;
-            } else {
-              height = targetWidth / aspectRatio;
-            }
-            ctx.drawImage(img, imageData.x, imageData.y, width, height);
-          };
-        }
-      });
-
-      const draggedImage = images[draggedImageIndex];
-      const image = new Image();
-      image.src = draggedImage.imageUrl;
-
-      image.onload = () => {
-        const { naturalWidth, naturalHeight } = image;
-        const targetWidth = 100;
-        const targetHeight = 100;
-        const aspectRatio = naturalWidth / naturalHeight;
-        let width = targetWidth;
-        let height = targetHeight;
-        if (targetWidth / targetHeight > aspectRatio) {
-          width = targetHeight * aspectRatio;
-        } else {
-          height = targetWidth / aspectRatio;
-        }
-        ctx.drawImage(image, x - width / 2, y - height / 2, width, height);
-      };
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
     } else {
       if (event.buttons !== 1) return;
 
@@ -220,8 +167,10 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Make sure the canvas dimensions match its CSS size
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.lineCap = 'round';
@@ -243,32 +192,35 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     const offsetX = clientX - rect.left;
     const offsetY = clientY - rect.top;
 
-    const newImages = images.map((imageData, i) => {
-      if (i === index) {
-        return {
-          ...imageData,
-          x: offsetX - imageData.width / 2,
-          y: offsetY - imageData.height / 2,
-        };
-      }
-      return imageData;
-    });
+    if (index === draggedImageIndex) {
+      const newImages = images.map((imageData, i) => {
+        if (i === index) {
+          return {
+            ...imageData,
+            x: offsetX - imageData.width / 2,
+            y: offsetY - imageData.height / 2,
+          };
+        }
+        return imageData;
+      });
 
-    setImages(newImages);
+      setImages(newImages);
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
+    }
   };
 
   const handleImageDragEnd = () => {
     setIsDragging(false);
   };
+
   const handleDragStartImage = (
-    event: React.DragEvent<HTMLImageElement>,
-    imageUrl: string,
+    _event: React.DragEvent<HTMLImageElement>,
+    _imageUrl: string,
     index: number
   ) => {
-    event.dataTransfer.setData('text/plain', imageUrl);
-    event.dataTransfer.setData('application/my-app-type', 'image');
     setDraggedImageIndex(index);
   };
+
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
   };
@@ -276,9 +228,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const imageUrl = event.dataTransfer.getData('text/plain');
-    const draggedIndex = draggedImageIndex;
 
-    // 이미지를 드롭한 위치의 좌표
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -289,22 +239,36 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    // 드래그한 이미지의 정보
-    const draggedImage = images[draggedIndex];
-
-    // 드래그한 이미지의 위치만 변경하여 새로운 images 배열
-    const newImages = images.map((imageData, index) => {
-      if (index === draggedIndex) {
-        return {
-          ...imageData,
-          x: x - draggedImage.width / 2,
-          y: y - draggedImage.height / 2,
-        };
+    const image = new Image();
+    image.onload = () => {
+      const { naturalWidth, naturalHeight } = image;
+      const targetWidth = 100;
+      const targetHeight = 100;
+      const aspectRatio = naturalWidth / naturalHeight;
+      let width = targetWidth;
+      let height = targetHeight;
+      if (targetWidth / targetHeight > aspectRatio) {
+        width = targetHeight * aspectRatio;
+      } else {
+        height = targetWidth / aspectRatio;
       }
-      return imageData;
-    });
 
-    setImages(newImages);
+      const newImages = [
+        ...images,
+        {
+          imageUrl: image.src,
+          x: x - width / 2,
+          y: y - height / 2,
+          width: width,
+          height: height,
+        },
+      ];
+
+      setImages(newImages);
+      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
+    };
+
+    image.src = imageUrl;
 
     setDraggedImage(null);
     setDraggedImageIndex(-1);
@@ -315,6 +279,7 @@ const CustomContent: React.FC<{ selectedImageProp: string }> = () => {
       const updatedImages = [...images];
       updatedImages.pop();
       setImages(updatedImages);
+      updateImages(updatedImages); // updateImages 함수를 사용하여 state 업데이트
 
       const canvas = canvasRef.current;
       if (!canvas) return;

@@ -1,6 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 import { CanvasComponentWrapper } from './CanvasComponentWrapper';
 
+export const StyledCanvas = styled.canvas`
+  width: 100%;
+  height: 77%;
+`;
 type CanvasWrapperProps = {
   children: React.ReactNode;
   forwardedRef?: React.RefObject<HTMLDivElement>;
@@ -35,7 +40,7 @@ function Canvas({
   onMouseUp,
 }: CanvasProps) {
   return (
-    <canvas
+    <StyledCanvas
       ref={forwardedRef}
       onMouseMove={onMouseMove}
       onMouseDown={onMouseDown}
