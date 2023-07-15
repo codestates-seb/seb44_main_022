@@ -1,8 +1,7 @@
 import styled, {css} from 'styled-components';
 import Modal from 'react-modal';
-interface ProductImgContainerProps {
-    backgroundImage: string | undefined;
-  }
+import {ProductImgContainerProps} from '../assets/interface/Store.interface'
+
 export const AlertBox= styled.div`
   width: 100%;
   height: 100%;
@@ -21,6 +20,7 @@ export const CircleShape = styled.div`
   top: 150px;
   left: calc(15%);
 `;
+
 export const Rectangle = styled.div`
   position: absolute;
   width: 100px;
@@ -33,6 +33,7 @@ export const Rectangle = styled.div`
   top: 20px;
   left: calc(82%);
 `;
+
 export const DecorationTextContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -154,7 +155,7 @@ export const ImageBox = styled.div`
   border-radius: 40px 0px 0px 0px;
 `;
 
-export const Product = styled.div`
+export const ProductsContainer = styled.div`
   position: absolute;
   top: 9rem;
   left: 10%;
@@ -273,7 +274,6 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
 `;
 
 export const ModalWrapper = styled.div`
-  background-color:red; 
   position: fixed;
   top: 0;
   left: 0;

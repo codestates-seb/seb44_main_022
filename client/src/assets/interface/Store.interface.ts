@@ -15,7 +15,7 @@ export   interface StoreCardProps {
     data: Store[];
   }
 
-export interface Product {
+export interface ProductContainer {
     productId: number;
     productImage: string;
     productName: string;
@@ -40,3 +40,28 @@ export interface StoreDetailInfo {
     storeId: number;
     storeName: string;
   }
+
+  
+export interface Product {
+  productId: number;
+  productImage: string;
+  productName: string;
+  productType: string;
+  productIntroduction: string;
+  productPrice: number;
+}
+
+export interface ModalComponentDetailProps {
+  product: Product;
+  closeModal: () => void;
+  storeId: string;
+  storeName: string
+  productId: string;
+}
+
+export interface ModalProps extends ModalComponentDetailProps {
+  isOpen: boolean;
+  onRequestClose: () => void;
+  contentLabel: string;
+  overlay?: boolean;
+}
