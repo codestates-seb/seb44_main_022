@@ -132,7 +132,7 @@ export const HeaderLogo = styled.div`
   }
 `;
 
-export const Dd = styled.a<{ isOpenModal: boolean }>`
+export const HamburgerMenuStyle = styled.a<{ isOpenModal: boolean }>`
   position: relative;
   width: 50px;
   height: 44px;

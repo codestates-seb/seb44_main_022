@@ -11,8 +11,14 @@ function App() {
   const [transitionStage, setTransitionStage] = useState('fadeIn');
 
   useEffect(() => {
-    if (location !== displayLocation) {
+    console.log(location, displayLocation, transitionStage);
+    if (location.pathname !== displayLocation.pathname) {
       setTransitionStage('fadeOut');
+
+      setTimeout(() => {
+        setTransitionStage('fadeIn');
+        setDisplayLocation(location);
+      }, 300);
     }
   }, [location]);
 
@@ -24,12 +30,6 @@ function App() {
       <div
         className={`${transitionStage}`}
         style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
-        onAnimationEnd={() => {
-          if (transitionStage === 'fadeOut') {
-            setTransitionStage('fadeIn');
-            setDisplayLocation(location);
-          }
-        }}
       >
         <Routes location={displayLocation}>{RouteList}</Routes>
         <Footer />

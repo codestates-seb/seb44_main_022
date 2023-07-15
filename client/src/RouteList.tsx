@@ -13,19 +13,19 @@ import PrivateRoute from './PrivateRoute';
 
 export const RouteList = (
   <>
-    <Route element={<PrivateRoute isAuth={false} />}>
-      <Route path="auth" element={<Auth />} />
-    </Route>
     <Route path="/" element={<Main />} />
-    <Route path="select" element={<SelectStore />} />
-    <Route path="map" element={<Map />} />
-    <Route path="store" element={<StoreList />} />
+    <Route path="/select" element={<SelectStore />} />
+    <Route path="/map" element={<Map />} />
+    <Route path="/store" element={<StoreList />} />
     <Route path="/store/:storeId" element={<StoreDetail />} />
+    <Route element={<PrivateRoute isAuth={false} />}>
+      <Route path="/auth" element={<Auth />} />
+    </Route>
     <Route element={<PrivateRoute isAuth={true} />}>
-      <Route path="payment" element={<Payment />} />
-      <Route path="complete" element={<OrderComplete />} />
-      <Route path="mypage/:id" element={<Mypage />} />
-      <Route path="cart" element={<ShoppingCart />} />
+      <Route path="/payment" element={<Payment />} />
+      <Route path="/complete" element={<OrderComplete />} />
+      <Route path="/mypage" element={<Mypage />} />
+      <Route path="/cart" element={<ShoppingCart />} />
     </Route>
   </>
 );

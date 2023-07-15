@@ -9,6 +9,7 @@ interface PrivateRouteProps {
 
 function PrivateRoute({ isAuth }: PrivateRouteProps) {
   const accessToken = LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken);
+
   if (isAuth) {
     return accessToken !== null ? <Outlet /> : <Navigate to="/" />;
   } else {

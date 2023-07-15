@@ -19,11 +19,11 @@ import {
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken) !== null) {
-      navigate('/');
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken) !== null) {
+  //     navigate('/');
+  //   }
+  // }, []);
 
   return (
     <AuthContainer>
