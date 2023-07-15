@@ -65,3 +65,7 @@ export interface ModalProps extends ModalComponentDetailProps {
   contentLabel: string;
   overlay?: boolean;
 }
+
+export interface ProductImgContainerProps {
+  backgroundImage: string;
+}

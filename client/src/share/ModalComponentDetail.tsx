@@ -29,6 +29,7 @@ import {
   ProductImgContainer,
   ModalWrapper
 } from './ModalComponentDetail.style';
+import ModalContainers from './ModalContainers';
 
 
 function ModalComponentDetail({
@@ -76,8 +77,8 @@ function ModalComponentDetail({
   };
 
   return (
-    <ModalWrapper>
-      <Overlay onClick={handleOverlayClick} isOpen={isOpen}/>    
+    <ModalContainers>
+      <Overlay onClick={handleOverlayClick} isOpen={isOpen}/>
       <StyledModal
         isOpen={isOpen}
         onRequestClose={onRequestClose}
@@ -88,39 +89,39 @@ function ModalComponentDetail({
         >
         <AlertBox>
          {isProductCartAlertVisible &&<ProductCartAlert closeModal={closeModal}/>}
-        </AlertBox>       
-        <ModalContainer>
-          <Title>BUYTE</Title>
-          <ProductsContainer>
-            <StoreName>{storeName}</StoreName>
-            <ProductName>{product?.productName}</ProductName>
-            <ProductDetail>
-            {product?.productIntroduction}
-            </ProductDetail>
-            <ProductPrice>{product?.productPrice}원</ProductPrice>
-          </ProductsContainer>
-          <DecorationTextContainer>
-            <DecorationText>Sweet</DecorationText>
-            <DecorationText>Delicious</DecorationText>
-            <DecorationText>Fresh</DecorationText>
-          </DecorationTextContainer>
-          <CircleShape />
-          <Rectangle />          
-          <ModalButtons>
-            <CloseButton onClick={onRequestClose}>X</CloseButton>
-            <ImageBox>
-              <img src={modal_cake} style={{width: '50px', height: '50px'}} alt="Cart" />
-            </ImageBox>
-            <CartButton onClick={handleSubmit}>
-              <img src={modal_cart} style={{width: '30px', height: '30px', marginBottom:'8px'}} alt="Cart" />
-              <span style={{color: 'var(--white)', fontSize: '6px'}}>장바구니 담기</span>
-            </CartButton>
-            <Line />
-          </ModalButtons>
-          <ProductImgContainer backgroundImage={product?.productImage}/>
-        </ModalContainer>
+        </AlertBox>
+          <ModalContainer>
+            <Title>BUYTE</Title>
+            <ProductsContainer>
+              <StoreName>{storeName}</StoreName>
+              <ProductName>{product?.productName}</ProductName>
+              <ProductDetail>
+              {product?.productIntroduction}
+              </ProductDetail>
+              <ProductPrice>{product?.productPrice}원</ProductPrice>
+            </ProductsContainer>
+            <DecorationTextContainer>
+              <DecorationText>Sweet</DecorationText>
+              <DecorationText>Delicious</DecorationText>
+              <DecorationText>Fresh</DecorationText>
+            </DecorationTextContainer>
+            <CircleShape />
+            <Rectangle />
+            <ModalButtons>
+              <CloseButton onClick={onRequestClose}>X</CloseButton>
+              <ImageBox>
+                <img src={modal_cake} style={{width: '50px', height: '50px'}} alt="Cart" />
+              </ImageBox>
+              <CartButton onClick={handleSubmit}>
+                <img src={modal_cart} style={{width: '30px', height: '30px', marginBottom:'8px'}} alt="Cart" />
+                <span style={{color: 'var(--white)', fontSize: '6px'}}>장바구니 담기</span>
+              </CartButton>
+              <Line />
+            </ModalButtons>
+            <ProductImgContainer backgroundImage={product?.productImage}/>
+          </ModalContainer>
       </StyledModal>
-    </ModalWrapper>
+    </ModalContainers>
   );
 }
 

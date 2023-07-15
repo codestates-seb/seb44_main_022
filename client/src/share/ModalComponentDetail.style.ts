@@ -62,7 +62,8 @@ export const Title = styled.h3`
   color: var(--light-black);
 `;
 
-export const StyledModal = styled(Modal)`
+export const StyledModal = styled(Modal)` 
+
   ${({ isOpen }) =>
     isOpen &&
     css`
@@ -75,7 +76,7 @@ export const StyledModal = styled(Modal)`
       border-radius: 20px;
       box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
       background-color: rgba(255, 255, 255, 0.9);
-      z-index: 10;
+      z-index: 100;
       outline: none;
       border: none;
     `}
@@ -88,7 +89,7 @@ export const Overlay = styled.div<{ isOpen: boolean }>`
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 999;
+  z-index: 9;
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;
 
