@@ -1,14 +1,14 @@
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 import Modal from 'react-modal';
-import {ProductImgContainerProps} from '../assets/interface/Store.interface'
+import { ProductImgContainerProps } from '../assets/interface/Store.interface';
 
-export const AlertBox= styled.div`
+export const AlertBox = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
   display: flex;
   justify-content: center;
-`
+`;
 export const CircleShape = styled.div`
   position: absolute;
   width: 260px;
@@ -49,7 +49,7 @@ export const DecorationText = styled.h2`
   color: var(--light-black);
   @media (max-width: 910px) {
     opacity: 0;
-    }
+  }
 `;
 export const Title = styled.h3`
   font-family: 'Just Another Hand', cursive;
@@ -62,8 +62,7 @@ export const Title = styled.h3`
   color: var(--light-black);
 `;
 
-export const StyledModal = styled(Modal)` 
-
+export const StyledModal = styled(Modal)`
   ${({ isOpen }) =>
     isOpen &&
     css`
@@ -166,10 +165,10 @@ export const ProductsContainer = styled.div`
     margin-top: 40px;
   }
   @media (max-width: 910px) {
-    >*+*{
-      margin-top: 30px
+    > * + * {
+      margin-top: 30px;
     }
-    }
+  }
 `;
 export const StoreName = styled.h2`
   display: flex;
@@ -186,7 +185,7 @@ export const StoreName = styled.h2`
   height: 30px;
   @media (max-width: 910px) {
     width: 270px;
-    }
+  }
 `;
 
 export const ProductName = styled.h2`
@@ -197,10 +196,10 @@ export const ProductName = styled.h2`
   margin-left: 2rem;
   @media (max-width: 1190px) {
     font-size: 36px;
-    }
+  }
   @media (max-width: 910px) {
     font-size: 30px;
-    }
+  }
 `;
 
 export const ProductDetail = styled.h3`
@@ -211,13 +210,13 @@ export const ProductDetail = styled.h3`
   line-height: 1.7;
   @media (max-width: 1190px) {
     font-size: 15px;
-      width: 300px;
-      line-height: 1.4;
-    }
-    @media (max-width: 910px) {
+    width: 300px;
+    line-height: 1.4;
+  }
+  @media (max-width: 910px) {
     font-size: 14px;
     width: 250px;
-    }
+  }
 `;
 export const ProductPrice = styled.h2`
   display: flex;
@@ -233,13 +232,13 @@ export const ProductPrice = styled.h2`
     font-size: 17px;
     width: 230px;
     margin-left: 15px;
-    }
-    @media (max-width: 910px) {
+  }
+  @media (max-width: 910px) {
     font-size: 15px;
     width: 150px;
     height: 30px;
     margin-left: 35px;
-    }
+  }
 `;
 
 export const ProductImgContainer = styled.div<ProductImgContainerProps>`
@@ -256,20 +255,20 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
   justify-content: center;
   ${({ backgroundImage }) =>
     css`
-      background-image: url(${backgroundImage?? ''});
+      background-image: url(${backgroundImage ?? ''});
       background-repeat: no-repeat;
       background-size: cover;
     `}
-    @media (max-width: 1320px) {
-      width: 300px;
-      height: 300px
-    }
-    @media (max-width: 1190px) {
-      width: 230px;
-      height: 230px
-    }
-    @media (max-width: 910px) {
+  @media (max-width: 1320px) {
+    width: 300px;
+    height: 300px;
+  }
+  @media (max-width: 1190px) {
+    width: 230px;
+    height: 230px;
+  }
+  @media (max-width: 910px) {
     width: 20%;
-    border-radius:30px;
-    }
+    border-radius: 30px;
+  }
 `;

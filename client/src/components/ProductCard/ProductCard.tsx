@@ -1,24 +1,24 @@
 import { useState } from 'react';
 import ModalComponentDetail from '../../share/ModalComponentDetail';
 import ModalComponentCustom from '../../share/ModalComponentCustom';
-import {Product, ProductCardProps} from '../../assets/interface/Store.interface'
+import { Product, ProductCardProps } from '../../assets/interface/Store.interface';
 import {
   ProductContainer,
   ProductImage,
   HoverOverlay,
   ModalContainer,
-  ProductTitle
+  ProductTitle,
 } from './ProductCard.style';
-function ProductCard({data, storeId, storeName}: ProductCardProps) {
+function ProductCard({ data, storeId, storeName }: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const handleProductClick = (product: Product) => {    
+  const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
     setModalOpen(true);
-  }
+  };
   const closeModal = () => {
     setModalOpen(false);
-    setSelectedProduct(null)
+    setSelectedProduct(null);
   };
   const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -26,44 +26,41 @@ function ProductCard({data, storeId, storeName}: ProductCardProps) {
 
   return (
     <>
-      <ProductContainer >
+      <ProductContainer>
         {data.map((product) => (
-            <li key={product.productId} style={{minWidth:'200px', height:'320px', width:'100%', position:'relative'}} onClick={() => handleProductClick(product)}>
-              <ProductImage src={product.productImage} alt={product.productName}/>
-              <ProductTitle>{product.productName}</ProductTitle>
-              <HoverOverlay />
-            </li>
-                        ))}
+          <li
+            key={product.productId}
+            style={{ minWidth: '200px', height: '320px', width: '100%', position: 'relative' }}
+            onClick={() => handleProductClick(product)}
+          >
+            <ProductImage src={product.productImage} alt={product.productName} />
+            <ProductTitle>{product.productName}</ProductTitle>
+            <HoverOverlay />
+          </li>
+        ))}
       </ProductContainer>
       {modalOpen && selectedProduct && (
         <ModalContainer onClick={handleModalClick}>
-          {selectedProduct.productType === "STANDARD" ? (
-              <ModalComponentDetail
-                isOpen={modalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Modal"
-                product={selectedProduct}
-                closeModal={closeModal}
-                storeId={storeId.toString()}
-                storeName={storeName}
-                productId={selectedProduct.productId.toString()}
-              />
-            ) : (
-              <ModalComponentCustom
-                isOpen={modalOpen}
-                onRequestClose={closeModal}
-                contentLabel="Modal"
-                //product={selectedProduct}
-                //여긴 ModalComponentCustom쪽과 논의 필요해보임
-                //closeModal={closeModal}
-                //storeId={storeId.toString()}
-                //storeName={storeName}
-               //productId={selectedProduct.productId.toString()}
-              />
-            )}
+          {selectedProduct.productType === 'STANDARD' ? (
+            <ModalComponentDetail
+              isOpen={modalOpen}
+              onRequestClose={closeModal}
+              contentLabel="Modal"
+              product={selectedProduct}
+              closeModal={closeModal}
+              storeId={storeId.toString()}
+              storeName={storeName}
+              productId={selectedProduct.productId.toString()}
+            />
+          ) : (
+            <ModalComponentCustom
+              isOpen={modalOpen}
+              onRequestClose={closeModal}
+              contentLabel="매장 리스트"
+            />
+          )}
         </ModalContainer>
       )}
-
     </>
   );
 }

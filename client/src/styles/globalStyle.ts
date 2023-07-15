@@ -4,8 +4,8 @@ import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
 import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
 import OpenSans from '../assets/fonts/OpenSans-SemiBold.ttf';
 import { fadeOut } from '../components/UserInput/UserInput.style';
+import BMJUA from '../assets/fonts/BMJUA_ttf.ttf';
 import { fadeIn } from './keyframes';
-
 export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Just Another Hand';
@@ -26,6 +26,12 @@ export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Open Sans';
   src: url(${OpenSans}) ;
+}
+@font-face {
+    font-family: 'BMJUA';
+    src: url(${BMJUA}) format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 :root{
   --background: #FCFCFF;

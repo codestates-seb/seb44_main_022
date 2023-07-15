@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import CustomSidebar from '../components/Custom/CustomSidebar/CustomSidebar';
 import CustomContent from '../components/Custom/CustomContent/CustomContent';
 import ModalButtons from '../components/Custom/CustomButton/ModalButtons';
+import ModalPortal from './ModalPortal';
 type ModalProps = {
   isOpen: boolean;
   onRequestClose: () => void;
   contentLabel: string;
-  children: React.ReactNode;
   overlay?: boolean;
 };
 
@@ -25,7 +25,7 @@ const Title = styled.h3`
 `;
 
 const StyledModal = styled(Modal)`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -72,27 +72,49 @@ const CustomContainer = styled.div`
 `;
 
 function ModalComponent({ isOpen, onRequestClose, contentLabel }: ModalProps) {
-  const [selectedImage] = useState<string>('');
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const [images, setImages] = useState<
+    { imageUrl: string; x: number; y: number; width: number; height: number }[]
+  >([]);
+  const storeId = 1;
+  const productId = 1;
 
   return (
-    <ModalContainer>
-      {isOpen && <Overlay />}
-      <StyledModal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-        contentLabel={contentLabel}
-        ariaHideApp={false}
-        shouldCloseOnOverlayClick={true}
-        overlayClassName="overlay"
-      >
-        <CustomContainer>
-          <Title>BUYTE</Title>
-          <CustomSidebar />
-          <CustomContent selectedImageProp={selectedImage} />
-        </CustomContainer>
-        <ModalButtons onRequestClose={onRequestClose} />
-      </StyledModal>
-    </ModalContainer>
+    <ModalPortal>
+      <ModalContainer>
+        {isOpen && <Overlay />}
+        <StyledModal
+          isOpen={isOpen}
+          onRequestClose={onRequestClose}
+          contentLabel={contentLabel}
+          ariaHideApp={false}
+          shouldCloseOnOverlayClick={true}
+          overlayClassName="overlay"
+        >
+          <CustomContainer>
+            <Title>BUYTE</Title>
+            <CustomSidebar />
+            <CustomContent
+              canvasRef={canvasRef}
+              updateImages={
+                setImages as React.Dispatch<
+                  React.SetStateAction<
+                    { imageUrl: string; x: number; y: number; width: number; height: number }[]
+                  >
+                >
+              }
+            />
+          </CustomContainer>
+          <ModalButtons
+            onRequestClose={onRequestClose}
+            canvasRef={canvasRef}
+            images={images}
+            storeId={storeId}
+            productId={productId}
+          />
+        </StyledModal>
+      </ModalContainer>
+    </ModalPortal>
   );
 }
 
