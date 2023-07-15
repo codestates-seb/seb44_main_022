@@ -55,7 +55,12 @@ public class CartServiceImpl implements CartService{
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         Member member = memberRepository.findById(authenticatedMemberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-        Cart cart = new Cart(product, product.getProductImage(),member);
+        Cart cart = cartRepository.findByMemberAndProduct(member, product);
+        if (cart != null) {
+            cart.setProductCount(cart.getProductCount() + 1);
+        } else {
+            cart = new Cart(product, product.getProductImage(), member);
+        }
 
         cartRepository.save(cart);
 

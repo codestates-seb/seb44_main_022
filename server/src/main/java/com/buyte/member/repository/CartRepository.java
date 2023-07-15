@@ -1,6 +1,8 @@
 package com.buyte.member.repository;
 
 import com.buyte.member.entity.Cart;
+import com.buyte.member.entity.Member;
+import com.buyte.product.entity.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,4 +27,6 @@ public interface CartRepository extends JpaRepository<Cart,Long> {
     Cart findByCartIdAndMemberMemberId(Long cartId, Long memberId);
 
     List<Cart> findAllByCartIdIn(List<Long> cartIds);
+
+    Cart findByMemberAndProduct(Member member, Product product);
 }
