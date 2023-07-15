@@ -41,10 +41,10 @@ function ShoppingCart() {
     setIsLoading(true);
     getCartList()
       .then((res) => {
-        // setCartList(res.data.cartInfos);
-        // setTotalPrice(res.data.totalPrice);
+        setCartList(res.data.cartInfos);
+        setTotalPrice(res.data.totalPrice);
       })
-      // .catch((err) => console.log(err))
+      .catch((err) => console.log(err))
       .finally(() => {
         setIsLoading(false);
       });

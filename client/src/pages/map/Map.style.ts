@@ -17,7 +17,7 @@ export const MarkerModal = styled.div<{ isClose: boolean }>`
   z-index: 10;
   width: 330px;
   height: 500px;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background);
   border-radius: 15px;
   border: 1px solid var(--normal-gray);
   top: 25%;

@@ -1,8 +1,9 @@
 import { Map } from 'react-kakao-maps-sdk';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
-import { POSITIONS, UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
+import { UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
 import { PositionData } from '../../assets/interface/Map.interface';
+import axiosInstance from '../../api/apis';
 import MapModal from './MapModal';
 import CustomMarker from './CustomMarker';
 import { MapContainer } from './Map.style';
@@ -12,6 +13,7 @@ function MapPage() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [clickedId, setClickedId] = useState(0);
   const [isClose, setIsClose] = useState(true);
+  const [storeMapList, setStoreMapList] = useState([]);
 
   const unmountAnimation = () => {
     setTimeout(() => setIsOpenModal(!isOpenModal), UNMOUNT_ANIMATION_TIME);
@@ -34,6 +36,13 @@ function MapPage() {
     setClickedId(position.storeId);
     setIsClose(false);
   };
+
+  useEffect(() => {
+    axiosInstance.get('/store/map').then((res) => {
+      setStoreMapList(res.data);
+      console.log(res.data);
+    });
+  }, []);
 
   return (
     <div
@@ -66,13 +75,15 @@ function MapPage() {
           }}
           level={3}
         >
-          {POSITIONS.map((position, idx) => (
-            <CustomMarker key={idx} markerPosition={position} handleClick={handleClickMarker} />
-          ))}
+          {storeMapList !== undefined &&
+            storeMapList.length > 0 &&
+            storeMapList.map((position, idx) => (
+              <CustomMarker key={idx} markerPosition={position} handleClick={handleClickMarker} />
+            ))}
 
           {isOpenModal && clickedId !== 0 && (
             <MapModal
-              position={POSITIONS[clickedId - 1]}
+              position={storeMapList[clickedId - 1]}
               isClose={isClose}
               handleCloseModal={handleCloseModal}
             />

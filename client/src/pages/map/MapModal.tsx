@@ -48,7 +48,7 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
             </MapModalAddressContainer>
           </MapModalStoreInfoContainer>
         </MapModalTitleContainer>
-        <div style={{ overflow: 'hidden' }}>
+        <div style={{ overflow: 'hidden', width: '328px' }}>
           <div
             style={{
               display: 'flex',
@@ -59,7 +59,7 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
             {position.productPreferenceList.map((product) => (
               <img
                 src={product.productImage}
-                style={{ width: '100%', padding: '1rem 2rem' }}
+                style={{ width: '328px', height: '296px', padding: '1rem 2rem', objectFit: 'fill' }}
                 alt="추천 제품 사진"
                 key={product.productId}
               />

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Routes, useLocation } from 'react-router-dom';
-import { mainRoutes } from './Routes';
+import { RouteList } from './RouteList';
 import Header from './share/Header/Header';
 import Footer from './share/Footer';
-import { postRefreshToken } from './api/authApis';
 import useAxiosInterceptor from './hooks/useAxiosInterceptor';
 
 function App() {
@@ -16,12 +15,6 @@ function App() {
       setTransitionStage('fadeOut');
     }
   }, [location]);
-
-  useEffect(() => {
-    postRefreshToken()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
 
   useAxiosInterceptor();
 
@@ -38,7 +31,7 @@ function App() {
           }
         }}
       >
-        <Routes location={displayLocation}>{mainRoutes}</Routes>
+        <Routes location={displayLocation}>{RouteList}</Routes>
         <Footer />
       </div>
     </>
