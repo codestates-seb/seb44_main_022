@@ -13,7 +13,6 @@ import {
   Loading
  } from './StoreList.style';
 
-
 function StoreList() {  
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
@@ -30,7 +29,6 @@ function StoreList() {
     rootMargin: '0px',
     threshold: 1.0
   };
-
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
@@ -71,15 +69,12 @@ function StoreList() {
     try {
       setLoading(true);
       setIsLoadingMore(page > 1);
-      let url = `/v1/store?page=${page}`;     
+      let url = `/store?page=${page}`;     
       if (searchTerm && searchTerm.trim() !=='') {
         url += `&search=${searchTerm}`;
       } 
     const response = await axiosInstance.get(url);
     const { storeInfoList, pageInfo } = response.data;
-    console.log(url)
-    console.log(storeInfoList);
-    console.log(pageInfo)
     if (searchTerm && searchTerm.trim() !== '') {
       if (page === 1) {
         setFilteredStores(storeInfoList);
@@ -136,7 +131,6 @@ function StoreList() {
   }, [isSearchEventTriggered]);
   
 
-  //완전히 page=1의 정보로 모든 걸 초기화 시키는 세팅.
   const showAll = () => {
     setIsSearchEventTriggered(false);
     setFilteredStores([]);

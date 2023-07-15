@@ -48,15 +48,15 @@ public class MemberServiceImpl implements MemberService {
         String tokenStatus = (String) redisTemplate.opsForValue().get(refreshToken);
 
         if(tokenStatus == null) {
-            response.setStatus(401);
+            response.setStatus(403);
             throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
         }
         else if (tokenStatus.equals("login")) {
             String accessToken = jwtTokenizer.delegateAccessToken(memberRepository.findById(Long.parseLong(memberId)).orElseThrow());
             response.setHeader("Authorization", "Bearer " + accessToken);
         } else {
-            response.setStatus(401);
-            throw new BusinessLogicException(ExceptionCode.LOGOUT);
+            response.setStatus(403);
+            throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
         }
         return response;
     }

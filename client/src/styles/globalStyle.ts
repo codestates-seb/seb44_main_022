@@ -44,6 +44,7 @@ export const GlobalStyle = createGlobalStyle`
   --black: #000000;
   --dark-blue-black: #142E38;
   --gold: #DCD2BD;
+  --dark-gold: #877859;
   --dark-khaki: #665D49;
   --orange-yellow: #FAB65D;
   --ivory: #FFF4E4;
