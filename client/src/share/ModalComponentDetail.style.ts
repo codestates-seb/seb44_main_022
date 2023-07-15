@@ -256,7 +256,7 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
   justify-content: center;
   ${({ backgroundImage }) =>
     css`
-      background-image: url(${backgroundImage});
+      background-image: url(${backgroundImage?? ''});
       background-repeat: no-repeat;
       background-size: cover;
     `}
@@ -272,16 +272,4 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
     width: 20%;
     border-radius:30px;
     }
-`;
-
-export const ModalWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
 `;

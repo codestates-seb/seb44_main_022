@@ -67,5 +67,5 @@ export interface ModalProps extends ModalComponentDetailProps {
 }
 
 export interface ProductImgContainerProps {
-  backgroundImage: string;
+  backgroundImage?: string
 }

@@ -16,17 +16,14 @@ import {
 function StoreDetail() {    
 const [data, setData] = useState<StoreDetailInfo | null>(null);
 const { storeId } = useParams();
-console.log(storeId)
    useEffect(() => {
      fetchData();
    }, []);
   const fetchData = async () => {  
       try {
         const url = `/store/${storeId}`;
-        console.log(url)
         const response = await axiosInstance.get(url);      
         const data = response.data;      
-        console.log(data)
         setData(data);
       } catch (error) {
         console.error('Error fetching store data:', error);

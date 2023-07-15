@@ -26,10 +26,9 @@ import {
   ProductName,
   ProductDetail,
   ProductPrice,
-  ProductImgContainer,
-  ModalWrapper
+  ProductImgContainer
 } from './ModalComponentDetail.style';
-import ModalContainers from './ModalContainers';
+import ModalPortal from './ModalPortal';
 
 
 function ModalComponentDetail({
@@ -77,7 +76,7 @@ function ModalComponentDetail({
   };
 
   return (
-    <ModalContainers>
+    <ModalPortal>
       <Overlay onClick={handleOverlayClick} isOpen={isOpen}/>
       <StyledModal
         isOpen={isOpen}
@@ -121,7 +120,7 @@ function ModalComponentDetail({
             <ProductImgContainer backgroundImage={product?.productImage}/>
           </ModalContainer>
       </StyledModal>
-    </ModalContainers>
+    </ModalPortal>
   );
 }
 

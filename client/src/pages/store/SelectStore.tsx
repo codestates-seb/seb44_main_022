@@ -1,7 +1,8 @@
-/* eslint-disable react/no-children-prop */
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SelectStoreImg from '../../assets/images/img_select/select_store.png';
 import SelectMenuImg from '../../assets/images/img_select/select_menu.png';
+
 const MainRoot = styled.div`
   background-color: #fffffc;
   width: 100%;
@@ -109,10 +110,13 @@ const Button = styled.button`
     font-size: 11px;
   }
 `;
-function SelectStore() {
-  const handleClick=()=>{
-    window.location.href = '/store';
-  }
+
+const SelectStore = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/store');
+  };
   return (
     <MainRoot>
       <OrderText>ORDER</OrderText>
@@ -141,5 +145,6 @@ function SelectStore() {
       </Container>
     </MainRoot>
   );
-}
+};
+
 export default SelectStore;
