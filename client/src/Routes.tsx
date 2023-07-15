@@ -8,6 +8,7 @@ import StoreList from './pages/store/StoreList';
 import Map from './pages/map/MapPage';
 import SelectStore from './pages/store/SelectStore';
 import OrderComplete from './pages/order/OrderComplete/OrderComplete';
+import StoreDetail from './pages/store/StoreDetail';
 
 export const mainRoutes = (
   <>
@@ -15,6 +16,7 @@ export const mainRoutes = (
     <Route path="mypage/:id" element={<Mypage />} />
     <Route path="cart" element={<ShoppingCart />} />
     <Route path="payment" element={<Payment />} />
+    <Route path="/store/:storeId" element={<StoreDetail />}/>
     <Route path="store" element={<StoreList />} />
     <Route path="map" element={<Map />} />
     <Route path="select" element={<SelectStore />} />

@@ -3,7 +3,7 @@ import { addCustom } from '../../../api/customApis';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
 import RangeInput from './RangeInput';
-import RangeInputContainer from './RangeInputContainer';
+import RangeInputContainer from './RangeInputcontainer';
 import UploadButton from './UploadButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
