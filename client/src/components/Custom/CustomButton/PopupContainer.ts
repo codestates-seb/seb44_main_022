@@ -32,11 +32,11 @@ export const PopupContainer = styled.div<{ show: boolean }>`
   animation-fill-mode: both;
   opacity: ${(props) => (props.show ? 1 : 0)};
   animation-name: ${(props) => (props.show ? fadeIn : fadeOut)};
-  animation-fill-mode: forwards; /* Retains the styles of the last keyframe after the animation ends */
+  animation-fill-mode: forwards;
   width: 60%;
   height: 50%;
 
-  @media (max-width: 908px) {
+  @media (max-width: 800px) {
     flex-direction: column;
   }
 `;

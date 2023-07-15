@@ -21,9 +21,15 @@ const PopupContent = styled.div`
   gap: 40px;
   flex-grow: 1;
 
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     flex-direction: column;
     gap: 10px;
+
+    ${PopupImage} {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+    }
   }
 `;
 
@@ -36,6 +42,11 @@ const RightContent = styled.div`
   border-width: 0.5px 1px 1px 0.5px;
   border-radius: 15px;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+  @media (max-width: 900px) {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+  }
 `;
 
 const Part1 = styled.div`

@@ -1,6 +1,6 @@
 import { RefObject } from 'react';
 import { addCustom } from '../../../api/customApis';
-import axiosInstance from '../../../api/apis';
+
 type ImageData = {
   imageUrl: string;
   x: number;
