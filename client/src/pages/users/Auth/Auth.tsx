@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { useNavigate } from 'react-router-dom';
 import LoginForm from '../LoginForm';
 import RoundButton from '../../../components/RoundButton/RoundButton';
 import SignUpForm from '../SignUpForm';
 import Logo from '../../../components/Logo/Logo';
-import { LocalStorage } from '../../../utils/browserStorage';
-import { LOCAL_STORAGE_KEY_LIST } from '../../../assets/constantValue/constantValue';
 import {
   AuthCategory,
   AuthCategoryContainer,
@@ -18,13 +15,6 @@ import {
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
-  const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken) !== null) {
-  //     navigate('/');
-  //   }
-  // }, []);
-
   return (
     <AuthContainer>
       <AuthImage />
