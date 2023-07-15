@@ -71,7 +71,7 @@ function StoreList() {
     try {
       setLoading(true);
       setIsLoadingMore(page > 1);
-      let url = `/v1/store?page=${page}`;     
+      let url = `/store?page=${page}`;     
       if (searchTerm && searchTerm.trim() !=='') {
         url += `&search=${searchTerm}`;
       } 

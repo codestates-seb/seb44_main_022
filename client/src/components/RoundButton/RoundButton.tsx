@@ -11,13 +11,11 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log('a');
     if (types === 'google') handleGoogleLogin();
   };
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: ({ code }) => {
-      console.log(code);
       postGoogleOAuthLogin(code)
         .then((res) => {
           const accessToken = res.headers['authorization'];

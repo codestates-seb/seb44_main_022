@@ -13,8 +13,6 @@ import {
   DetailTitle,
   DetailWrapper
 } from './StoreDetail.style';
-
-
 function StoreDetail() {    
 const [data, setData] = useState<StoreDetailInfo | null>(null);
 const { storeId } = useParams();
@@ -24,7 +22,7 @@ console.log(storeId)
    }, []);
   const fetchData = async () => {  
       try {
-        const url = `/v1/store/${storeId}`;
+        const url = `/store/${storeId}`;
         console.log(url)
         const response = await axiosInstance.get(url);      
         const data = response.data;      

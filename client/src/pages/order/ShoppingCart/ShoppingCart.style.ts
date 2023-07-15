@@ -5,7 +5,7 @@ export const CartContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   width: 70%;
-  margin: 11rem auto 10rem auto;
+  margin: 6rem auto 10rem auto;
   min-width: 500px;
   height: auto;
 
