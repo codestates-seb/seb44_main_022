@@ -6,6 +6,15 @@ const CartImage = styled.img`
   width: 30px;
   height: 30px;
   margin-bottom: 8px;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+
+  &:active {
+    filter: brightness(0.6);
+  }
 `;
 
 const CartButtonText = styled.span`

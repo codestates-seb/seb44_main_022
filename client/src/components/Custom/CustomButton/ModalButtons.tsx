@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import styled from 'styled-components';
+import { useState, useRef, useEffect } from 'react';
+import styled, { css, keyframes } from 'styled-components';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import saveAsImage from '../CustomContent/UseSaveAsImage';
 import ProductCartAlert from '../../../share/ProductCartAlert';
@@ -7,6 +7,7 @@ import axiosInstance from '../../../api/apis';
 import CloseButton from './CloseButton';
 import CartButton from './CartButton';
 import Popup from './Popup';
+
 const ImageBox = styled.div`
   position: absolute;
   background-color: #fab65d;
@@ -20,10 +21,22 @@ const ImageBox = styled.div`
   border-radius: 20px 0px 0px 0px;
 `;
 
-const Image = styled.img`
+const blink = keyframes`
+  0% {opacity: 1;}
+  50% {opacity: 0.55;}
+  100% {opacity: 1;}
+`;
+
+const Image = styled.img<{ blinking: boolean }>`
   width: 50px;
   height: 50px;
   cursor: pointer;
+
+  ${({ blinking }) =>
+    blinking &&
+    css`
+      animation: ${blink} 1.5s linear infinite;
+    `}
 `;
 const CenteredAlertContainer = styled.div`
   position: fixed;
@@ -56,6 +69,7 @@ const ModalButtons = ({
 }: ModalButtonsProps) => {
   const [showPopup, setShowPopup] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [blinking, setBlinking] = useState(true);
   const popupRef = useRef(null);
 
   const closeAlert = () => {
@@ -63,8 +77,12 @@ const ModalButtons = ({
   };
 
   const handleImageClick = () => {
+    setBlinking(false);
     setShowPopup((prevState) => !prevState);
   };
+  useEffect(() => {
+    setBlinking(true);
+  }, []);
 
   const handleSubmit = async () => {
     const formData = {
@@ -92,7 +110,7 @@ const ModalButtons = ({
     <>
       <CloseButton onClick={onRequestClose} />
       <ImageBox ref={popupRef}>
-        <Image src={modal_cake} alt="Cart" onClick={handleImageClick} />
+        <Image src={modal_cake} alt="Cart" onClick={handleImageClick} blinking={blinking} />
         <CenteredAlertContainer>
           {showAlert && <ProductCartAlert closeModal={closeAlert} />}
         </CenteredAlertContainer>
