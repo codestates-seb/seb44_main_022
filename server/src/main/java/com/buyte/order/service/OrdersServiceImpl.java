@@ -72,6 +72,8 @@ public class OrdersServiceImpl implements OrdersService{
             }
 
             if (totalPrice + 3500 != amount) {
+                log.info("결제금액 이상");
+                log.info("예상 결제금액: {}", totalPrice + 3500);
                 payMentCancle(token, orderInfo.getImpUid(), amount, "결제 금액 오류");
                 return new ResponseEntity<String>("결제 금액 오류, 결제 취소", HttpStatus.BAD_REQUEST);
             }
@@ -93,6 +95,7 @@ public class OrdersServiceImpl implements OrdersService{
             orders.setOrder(totalOrderPrice, orderInfo.getAddress());
             ordersRepository.save(orders);
 
+            log.info("주문 완료");
             return new ResponseEntity<>("주문이 완료되었습니다", HttpStatus.OK);
 
         } catch (Exception e) {
