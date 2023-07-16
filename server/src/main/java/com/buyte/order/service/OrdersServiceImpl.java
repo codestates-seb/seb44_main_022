@@ -99,6 +99,7 @@ public class OrdersServiceImpl implements OrdersService{
             return new ResponseEntity<>("주문이 완료되었습니다", HttpStatus.OK);
 
         } catch (Exception e) {
+            log.info("결제 에러");
             payMentCancle(token, orderInfo.getImpUid(), amount, "결제 에러");
             return new ResponseEntity<String>("결제 에러", HttpStatus.BAD_REQUEST);
         }
