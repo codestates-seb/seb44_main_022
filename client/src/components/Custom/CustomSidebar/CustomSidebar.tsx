@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import custom_icon from '../../../assets/images/img_modal/custom_icon.png';
 import FlavorSection from './FlavorSeciton';
@@ -33,12 +33,9 @@ const CustomIcon = styled.img`
 `;
 
 const CustomSidebar: React.FC = () => {
-  const [draggedImage, setDraggedImage] = useState<string | null>(null);
-
   const handleImageDragStart = (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => {
     event.dataTransfer.setData('text/plain', imageUrl);
     event.dataTransfer.setData('application/my-app-type', 'image');
-    setDraggedImage(imageUrl);
   };
 
   return (
