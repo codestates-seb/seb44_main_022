@@ -19,3 +19,9 @@ export const CartListName = styled.div<{ grow: number; minWidth?: number }>`
         `
       : css`120px`};
 `;
+
+export const CartImage = styled.img`
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+`;

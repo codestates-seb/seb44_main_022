@@ -10,12 +10,8 @@ import {
   section1_2,
   section1_3,
   section1_4,
-  section2,
   section3_1,
   section3_2,
-  section3_3,
-  section3_4,
-  section3_5,
   divimgbox,
   divimgbox1,
   divimgbox2,
@@ -250,7 +246,6 @@ function Main() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const section3Icons = [section3_1, section3_2, section3_3, section3_4, section3_5];
   const sliderItems = [
     { src: section1_1, text: 'BUYTE가 처음이신가요?' },
     { src: section1_2, text: 'BUYTE가 처음이신가요?' },

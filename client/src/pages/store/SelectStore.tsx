@@ -4,7 +4,7 @@ import SelectStoreImg from '../../assets/images/img_select/select_store.png';
 import SelectMenuImg from '../../assets/images/img_select/select_menu.png';
 
 const MainRoot = styled.div`
-  background-color: #fffffc;
+  background-color: var(--background);
   width: 100%;
   display: flex;
   flex-direction: column;

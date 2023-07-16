@@ -3,9 +3,10 @@ import JustAnotherHand from '../assets/fonts/JustAnotherHand-Regular.ttf';
 import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
 import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
 import OpenSans from '../assets/fonts/OpenSans-SemiBold.ttf';
-import { fadeOut } from '../components/UserInput/UserInput.style';
 import BMJUA from '../assets/fonts/BMJUA_ttf.ttf';
+import { fadeOut } from './keyframes';
 import { fadeIn } from './keyframes';
+
 export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Just Another Hand';

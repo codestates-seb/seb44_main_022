@@ -1,22 +1,23 @@
 import styled from 'styled-components';
+
 export const ProductContainer = styled.ul`
   margin-top: 1rem;
   margin-bottom: 7rem;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  grid-gap:12px; 
-  justify-items: center; 
-  align-items: center; 
+  grid-gap: 12px;
+  justify-items: center;
+  align-items: center;
   grid-row-gap: 4rem;
-`
+`;
 export const ProductTitle = styled.p`
-font-size: 165x;
-text-align: center;
-margin-top: 0.4rem;
-font-weight: 800;
-color: var(--dark-gray);
-`
+  font-size: 165x;
+  text-align: center;
+  margin-top: 0.4rem;
+  font-weight: 800;
+  color: var(--dark-gray);
+`;
 
 export const ProductImage = styled.img`
   height: 100%;
@@ -24,7 +25,7 @@ export const ProductImage = styled.img`
   object-fit: cover;
   object-position: center;
   cursor: pointer;
-`
+`;
 export const HoverOverlay = styled.div`
   position: absolute;
   top: 0;

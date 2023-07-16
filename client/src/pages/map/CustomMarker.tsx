@@ -1,11 +1,6 @@
 import { MapMarker, useMap } from 'react-kakao-maps-sdk';
 import MarkerImg from '../../assets/images/marker.png';
-import { PositionData } from '../../assets/interface/Map.interface';
-
-interface MarkerProps {
-  markerPosition: PositionData;
-  handleClick: (position: PositionData) => void;
-}
+import { MarkerProps } from '../../assets/interface/Map.interface';
 
 function CustomMarker({ markerPosition, handleClick }: MarkerProps) {
   const map = useMap();

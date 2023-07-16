@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Routes, useLocation } from 'react-router-dom';
-import { mainRoutes } from './Routes';
+import { RouteList } from './RouteList';
 import Header from './share/Header/Header';
 import Footer from './share/Footer';
-import { postRefreshToken } from './api/authApis';
 import useAxiosInterceptor from './hooks/useAxiosInterceptor';
 
 function App() {
@@ -12,16 +11,15 @@ function App() {
   const [transitionStage, setTransitionStage] = useState('fadeIn');
 
   useEffect(() => {
-    if (location !== displayLocation) {
+    if (location.pathname !== displayLocation.pathname) {
       setTransitionStage('fadeOut');
+
+      setTimeout(() => {
+        setTransitionStage('fadeIn');
+        setDisplayLocation(location);
+      }, 300);
     }
   }, [location]);
-
-  useEffect(() => {
-    postRefreshToken()
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-  }, []);
 
   useAxiosInterceptor();
 
@@ -31,14 +29,8 @@ function App() {
       <div
         className={`${transitionStage}`}
         style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
-        onAnimationEnd={() => {
-          if (transitionStage === 'fadeOut') {
-            setTransitionStage('fadeIn');
-            setDisplayLocation(location);
-          }
-        }}
       >
-        <Routes location={displayLocation}>{mainRoutes}</Routes>
+        <Routes location={displayLocation}>{RouteList}</Routes>
         <Footer />
       </div>
     </>
