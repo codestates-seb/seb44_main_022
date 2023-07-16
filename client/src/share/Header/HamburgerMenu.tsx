@@ -1,8 +1,6 @@
+import { HamburgerMenuProps } from '../../assets/interface/Header.interface';
 import { HamburgerMenuStyle } from './Header.style';
 
-interface HamburgerMenuProps {
-  isOpenMenu: boolean;
-}
 function HamburgerMenu({ isOpenMenu }: HamburgerMenuProps) {
   return (
     <HamburgerMenuStyle isOpenModal={isOpenMenu}>

@@ -37,7 +37,7 @@ export const fadeNone = keyframes`
     visibility: visible;
   }
   100% {
-    transform: translate(-40px, 0);
+    transform: translate(-400px, 0);
     opacity: 0;
     visibility: hidden;
   }

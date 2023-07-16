@@ -11,7 +11,6 @@ function App() {
   const [transitionStage, setTransitionStage] = useState('fadeIn');
 
   useEffect(() => {
-    console.log(location, displayLocation, transitionStage);
     if (location.pathname !== displayLocation.pathname) {
       setTransitionStage('fadeOut');
 

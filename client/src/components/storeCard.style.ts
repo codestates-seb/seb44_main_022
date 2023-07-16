@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-export const StoreMenuInfo = styled.div`  
+
+export const StoreMenuInfo = styled.div`
   position: absolute;
   background-color: rgba(255, 255, 255, 0.3);
   width: 100%;
@@ -32,7 +33,7 @@ export const Cards = styled.li`
       cursor: pointer;
     }
     img {
-      transform: scale(1.05); 
+      transform: scale(1.05);
       transition: all 1s;
     }
   }

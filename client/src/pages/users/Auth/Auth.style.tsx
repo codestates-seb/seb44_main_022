@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import loginImage from '../../../assets/images/loginImage.png';
+
 export const AuthContainer = styled.div`
   display: flex;
   height: 100vh;

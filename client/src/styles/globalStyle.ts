@@ -6,6 +6,7 @@ import OpenSans from '../assets/fonts/OpenSans-SemiBold.ttf';
 import BMJUA from '../assets/fonts/BMJUA_ttf.ttf';
 import { fadeOut } from './keyframes';
 import { fadeIn } from './keyframes';
+
 export const GlobalStyle = createGlobalStyle`
 @font-face {
   font-family: 'Just Another Hand';

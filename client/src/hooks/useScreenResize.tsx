@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 const useScreenResize = (handleResize: () => void) => {
   useEffect(() => {
+    handleResize();
     window.addEventListener('resize', handleResize);
 
     return () => {

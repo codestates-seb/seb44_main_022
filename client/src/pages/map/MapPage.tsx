@@ -4,13 +4,15 @@ import useCurrentLocation from '../../hooks/useCurrentLocation';
 import { UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
 import { PositionData } from '../../assets/interface/Map.interface';
 import axiosInstance from '../../api/apis';
+import useScreenResize from '../../hooks/useScreenResize';
 import MapModal from './MapModal';
 import CustomMarker from './CustomMarker';
-import { MapContainer } from './Map.style';
+import { MapContainer, MapPageContainer } from './Map.style';
 
 function MapPage() {
   const { lat, lng } = useCurrentLocation();
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [limitSize, setLimitSize] = useState(false);
   const [clickedId, setClickedId] = useState(0);
   const [isClose, setIsClose] = useState(true);
   const [storeMapList, setStoreMapList] = useState([]);
@@ -37,26 +39,20 @@ function MapPage() {
     setIsClose(false);
   };
 
+  const handleResize = () => {
+    setLimitSize(window.innerWidth > 1000);
+  };
+
+  useScreenResize(handleResize);
+
   useEffect(() => {
     axiosInstance.get('/store/map').then((res) => {
       setStoreMapList(res.data);
-      console.log(res.data);
     });
   }, []);
 
   return (
-    <div
-      style={{
-        marginTop: '80px',
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'column',
-        width: '100%',
-        height: '120%',
-        paddingTop: '2rem',
-      }}
-    >
+    <MapPageContainer>
       <div
         style={{
           width: '80%',
@@ -81,16 +77,17 @@ function MapPage() {
               <CustomMarker key={idx} markerPosition={position} handleClick={handleClickMarker} />
             ))}
 
-          {isOpenModal && clickedId !== 0 && (
+          {isOpenModal && limitSize && clickedId !== 0 && (
             <MapModal
               position={storeMapList[clickedId - 1]}
               isClose={isClose}
+              isOpenModal={limitSize}
               handleCloseModal={handleCloseModal}
             />
           )}
         </Map>
       </MapContainer>
-    </div>
+    </MapPageContainer>
   );
 }
 

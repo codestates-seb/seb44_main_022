@@ -17,5 +17,11 @@ export interface PositionData {
 export interface MapModalProps {
   position: PositionData;
   isClose: boolean;
+  isOpenModal: boolean;
   handleCloseModal: () => void;
+}
+
+export interface MarkerProps {
+  markerPosition: PositionData;
+  handleClick: (position: PositionData) => void;
 }
