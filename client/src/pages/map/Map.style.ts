@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 import { BsCircle } from 'react-icons/bs';
-import { fadeIn, fadeNone, fadeOut, fadeUpNone } from '../../styles/keyframes';
+import { fadeIn, fadeOut, fadeUpNone } from '../../styles/keyframes';
 
+export const MapPageContainer = styled.div`
+  margin-top: 80px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 120%;
+  padding-top: 2rem;
+`;
 export const MapContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -17,7 +27,7 @@ export const MarkerModal = styled.div<{ isClose: boolean }>`
   z-index: 10;
   width: 330px;
   height: 500px;
-  background-color: rgb(255, 255, 255);
+  background-color: var(--background);
   border-radius: 15px;
   border: 1px solid var(--normal-gray);
   top: 25%;
@@ -27,9 +37,7 @@ export const MarkerModal = styled.div<{ isClose: boolean }>`
   justify-content: space-between;
   animation: ${({ isClose }) => (isClose ? fadeOut : fadeIn)} 0.3s forwards;
   box-shadow: 1px 1px 5px 1px var(--light-gray);
-  @media screen and (max-width: 1000px) {
-    animation: ${fadeNone} 0.3s forwards;
-  }
+
   @media screen and (max-height: 950px) {
     animation: ${fadeUpNone} 0.3s forwards;
   }

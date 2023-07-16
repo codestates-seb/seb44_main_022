@@ -1,3 +1,7 @@
+export interface CartReducerState {
+  idList: number[];
+}
+
 export interface CartItemTypes {
   cartId: number;
   productImagePath: string;

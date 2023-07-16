@@ -25,67 +25,79 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
   };
 
   return (
-    <MarkerModal isClose={isClose}>
-      <ExitMapModalButton onClick={handleCloseModal}>BUYTE</ExitMapModalButton>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <MapModalTitleContainer>
-          <img
-            src={position.storeImage}
-            style={{ width: '2.75rem', height: '2.75rem', borderRadius: '50%' }}
-          />
-          <MapModalStoreInfoContainer>
+    <>
+      <MarkerModal isClose={isClose}>
+        <ExitMapModalButton onClick={handleCloseModal}>BUYTE</ExitMapModalButton>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+          <MapModalTitleContainer>
+            <img
+              src={position.storeImage}
+              style={{ width: '2.75rem', height: '2.75rem', borderRadius: '50%' }}
+            />
+            <MapModalStoreInfoContainer>
+              <div
+                style={{
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                }}
+              >
+                {position.storeName}
+              </div>
+              <MapModalAddressContainer>
+                <FaSearch style={{ paddingLeft: '2px', paddingRight: '5px' }} />
+                {position.storeAddress}
+              </MapModalAddressContainer>
+            </MapModalStoreInfoContainer>
+          </MapModalTitleContainer>
+          <div style={{ overflow: 'hidden', width: '328px' }}>
             <div
               style={{
-                fontSize: '14px',
-                fontWeight: 'bold',
+                display: 'flex',
+                transform: `translateX(-${currentNumber * 327.8}px)`,
+                transition: '0.3s',
               }}
             >
-              {position.storeName}
+              {position.productPreferenceList.map((product) => (
+                <img
+                  src={product.productImage}
+                  style={{
+                    width: '328px',
+                    height: '296px',
+                    padding: '1rem 2rem',
+                    objectFit: 'fill',
+                  }}
+                  alt="추천 제품 사진"
+                  key={product.productId}
+                />
+              ))}
             </div>
-            <MapModalAddressContainer>
-              <FaSearch style={{ paddingLeft: '2px', paddingRight: '5px' }} />
-              {position.storeAddress}
-            </MapModalAddressContainer>
-          </MapModalStoreInfoContainer>
-        </MapModalTitleContainer>
-        <div style={{ overflow: 'hidden' }}>
+          </div>
           <div
             style={{
               display: 'flex',
-              transform: `translateX(-${currentNumber * 327.8}px)`,
-              transition: '0.3s',
+              width: '100%',
+              justifyContent: 'center',
+              columnGap: '1rem',
             }}
           >
-            {position.productPreferenceList.map((product) => (
-              <img
-                src={product.productImage}
-                style={{ width: '100%', padding: '1rem 2rem' }}
-                alt="추천 제품 사진"
-                key={product.productId}
-              />
+            {IMAGE_NUMBER_BUTTON.map((number) => (
+              <ImageCarouselButton
+                imageNumber={number}
+                currentNumber={currentNumber}
+                onClick={() => setCurrentNumber(number)}
+                key={number}
+              >
+                <BsCircle />
+              </ImageCarouselButton>
             ))}
           </div>
-        </div>
-        <div
-          style={{ display: 'flex', width: '100%', justifyContent: 'center', columnGap: '1rem' }}
-        >
-          {IMAGE_NUMBER_BUTTON.map((number) => (
-            <ImageCarouselButton
-              imageNumber={number}
-              currentNumber={currentNumber}
-              onClick={() => setCurrentNumber(number)}
-              key={number}
-            >
-              <BsCircle />
-            </ImageCarouselButton>
-          ))}
-        </div>
 
-        <div style={{ padding: '1.5rem', fontSize: '14px', lineHeight: '1.25' }}>
-          {sliceText(position.storeIntroduction)}
+          <div style={{ padding: '1.5rem', fontSize: '14px', lineHeight: '1.25' }}>
+            {sliceText(position.storeIntroduction)}
+          </div>
         </div>
-      </div>
-    </MarkerModal>
+      </MarkerModal>
+    </>
   );
 }
 
