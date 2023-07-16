@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @Slf4j
@@ -108,13 +109,13 @@ public class GlobalExceptionAdvice {
         return response;
     }
 
-    @ExceptionHandler(MissingServletRequestPartException.class)
+    @ExceptionHandler(MultipartException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ErrorResponse handleMissingServletRequestPartException(MissingServletRequestPartException e) {
-        log.error("# Missing Servlet Request Part Exception", e);
+    public ErrorResponse handleMultipartException(MultipartException e) {
+        log.error("# Multipart Exception", e);
 
-        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST, e.getMessage());
+        final ErrorResponse response = ErrorResponse.of(HttpStatus.BAD_REQUEST, "Invalid multipart request");
 
         return response;
     }
