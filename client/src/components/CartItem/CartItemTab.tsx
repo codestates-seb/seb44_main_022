@@ -1,8 +1,10 @@
 import { MdCheckBox } from 'react-icons/md';
 import { CartItemTabProps } from '../../assets/interface/Cart.interface';
 import { CartListName } from './CartItem.style';
-
-function CartItemTab(path: CartItemTabProps) {
+interface ModifiedCartItemTabProps extends CartItemTabProps {
+  hideCheckBox?: boolean;
+}
+function CartItemTab({ hideCheckBox, ...restProps }: ModifiedCartItemTabProps){
   return (
     <div
       style={{
@@ -28,13 +30,15 @@ function CartItemTab(path: CartItemTabProps) {
       <CartListName grow={15} minWidth={110} style={{ fontWeight: 'bold' }}>
         주문금액
       </CartListName>
-      <CartListName
-        grow={5}
-        minWidth={40}
-        style={{ justifyContent: 'flex-start', fontSize: '18px', padding: '0.5rem' }}
-      >
-        {path && <MdCheckBox />}
-      </CartListName>
+      {!hideCheckBox && (
+        <CartListName
+          grow={5}
+          minWidth={40}
+          style={{ justifyContent: 'flex-start', fontSize: '18px', padding: '0.5rem' }}
+        >
+          {restProps && restProps.path && <MdCheckBox />}
+        </CartListName>
+      )}
     </div>
   );
 }
