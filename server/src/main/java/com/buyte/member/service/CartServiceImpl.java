@@ -50,11 +50,11 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void addProductToCart(Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         Member member = memberRepository.findById(authenticatedMemberId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
         Cart cart = cartRepository.findByMemberAndProduct(member, product);
         if (cart != null) {
             cart.setProductCount(cart.getProductCount() + 1);
@@ -68,15 +68,15 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public void addCustomProductToCart(MultipartFile file, Long productId) throws IOException {
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        Member member = memberRepository.findById(authenticatedMemberId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.PRODUCT_NOT_FOUND));
         if(file.isEmpty()) {
             throw new IllegalArgumentException("파일이 존재하지 않습니다.");
         }
         String storedFileName = s3Service.upload(file, "customProduct");
-        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
-        Member member = memberRepository.findById(authenticatedMemberId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Cart cart = new Cart(product, storedFileName,member);
         cartRepository.save(cart);
     }
@@ -102,13 +102,13 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public CartResDto.CartAllInfo paymentSelectedProduct(CartReqDto.CartIds cartIds) {
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         List<Long> selectedCartIds = cartIds.getCartIds();
 
         if (selectedCartIds.isEmpty()) {
             throw new IllegalArgumentException("선택된 카트가 없습니다.");
         }
 
-        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         List<Cart> cartList = cartRepository.findAllByCartIdInAndMemberMemberId(selectedCartIds, authenticatedMemberId);
 
         if (cartList.size() != selectedCartIds.size()) {
