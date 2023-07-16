@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +33,8 @@ public class S3Service {
     }
 
     private String upload(File uploadFile, String dirName) {
-        String fileName = dirName + "/" + uploadFile.getName();
+        String randomName = UUID.randomUUID().toString();
+        String fileName = dirName + "/" + randomName;
         String uploadImageUrl = putS3(uploadFile, fileName);
 
         removeNewFile(uploadFile);
