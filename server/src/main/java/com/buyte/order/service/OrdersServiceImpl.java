@@ -162,11 +162,10 @@ public class OrdersServiceImpl implements OrdersService{
     }
 
     public void payMentCancle(String access_token, String imp_uid, int amount, String reason) throws IOException  {
-        System.out.println("결제 취소");
 
-        System.out.println(access_token);
-
-        System.out.println(imp_uid);
+        log.info("결제 취소");
+        log.info("access_token: {}",access_token);
+        log.info("imp_uid: {}", imp_uid);
 
         HttpsURLConnection conn = null;
         URL url = new URL("https://api.iamport.kr/payments/cancel");
