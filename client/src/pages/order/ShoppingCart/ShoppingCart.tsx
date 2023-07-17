@@ -72,7 +72,7 @@ function ShoppingCart() {
             ))}
           </div>
         </CartCategoryName>
-        <CartItemTab hideCheckBox={false} path="cart" />
+        <CartItemTab path="cart" />
         {isLoading ? (
           <div style={{ backgroundImage: `url(${loading})` }}>로딩중</div>
         ) : cartList !== undefined && cartList.length > 0 ? (

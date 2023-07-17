@@ -26,7 +26,7 @@ export interface CartCategoryNameList {
 }
 
 export interface CartItemTabProps {
-  path: string;
+  path?: string;
 }
 
 export interface CartCategoryListProps {
