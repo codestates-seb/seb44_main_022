@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import custom_icon from '../../../assets/images/img_modal/custom_icon.png';

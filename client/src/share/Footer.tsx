@@ -12,7 +12,6 @@ const FooterContainer = styled.div`
   align-items: center;
   background-color: var(--purple);
   width: 100%;
-  height: 200px;
   color: var(--color-white);
   font-family: var(--font-noto-sans-kr);
   margin-top: auto;
@@ -53,12 +52,12 @@ function Footer() {
   const [animation, setAnimation] = useState(initialAnimationState);
 
   useEffect(() => {
-    if (location.pathname === '/auth' && animation === 'fadeIn') {
+    if ((location.pathname === '/auth' || location.pathname === '/') && animation === 'fadeIn') {
       setTimeout(() => setAnimation('none'), 300);
       setAnimation('fadeOut');
       return;
     }
-    if (location.pathname !== '/auth') {
+    if (location.pathname !== '/auth' && location.pathname !== '/') {
       setTimeout(() => setAnimation('fadeIn'), 300);
       return;
     }
