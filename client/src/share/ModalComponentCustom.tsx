@@ -93,7 +93,7 @@ function ModalComponent({ isOpen, onRequestClose, contentLabel }: ModalProps) {
         >
           <CustomContainer>
             <Title>BUYTE</Title>
-            <CustomSidebar />
+            <CustomSidebar store_id={storeId} product_id={productId} />
             <CustomContent
               canvasRef={canvasRef}
               updateImages={

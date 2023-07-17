@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Routes, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 import { RouteList } from './RouteList';
 import Header from './share/Header/Header';
 import Footer from './share/Footer';
 import useAxiosInterceptor from './hooks/useAxiosInterceptor';
-
+const MainContent = styled.div`
+  flex-grow: 1;
+`;
 function App() {
   const location = useLocation();
   const [displayLocation, setDisplayLocation] = useState(location);
@@ -28,9 +31,11 @@ function App() {
       <Header />
       <div
         className={`${transitionStage}`}
-        style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
+        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
       >
-        <Routes location={displayLocation}>{RouteList}</Routes>
+        <MainContent>
+          <Routes location={displayLocation}>{RouteList}</Routes>
+        </MainContent>
         <Footer />
       </div>
     </>
