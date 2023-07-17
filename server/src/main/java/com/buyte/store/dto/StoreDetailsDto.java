@@ -13,6 +13,8 @@ public class StoreDetailsDto {
     private long memberId;
     private String storeName;
     private String storeAddress;
+    private double storeLatitude;
+    private double storeLongitude;
     private String storeIntroduction;
     private String storeImage;
     private String storePhoneNumber;
