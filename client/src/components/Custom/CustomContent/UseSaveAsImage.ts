@@ -37,6 +37,7 @@ const saveAsImage = async (
       const img = new Image();
       img.src = imageData.imageUrl;
       img.onload = () => {
+        ctx.drawImage(img, imageData.x, imageData.y, imageData.width, imageData.height);
         resolve();
       };
     });

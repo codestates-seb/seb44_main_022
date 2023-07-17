@@ -1,129 +1,43 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
-const Item1 = styled.div`
-  position: absolute;
-  line-height: 1.95rem;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  width: 16.62rem;
-  height: 1.7rem;
-  color: var(--white);
-  font-size: 15px;
-`;
-const Item2 = styled.div`
-  position: absolute;
-  top: 1.125rem;
-  left: 0;
-  font-size: 12px;
-  line-height: 1.125rem;
-  font-weight: 300;
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  width: 15.625rem;
-  height: 1.125rem;
-`;
-
-const CopyrightBuyteAll = styled.div`
-  position: absolute;
-  top: 48px;
-  left: 0px;
-  color: var(--white);
-  line-height: 18px;
-  font-weight: 300;
-  display: flex;
-  align-items: center;
-  width: 226.2px;
-  height: 17px;
-  font-size: 13px;
-`;
-const Item3 = styled.div`
-  position: absolute;
-  top: -31.5px;
-  left: 1px;
-  line-height: 19.5px;
-  color: var(--white);
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  width: 244px;
-  height: 19px;
-  font-size: 10px;
-`;
-const DivfooterText2 = styled.div`
-  position: absolute;
-  top: 129.5px;
-  left: 224px;
-  width: 1476.44px;
-  height: 66px;
-  display: flex;
-`;
-const Buyte = styled.div`
-  position: absolute;
-  top: 34px;
-  left: 20px;
-  font-size: 25px;
-  color: var(--white);
-  line-height: 60px;
-  font-family: 'Indie Flower', cursive;
-  display: flex;
-  align-items: center;
-  width: 203px;
-  height: 37px;
-`;
-const Item4 = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 10px;
-  color: var(--white);
-  line-height: 19.5px;
-  font-weight: 500;
-  font-size: 13px;
-`;
-const Item5 = styled.b`
-  position: absolute;
-  top: 31.5px;
-  left: 10px;
-  color: var(--white);
-  line-height: 25.5px;
-  font-size: 13px;
-`;
-const Item6 = styled.div`
-  position: absolute;
-  top: 65px;
-  left: 10px;
-  line-height: 18px;
-  color: var(--white);
-  font-weight: 300;
-`;
-const Divcontainer2 = styled.div`
-  position: absolute;
-  top: 98px;
-  left: 20px;
-  width: 153.56px;
-  font-size: 12px;
-  height: 101px;
-`;
-const Divcontainer = styled.div`
-  position: sticky;
-  bottom: 0;
-  width: 100%;
-  height: 200px;
-  background-color: var(--purple);
-  color: var(--color-white);
-  font-family: var(--font-noto-sans-kr);
-`;
-
+import github from '../assets/images/github.png';
+import notion from '../assets/images/notion.png';
+import youtube from '../assets/images/youtube.png';
 const FooterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: var(--purple);
   width: 100%;
   height: 200px;
   color: var(--color-white);
   font-family: var(--font-noto-sans-kr);
   margin-top: auto;
+`;
+const FooterInfoContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 40%;
+  margin-bottom: 8px;
+`;
+const InfoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 70px;
+`;
+
+const RightInfoBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+`;
+const ImageContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 12%;
 `;
 
 function Footer() {
@@ -150,20 +64,58 @@ function Footer() {
 
   return (
     <FooterContainer className={`${animation}`}>
-      <Divcontainer>
-        <DivfooterText2>
-          <Item1>22팀 | 메인프로젝트 화이팅</Item1>
-          <Item2>대표자: 김준표 | 그 외 5 인 | 🥲🥲🥲</Item2>
-          <CopyrightBuyteAll>Copyright© buyte. All Rights Reserved.</CopyrightBuyteAll>
-          <Item3>이용약관 | 개인정보처리방침 | 1:1 문의</Item3>
-        </DivfooterText2>
-        <Buyte>BUYTE</Buyte>
-        <Divcontainer2>
-          <Item4>(주) BUYTE</Item4>
-          <Item5>010-1234-1234</Item5>
-          <Item6>서비스 시간: 09:00 ~ 18:00</Item6>
-        </Divcontainer2>
-      </Divcontainer>
+      <div
+        style={{
+          fontSize: '41px',
+          color: 'var(--white)',
+          lineHeight: '60px',
+          fontFamily: "'Just Another Hand', cursive",
+          marginBottom: '3px',
+          marginTop: '7px',
+          fontWeight: 'bold',
+        }}
+      >
+        BUYTE
+      </div>
+      <FooterInfoContainer>
+        <InfoBlock>
+          <div
+            style={{ color: 'white', marginBottom: '10px', fontWeight: 'bold', fontSize: '19px' }}
+          >
+            (주) BUYTE
+          </div>
+          <div style={{ color: 'white', fontSize: '15px' }}>010-1234-1234</div>
+        </InfoBlock>
+        <RightInfoBlock>
+          <div style={{ color: 'white', marginBottom: '3px', fontSize: '14px' }}>
+            22팀 | BUYTE 팀 메인프로젝트{' '}
+          </div>
+          <div style={{ color: 'white', marginBottom: '3px', fontSize: '14px' }}>
+            FE : 김준표 | 민정호 | 양효정{' '}
+          </div>
+          <div style={{ color: 'white', fontSize: '14px' }}>BE : 김현우 | 오숙현 | 이준기</div>
+        </RightInfoBlock>
+      </FooterInfoContainer>
+
+      <ImageContainer>
+        <a href="https://github.com/codestates-seb/seb44_main_022">
+          <img
+            src={github}
+            alt="GitHub"
+            style={{ width: '32px', height: '32px', cursor: 'pointer' }}
+          />
+        </a>
+        <img
+          src={notion}
+          alt="Notion"
+          style={{ width: '32px', height: '32px', cursor: 'pointer' }}
+        />
+        <img
+          src={youtube}
+          alt="YouTube"
+          style={{ width: '38px', height: '38px', cursor: 'pointer' }}
+        />
+      </ImageContainer>
     </FooterContainer>
   );
 }
