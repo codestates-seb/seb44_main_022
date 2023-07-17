@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+
 interface EditableNicknameProps {
     nickname: string;
     onNicknameChange: (newNickname: string) => void;

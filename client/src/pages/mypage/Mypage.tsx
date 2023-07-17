@@ -60,22 +60,20 @@ useEffect(() => {
     fetchData();
   }, []);
 
-// const handleSubmit = async () => {
-// const formData = {
-//   storeId: storeId,
-//   productId: productId,
-// };
-// try {
-//   const url= `/store/${storeId}/${productId}`;
-//   await axiosInstance.post(url, formData);
-//   setProductCartAlertVisible(true);
-//   console.log('POST 요청 성공');
-// } catch (error) {
-//   console.error('POST 요청 실패:', error);
-// }
-// };
-
-
+  const handleNicknameChange = async (newNickname: string) => {
+    const formData = {
+      memberName: newNickname
+    }
+    if (newNickname.trim() !== '') {
+      try {
+        const response = await axiosInstance.patch('/members', formData);
+        setNickname(response.data.memberName);
+        console.log("patch성공!")
+      } catch (error) {
+        console.error('Error updating nickname:', error);
+      }
+    }
+  };
 
   const data: Data = {
     orderdata: [
@@ -144,7 +142,7 @@ useEffect(() => {
        {editMode ? (
         <EditableNickname
           nickname={nickname}
-          onNicknameChange={setNickname}
+          onNicknameChange={handleNicknameChange}
           onEditModeToggle={() => setEditMode(!editMode)}
         />
       ) : (
