@@ -136,28 +136,30 @@ useEffect(() => {
   return <div style={{ marginTop: '160px', display: 'flex', justifyContent:'center' }}>
     <MyPageWrapper>
       <p style={{fontWeight:'800', color: 'var(--dark-gray)', textAlign:'center', marginBottom:'30px', fontSize:"18px"}}>안녕하세요, <span style={{color: 'var(--purple)'}}>{nickname}</span>님!</p>
-      <MyInfoSection>
-        <img src="../../../src/assets/images/profile.png" style={{width: '200px', paddingRight:'10px'}}/>
-        <MyInfoDetail>
-       {editMode ? (
-        <EditableNickname
-          nickname={nickname}
-          onNicknameChange={handleNicknameChange}
-          onEditModeToggle={() => setEditMode(!editMode)}
-        />
-      ) : (
-        <>
-          <h3>{nickname}</h3>
-          <span
-            style={{ fontSize: '14px', color: 'var(--purple)', cursor: 'pointer' }}
-            onClick={() => setEditMode(!editMode)}
-          >
-            회원 정보 수정
-          </span>
-        </>
-      )}
-    </MyInfoDetail>
-      </MyInfoSection>   
+      <section style={{borderTop:"2px solid var(--light-purple)", margin:"20px", padding:"30px"}}>
+        <MyInfoSection>
+          <img src="../../../src/assets/images/profile.png" style={{width: '200px', paddingRight:'10px'}}/>
+          <MyInfoDetail>
+         {editMode ? (
+          <EditableNickname
+            nickname={nickname}
+            onNicknameChange={handleNicknameChange}
+            onEditModeToggle={() => setEditMode(!editMode)}
+          />
+        ) : (
+          <>
+            <h3>{nickname}</h3>
+            <span
+              style={{ fontSize: '14px', color: 'var(--purple)', cursor: 'pointer' }}
+              onClick={() => setEditMode(!editMode)}
+            >
+              회원 정보 수정
+            </span>
+          </>
+        )}
+            </MyInfoDetail>
+        </MyInfoSection>
+      </section>
       <MyOrderSection>
         <h2 style={{fontWeight:'800', fontSize:'18px', color:'var(--light-gray)', marginBottom:'10px', marginLeft: '20px'}}>나의 주문</h2>
        <MyOrderLists>
@@ -187,7 +189,7 @@ const MyPageWrapper = styled.section`
 const MyInfoSection = styled.section`
   width: 100%;
   display: flex;
-  padding: 40px 30px; 
+  padding: 1rem; 
   /* flex-direction: column;
   :after{
     content:'';
@@ -197,21 +199,22 @@ const MyInfoSection = styled.section`
   } */
 `
 const MyInfoDetail = styled.section`
-  margin-left: 30px;
-  margin-top: 40px;
+  margin-left: 2rem;
+  margin-top: 3rem;
   h3 {
     color: var(--light-gray);
-    margin-bottom: 30px;
+    margin-bottom: 2rem;
     font-size: 18px;
     font-weight: 800;
   }
- 
 `
 const MyOrderSection= styled.section`
-  padding: 20px;
+  padding: 3rem 1rem;
+  border: 1px solid var(--light-purple);
+  border-radius: 10px;
 `
 const MyOrderLists= styled.section`
-padding: 20px;
+padding: 1rem;
 display: flex;
 flex-direction: column;
 justify-content: center;

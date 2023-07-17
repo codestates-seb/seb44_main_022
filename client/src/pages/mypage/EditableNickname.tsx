@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { AUTH_FAILED_MESSAGE } from '../../assets/constantValue/constantValue';
 
 interface EditableNicknameProps {
     nickname: string;
@@ -22,7 +23,7 @@ interface EditableNicknameProps {
     
   return (
     <div>
-      <EditInput type="text" value={nickname} onChange={handleInputChange} />
+      <EditInput type="text" value={inputValue} onChange={handleInputChange}/>
       <EditButton onClick={handleSaveClick}>저장</EditButton>
     </div>
   );
