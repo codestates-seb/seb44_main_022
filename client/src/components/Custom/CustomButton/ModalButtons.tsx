@@ -84,25 +84,10 @@ const ModalButtons = ({
     setBlinking(true);
   }, []);
 
-  const handleSubmit = async () => {
-    const formData = {
-      storeId: 1,
-      productId: 1,
-    };
-    try {
-      const url = `/store/${storeId}/custom/${productId}`;
-      await axiosInstance.post(url, formData);
-      setShowAlert(true);
-      console.log('POST 요청 성공');
-    } catch (error) {
-      console.error('POST 요청 실패:', error);
-    }
-  };
-
   const onSaveImage = async () => {
     const result = await saveAsImage(images, canvasRef, storeId, productId);
     if (result) {
-      handleSubmit();
+      setShowAlert(true);
     }
   };
 

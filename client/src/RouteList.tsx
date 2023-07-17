@@ -10,22 +10,75 @@ import SelectStore from './pages/store/SelectStore';
 import OrderComplete from './pages/order/OrderComplete/OrderComplete';
 import StoreDetail from './pages/store/StoreDetail';
 import PrivateRoute from './PrivateRoute';
+import NotFound from './pages/notfound/NotFound';
+
+export const normalRoutes = [
+  {
+    path: '/',
+    element: <Main />,
+  },
+  {
+    path: '/select',
+    element: <SelectStore />,
+  },
+  {
+    path: '/map',
+    element: <Map />,
+  },
+  {
+    path: '/store',
+    element: <StoreList />,
+  },
+  {
+    path: '/store/:storeId',
+    element: <StoreDetail />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+];
+
+export const privateDisabledRoutes = [
+  {
+    path: '/auth',
+    element: <Auth />,
+  },
+];
+
+export const privateEnabledRoutes = [
+  {
+    path: '/payment',
+    element: <Payment />,
+  },
+  {
+    path: '/complete',
+    element: <OrderComplete />,
+  },
+  {
+    path: '/mypage',
+    element: <Mypage />,
+  },
+  {
+    path: '/cart',
+    element: <ShoppingCart />,
+  },
+];
 
 export const RouteList = (
   <>
-    <Route path="/" element={<Main />} />
-    <Route path="/select" element={<SelectStore />} />
-    <Route path="/map" element={<Map />} />
-    <Route path="/store" element={<StoreList />} />
-    <Route path="/store/:storeId" element={<StoreDetail />} />
+    {normalRoutes.map((route, index) => (
+      <Route key={index} path={route.path} element={route.element} />
+    ))}
     <Route element={<PrivateRoute isAuth={false} />}>
-      <Route path="/auth" element={<Auth />} />
+      {privateDisabledRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
     </Route>
     <Route element={<PrivateRoute isAuth={true} />}>
-      <Route path="/payment" element={<Payment />} />
-      <Route path="/complete" element={<OrderComplete />} />
-      <Route path="/mypage" element={<Mypage />} />
-      <Route path="/cart" element={<ShoppingCart />} />
+      {privateEnabledRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
     </Route>
   </>
 );

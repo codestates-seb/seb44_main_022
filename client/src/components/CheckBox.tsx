@@ -19,9 +19,12 @@ function CheckBox({ items, initialChecked }: CartCheckProps) {
   return (
     <>
       {isChecked ? (
-        <MdCheckBox onClick={() => setIsChecked(!isChecked)} />
+        <MdCheckBox style={{ cursor: 'pointer' }} onClick={() => setIsChecked(!isChecked)} />
       ) : (
-        <MdCheckBoxOutlineBlank onClick={() => setIsChecked(!isChecked)} />
+        <MdCheckBoxOutlineBlank
+          style={{ cursor: 'pointer' }}
+          onClick={() => setIsChecked(!isChecked)}
+        />
       )}
     </>
   );

@@ -19,6 +19,7 @@ import {
   divimgbox4,
   heading,
 } from '../../assets/images/img_main/img_main';
+import ChatButton from './ChatButton';
 
 const settings = {
   dots: true,
@@ -261,6 +262,7 @@ function Main() {
   ];
   return (
     <MainRoot>
+      <ChatButton />
       <Body>
         <Section1>
           <Slider {...settings}>

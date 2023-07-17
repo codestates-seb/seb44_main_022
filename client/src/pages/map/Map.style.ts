@@ -48,7 +48,10 @@ export const ImageCarouselButton = styled(BsCircle)<{ imageNumber: number; curre
   color: var(--purple);
   border-radius: 50%;
   ${({ imageNumber, currentNumber }) =>
-    imageNumber === currentNumber && 'background-color: var(--purple)'};
+    imageNumber === currentNumber ? 'background-color: var(--purple)' : 'cursor: pointer'};
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 export const ExitMapModalButton = styled.div`
@@ -58,6 +61,13 @@ export const ExitMapModalButton = styled.div`
   top: 2%;
   font-size: 1.5rem;
   font-family: Just Another Hand, cursive;
+  transition: 0.3s;
+  color: var(--dark-gray);
+
+  &:hover {
+    transform: scale(110%, 110%);
+    color: var(--purple);
+  }
 `;
 
 export const MapModalTitleContainer = styled.div`
@@ -80,4 +90,29 @@ export const MapModalAddressContainer = styled.div`
   font-weight: normal;
   color: gray;
   padding-top: 6px;
+`;
+
+export const MapModalStoreImg = styled.img`
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.2, 1.2);
+    opacity: 0.7;
+  }
+`;
+
+export const MapModalStoreName = styled.div`
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--dark-gray);
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--light-gray);
+  }
 `;

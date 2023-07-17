@@ -12,11 +12,16 @@ export const InputBox = styled.input<{ valid?: boolean }>`
   background-color: var(--gray);
   margin: 0.2rem 0;
   padding: 1rem 0 1rem 2.5rem;
-  color: var(--dark-gray);
+  color: var(--light-black);
+  transition: 0.3s;
   ::placeholder {
-    color: var(--bright-black);
+    color: var(--bright-gray);
   }
   ${({ valid }) => valid && 'border-color: red'}
+
+  &:focus {
+    background-color: var(--normal-gray);
+  }
 `;
 
 export const Icons = styled.div`

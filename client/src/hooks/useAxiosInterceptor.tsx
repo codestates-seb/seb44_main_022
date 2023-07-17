@@ -50,9 +50,12 @@ const useAxiosInterceptor = () => {
           break;
         }
         case 'Unauthorized': {
+          if (config.url === '/login') {
+            break;
+          }
           alert('로그인 후 이용이 가능합니다.');
           navigate('/auth');
-          throw err;
+          break;
         }
         default:
           break;

@@ -21,6 +21,8 @@ export const SmallLinkText = styled.div`
   display: flex;
   height: 2rem;
   font-size: 15px;
+  color: #6d4924;
+  transition: 0.3s;
 `;
 
 export const Icon = styled(Link)`
@@ -31,6 +33,20 @@ export const Icon = styled(Link)`
   align-items: center;
   width: 80px;
   min-width: 60px;
+
+  &:hover > div {
+    transform: scale(110%, 110%);
+    color: var(--purple);
+    cursor: pointer;
+  }
+
+  & > img {
+    transition: 0.3s;
+  }
+
+  &:hover > img {
+    transform: scale(110%, 110%);
+  }
 `;
 
 export const IconDiv = styled.div`
@@ -41,6 +57,20 @@ export const IconDiv = styled.div`
   align-items: center;
   width: 80px;
   min-width: 60px;
+
+  &:hover > div {
+    transform: scale(110%, 110%);
+    color: var(--purple);
+    cursor: pointer;
+  }
+
+  & > img {
+    transition: 0.3s;
+  }
+
+  &:hover > img {
+    transform: scale(110%, 110%);
+  }
 `;
 
 export const HeaderContainer = styled.div`
