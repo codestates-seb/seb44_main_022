@@ -52,7 +52,6 @@ function ModalComponentDetail({
           console.error('Error fetching store data:', error);
         }
       };
-
     useEffect(() => {
         fetchData();
       }, []);
