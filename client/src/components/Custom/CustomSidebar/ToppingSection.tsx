@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 
 const SectionContainer = styled.div`
   position: relative;
@@ -21,7 +20,7 @@ const SectionTitle = styled.p`
 
 const ContentItem = styled.div`
   width: 90%;
-  height: 80px;
+  height: 100px;
   background-color: #fff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
@@ -34,7 +33,6 @@ const ContentImage = styled.img`
   width: 50px;
   height: 50px;
   margin-right: 10px;
-  border: 1px solid var(--light-gray);
   border-radius: 4px;
 `;
 
@@ -45,12 +43,18 @@ const ContentImageContainer = styled.div`
   margin-top: 8px;
   height: 70px;
 `;
+interface Topping {
+  ingredientName: string;
+  ingredientImage: string;
+  ingredientPrice: number;
+}
 
-type ToppingSectionProps = {
+interface ToppingSectionProps {
   onImageDragStart: (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => void;
-};
+  toppingIngredientList: Topping[];
+}
 
-function ToppingSection({ onImageDragStart }: ToppingSectionProps) {
+function ToppingSection({ onImageDragStart, toppingIngredientList }: ToppingSectionProps) {
   const handleImageDragStart = (event: React.DragEvent<HTMLImageElement>) => {
     event.dataTransfer.setData('text/plain', '');
     const imageUrl = event.currentTarget.getAttribute('src');
@@ -64,12 +68,15 @@ function ToppingSection({ onImageDragStart }: ToppingSectionProps) {
       <SectionTitle>토핑</SectionTitle>
       <ContentItem>
         <ContentImageContainer>
-          <ContentImage
-            src={modal_cake}
-            alt="Cake Icon"
-            draggable
-            onDragStart={handleImageDragStart}
-          />
+          {toppingIngredientList.map((topping, index) => (
+            <ContentImage
+              key={index}
+              src={topping.ingredientImage}
+              alt={topping.ingredientName}
+              draggable
+              onDragStart={handleImageDragStart}
+            />
+          ))}
         </ContentImageContainer>
       </ContentItem>
     </SectionContainer>

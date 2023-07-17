@@ -3,7 +3,6 @@ import styled, { css, keyframes } from 'styled-components';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import saveAsImage from '../CustomContent/UseSaveAsImage';
 import ProductCartAlert from '../../../share/ProductCartAlert';
-import axiosInstance from '../../../api/apis';
 import CloseButton from './CloseButton';
 import CartButton from './CartButton';
 import Popup from './Popup';
@@ -23,7 +22,7 @@ const ImageBox = styled.div`
 
 const blink = keyframes`
   0% {opacity: 1;}
-  50% {opacity: 0.55;}
+  50% {opacity: 0.3;}
   100% {opacity: 1;}
 `;
 
@@ -35,7 +34,7 @@ const Image = styled.img<{ blinking: boolean }>`
   ${({ blinking }) =>
     blinking &&
     css`
-      animation: ${blink} 1.5s linear infinite;
+      animation: ${blink} 1s linear infinite;
     `}
 `;
 const CenteredAlertContainer = styled.div`
@@ -84,25 +83,10 @@ const ModalButtons = ({
     setBlinking(true);
   }, []);
 
-  const handleSubmit = async () => {
-    const formData = {
-      storeId: 1,
-      productId: 1,
-    };
-    try {
-      const url = `/store/${storeId}/custom/${productId}`;
-      await axiosInstance.post(url, formData);
-      setShowAlert(true);
-      console.log('POST 요청 성공');
-    } catch (error) {
-      console.error('POST 요청 실패:', error);
-    }
-  };
-
   const onSaveImage = async () => {
     const result = await saveAsImage(images, canvasRef, storeId, productId);
     if (result) {
-      handleSubmit();
+      setShowAlert(true);
     }
   };
 
