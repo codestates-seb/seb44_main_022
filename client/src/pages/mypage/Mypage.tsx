@@ -135,7 +135,7 @@ useEffect(() => {
   };
   return <div style={{ marginTop: '160px', display: 'flex', justifyContent:'center' }}>
     <MyPageWrapper>
-      <p style={{fontWeight:'800', color: 'var(--dark-gray)', textAlign:'center', marginBottom:'30px'}}>안녕하세요, <span style={{color: 'var(--purple)'}}>nickname</span>님!</p>
+      <p style={{fontWeight:'800', color: 'var(--dark-gray)', textAlign:'center', marginBottom:'30px', fontSize:"18px"}}>안녕하세요, <span style={{color: 'var(--purple)'}}>{nickname}</span>님!</p>
       <MyInfoSection>
         <img src="../../../src/assets/images/profile.png" style={{width: '200px', paddingRight:'10px'}}/>
         <MyInfoDetail>
