@@ -4,6 +4,7 @@ import { useRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import ReactFullpage from '@fullpage/react-fullpage';
 
 import {
   section1_1,
@@ -12,12 +13,6 @@ import {
   section1_4,
   section3_1,
   section3_2,
-  divimgbox,
-  divimgbox1,
-  divimgbox2,
-  divimgbox3,
-  divimgbox4,
-  heading,
 } from '../../assets/images/img_main/img_main';
 
 const settings = {
@@ -32,76 +27,6 @@ const settings = {
   arrow: false,
   centerPadding: '40px',
 };
-
-const Heading2 = styled.div`
-  letter-spacing: -0.46px;
-  padding: 1.5rem 0;
-`;
-const Heading1TitleReviewpng = styled.img`
-  width: 210px;
-  object-fit: cover;
-`;
-const ReviewText = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ProductText = styled.div`
-  line-height: 22.8px;
-  display: flex;
-  align-items: center;
-  width: 98.25px;
-  height: 27px;
-`;
-const ProductName = styled.div`
-  width: 340px;
-  height: 22.8px;
-  overflow: hidden;
-`;
-const Price = styled.b`
-  line-height: 26.4px;
-  display: flex;
-  align-items: center;
-  width: 125.03px;
-  height: 32px;
-`;
-const Divprice = styled.div`
-  width: 340px;
-  height: 26.39px;
-  font-size: var(--font-size-3xl);
-`;
-const Section4Box = styled.div`
-  display: flex;
-  width: 340px;
-  height: 99.19px;
-`;
-const DivimgBoxIcon = styled.img`
-  width: 300px;
-  height: 300px;
-  overflow: hidden;
-  object-fit: cover;
-`;
-const Link = styled.div`
-  width: 340px;
-  height: 439.19px;
-`;
-
-const Section4Container = styled.div`
-  display: flex;
-  width: 100%;
-  height: 420px;
-  overflow: hidden;
-  text-align: left;
-  justify-content: center;
-`;
-
-const Section4 = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: auto;
-`;
 
 const Section1_img = styled.img`
   width: 100%;
@@ -252,58 +177,45 @@ function Main() {
     { src: section1_3, text: 'BUYTE가 처음이신가요?' },
     { src: section1_4, text: 'BUYTE가 처음이신가요?' },
   ];
-  const products = [
-    { src: divimgbox, price: '31,000 won' },
-    { src: divimgbox1, price: '68,000 won' },
-    { src: divimgbox2, price: '20,000 won' },
-    { src: divimgbox3, price: '46,000 won' },
-    { src: divimgbox4, price: '52,000 won' },
-  ];
+
   return (
     <MainRoot>
-      <Body>
-        <Section1>
-          <Slider {...settings}>
-            {sliderItems.map((item, index) => (
-              <SliderItem key={index}>
-                <Section1_img src={item.src} />
-                <TextOverlay>{item.text}</TextOverlay>
-              </SliderItem>
-            ))}
-          </Slider>
-        </Section1>
-        <Section2>
-          <Section2Text ref={section2TextRef}>커스텀할 수 있씀</Section2Text>
-          {/* <Section2Img src={section2} /> */}
-        </Section2>
-        <Section3>
-          <Section3Card className="card">
-            <Section3Icon className="front" src={section3_1} />
-            <Section3Icon className="back" src={section3_2} />
-          </Section3Card>
-        </Section3>
-        <Section4>
-          <ReviewText>
-            <Heading2>인기 메뉴</Heading2>
-            <Heading1TitleReviewpng src={heading} />
-          </ReviewText>
-          <Section4Container>
-            {products.map((product, index) => (
-              <Link key={index}>
-                <DivimgBoxIcon src={product.src} />
-                <Section4Box>
-                  <ProductName>
-                    <ProductText>ProductText</ProductText>
-                  </ProductName>
-                  <Divprice>
-                    <Price>{product.price}</Price>
-                  </Divprice>
-                </Section4Box>
-              </Link>
-            ))}
-          </Section4Container>
-        </Section4>
-      </Body>
+      <ReactFullpage
+        scrollingSpeed={1000}
+        render={({ state, fullpageApi }) => {
+          return (
+            <ReactFullpage.Wrapper>
+              <div className="section">
+                <Body>
+                  <Section1>
+                    <Slider {...settings}>
+                      {sliderItems.map((item, index) => (
+                        <SliderItem key={index}>
+                          <Section1_img src={item.src} />
+                          <TextOverlay>{item.text}</TextOverlay>
+                        </SliderItem>
+                      ))}
+                    </Slider>
+                  </Section1>
+                </Body>
+              </div>
+              <div className="section">
+                <Section2>
+                  <Section2Text ref={section2TextRef}>커스텀할 수 있씀</Section2Text>
+                </Section2>
+              </div>
+              <div className="section">
+                <Section3>
+                  <Section3Card className="card">
+                    <Section3Icon className="front" src={section3_1} />
+                    <Section3Icon className="back" src={section3_2} />
+                  </Section3Card>
+                </Section3>
+              </div>
+            </ReactFullpage.Wrapper>
+          );
+        }}
+      />
     </MainRoot>
   );
 }

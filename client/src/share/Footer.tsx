@@ -5,6 +5,7 @@ import github from '../assets/images/github.png';
 import notion from '../assets/images/notion.png';
 import youtube from '../assets/images/youtube.png';
 const FooterContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -34,6 +35,7 @@ const RightInfoBlock = styled.div`
   flex-direction: column;
   align-items: flex-start;
 `;
+
 const ImageContainer = styled.div`
   display: flex;
   justify-content: space-between;
