@@ -1,5 +1,6 @@
 package com.buyte.member.service;
 
+import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,4 +16,6 @@ public interface MemberService {
     Member getMemberDetails(long memberId);
 
     Member updateMember(Member member);
+
+    MemberDto.OrderResponse getOrderDetails(long memberId, int page, int size);
 }
