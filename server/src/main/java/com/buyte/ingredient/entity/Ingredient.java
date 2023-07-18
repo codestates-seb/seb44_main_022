@@ -29,14 +29,14 @@ public class Ingredient {
     @Column(name = "ingredient_name")
     private String ingredientName;
 
-    @Column(name = "ingredient_price")
-    private Integer ingredientPrice;
-
     @Column(name = "ingredient_image")
     private String ingredientImage;
 
-    @Column(name = "ingredient_count")
-    private Integer ingredientCount;
+//    @Column(name = "ingredient_price")
+//    private Integer ingredientPrice;
+//
+//    @Column(name = "ingredient_count")
+//    private Integer ingredientCount;
 
     @Column(name = "ingredient_category")
     @Enumerated(EnumType.STRING)
@@ -49,9 +49,6 @@ public class Ingredient {
     private List<ProductIngerdient> productIngerdientList = new ArrayList<>();
 
     public enum IngredientCategory {
-        CAKE_BASE,
-        COOKIE_BASE,
-        DONUT_BASE,
         CREAM,
         TOPPING,
         FILLING
