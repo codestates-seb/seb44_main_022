@@ -5,6 +5,7 @@ import axiosInstance from '../../api/apis';
 import MypageOrderTab from './MypageOrderTab';
 import MypageOrderList from './MypageOrderList';
 import EditableNickname from './EditableNickname';
+import Pagination from './Paigination';
 
 
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
@@ -93,7 +94,7 @@ useEffect(() => {
           },
         ],
         totalPrice: 5555,
-        orderTimestamp: "2022.08.03",
+        orderTimestamp: "2022.08.23",
         deliveryStatus: "배송완료",
       },
       {
@@ -128,6 +129,111 @@ useEffect(() => {
         orderTimestamp: "2022.08.05",
         deliveryStatus: "배송중",
       },
+      {
+        orderId: 3,
+        orderProducts: [
+          {
+            cartId: 3,
+            productId: 3,
+            productName: "도넛",
+            productImagePath: "https://images.unsplash.com/photo-1586657263857-346c4b712ff5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
+            productPrice: 100,
+            productCount: 1,
+          },
+          
+          {
+            cartId: 5,
+            productId: 5,
+            productName: "슈크링",
+            productImagePath: "https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
+            productPrice: 500,
+            productCount: 3,
+          },
+        ],
+        totalPrice: 3000,
+        orderTimestamp: "2022.06.05",
+        deliveryStatus: "배송중",
+      },
+      {
+        orderId: 4,
+        orderProducts: [
+          {
+            cartId: 3,
+            productId: 3,
+            productName: "빵쟁이",
+            productImagePath: "https://images.unsplash.com/photo-1599940778173-e276d4acb2bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=855&q=80",
+            productPrice: 100,
+            productCount: 1,
+          },
+          {
+            cartId: 4,
+            productId: 4,
+            productName: "딜리샤스",
+            productImagePath: "https://plus.unsplash.com/premium_photo-1664547606517-42d7b1113290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+            productPrice: 300,
+            productCount: 2,
+          },
+          {
+            cartId: 5,
+            productId: 5,
+            productName: "슈크링",
+            productImagePath: "https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
+            productPrice: 500,
+            productCount: 3,
+          },
+        ],
+        totalPrice: 355,
+        orderTimestamp: "2022.05.05",
+        deliveryStatus: "배송중",
+      },
+      {
+        orderId: 5,
+        orderProducts: [
+          {
+            cartId: 3,
+            productId: 3,
+            productName: "공갈빵",
+            productImagePath: "https://images.unsplash.com/photo-1598373182133-52452f7691ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
+            productPrice: 100,
+            productCount: 1,
+          },
+          {
+            cartId: 4,
+            productId: 4,
+            productName: "딜리샤스",
+            productImagePath: "https://plus.unsplash.com/premium_photo-1664547606517-42d7b1113290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+            productPrice: 300,
+            productCount: 2,
+          }
+        ],
+        totalPrice: 888,
+        orderTimestamp: "2022.04.05",
+        deliveryStatus: "배송중",
+      },
+      {
+        orderId: 6,
+        orderProducts: [
+          {
+            cartId: 3,
+            productId: 3,
+            productName: "크루아상",
+            productImagePath: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80",
+            productPrice: 100,
+            productCount: 1,
+          },
+          {
+            cartId: 4,
+            productId: 4,
+            productName: "딜리샤스",
+            productImagePath: "https://plus.unsplash.com/premium_photo-1664547606517-42d7b1113290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
+            productPrice: 300,
+            productCount: 2,
+          }
+        ],
+        totalPrice: 888,
+        orderTimestamp: "2022.03.05",
+        deliveryStatus: "배송중",
+      }
     ],
     pageInfo: {
       page: 1,
@@ -178,7 +284,8 @@ useEffect(() => {
           ))
         )}
       </MyOrderLists>
-      </MyOrderSection>
+      <Pagination data={data}/>
+      </MyOrderSection>      
     </MyPageWrapper>
   </div>;
 }
