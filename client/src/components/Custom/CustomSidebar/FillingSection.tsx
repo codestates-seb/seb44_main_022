@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 
 const SectionContainer = styled.div`
   position: relative;
@@ -46,11 +45,18 @@ const ContentImageContainer = styled.div`
   height: 70px;
 `;
 
-type FillingSectionProps = {
-  onImageDragStart: (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => void;
-};
+interface Filling {
+  ingredientName: string;
+  ingredientImage: string;
+  ingredientPrice: number;
+}
 
-function FillingSection({ onImageDragStart }: FillingSectionProps) {
+interface FillingSectionProps {
+  onImageDragStart: (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => void;
+  fillingIngredientList: Filling[];
+}
+
+function FillingSection({ onImageDragStart, fillingIngredientList }: FillingSectionProps) {
   const handleImageDragStart = (event: React.DragEvent<HTMLImageElement>) => {
     event.dataTransfer.setData('text/plain', '');
     const imageUrl = event.currentTarget.getAttribute('src');
@@ -64,12 +70,15 @@ function FillingSection({ onImageDragStart }: FillingSectionProps) {
       <SectionTitle>필링</SectionTitle>
       <ContentItem>
         <ContentImageContainer>
-          <ContentImage
-            src={modal_cake}
-            alt="Cake Icon"
-            draggable
-            onDragStart={handleImageDragStart}
-          />
+          {fillingIngredientList.map((filling, index) => (
+            <ContentImage
+              key={index}
+              src={filling.ingredientImage}
+              alt={filling.ingredientName}
+              draggable
+              onDragStart={handleImageDragStart}
+            />
+          ))}
         </ContentImageContainer>
       </ContentItem>
     </SectionContainer>

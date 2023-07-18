@@ -6,6 +6,7 @@ import MypageOrderTab from './MypageOrderTab';
 import MypageOrderList from './MypageOrderList';
 import EditableNickname from './EditableNickname';
 
+
 //처음에 회원의 이름, 정보 받아오기 
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
 //https://buyte.site/members로 patch 보내기 
@@ -203,7 +204,7 @@ const MyInfoDetail = styled.section`
   margin-top: 3rem;
   h3 {
     color: var(--light-gray);
-    margin-bottom: 2rem;
+    margin-bottom: 2.3rem;
     font-size: 18px;
     font-weight: 800;
   }

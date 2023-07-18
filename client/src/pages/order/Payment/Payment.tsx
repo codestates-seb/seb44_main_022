@@ -35,6 +35,26 @@ function Payment() {
   const [orderUserName, setOrderUserName] = useState<string>('');
   const [shippingAddress, setShippingAddress] = useState<string>('');
 
+  const handleClickPayment = () => {
+    if (
+      orderUserName !== undefined &&
+      shippingAddress !== undefined &&
+      orderUserName.length !== 0 &&
+      shippingAddress.length !== 0
+    ) {
+      requestPay({
+        orderUserName,
+        shippingAddress,
+        cartList,
+        onSuccess: () => navigate('/complete', { state: { rightPass: true }, replace: true }),
+      });
+      return;
+    }
+    alert(
+      '주문자 정보를 반드시 기입해주세요.\n잘못된 정보를 기입함에 있어서 Buyte는 책임지지 않습니다.'
+    );
+  };
+
   useGoBackRestrict(navigate, '/cart');
 
   useEffect(() => {
@@ -120,19 +140,7 @@ function Payment() {
               navigate(-1);
             }}
           />
-          <RectangleButton
-            text="결제하기"
-            types="purple"
-            handleClick={() =>
-              requestPay({
-                orderUserName,
-                shippingAddress,
-                cartList,
-                onSuccess: () =>
-                  navigate('/complete', { state: { rightPass: true }, replace: true }),
-              })
-            }
-          />
+          <RectangleButton text="결제하기" types="purple" handleClick={handleClickPayment} />
         </div>
       </div>
     </CartContainer>

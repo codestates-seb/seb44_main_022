@@ -20,12 +20,6 @@ const saveAsImage = async (
     return;
   }
 
-  const originalCanvas = document.createElement('canvas');
-  originalCanvas.width = canvas.width;
-  originalCanvas.height = canvas.height;
-  const originalContext = originalCanvas.getContext('2d');
-  originalContext?.drawImage(canvas, 0, 0);
-
   const ctx = canvas.getContext('2d');
   if (!ctx) {
     console.error('Context 2D is not available');
@@ -35,9 +29,10 @@ const saveAsImage = async (
   const loadAndDrawImage = (imageData: ImageData): Promise<void> => {
     return new Promise((resolve) => {
       const img = new Image();
+      img.crossOrigin = 'anonymous';
       img.src = imageData.imageUrl;
       img.onload = () => {
-        ctx.drawImage(img, imageData.x, imageData.y, imageData.width, imageData.height);
+        ctx.drawImage(img, imageData.x, imageData.y);
         resolve();
       };
     });
@@ -47,7 +42,6 @@ const saveAsImage = async (
 
   await Promise.all(promises);
 
-  ctx.drawImage(originalCanvas, 0, 0);
   const dataUrl = canvas.toDataURL('image/png');
   const byteString = atob(dataUrl.split(',')[1]);
   const arrayBuffer = new ArrayBuffer(byteString.length);

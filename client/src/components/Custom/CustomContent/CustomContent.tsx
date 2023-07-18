@@ -92,15 +92,7 @@ const CustomContent: React.FC<{
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
 
-    const draggedIndex = images.findIndex((imageData) => {
-      const { x: imageX, y: imageY, width, height } = imageData;
-      return x >= imageX && x <= imageX + width && y >= imageY && y <= imageY + height;
-    });
-
-    if (draggedIndex !== -1 && !drawingMode) {
-      setIsDragging(true);
-      setDraggedImageIndex(draggedIndex);
-    } else if (isDragging && draggedImageIndex >= 0) {
+    if (isDragging && draggedImageIndex >= 0) {
       const draggedImage = images[draggedImageIndex];
 
       const newImages = images.map((imageData, index) => {
@@ -149,7 +141,17 @@ const CustomContent: React.FC<{
         }
       }
 
-      setIsDragging(true);
+      const draggedIndex = images.findIndex((imageData) => {
+        const { x: imageX, y: imageY, width, height } = imageData;
+        return x >= imageX && x <= imageX + width && y >= imageY && y <= imageY + height;
+      });
+
+      if (draggedIndex !== -1 && !drawingMode) {
+        setIsDragging(true);
+        setDraggedImageIndex(draggedIndex);
+      } else {
+        setIsDragging(true);
+      }
     }
   };
 

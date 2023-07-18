@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 
 const SectionContainer = styled.div`
   position: relative;
@@ -45,12 +44,18 @@ const ContentImageContainer = styled.div`
   margin-top: 8px;
   height: 70px;
 `;
+interface Cream {
+  ingredientName: string;
+  ingredientImage: string;
+  ingredientPrice: number;
+}
 
-type CreamSectionProps = {
+interface CreamSectionProps {
   onImageDragStart: (event: React.DragEvent<HTMLImageElement>, imageUrl: string) => void;
-};
+  creamIngredientList: Cream[];
+}
 
-function CreamSection({ onImageDragStart }: CreamSectionProps) {
+function CreamSection({ onImageDragStart, creamIngredientList }: CreamSectionProps) {
   const handleImageDragStart = (event: React.DragEvent<HTMLImageElement>) => {
     event.dataTransfer.setData('text/plain', '');
     const imageUrl = event.currentTarget.getAttribute('src');
@@ -64,12 +69,15 @@ function CreamSection({ onImageDragStart }: CreamSectionProps) {
       <SectionTitle>크림</SectionTitle>
       <ContentItem>
         <ContentImageContainer>
-          <ContentImage
-            src={modal_cake}
-            alt="Cake Icon"
-            draggable
-            onDragStart={handleImageDragStart}
-          />
+          {creamIngredientList.map((cream, index) => (
+            <ContentImage
+              key={index}
+              src={cream.ingredientImage}
+              alt={cream.ingredientName}
+              draggable
+              onDragStart={handleImageDragStart}
+            />
+          ))}
         </ContentImageContainer>
       </ContentItem>
     </SectionContainer>

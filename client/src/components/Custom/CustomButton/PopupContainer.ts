@@ -36,7 +36,7 @@ export const PopupContainer = styled.div<{ show: boolean }>`
   width: 60%;
   height: 50%;
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     flex-direction: column;
   }
 `;

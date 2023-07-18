@@ -13,3 +13,25 @@ export const addCustom = (store_id: number, product_id: number, file: File) => {
     },
   });
 };
+
+export const getCustomBoard = async (store_id: number, product_id: number) => {
+  try {
+    const response = await axiosInstance({
+      method: 'get',
+      url: `/store/${store_id}/custom/${product_id}`,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const { creamIngredientList, toppingIngredientList, fillingIngredientList } = response.data;
+
+    return {
+      creamIngredientList,
+      toppingIngredientList,
+      fillingIngredientList,
+    };
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -72,6 +72,8 @@ public class OrdersServiceImpl implements OrdersService{
             }
 
             if (totalPrice + 3500 != amount) {
+                log.info("결제금액 이상");
+                log.info("예상 결제금액: {}", totalPrice + 3500);
                 payMentCancle(token, orderInfo.getImpUid(), amount, "결제 금액 오류");
                 return new ResponseEntity<String>("결제 금액 오류, 결제 취소", HttpStatus.BAD_REQUEST);
             }
@@ -93,9 +95,11 @@ public class OrdersServiceImpl implements OrdersService{
             orders.setOrder(totalOrderPrice, orderInfo.getAddress());
             ordersRepository.save(orders);
 
+            log.info("주문 완료");
             return new ResponseEntity<>("주문이 완료되었습니다", HttpStatus.OK);
 
         } catch (Exception e) {
+            log.info("결제 에러");
             payMentCancle(token, orderInfo.getImpUid(), amount, "결제 에러");
             return new ResponseEntity<String>("결제 에러", HttpStatus.BAD_REQUEST);
         }
@@ -162,11 +166,10 @@ public class OrdersServiceImpl implements OrdersService{
     }
 
     public void payMentCancle(String access_token, String imp_uid, int amount, String reason) throws IOException  {
-        System.out.println("결제 취소");
 
-        System.out.println(access_token);
-
-        System.out.println(imp_uid);
+        log.info("결제 취소");
+        log.info("access_token: {}",access_token);
+        log.info("imp_uid: {}", imp_uid);
 
         HttpsURLConnection conn = null;
         URL url = new URL("https://api.iamport.kr/payments/cancel");

@@ -5,7 +5,6 @@ import { postGoogleOAuthLogin } from '../../api/authApis';
 import { LocalStorage } from '../../utils/browserStorage';
 import { LOCAL_STORAGE_KEY_LIST } from '../../assets/constantValue/constantValue';
 import { Icons, RoundButtonStyle } from './RoundButton.style';
-// import { postGoogleOAuth } from '../../api/authApis';
 
 function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   const navigate = useNavigate();

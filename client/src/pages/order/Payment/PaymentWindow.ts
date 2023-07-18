@@ -13,9 +13,9 @@ IMP.init('imp04163177');
 
 const makeMerchantUid = () => {
   const today = new Date();
-  const hours = today.getHours(); // 시
-  const minutes = today.getMinutes(); // 분
-  const seconds = today.getSeconds(); // 초
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const seconds = today.getSeconds();
   const milliseconds = today.getMilliseconds();
 
   return hours + minutes + seconds + milliseconds;

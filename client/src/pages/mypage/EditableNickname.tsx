@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { AUTH_FAILED_MESSAGE } from '../../assets/constantValue/constantValue';
 
 interface EditableNicknameProps {
     nickname: string;
@@ -31,13 +30,16 @@ interface EditableNicknameProps {
 export default EditableNickname;
 
 const EditInput = styled.input`
-    width: 300px;
+    width: 350px;
     font-size: 18px;
-    margin-bottom: 20px;
-    padding: 2px 10px;
+    margin-bottom: 18px;
+    padding: 3px 8px 4px 8px;
     border: 1px solid var(--light-gray);
     font-family: inherit;
     color: var(--dark-gray);
+    position: relative;
+    top: -6px;
+    border-radius: 5px;;
   &:focus {
     outline: 1px solid var(--purple);
   }

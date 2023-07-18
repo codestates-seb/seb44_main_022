@@ -15,14 +15,16 @@ public interface StoreMapper {
 
     default StoreDetailsDto storeToStoreDetails(Store store) {
         return StoreDetailsDto.builder()
-                .memberId(store.getMember().getMemberId())
-                .storeName(store.getStoreName())
-                .storeAddress(store.getStoreAddress())
-                .storeImage(store.getStoreImage())
-                .storeIntroduction(store.getStoreIntroduction())
-                .storePhoneNumber(store.getStorePhoneNumber())
-                .storeId(store.getStoreId())
-                .build();
+            .memberId(store.getMember().getMemberId())
+            .storeName(store.getStoreName())
+            .storeAddress(store.getStoreAddress())
+            .storeLongitude(store.getStoreLongitude())
+            .storeLatitude(store.getStoreLatitude())
+            .storeImage(store.getStoreImage())
+            .storeIntroduction(store.getStoreIntroduction())
+            .storePhoneNumber(store.getStorePhoneNumber())
+            .storeId(store.getStoreId())
+            .build();
     }
 
     default StoreInfoDto storeToStoreInfo(Store store) {

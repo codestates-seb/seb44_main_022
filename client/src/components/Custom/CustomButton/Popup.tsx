@@ -20,15 +20,23 @@ const PopupContent = styled.div`
   justify-content: center;
   gap: 40px;
   flex-grow: 1;
+  @media (max-width: 1500px) {
+    gap: 10px;
 
-  @media (max-width: 900px) {
+    ${PopupImage} {
+      width: 70%;
+      max-width: 100%;
+      height: 70%;
+    }
+  }
+  @media (max-width: 1200px) {
     flex-direction: column;
     gap: 10px;
 
     ${PopupImage} {
-      width: auto;
+      width: 170%;
       max-width: 100%;
-      height: auto;
+      height: 170%;
     }
   }
 `;
@@ -42,10 +50,8 @@ const RightContent = styled.div`
   border-width: 0.5px 1px 1px 0.5px;
   border-radius: 15px;
   box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
-  @media (max-width: 900px) {
-    width: auto;
-    max-width: 100%;
-    height: auto;
+  @media (max-width: 1200px) {
+    display: none;
   }
 `;
 
@@ -72,6 +78,10 @@ const Part2 = styled.div`
   color: white;
   line-height: 2.8;
   font-size: 20px;
+  @media (max-width: 1500px) {
+    gap: 10px;
+    font-size: 15px;
+  }
 `;
 
 const Part3 = styled.div`

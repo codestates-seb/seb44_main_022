@@ -4,7 +4,7 @@ export const UserInputWrapper = styled.div`
   position: relative;
 `;
 
-export const InputBox = styled.input<{ valid: boolean }>`
+export const InputBox = styled.input<{ valid?: boolean }>`
   display: block;
   border-radius: 12px;
   width: 300px;

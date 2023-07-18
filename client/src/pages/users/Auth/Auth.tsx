@@ -15,7 +15,6 @@ import {
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
-
   return (
     <AuthContainer>
       <AuthImage />
