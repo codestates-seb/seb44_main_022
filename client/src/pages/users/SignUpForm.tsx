@@ -28,7 +28,7 @@ function SignUpForm({ setIsSignUp }: SignUpFormProps) {
           setIsSignUp(false);
           navigate('/auth');
         })
-        .catch(() => alert('데이터를 잘못 입력했음 ㅇㅇ'));
+        .catch(() => alert('중복된 아이디입니다.'));
     }
   };
 

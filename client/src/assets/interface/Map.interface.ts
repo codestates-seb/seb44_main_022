@@ -25,3 +25,9 @@ export interface MarkerProps {
   markerPosition: PositionData;
   handleClick: (position: PositionData) => void;
 }
+
+export interface useCurrentLocationProps {
+  lat: number;
+  lng: number;
+  id: number;
+}

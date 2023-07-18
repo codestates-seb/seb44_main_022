@@ -22,7 +22,7 @@ const makeMerchantUid = () => {
 };
 
 export function requestPay(params: PaymentWindowParams) {
-  const { orderUserName, shippingAddress, cartList, onSuccess } = params;
+  const { orderUserName, shippingAddress, detailAddress, cartList, onSuccess } = params;
   const itemsName = cartList.map((item) => item.productName).join(',');
   const idList = cartList.map((item) => item.cartId);
   const totalAmount = (cartList: CartItemTypes[]) => {
@@ -43,7 +43,7 @@ export function requestPay(params: PaymentWindowParams) {
     (res) => {
       const { success, imp_uid, error_msg } = res;
       if (success) {
-        postAfterPayment(idList, imp_uid, orderUserName, shippingAddress)
+        postAfterPayment(idList, imp_uid, orderUserName, shippingAddress + ' ' + detailAddress)
           .then(() => {
             alert('결제 성공');
             onSuccess();

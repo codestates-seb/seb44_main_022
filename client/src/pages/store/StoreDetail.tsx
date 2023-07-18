@@ -73,7 +73,10 @@ function StoreDetail() {
             <DetailTitle>소개</DetailTitle>
             <DetailInfo>{data.storeIntroduction}</DetailInfo>
             <DetailTitle>주소</DetailTitle>
-            <Link to="/map">
+            <Link
+              to="/map"
+              state={{ lat: data.storeLatitude, lng: data.storeLongitude, id: data.storeId }}
+            >
               <span style={{ color: 'var(--light-gray)', fontSize: '13px' }}>[지도보기]</span>
             </Link>
             <DetailInfo>{data.storeAddress}</DetailInfo>

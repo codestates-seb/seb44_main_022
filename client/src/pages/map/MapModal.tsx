@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { BsCircle } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 import { MapModalProps } from '../../assets/interface/Map.interface';
 import {
   IMAGE_NUMBER_BUTTON,
@@ -10,13 +10,19 @@ import {
   ExitMapModalButton,
   ImageCarouselButton,
   MapModalAddressContainer,
+  MapModalStoreImg,
   MapModalStoreInfoContainer,
+  MapModalStoreName,
   MapModalTitleContainer,
   MarkerModal,
 } from './Map.style';
 
 function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
   const [currentNumber, setCurrentNumber] = useState<number>(0);
+  const navigate = useNavigate();
+  const clickStore = () => {
+    navigate(`/store/${position.storeId}`);
+  };
 
   const sliceText = (text: string) => {
     if (text.length > STORE_MAP_INTRODUCE_LIMIT)
@@ -30,19 +36,12 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
         <ExitMapModalButton onClick={handleCloseModal}>BUYTE</ExitMapModalButton>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <MapModalTitleContainer>
-            <img
-              src={position.storeImage}
-              style={{ width: '2.75rem', height: '2.75rem', borderRadius: '50%' }}
-            />
+            <div style={{ overflow: 'hidden', borderRadius: '50%' }}>
+              <MapModalStoreImg src={position.storeImage} onClick={clickStore} />
+            </div>
+
             <MapModalStoreInfoContainer>
-              <div
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                }}
-              >
-                {position.storeName}
-              </div>
+              <MapModalStoreName onClick={clickStore}>{position.storeName}</MapModalStoreName>
               <MapModalAddressContainer>
                 <FaSearch style={{ paddingLeft: '2px', paddingRight: '5px' }} />
                 {position.storeAddress}
@@ -86,9 +85,7 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
                 currentNumber={currentNumber}
                 onClick={() => setCurrentNumber(number)}
                 key={number}
-              >
-                <BsCircle />
-              </ImageCarouselButton>
+              ></ImageCarouselButton>
             ))}
           </div>
 

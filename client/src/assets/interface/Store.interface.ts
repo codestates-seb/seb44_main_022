@@ -28,6 +28,8 @@ export interface StoreDetailInfo {
   storeName: string;
   storeAddress: string;
   storeIntroduction: string;
+  storeLatitude: number;
+  storeLongitude: number;
   storePhoneNumber: string;
   storeImage: string;
   customProductInfoList: Product[];
