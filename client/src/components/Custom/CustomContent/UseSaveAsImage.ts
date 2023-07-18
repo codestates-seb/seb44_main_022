@@ -32,7 +32,6 @@ const saveAsImage = async (
       img.crossOrigin = 'anonymous';
       img.src = imageData.imageUrl;
       img.onload = () => {
-        ctx.drawImage(img, imageData.x, imageData.y);
         resolve();
       };
     });

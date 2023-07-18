@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
 import styled from 'styled-components';
 import MainSection1 from '../../components/Main/MainSection1';
@@ -19,12 +19,16 @@ const MainRoot = styled.div`
 function Main() {
   const FullPageComponent = ReactFullpage as any;
   const [api, setApi] = useState<any>(null);
+  const [activeSection, setActiveSection] = useState(1);
 
   return (
     <>
       <MainRoot>
         <FullPageComponent
           scrollingSpeed={1000}
+          afterLoad={(origin: any, destination: any, direction: any) => {
+            setActiveSection(destination.index + 1);
+          }}
           render={({ fullpageApi }: { fullpageApi: any }) => {
             if (!api) setApi(fullpageApi);
             return (
@@ -36,7 +40,7 @@ function Main() {
             );
           }}
         />
-        {api && <MainSidebar fullpageApi={api} />}
+        {api && <MainSidebar fullpageApi={api} activeSection={activeSection} />}
       </MainRoot>
     </>
   );

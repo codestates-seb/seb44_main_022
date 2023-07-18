@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
 const SidebarContainer = styled.div`
   position: fixed;
-  top: 40%;
-  left: 2%;
-  height: 20%;
+  top: 57%;
+  left: 4%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: 10px;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  padding: 10px;
+  height: 90px;
   border-color: var(--purple);
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -17,27 +19,36 @@ const SidebarContainer = styled.div`
 
 interface SidebarItemProps {
   active: boolean;
+  clicked: boolean;
 }
 
 const SidebarItem = styled.div<SidebarItemProps>`
-  height: 12px;
-  width: 12px;
-  margin-bottom: 15px;
-  margin-right: 10px;
-  background-color: ${(props) => (props.active ? 'var(--purple)' : '#bebebe')};
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  position: relative;
+  height: 20px;
+  width: 20px;
 
-  &:hover {
-    background-color: var(--light-purple);
-    cursor: pointer;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: ${(props) => (props.active ? '10px' : '8px')};
+    width: ${(props) => (props.active ? '10px' : '8px')};
+    background-color: ${(props) => (props.active ? 'var(--purple)' : '#bebebe')};
+    border-radius: 50%;
+    transition: height 0.3s ease, width 0.3s ease;
+
+    ${(props) =>
+      props.clicked &&
+      css`
+        animation: clickAnimation 0.3s forwards;
+        border: 2px solid #000;
+      `}
   }
 
-  &:active {
-    animation: clickAnimation 0.3s forwards;
-    border: 2px solid #000;
-    cursor: pointer;
+  &:hover::before {
+    background-color: var(--light-purple);
   }
 
   @keyframes clickAnimation {
@@ -54,21 +65,35 @@ interface MainSidebarProps {
   fullpageApi: {
     moveTo: (section: number) => void;
   };
+  activeSection: number;
 }
 
-function MainSidebar({ fullpageApi }: MainSidebarProps) {
-  const [activeItem, setActiveItem] = useState(1);
+function MainSidebar({ fullpageApi, activeSection }: MainSidebarProps) {
+  const [clickedSection, setClickedSection] = useState(0);
 
   const handleClick = (section: number) => {
+    setClickedSection(section);
     fullpageApi.moveTo(section);
-    setActiveItem(section);
+    setTimeout(() => setClickedSection(0), 300);
   };
 
   return (
     <SidebarContainer>
-      <SidebarItem active={activeItem === 1} onClick={() => handleClick(1)} />
-      <SidebarItem active={activeItem === 2} onClick={() => handleClick(2)} />
-      <SidebarItem active={activeItem === 3} onClick={() => handleClick(3)} />
+      <SidebarItem
+        active={activeSection === 1}
+        clicked={clickedSection === 1}
+        onClick={() => handleClick(1)}
+      />
+      <SidebarItem
+        active={activeSection === 2}
+        clicked={clickedSection === 2}
+        onClick={() => handleClick(2)}
+      />
+      <SidebarItem
+        active={activeSection === 3}
+        clicked={clickedSection === 3}
+        onClick={() => handleClick(3)}
+      />
     </SidebarContainer>
   );
 }
