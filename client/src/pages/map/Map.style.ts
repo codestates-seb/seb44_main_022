@@ -9,16 +9,16 @@ export const MapPageContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 120%;
+  height: 80vh;
   padding-top: 2rem;
 `;
+
 export const MapContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 80%;
   height: 80%;
-  min-height: 500px;
   margin-bottom: 2rem;
 `;
 
@@ -115,4 +115,12 @@ export const MapModalStoreName = styled.div`
   &:hover {
     color: var(--light-gray);
   }
+`;
+
+export const MapPageIntroduce = styled.div`
+  width: 80%;
+  padding: 1rem 2rem 2rem 2rem;
+  font-family: Yaldevi; sans-serif;
+  font-size: 1.25rem;
+  color: var(--dark-gray);
 `;

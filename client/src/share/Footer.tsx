@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import github from '../assets/images/github.png';
 import notion from '../assets/images/notion.png';
 import youtube from '../assets/images/youtube.png';
+import { BASE_ANIMATION_TIME } from '../assets/constantValue/constantValue';
 const FooterContainer = styled.div`
   position: relative;
   display: flex;
@@ -53,12 +54,12 @@ function Footer() {
 
   useEffect(() => {
     if ((location.pathname === '/auth' || location.pathname === '/') && animation === 'fadeIn') {
-      setTimeout(() => setAnimation('none'), 300);
+      setTimeout(() => setAnimation('none'), BASE_ANIMATION_TIME);
       setAnimation('fadeOut');
       return;
     }
     if (location.pathname !== '/auth' && location.pathname !== '/') {
-      setTimeout(() => setAnimation('fadeIn'), 300);
+      setTimeout(() => setAnimation('fadeIn'), BASE_ANIMATION_TIME);
       return;
     }
   }, [location]);

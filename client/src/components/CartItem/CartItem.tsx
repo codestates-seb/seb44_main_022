@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import CheckBox from '../CheckBox';
 import CountButton from '../CountButton/CountButton';
 import { CartItemProps } from '../../assets/interface/Cart.interface';
+import CheckBox from './CheckBox';
 import { CartImage, CartListName } from './CartItem.style';
 
 function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) {

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { addCartIdList, removeCartIdList } from '../redux/reducer/cartReducer';
-import { CartCheckProps } from '../assets/interface/Cart.interface';
+import { addCartIdList, removeCartIdList } from '../../redux/reducer/cartReducer';
+import { CartCheckProps } from '../../assets/interface/Cart.interface';
 
 function CheckBox({ items, initialChecked }: CartCheckProps) {
   const [isChecked, setIsChecked] = useState<boolean>(initialChecked);

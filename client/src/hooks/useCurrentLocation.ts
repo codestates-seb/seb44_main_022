@@ -1,10 +1,5 @@
 import { useEffect, useState } from 'react';
-
-interface useCurrentLocationProps {
-  lat: number;
-  lng: number;
-  id: number;
-}
+import { useCurrentLocationProps } from '../assets/interface/Map.interface';
 
 const useCurrentLocation = (storePosition: useCurrentLocationProps | null) => {
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number }>({

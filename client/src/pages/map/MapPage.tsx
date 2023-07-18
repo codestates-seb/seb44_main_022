@@ -6,9 +6,10 @@ import { UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue
 import { PositionData } from '../../assets/interface/Map.interface';
 import axiosInstance from '../../api/apis';
 import useScreenResize from '../../hooks/useScreenResize';
+import ChatButton from '../Chat/Chat';
 import MapModal from './MapModal';
 import CustomMarker from './CustomMarker';
-import { MapContainer, MapPageContainer } from './Map.style';
+import { MapContainer, MapPageContainer, MapPageIntroduce } from './Map.style';
 
 function MapPage() {
   const location = useLocation();
@@ -63,17 +64,8 @@ function MapPage() {
 
   return (
     <MapPageContainer>
-      <div
-        style={{
-          width: '80%',
-          padding: '1rem 2rem 2rem 2rem',
-          fontFamily: 'Yaldevi, sans-serif',
-          fontSize: '1.25rem',
-          color: 'var(--dark-gray)',
-        }}
-      >
-        BUYTE에 입점된 매장을 찾아보세요!
-      </div>
+      <ChatButton />
+      <MapPageIntroduce>BUYTE에 입점된 매장을 찾아보세요!</MapPageIntroduce>
       <MapContainer>
         <Map
           center={{ lat: lat, lng: lng }}

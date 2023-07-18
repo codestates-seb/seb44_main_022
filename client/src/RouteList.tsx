@@ -12,7 +12,7 @@ import StoreDetail from './pages/store/StoreDetail';
 import PrivateRoute from './PrivateRoute';
 import NotFound from './pages/notfound/NotFound';
 
-export const normalRoutes = [
+export const Routes = [
   {
     path: '/',
     element: <Main />,
@@ -37,48 +37,43 @@ export const normalRoutes = [
     path: '*',
     element: <NotFound />,
   },
-];
-
-export const privateDisabledRoutes = [
   {
     path: '/auth',
     element: <Auth />,
+    isAuth: false,
   },
-];
-
-export const privateEnabledRoutes = [
   {
     path: '/payment',
     element: <Payment />,
+    isAuth: true,
   },
   {
     path: '/complete',
     element: <OrderComplete />,
+    isAuth: true,
   },
   {
     path: '/mypage',
     element: <Mypage />,
+    isAuth: true,
   },
   {
     path: '/cart',
     element: <ShoppingCart />,
+    isAuth: true,
   },
 ];
 
 export const RouteList = (
   <>
-    {normalRoutes.map((route, index) => (
-      <Route key={index} path={route.path} element={route.element} />
-    ))}
-    <Route element={<PrivateRoute isAuth={false} />}>
-      {privateDisabledRoutes.map((route, index) => (
+    {Routes.map((route, index) => {
+      return route.isAuth === undefined ? (
         <Route key={index} path={route.path} element={route.element} />
-      ))}
-    </Route>
-    <Route element={<PrivateRoute isAuth={true} />}>
-      {privateEnabledRoutes.map((route, index) => (
-        <Route key={index} path={route.path} element={route.element} />
-      ))}
-    </Route>
+      ) : (
+        <Route element={<PrivateRoute isAuth={route.isAuth} />}>
+          <Route key={index} path={route.path} element={route.element} />
+        </Route>
+      );
+    })}
   </>
 );

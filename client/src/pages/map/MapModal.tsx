@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { BsCircle } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import { MapModalProps } from '../../assets/interface/Map.interface';
 import {
