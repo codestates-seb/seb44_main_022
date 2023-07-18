@@ -7,10 +7,7 @@ import MypageOrderList from './MypageOrderList';
 import EditableNickname from './EditableNickname';
 import Pagination from './Paigination';
 
-
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
-//엥 근데 이거 Auth로 받은 이름은 어떻게 처리함? 
-//날짜 받아서 예쁘게 가공하는 함수 만들어야 됨. 
 //NO 나오는 배열 순서 세는 함수 만들어야 됨.
  interface Product {
     cartId: number;
@@ -99,7 +96,7 @@ useEffect(() => {
           },
         ],
         totalPrice: 5555,
-        orderTimestamp: "2022.08.23",
+        orderTimestamp: "2023-07-20T13:01:17",
         deliveryStatus: "배송완료",
       },
       {
@@ -134,7 +131,7 @@ useEffect(() => {
           },
         ],
         totalPrice: 9999,
-        orderTimestamp: "2022.08.05",
+        orderTimestamp: "2023-07-18T13:01:17",
         deliveryStatus: "배송중",
       },
       {
@@ -161,7 +158,7 @@ useEffect(() => {
           },
         ],
         totalPrice: 3000,
-        orderTimestamp: "2022.06.05",
+        orderTimestamp: "2023-07-18T13:01:17",
         deliveryStatus: "배송중",
       },
       {
@@ -196,7 +193,7 @@ useEffect(() => {
           },
         ],
         totalPrice: 355,
-        orderTimestamp: "2022.05.05",
+        orderTimestamp: "2023-07-18T13:01:17",
         deliveryStatus: "배송중",
       },
       {
@@ -222,7 +219,7 @@ useEffect(() => {
           }
         ],
         totalPrice: 888,
-        orderTimestamp: "2022.04.05",
+        orderTimestamp: "2023-07-18T13:01:17",
         deliveryStatus: "배송중",
       },
       {
@@ -248,7 +245,7 @@ useEffect(() => {
           }
         ],
         totalPrice: 888,
-        orderTimestamp: "2022.03.05",
+        orderTimestamp: "2023-07-18T13:01:17",
         deliveryStatus: "배송중",
       }
     ],

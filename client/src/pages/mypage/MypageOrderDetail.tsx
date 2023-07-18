@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { CartListName } from '../../components/CartItem/CartItem.style';
 
+
 interface Product {
   cartId: number;
   productId: number;
@@ -16,7 +17,7 @@ interface MypageOrderDetailProps {
   product: Product;
 }
 
-const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
+const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {    
   const navigate = useNavigate();
   return (
     <CartListDetail>

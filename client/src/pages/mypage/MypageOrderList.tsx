@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { BsArrowDownSquare } from 'react-icons/bs';
 import { CartListName } from '../../components/CartItem/CartItem.style';
 import MypageOrderDetail from './MypageOrderDetail';
+import DateFormatter from './DateFormatter'
 interface Product {
     cartId: number;
     productId: number;
@@ -56,7 +57,7 @@ function MypageOrderList({ products }: MypageOrderListProps) {
         minWidth={130}
         style={{ justifyContent: 'flex-end', fontSize: '15px', paddingRight: '2rem' }}
       >
-       {products.orderTimestamp}
+       <DateFormatter timestamp={products.orderTimestamp}></DateFormatter>
       </CartListName>
       <CartListName
         grow={5}
