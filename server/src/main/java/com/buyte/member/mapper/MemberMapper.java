@@ -76,6 +76,7 @@ public interface MemberMapper {
                     .productPrice(orderProduct1.getProduct().getProductPrice())
                     .productImage(orderProduct1.getOrderProductCustomProductImage())
                     .productCount(orderProduct1.getOrderProductCustomProductCount())
+                    .storeId(orderProduct1.getProduct().getStore().getStoreId())
                     .build());
         }
 
