@@ -70,15 +70,20 @@ const settings = {
 
 const Section1_img = styled.img`
   width: 100%;
-  height: 100vh;
+  height: 100%;
   object-fit: cover;
 `;
 
 const SliderItem = styled.div`
   position: relative;
+  height: 100vh;
 `;
 
-function MainSection1() {
+const SliderContainer = styled.div`
+  height: 100vh;
+`;
+
+function MainSection1({ id }: { id: string }) {
   const sliderItems = [
     { src: section1_1, text: 'Text image 1' },
     { src: section1_2, text: 'Text image 2' },
@@ -86,8 +91,12 @@ function MainSection1() {
     { src: section1_4, text: 'Text image 4' },
   ];
   return (
-    <div className="section" style={{ boxSizing: 'border-box', width: '100%', height: '100%' }}>
-      <div style={{ width: '100%', overflow: 'hidden', textAlign: 'center' }}>
+    <div
+      id={id}
+      className="section"
+      style={{ boxSizing: 'border-box', width: '100%', height: '100%' }}
+    >
+      <SliderContainer>
         <Slider {...settings}>
           {sliderItems.map((item, index) => (
             <SliderItem key={index}>
@@ -109,7 +118,7 @@ function MainSection1() {
             </SliderItem>
           ))}
         </Slider>
-      </div>
+      </SliderContainer>
     </div>
   );
 }

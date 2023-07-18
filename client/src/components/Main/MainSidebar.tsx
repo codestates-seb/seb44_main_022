@@ -1,25 +1,26 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-
 const SidebarContainer = styled.div`
   position: fixed;
-  top: 57%;
+  top: 48%;
   left: 4%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transform: translateY(-50%);
   padding: 10px;
   height: 90px;
   border-color: var(--purple);
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   border-radius: 20px;
+  z-index: 10;
 `;
 
 interface SidebarItemProps {
   active: boolean;
   clicked: boolean;
+  onClick: () => void;
 }
 
 const SidebarItem = styled.div<SidebarItemProps>`
@@ -62,18 +63,16 @@ const SidebarItem = styled.div<SidebarItemProps>`
 `;
 
 interface MainSidebarProps {
-  fullpageApi: {
-    moveTo: (section: number) => void;
-  };
   activeSection: number;
+  handleScrollToSection: (section: number) => void;
 }
 
-function MainSidebar({ fullpageApi, activeSection }: MainSidebarProps) {
+const MainSidebar: React.FC<MainSidebarProps> = ({ activeSection, handleScrollToSection }) => {
   const [clickedSection, setClickedSection] = useState(0);
 
   const handleClick = (section: number) => {
     setClickedSection(section);
-    fullpageApi.moveTo(section);
+    handleScrollToSection(section);
     setTimeout(() => setClickedSection(0), 300);
   };
 
@@ -96,6 +95,6 @@ function MainSidebar({ fullpageApi, activeSection }: MainSidebarProps) {
       />
     </SidebarContainer>
   );
-}
+};
 
 export default MainSidebar;
