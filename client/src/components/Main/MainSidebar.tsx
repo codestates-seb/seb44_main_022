@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
+
 const SidebarContainer = styled.div`
   position: fixed;
   top: 48%;
@@ -9,7 +10,7 @@ const SidebarContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 10px;
-  height: 90px;
+  height: 150px;
   border-color: var(--purple);
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -92,6 +93,16 @@ const MainSidebar: React.FC<MainSidebarProps> = ({ activeSection, handleScrollTo
         active={activeSection === 3}
         clicked={clickedSection === 3}
         onClick={() => handleClick(3)}
+      />
+      <SidebarItem
+        active={activeSection === 4}
+        clicked={clickedSection === 4}
+        onClick={() => handleClick(4)}
+      />
+      <SidebarItem
+        active={activeSection === 5}
+        clicked={clickedSection === 5}
+        onClick={() => handleClick(5)}
       />
     </SidebarContainer>
   );

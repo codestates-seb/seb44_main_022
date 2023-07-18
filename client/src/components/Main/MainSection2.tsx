@@ -35,7 +35,7 @@ const TextContainer = styled.div`
 
 function MainSection2({ id }: { id: string }) {
   return (
-    <SectionContainer id={id} className="section">
+    <SectionContainer id={id} className="section3">
       <ImageContainer>
         <Image src={customCake1} alt="Custom Cake" />
       </ImageContainer>
