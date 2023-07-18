@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fullpage/react-fullpage": "^0.1.40",
     "@react-oauth/google": "^0.11.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/daum-postcode": "^2.0.0",
