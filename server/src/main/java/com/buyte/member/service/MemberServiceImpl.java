@@ -3,8 +3,11 @@ package com.buyte.member.service;
 import com.buyte.exception.BusinessLogicException;
 import com.buyte.exception.ExceptionCode;
 import com.buyte.member.auth.jwt.JwtTokenizer;
+import com.buyte.member.dto.MemberDto;
 import com.buyte.member.entity.Member;
+import com.buyte.member.mapper.MemberMapper;
 import com.buyte.member.repository.MemberRepository;
+import com.buyte.order.entity.Orders;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -24,6 +28,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenizer jwtTokenizer;
+    private final MemberMapper mapper;
 
     @Override
     public Member createMember(Member member) {
@@ -86,6 +91,14 @@ public class MemberServiceImpl implements MemberService {
                 .ifPresent(memberName -> findMember.setMemberName(memberName));
 
         return memberRepository.save(findMember);
+    }
+
+    @Override
+    public MemberDto.OrderResponse getOrderDetails(long memberId, int page, int size) {
+        Member findMember = findVerifiedMember(memberId);
+        List<Orders> orders = findMember.getOrderList();
+        MemberDto.OrderResponse response = mapper.ordersToOrderResponse(orders, page, size);
+        return response;
     }
 
     private Member findVerifiedMember(long memberId) {
