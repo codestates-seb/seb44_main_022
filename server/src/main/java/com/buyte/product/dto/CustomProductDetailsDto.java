@@ -8,7 +8,6 @@ import lombok.Data;
 @Data
 @Builder
 public class CustomProductDetailsDto {
-    private List<IngredientInfoDto> baseIngredientList;
     private List<IngredientInfoDto> creamIngredientList;
     private List<IngredientInfoDto> toppingIngredientList;
     private List<IngredientInfoDto> fillingIngredientList;
