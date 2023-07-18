@@ -39,7 +39,7 @@ interface PageButtonsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     active?: boolean;
   }
 function Pagination({data}:PaginationProps) {
-   // const numPages = Math.ceil(total / limit);
+// const numPages = Math.ceil(total / limit);
    const [currentPage, setCurrentPage] = useState(1);
    const  totalPages  = data.pageInfo.totalPage;
 //    const handlePageChange = (page:number) => {
@@ -63,7 +63,7 @@ function Pagination({data}:PaginationProps) {
       <>
       <Nav>
         <PrevButton onClick={goToPreviousPage}><AiOutlineArrowLeft/></PrevButton>
-        {Array.from(Array(totalPages), (x, index) => index + 1).map((page) => (
+        {Array.from(Array(totalPages), (_, index) => index + 1).map((page) => (
         <PageButtons
           key={page}
           onClick={() => goToPage(page)}
@@ -78,10 +78,6 @@ function Pagination({data}:PaginationProps) {
       </>
     );
   }
-
-
-
-
 export default Pagination;
 
 const baseButtonStyles = css`
@@ -92,30 +88,29 @@ const baseButtonStyles = css`
   color: var(--dark-gray);
   border-radius: 50%;
   margin: 0 0.2rem;
-  :hover {
-    background-color: var(--light-gray);
-    transition: all 0.5s ease;
-  }
   
 `;
 
 const PrevButton = styled.button<PageButtonsProps>`
-  ${baseButtonStyles}
-  
+  ${baseButtonStyles}  
+  :hover {
+    background-color: var(--light-gray);
+    transition: all 0.5s ease;
+  }  
 `;
 
 const NextButton = styled.button<PageButtonsProps>`
   ${baseButtonStyles}
+  :hover {
+    background-color: var(--light-gray);
+    transition: all 0.5s ease;
+  }  
 `;
 
 const PageButtons = styled.button<PageButtonsProps>`
   ${baseButtonStyles}
   color: var(--white);
-  background-color: ${({ active }) => (active ? 'var(--purple)' : 'gray')};
-  :hover{
-    background-color: var(--blue-purple);
-    transition: all 0.5s ease;
-  }
+  background-color: ${({ active }) => (active ? 'var(--blue-purple)' : 'var(--purple)')};
 `;
 
 const Nav = styled.nav`

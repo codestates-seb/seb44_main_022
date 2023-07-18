@@ -10,6 +10,8 @@ import Pagination from './Paigination';
 
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
 //엥 근데 이거 Auth로 받은 이름은 어떻게 처리함? 
+//날짜 받아서 예쁘게 가공하는 함수 만들어야 됨. 
+//NO 나오는 배열 순서 세는 함수 만들어야 됨.
  interface Product {
     cartId: number;
     productId: number;
@@ -17,6 +19,7 @@ import Pagination from './Paigination';
     productImagePath: string;
     productPrice: number;
     productCount: number;
+    storeId: number;
   }
   
   interface OrderData {
@@ -83,6 +86,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1626094309830-abbb0c99da4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80",
             productPrice: 3333,
             productCount: 1,
+            storeId: 1
           },
           {
             cartId: 2,
@@ -91,6 +95,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1588861472194-6883d8b5e552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
             productPrice: 2222,
             productCount: 1,
+            storeId: 1
           },
         ],
         totalPrice: 5555,
@@ -107,6 +112,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1631397833242-fc6213046352?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
             productPrice: 100,
             productCount: 1,
+            storeId: 1
           },
           {
             cartId: 4,
@@ -115,6 +121,7 @@ useEffect(() => {
             productImagePath: "https://plus.unsplash.com/premium_photo-1664547606517-42d7b1113290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
             productPrice: 300,
             productCount: 2,
+            storeId: 1
           },
           {
             cartId: 5,
@@ -123,6 +130,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
             productPrice: 500,
             productCount: 3,
+            storeId: 1
           },
         ],
         totalPrice: 9999,
@@ -139,6 +147,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1586657263857-346c4b712ff5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
             productPrice: 100,
             productCount: 1,
+            storeId: 1
           },
           
           {
@@ -148,6 +157,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
             productPrice: 500,
             productCount: 3,
+            storeId: 1
           },
         ],
         totalPrice: 3000,
@@ -164,6 +174,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1599940778173-e276d4acb2bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=855&q=80",
             productPrice: 100,
             productCount: 1,
+            storeId: 1
           },
           {
             cartId: 4,
@@ -172,6 +183,7 @@ useEffect(() => {
             productImagePath: "https://plus.unsplash.com/premium_photo-1664547606517-42d7b1113290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
             productPrice: 300,
             productCount: 2,
+            storeId: 1
           },
           {
             cartId: 5,
@@ -180,6 +192,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1551024601-bec78aea704b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80",
             productPrice: 500,
             productCount: 3,
+            storeId: 1
           },
         ],
         totalPrice: 355,
@@ -196,6 +209,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1598373182133-52452f7691ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80",
             productPrice: 100,
             productCount: 1,
+            storeId: 1
           },
           {
             cartId: 4,
@@ -204,6 +218,7 @@ useEffect(() => {
             productImagePath: "https://plus.unsplash.com/premium_photo-1664547606517-42d7b1113290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
             productPrice: 300,
             productCount: 2,
+            storeId: 1
           }
         ],
         totalPrice: 888,
@@ -220,6 +235,7 @@ useEffect(() => {
             productImagePath: "https://images.unsplash.com/photo-1530610476181-d83430b64dcd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80",
             productPrice: 100,
             productCount: 1,
+            storeId: 1
           },
           {
             cartId: 4,
@@ -228,6 +244,7 @@ useEffect(() => {
             productImagePath: "https://plus.unsplash.com/premium_photo-1664547606517-42d7b1113290?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80",
             productPrice: 300,
             productCount: 2,
+            storeId: 1
           }
         ],
         totalPrice: 888,
@@ -239,7 +256,7 @@ useEffect(() => {
       page: 1,
       size: 20,
       totalElement: 2,
-      totalPage: 1,
+      totalPage: 2,
     },
   };
   return <div style={{ marginTop: '160px', display: 'flex', justifyContent:'center' }}>

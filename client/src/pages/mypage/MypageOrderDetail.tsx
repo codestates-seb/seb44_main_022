@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { CartListName } from '../../components/CartItem/CartItem.style';
 
 interface Product {
@@ -8,6 +9,7 @@ interface Product {
   productImagePath: string;
   productPrice: number;
   productCount: number;
+  storeId:number;
 }
 
 interface MypageOrderDetailProps {
@@ -15,6 +17,7 @@ interface MypageOrderDetailProps {
 }
 
 const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
+  const navigate = useNavigate();
   return (
     <CartListDetail>
       <div style={{ display: 'flex', fontSize: '14px' }}>
@@ -22,7 +25,9 @@ const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
         <CartListName grow={5} minWidth={40} style={{ padding: ' 1rem', justifyContent: 'flex-start' }}>
           <img
             src={product.productImagePath}
-            style={{ width: '4rem', height: '4rem', objectFit: 'cover' }}
+            style={{ width: '4rem', height: '4rem', objectFit: 'cover', cursor:"pointer" }}
+            onClick={() => navigate(`/store/${product.storeId}`)}
+            //여긴 storeId 받으면 고치기
           />
         </CartListName>
         <CartListName
@@ -34,7 +39,7 @@ const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
             fontWeight: 'bold',
             paddingLeft: '1.5rem',
             paddingRight: '7rem',
-            lineHeight: '1.4',
+            lineHeight: '1.4'
           }}
         >
           {product.productName} 

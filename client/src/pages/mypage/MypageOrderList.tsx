@@ -10,6 +10,7 @@ interface Product {
     productImagePath: string;
     productPrice: number;
     productCount: number;
+    storeId: number;
   }
   
   interface OrderData {
@@ -95,5 +96,5 @@ const slideDown = keyframes`
 `;
 
 const SlideDown = styled.div`
-  animation: ${slideDown} 2s ease;
+  animation: ${slideDown} 1s ease;
 `;

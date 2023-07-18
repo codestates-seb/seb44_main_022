@@ -12,7 +12,6 @@ interface EditableNicknameProps {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(event.target.value);
     };
-
     const handleSaveClick = () => {
       if (inputValue.trim() !== '') {
         onNicknameChange(inputValue);
