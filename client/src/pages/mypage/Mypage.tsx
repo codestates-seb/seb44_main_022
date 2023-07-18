@@ -7,12 +7,7 @@ import MypageOrderList from './MypageOrderList';
 import EditableNickname from './EditableNickname';
 
 
-//처음에 회원의 이름, 정보 받아오기 
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
-//https://buyte.site/members로 patch 보내기 
-//Content-Type:application/json
-//Authorization:{-}
-//{  "memberName": "변경이름"}
 //엥 근데 이거 Auth로 받은 이름은 어떻게 처리함? 
  interface Product {
     cartId: number;
@@ -51,7 +46,6 @@ function Mypage() {
       const url = `/members`;
       const response = await axiosInstance.get(url);      
       const data = response.data;    
-      console.log(data)
       setNickname(data.memberName)
     } catch (error) {
       console.error('Error fetching store data:', error);
@@ -84,7 +78,7 @@ useEffect(() => {
           {
             cartId: 1,
             productId: 1,
-            productName: "아이템이름1",
+            productName: "맛집도넛",
             productImagePath: "~",
             productPrice: 3333,
             productCount: 1,
@@ -92,7 +86,7 @@ useEffect(() => {
           {
             cartId: 2,
             productId: 2,
-            productName: "아이템이름2",
+            productName: "도너츠링",
             productImagePath: "~",
             productPrice: 2222,
             productCount: 1,
@@ -108,18 +102,26 @@ useEffect(() => {
           {
             cartId: 3,
             productId: 3,
-            productName: "아이템이름3",
+            productName: "맛난빵",
             productImagePath: "~",
-            productPrice: 4444,
+            productPrice: 100,
             productCount: 1,
           },
           {
             cartId: 4,
             productId: 4,
-            productName: "아이템이름4",
+            productName: "딜리샤스",
             productImagePath: "~",
-            productPrice: 5555,
-            productCount: 1,
+            productPrice: 300,
+            productCount: 2,
+          },
+          {
+            cartId: 5,
+            productId: 5,
+            productName: "슈크링",
+            productImagePath: "~",
+            productPrice: 500,
+            productCount: 3,
           },
         ],
         totalPrice: 9999,
@@ -136,7 +138,7 @@ useEffect(() => {
   };
   return <div style={{ marginTop: '160px', display: 'flex', justifyContent:'center' }}>
     <MyPageWrapper>
-      <p style={{fontWeight:'800', color: 'var(--dark-gray)', textAlign:'center', marginBottom:'30px', fontSize:"18px"}}>안녕하세요, <span style={{color: 'var(--purple)'}}>{nickname}</span>님!</p>
+      <WelcomeText>안녕하세요, <span style={{color: 'var(--purple)'}}>{nickname}</span>님!</WelcomeText>
       <section style={{borderTop:"2px solid var(--light-purple)", margin:"20px", padding:"30px"}}>
         <MyInfoSection>
           <img src="../../../src/assets/images/profile.png" style={{width: '200px', paddingRight:'10px'}}/>
@@ -151,7 +153,7 @@ useEffect(() => {
           <>
             <h3>{nickname}</h3>
             <span
-              style={{ fontSize: '14px', color: 'var(--purple)', cursor: 'pointer' }}
+              style={{ fontSize: '14px', color: 'var(--purple)', cursor: 'pointer'}}
               onClick={() => setEditMode(!editMode)}
             >
               회원 정보 수정
@@ -162,7 +164,7 @@ useEffect(() => {
         </MyInfoSection>
       </section>
       <MyOrderSection>
-        <h2 style={{fontWeight:'800', fontSize:'18px', color:'var(--light-gray)', marginBottom:'10px', marginLeft: '20px'}}>나의 주문</h2>
+        <h2>나의 주문</h2>
        <MyOrderLists>
        <MypageOrderTab />
         {data.orderdata.length===0 ?
@@ -170,12 +172,11 @@ useEffect(() => {
           <BsFillGearFill style={{fontSize:'30px', color: 'var(--dark-gray)', margin: '15px'}}/>
           <p style={{color: 'var(--dark-gray)', fontWeight:'800'}}>주문내역이 없습니다.</p>
           </>
-        :
-        <>
-        <MypageOrderList products={data.orderdata[0]}/>
-        <MypageOrderList products={data.orderdata[1]}/>
-        <MypageOrderList products={data.orderdata[2]}/>
-        </>}
+        :(
+          data.orderdata.map((order) => (
+            <MypageOrderList key={order.orderId} products={order} />
+          ))
+        )}
       </MyOrderLists>
       </MyOrderSection>
     </MyPageWrapper>
@@ -187,32 +188,43 @@ const MyPageWrapper = styled.section`
   width: 70%;
   margin-bottom: 80px;
 `
+const WelcomeText = styled.p`
+   font-weight:800;
+   color: var(--dark-gray);
+   text-align:center; 
+   margin-bottom:30px; 
+   font-size:18px;
+`
 const MyInfoSection = styled.section`
   width: 100%;
   display: flex;
   padding: 1rem; 
-  /* flex-direction: column;
-  :after{
-    content:'';
-    width: 100%;
-    height: 1px;
-    background-color: var(--dark-gray);
-  } */
 `
 const MyInfoDetail = styled.section`
   margin-left: 2rem;
-  margin-top: 3rem;
+  margin-top: 3.3rem;
+  min-width: 300px;
   h3 {
     color: var(--light-gray);
     margin-bottom: 2.3rem;
     font-size: 18px;
     font-weight: 800;
   }
+  @media (max-width: 780px) {
+    margin-left: 0.5rem;
+}
 `
 const MyOrderSection= styled.section`
   padding: 3rem 1rem;
   border: 1px solid var(--light-purple);
   border-radius: 10px;
+  h2 {
+  font-weight:800;
+  font-size:18px; 
+  color:var(--light-gray);
+  margin-bottom:10px; 
+  margin-left: 20px
+  }
 `
 const MyOrderLists= styled.section`
 padding: 1rem;
