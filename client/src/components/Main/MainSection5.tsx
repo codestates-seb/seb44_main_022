@@ -37,10 +37,10 @@ const Section3 = styled.div`
   }
 `;
 
-function MainSection3() {
+function MainSection5({ id }: { id: string }) {
   return (
     <div className="section">
-      <Section3>
+      <Section3 id={id} className="section4">
         <Section3Card className="card">
           <Section3Icon className="front" src={section3_1} />
           <Section3Icon className="back" src={section3_2} />
@@ -50,4 +50,4 @@ function MainSection3() {
   );
 }
 
-export default MainSection3;
+export default MainSection5;
