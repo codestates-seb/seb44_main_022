@@ -53,3 +53,13 @@ div{
   width: 100%;
 }
 `
+
+export const SizeSelect = styled.select`
+  margin-right: 1rem;
+  padding: 5px;
+  border: 1px solid var(--light-gray);
+  background-color: var(--white);
+  color: var(--dark-gray);
+  border-radius: 5px;
+  outline: 1px solid var(--light-purple);
+`;

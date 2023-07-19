@@ -6,14 +6,16 @@ import MypageOrderTab from './MypageOrderTab';
 import MypageOrderList from './MypageOrderList';
 import EditableNickname from './EditableNickname';
 import Pagination from './Pagination';
-import { MyPageWrapper, WelcomeText, MyInfoSection, MyInfoDetail, MyOrderSection, MyOrderLists } from './Mypage.style';
+import { MyPageWrapper, WelcomeText, MyInfoSection, MyInfoDetail, MyOrderSection, MyOrderLists, SizeSelect } from './Mypage.style';
 
-//페이지 수 선택 가능하게 하고십당.....
 function Mypage() {
   const [editMode, setEditMode] = useState(false);
   const [nickname, setNickname] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
+  const [selectedSize, setSelectedSize] = useState(5);
+  const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
+
+
   const fetchData = async () => {  
     try {
       const url = `/members`;
@@ -28,7 +30,7 @@ const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
 useEffect(() => {
     fetchData();
     fetchOrderList(currentPage);
-  }, [currentPage]);
+  }, [currentPage,selectedSize]);
 
   const handleNicknameChange = async (newNickname: string) => {
     const formData = {
@@ -45,8 +47,8 @@ useEffect(() => {
     }
   };
 
-  const fetchOrderList = async (page:number) => {   
-    const size=5;
+  const fetchOrderList = async (page:number) => { 
+    const size = selectedSize; 
       try {
         const response = await axiosInstance.get(`/members/orders?page=${page}&size=${size}`);
         setFilteredOrderlist(response.data);
@@ -60,6 +62,12 @@ useEffect(() => {
   const handlePageChange = async (page: number) => {
     setCurrentPage(page);
     fetchOrderList(page);
+  };
+
+  const handleSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newSelectedSize = parseInt(event.target.value, 10);
+    setSelectedSize(newSelectedSize);
+    setCurrentPage(1); 
   };
 
   if (filteredOrderlist === null) {    
@@ -96,7 +104,14 @@ useEffect(() => {
         </MyInfoSection>
       </section>
       <MyOrderSection>
-        <h2>나의 주문</h2>
+        <div style={{display:"flex", justifyContent:"space-between"}}>
+          <h2>나의 주문</h2>
+          <SizeSelect onChange={handleSizeChange} value={selectedSize}>
+            <option value={3}>3개씩 보기</option>
+            <option value={5}>5개씩 보기</option>
+            <option value={10}>10개씩 보기</option>
+          </SizeSelect>
+        </div>
        <MyOrderLists>
        <MypageOrderTab />
         {filteredOrderlist.orderInfos.length===0 ?

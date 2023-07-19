@@ -3,7 +3,6 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import {PaginationProps, PageButtonsProps } from '../../assets/interface/Mypage.interface'
 function Pagination({data, currentPage, onPageChange}:PaginationProps) {
-  console.log(data)
    const  totalPages  = data.pageInfo.totalPage;
    const goToPreviousPage = () => {
     if (currentPage > 1) {
