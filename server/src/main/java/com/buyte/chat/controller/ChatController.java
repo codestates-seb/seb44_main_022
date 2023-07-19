@@ -1,6 +1,7 @@
 package com.buyte.chat.controller;
 
 import com.buyte.chat.dto.ChatReqDto;
+import com.buyte.chat.dto.ChatResDto;
 import com.buyte.chat.dto.RoomRequest;
 import com.buyte.chat.dto.RoomResponse;
 import com.buyte.chat.service.ChatService;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,6 +44,16 @@ public class ChatController {
     @GetMapping("/room/{roomId}")
     public ResponseEntity findChats(@PathVariable @Positive Long roomId) {
 
-        return ResponseEntity.ok(chatService.findAllChat(roomId));
+        List<ChatResDto> allChat = chatService.findAllChat(roomId);
+
+        return ResponseEntity.ok(allChat);
+    }
+
+    @GetMapping("/room/seller")
+    public ResponseEntity findChatRoom() {
+
+        List<RoomResponse> allRoom = roomService.findAllRoom();
+
+        return ResponseEntity.ok(allRoom);
     }
 }
