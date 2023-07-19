@@ -56,16 +56,16 @@ const baseButtonStyles = css`
 const PrevButton = styled.button<PageButtonsProps>`
   ${baseButtonStyles}  
   :hover {
-    background-color: var(--light-gray);
-    transition: all 0.5s ease;
+    background-color: #ccc;
+    transition: all 0.3s ease;
   }  
 `;
 
 const NextButton = styled.button<PageButtonsProps>`
   ${baseButtonStyles}
   :hover {
-    background-color: var(--light-gray);
-    transition: all 0.5s ease;
+    background-color: #ccc;
+    transition: all 0.3s ease;
   }  
 `;
 
@@ -73,6 +73,10 @@ const PageButtons = styled.button<PageButtonsProps>`
   ${baseButtonStyles}
   color: var(--white);
   background-color: ${({ active }) => (active ? 'var(--blue-purple)' : 'var(--purple)')};
+  &:hover {
+    background-color: ${({ active }) => (active ? 'var(--blue-purple)' : '#8d8ad3')};
+    transition: all 0.3s ease;
+  }
 `;
 
 const Nav = styled.nav`

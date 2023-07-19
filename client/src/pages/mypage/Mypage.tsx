@@ -8,7 +8,6 @@ import EditableNickname from './EditableNickname';
 import Pagination from './Pagination';
 import { MyPageWrapper, WelcomeText, MyInfoSection, MyInfoDetail, MyOrderSection, MyOrderLists } from './Mypage.style';
 
-//페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
 //페이지 수 선택 가능하게 하고십당.....
 function Mypage() {
   const [editMode, setEditMode] = useState(false);
@@ -25,11 +24,11 @@ const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
       console.error('Error fetching store data:', error);
     }
   };
+
 useEffect(() => {
     fetchData();
     fetchOrderList(currentPage);
   }, [currentPage]);
-  // currentPage가 변경될 때마다 useEffect가 실행됩니다.
 
   const handleNicknameChange = async (newNickname: string) => {
     const formData = {
@@ -46,7 +45,7 @@ useEffect(() => {
     }
   };
 
-  const fetchOrderList = async () => {   
+  const fetchOrderList = async (page:number) => {   
     const size=5;
       try {
         const response = await axiosInstance.get(`/members/orders?page=${page}&size=${size}`);
@@ -60,6 +59,7 @@ useEffect(() => {
 
   const handlePageChange = async (page: number) => {
     setCurrentPage(page);
+    fetchOrderList(page);
   };
 
   if (filteredOrderlist === null) {    
