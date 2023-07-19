@@ -10,6 +10,7 @@ import section3_4 from './section3-4.png';
 import section3_5 from './section3-5.png';
 import heading from './heading.png';
 import next from './next.png';
+import prev from './prev.png';
 export {
   section1_1,
   section1_2,
@@ -23,4 +24,5 @@ export {
   section3_5,
   heading,
   next,
+  prev,
 };

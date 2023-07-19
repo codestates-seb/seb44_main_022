@@ -3,8 +3,8 @@ import styled, { css } from 'styled-components';
 
 const SidebarContainer = styled.div`
   position: fixed;
-  top: 48%;
-  left: 4%;
+  top: 50%;
+  left: 3%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
