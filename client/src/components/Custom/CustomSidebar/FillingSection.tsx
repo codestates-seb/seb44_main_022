@@ -5,13 +5,13 @@ const SectionContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: 42px;
+  margin-bottom: 30px;
   margin-left: 11px;
 `;
 
 const SectionTitle = styled.p`
   font-family: 'Open Sans', cursive;
-  font-size: 16px;
+  font-size: 20px;
   color: var(--light-black);
   text-align: left;
   margin-left: 12px;
@@ -19,30 +19,33 @@ const SectionTitle = styled.p`
 `;
 
 const ContentItem = styled.div`
-  width: 90%;
-  height: 80px;
+  margin-left: 1.5%;
+  width: 88%;
+  height: 130px;
   background-color: #fff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   display: flex;
   align-items: center;
-  padding: 12px;
+  padding-left: 21px;
+  padding-bottom: 10px;
 `;
-
 const ContentImage = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  border: 1px solid var(--light-gray);
-  border-radius: 4px;
+  width: 57px;
+  height: 57px;
+  margin-right: 5px;
+  border: 0.9px solid var(--light-gray);
+  border-radius: 8px;
 `;
-
 const ContentImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
   margin-top: 8px;
-  height: 70px;
 `;
 
 interface Filling {

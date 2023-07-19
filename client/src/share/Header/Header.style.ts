@@ -86,6 +86,7 @@ export const HeaderContainer = styled.div`
   z-index: 1;
   align-items: center;
   justify-content: space-between;
+  background-color: #fcfcffaa;
 `;
 
 export const AuthRelativeContainer = styled.div`
