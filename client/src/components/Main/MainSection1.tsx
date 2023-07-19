@@ -16,49 +16,43 @@ type ArrowProps = {
   onClick?: () => void;
 };
 
-function NextArrow(props: ArrowProps) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: 'block',
-        backgroundColor: 'transparent',
-        right: '0',
-        width: '150px',
-        height: '50px',
-      }}
-      onClick={onClick}
-    >
-      <i className="fas fa-chevron-right" style={{ fontSize: '48px', color: 'grey' }} />
-    </div>
-  );
-}
+const NextArrow = ({ className, style, onClick }: ArrowProps) => (
+  <div
+    className={className}
+    style={{
+      ...style,
+      display: 'block',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'contain',
+      right: '0',
+      width: '150px',
+      height: '50px',
+    }}
+    onClick={onClick}
+  />
+);
 
-function PrevArrow(props: ArrowProps) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: 'block',
-        backgroundColor: 'transparent',
-        left: '20px',
-        zIndex: 2,
-        width: '50px',
-        height: '50px',
-      }}
-      onClick={onClick}
-    >
-      <i className="fas fa-chevron-left" style={{ fontSize: '48px', color: 'grey' }} />
-    </div>
-  );
-}
+const PrevArrow = ({ className, style, onClick }: ArrowProps) => (
+  <div
+    className={className}
+    style={{
+      ...style,
+      display: 'block',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'contain',
+      left: '120px',
+      zIndex: 2,
+      width: '50px',
+      height: '50px',
+    }}
+    onClick={onClick}
+  />
+);
 
 const settings = {
-  dots: false, // dots: true에서 dots: false로 변경
+  dots: false,
   infinite: true,
   speed: 500,
   slidesToShow: 1,
@@ -66,6 +60,8 @@ const settings = {
   arrows: true,
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
+  autoplay: true,
+  autoplaySpeed: 2000,
 };
 
 const Section1_img = styled.img`

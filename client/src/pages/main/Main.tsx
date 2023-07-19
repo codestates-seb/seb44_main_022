@@ -91,10 +91,10 @@ function Main() {
         <MainSection1 id={'section1'} />
       </AnimatedSection>
       <AnimatedSection className={activeSection === 2 ? 'active' : ''}>
-        <MainSection2 id={'section2'} />
+        <MainSection2 id={'section2'} isActive={activeSection === 2} />
       </AnimatedSection>
       <AnimatedSection className={activeSection === 3 ? 'active' : ''}>
-        <MainSection3 id={'section3'} />
+        <MainSection3 id={'section3'} isActive={activeSection === 3} />
       </AnimatedSection>
       <AnimatedSection className={activeSection === 4 ? 'active' : ''}>
         <MainSection4 id={'section4'} />
