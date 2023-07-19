@@ -1,17 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { CartListName } from '../../components/CartItem/CartItem.style';
+import {Product} from '../../assets/interface/Mypage.interface'
 
-
-interface Product {
-  cartId: number;
-  productId: number;
-  productName: string;
-  productImagePath: string;
-  productPrice: number;
-  productCount: number;
-  storeId:number;
-}
 
 interface MypageOrderDetailProps {
   product: Product;
@@ -25,7 +16,7 @@ const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
         <CartListName grow={5} minWidth={5} style={{ justifyContent: 'flex-start', marginRight: '0' }}></CartListName>
         <CartListName grow={5} minWidth={40} style={{ padding: ' 1rem', justifyContent: 'flex-start' }}>
           <img
-            src={product.productImagePath}
+            src={product.productImage}
             style={{ width: '4rem', height: '4rem', objectFit: 'cover', cursor:"pointer" }}
             onClick={() => navigate(`/store/${product.storeId}`)}
             //여긴 storeId 받으면 고치기

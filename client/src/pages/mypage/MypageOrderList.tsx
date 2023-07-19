@@ -2,35 +2,14 @@ import styled, {keyframes} from 'styled-components';
 import { useState } from 'react';
 import { BsArrowDownSquare } from 'react-icons/bs';
 import { CartListName } from '../../components/CartItem/CartItem.style';
+import { OrderData } from '../../assets/interface/Mypage.interface'
 import MypageOrderDetail from './MypageOrderDetail';
-import DateFormatter from './DateFormatter'
-interface Product {
-    cartId: number;
-    productId: number;
-    productName: string;
-    productImagePath: string;
-    productPrice: number;
-    productCount: number;
-    storeId: number;
-  }
-  
-  interface OrderData {
-    orderId: number;
-    orderProducts: Product[];
-    totalPrice: number;
-    orderTimestamp: string;
-    deliveryStatus: string;
-  }
-  
-  interface MypageOrderListProps {
+import DateFormatter from './DateFormatter';  
+
+interface MypageOrderListProps {
     products: OrderData;
   }
-
-
-
-  
 function MypageOrderList({ products }: MypageOrderListProps) {
-    //console.log(products);
     const [isOpened, setIsOpened] = useState(false);
     const handleListClick = () => {
         setIsOpened(!isOpened);
@@ -42,12 +21,12 @@ function MypageOrderList({ products }: MypageOrderListProps) {
       </CartListName>
       <CartListName grow={5} minWidth={40} style={{ padding: ' 1rem', justifyContent:'flex-start' }}>
         <img
-          src={products.orderProducts[0].productImagePath}
+          src={products.orderProductInfos[0].productImage}
           style={{ width: '4rem', height: '4rem', objectFit: 'cover' }}
         />
       </CartListName>
       <CartListName grow={80} minWidth={200} style={{ fontSize: '14px', justifyContent: 'flex-start', fontWeight: 'bold', paddingLeft: "1.5rem", paddingRight:"7rem", lineHeight:'1.4'}}>
-        {products.orderProducts[0].productName} 포함 총 <span style={{color:"var(--dark-purple)", marginLeft:"5px"}}>{products.orderProducts.length}</span>건
+        {products.orderProductInfos[0].productName} 포함 총 <span style={{color:"var(--dark-purple)", marginLeft:"5px"}}>{products.orderProductInfos.length}</span>건
       </CartListName>
       <CartListName grow={5} minWidth={20} style={{ fontWeight: 'bold' }}>
         {products.totalPrice}원
@@ -57,7 +36,7 @@ function MypageOrderList({ products }: MypageOrderListProps) {
         minWidth={130}
         style={{ justifyContent: 'flex-end', fontSize: '15px', paddingRight: '2rem' }}
       >
-       <DateFormatter timestamp={products.orderTimestamp}></DateFormatter>
+       <DateFormatter timestamp={products.createdAt}></DateFormatter>
       </CartListName>
       <CartListName
         grow={5}
@@ -76,7 +55,7 @@ function MypageOrderList({ products }: MypageOrderListProps) {
     </div>
     {isOpened && (
         <SlideDown>
-          {products.orderProducts.map((product, index) => (
+          {products.orderProductInfos.map((product, index) => (
             <MypageOrderDetail key={index} product={product} />
           ))}
         </SlideDown>

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { BsFillGearFill } from 'react-icons/bs';
 import  { useState, useEffect } from 'react';
 import axiosInstance from '../../api/apis';
+import { Data } from '../../assets/interface/Mypage.interface'
 import MypageOrderTab from './MypageOrderTab';
 import MypageOrderList from './MypageOrderList';
 import EditableNickname from './EditableNickname';
@@ -10,40 +11,12 @@ import Pagination from './Paigination';
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
 //페이지 수 선택 가능하게 하고십당.....
 //NO 나오는 배열 순서 세는 함수 만들어야 됨.
- interface Product {
-    cartId: number;
-    productId: number;
-    productName: string;
-    productImagePath: string;
-    productPrice: number;
-    productCount: number;
-    storeId: number;
-  }
-  
-  interface OrderData {
-    orderId: number;
-    orderProducts: Product[];
-    totalPrice: number;
-    orderTimestamp: string;
-    deliveryStatus: string;
-  }
-  
-  interface PageInfo {
-    page: number;
-    size: number;
-    totalElement: number;
-    totalPage: number;
-  }
-  
-  interface Data {
-    orderdata: OrderData[];
-    pageInfo: PageInfo;
-  }
+
 
 function Mypage() {
   const [editMode, setEditMode] = useState(false);
   const [nickname, setNickname] = useState('');
-  const [orderlist, setOrderlist] = useState([]);
+  const [orderlist, setOrderlist] = useState<Data | null>(null);
   console.log(orderlist)
   const fetchData = async () => {  
     try {
@@ -89,7 +62,7 @@ useEffect(() => {
     
   };
 
-  const data: Data = {
+  /*const data: Data = {
     orderdata: [
       {
         orderId: 1,
@@ -273,7 +246,12 @@ useEffect(() => {
       totalElement: 2,
       totalPage: 2,
     },
-  };
+  };*/
+
+  if (orderlist === null) {
+    return <div style={{ marginTop: '160px', textAlign: 'center' }}>로딩 중...</div>;
+  }
+
   return <div style={{ marginTop: '160px', display: 'flex', justifyContent:'center' }}>
     <MyPageWrapper>
       <WelcomeText>안녕하세요, <span style={{color: 'var(--purple)'}}>{nickname}</span>님!</WelcomeText>
@@ -305,18 +283,18 @@ useEffect(() => {
         <h2>나의 주문</h2>
        <MyOrderLists>
        <MypageOrderTab />
-        {data.orderdata.length===0 ?
+        {orderlist.orderInfos.length===0 ?
         <>
           <BsFillGearFill style={{fontSize:'30px', color: 'var(--dark-gray)', margin: '15px'}}/>
           <p style={{color: 'var(--dark-gray)', fontWeight:'800'}}>주문내역이 없습니다.</p>
           </>
         :(
-          data.orderdata.map((order) => (
+          orderlist.orderInfos.map((order) => (
             <MypageOrderList key={order.orderId} products={order} />
           ))
         )}
       </MyOrderLists>
-      <Pagination data={data}/>
+      <Pagination data={orderlist}/>
       </MyOrderSection>      
     </MyPageWrapper>
   </div>;

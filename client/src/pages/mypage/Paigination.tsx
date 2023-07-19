@@ -4,20 +4,22 @@ import { ButtonHTMLAttributes } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 interface Product {
-    cartId: number;
+    orderProductId: number;
     productId: number;
     productName: string;
-    productImagePath: string;
+    productImage: string;
     productPrice: number;
     productCount: number;
+    storeId: number;
   }
   
   interface OrderData {
     orderId: number;
-    orderProducts: Product[];
+    orderAddress: string;
+    orderProductInfos: Product[];
     totalPrice: number;
-    orderTimestamp: string;
-    deliveryStatus: string;
+    createdAt: string;
+    orderStatus: string;
   }
   
   interface PageInfo {
@@ -28,11 +30,12 @@ interface Product {
   }
   
   interface Data {
-    orderdata: OrderData[];
+    orderInfos: OrderData[];
     pageInfo: PageInfo;
   }
 
-interface PaginationProps {
+
+  interface PaginationProps {
     data: Data; 
   }
 interface PageButtonsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
