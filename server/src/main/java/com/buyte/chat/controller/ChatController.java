@@ -1,9 +1,6 @@
 package com.buyte.chat.controller;
 
-import com.buyte.chat.dto.ChatReqDto;
-import com.buyte.chat.dto.ChatResDto;
-import com.buyte.chat.dto.RoomRequest;
-import com.buyte.chat.dto.RoomResponse;
+import com.buyte.chat.dto.*;
 import com.buyte.chat.service.ChatService;
 import com.buyte.chat.service.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +49,7 @@ public class ChatController {
     @GetMapping("/room/seller")
     public ResponseEntity findChatRoom() {
 
-        List<RoomResponse> allRoom = roomService.findAllRoom();
+        List<SellerRoomDto> allRoom = roomService.findAllRoom();
 
         return ResponseEntity.ok(allRoom);
     }

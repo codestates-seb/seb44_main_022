@@ -2,6 +2,7 @@ package com.buyte.chat.service;
 
 import com.buyte.chat.dto.RoomRequest;
 import com.buyte.chat.dto.RoomResponse;
+import com.buyte.chat.dto.SellerRoomDto;
 import com.buyte.chat.entity.ChatRoom;
 import com.buyte.chat.repository.ChatRoomRepository;
 import com.buyte.member.auth.utils.SecurityUtil;
@@ -11,8 +12,10 @@ import com.buyte.store.entity.Store;
 import com.buyte.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,17 +47,24 @@ public class RoomService {
 
     }
 
-    public List<RoomResponse> findAllRoom() {
+    @Transactional
+    public List<SellerRoomDto> findAllRoom() {
 
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         Member merchant = memberRepository.findById(authenticatedMemberId).orElseThrow();
         List<ChatRoom> allChatRoom = chatRoomRepository.findAllByMerchant(merchant);
-        List<RoomResponse> allRoomDto = new ArrayList<>();
+        List<SellerRoomDto> allRoomDto = new ArrayList<>();
 
         for(ChatRoom chatRoom : allChatRoom) {
-            RoomResponse roomResponse = RoomResponse.builder().roomId(chatRoom.getRoomId())
+
+            Hibernate.initialize(chatRoom.getMerchant());
+            Hibernate.initialize(chatRoom.getCustomer());
+
+            SellerRoomDto roomResponse = SellerRoomDto.builder().roomId(chatRoom.getRoomId())
                     .senderId(chatRoom.getMerchant().getMemberId())
                     .receiverId(chatRoom.getCustomer().getMemberId())
+                    .customerName(chatRoom.getCustomer().getMemberName())
+                    .storeName(chatRoom.getMerchant().getStore().getStoreName())
                     .build();
             allRoomDto.add(roomResponse);
         }
