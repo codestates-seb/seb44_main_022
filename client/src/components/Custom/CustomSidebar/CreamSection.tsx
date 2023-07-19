@@ -13,22 +13,13 @@ const SectionContainer = styled.div`
   }
 `;
 
-const SectionTitle = styled.p`
-  font-family: 'Open Sans', cursive;
-  font-size: 20px;
-  color: var(--light-black);
-  text-align: left;
-  margin-left: 12px;
-  margin-bottom: 12px;
-`;
-
 const ContentItem = styled.div`
   margin-left: 1.5%;
   width: 88%;
-  background-color: #fff;
+  background-color: #ffffff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding-left: 13px;
+  padding-left: 8px;
   padding-bottom: 10px;
 `;
 
@@ -44,17 +35,16 @@ const ContentImage = styled.img`
     background-color: var(--gray);
   }
   &:active {
-    transform: scale(1.02);
+    background-color: var(--normal-gray);
   }
 `;
 
 const ContentImageContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(3, minmax(50px, 1fr)); // 3열로 고정
   gap: 8px;
   max-width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-top: 8px;
 `;
 
@@ -80,7 +70,31 @@ function CreamSection({ onImageDragStart, creamIngredientList }: CreamSectionPro
 
   return (
     <SectionContainer>
-      <SectionTitle>크림</SectionTitle>
+      <div
+        style={{
+          background: '#FFF4E4',
+          width: '80px',
+          height: '30px',
+          paddingTop: '6px',
+          borderRadius: '2px',
+          marginBottom: '5px',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Just Another Hand', cursive",
+            fontSize: '22px',
+            color: '#ffb144',
+            textAlign: 'left',
+            marginLeft: '12px',
+            marginBottom: '12px',
+            textShadow: '1px 1px 2px #FFADD4',
+          }}
+        >
+          CREAM.
+        </p>
+      </div>
+
       <ContentItem>
         <ContentImageContainer>
           {creamIngredientList.map((cream, index) => (

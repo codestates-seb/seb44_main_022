@@ -12,9 +12,10 @@ const Sidebar = styled.div`
   left: 0;
   width: 21%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(50px);
+  background-color: #ffec9e;
+  backdrop-filter: blur(5px);
   overflow: hidden;
+  border-right: 14px solid #cdc4aa;
 `;
 
 const SidebarContent = styled.div`

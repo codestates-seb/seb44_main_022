@@ -9,15 +9,6 @@ const SectionContainer = styled.div`
   margin-left: 11px;
 `;
 
-const SectionTitle = styled.p`
-  font-family: 'Open Sans', cursive;
-  font-size: 20px;
-  color: var(--light-black);
-  text-align: left;
-  margin-left: 12px;
-  margin-bottom: 12px;
-`;
-
 const ContentItem = styled.div`
   margin-left: 1.5%;
   width: 88%;
@@ -36,6 +27,14 @@ const ContentImage = styled.img`
   margin-right: 5px;
   border: 0.9px solid var(--light-gray);
   border-radius: 8px;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  cursor: grab;
+  &:hover {
+    background-color: var(--gray);
+  }
+  &:active {
+    background-color: var(--normal-gray);
+  }
 `;
 const ContentImageContainer = styled.div`
   display: grid;
@@ -43,7 +42,7 @@ const ContentImageContainer = styled.div`
   grid-auto-rows: 1fr;
   gap: 8px;
   max-width: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin-top: 8px;
 `;
 interface Topping {
@@ -68,7 +67,30 @@ function ToppingSection({ onImageDragStart, toppingIngredientList }: ToppingSect
 
   return (
     <SectionContainer>
-      <SectionTitle>토핑</SectionTitle>
+      <div
+        style={{
+          background: '#FFF4E4',
+          width: '80px',
+          height: '30px',
+          paddingTop: '6px',
+          borderRadius: '2px',
+          marginBottom: '5px',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Just Another Hand', cursive",
+            fontSize: '22px',
+            color: '#FF8FC7',
+            textAlign: 'left',
+            marginLeft: '12px',
+            marginBottom: '12px',
+            textShadow: '1px 1px 2px #DBDAFF',
+          }}
+        >
+          TOPPING.
+        </p>
+      </div>
       <ContentItem>
         <ContentImageContainer>
           {toppingIngredientList.map((topping, index) => (
