@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from 'styled-components';
+import { errFadeIn, errFadeOut } from '../../styles/keyframes';
 
 export const UserInputWrapper = styled.div`
   position: relative;
@@ -36,33 +37,6 @@ export const Icons = styled.div`
   color: var(--light-gray);
 `;
 
-export const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-    height: 0;
-  }
-  10% {
-    height: auto;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
-
-export const fadeOut = keyframes`
-  0% {
-    opacity: 1;
-    height: auto;
-  }
-  70% {
-    height: auto;
-  }
-  100% {
-    opacity: 0;
-    height: 0;
-  }
-`;
-
 export const ErrorBox = styled.div<{ animate: boolean; isChanged: boolean | null }>`
   color: red;
   margin: 0.25rem 0;
@@ -76,10 +50,10 @@ export const ErrorBox = styled.div<{ animate: boolean; isChanged: boolean | null
     css`
       animation: ${animate
           ? css`
-              ${fadeIn}
+              ${errFadeIn}
             `
           : css`
-              ${fadeOut}
+              ${errFadeOut}
             `}
         0.3s forwards;
     `};

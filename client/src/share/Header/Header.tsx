@@ -26,7 +26,7 @@ import HamburgerMenu from './HamburgerMenu';
 function Header() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
   const { animation, setAnimation } = useAuthAnimation();
 
   const handleResize = () => {
@@ -59,7 +59,7 @@ function Header() {
   }, [location]);
 
   return (
-    <HeaderContainer className={`${animation}`}>
+    <HeaderContainer animation={animation}>
       <HeaderLogo>
         <Link to="/">BUYTE</Link>
       </HeaderLogo>

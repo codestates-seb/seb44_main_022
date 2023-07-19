@@ -6,7 +6,6 @@ import { UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue
 import { PositionData } from '../../assets/interface/Map.interface';
 import axiosInstance from '../../api/apis';
 import useScreenResize from '../../hooks/useScreenResize';
-import ChatButton from '../Chat/Chat';
 import MapModal from './MapModal';
 import CustomMarker from './CustomMarker';
 import { MapContainer, MapPageContainer, MapPageIntroduce } from './Map.style';
@@ -64,7 +63,6 @@ function MapPage() {
 
   return (
     <MapPageContainer>
-      <ChatButton />
       <MapPageIntroduce>BUYTE에 입점된 매장을 찾아보세요!</MapPageIntroduce>
       <MapContainer>
         <Map

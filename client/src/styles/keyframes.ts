@@ -105,3 +105,40 @@ export const fadeInCenter = keyframes`
     transform: scale(1, 1);
   }
 `;
+
+export const sliceUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+`;
+export const errFadeIn = keyframes`
+  0% {
+    opacity: 0;
+    height: 0;
+  }
+  10% {
+    height: auto;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+export const errFadeOut = keyframes`
+  0% {
+    opacity: 1;
+    height: auto;
+  }
+  70% {
+    height: auto;
+  }
+  100% {
+    opacity: 0;
+    height: 0;
+  }
+`;

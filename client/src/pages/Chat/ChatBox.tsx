@@ -14,16 +14,23 @@ import {
   ChattingMessageBox,
   ChattingTextarea,
   ChattingTextareaContainer,
+  ChattingTime,
 } from './ChatBox.style';
 
-function ChatBox({ setIsOpenChatting, storeId }: ChatBoxProps) {
+function ChatBox({
+  setIsOpenChatting,
+  storeId,
+  roomIdProps = 0,
+  receiverIdProps = 0,
+  senderIdProps = 0,
+}: ChatBoxProps) {
   const [messages, setMessages] = useState<messageList[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const inputMessageRef = useRef<HTMLTextAreaElement>(null);
   const [chatText, setChatText] = useState<string>('');
-  const [roomId, setRoomId] = useState<number>(0);
-  const [senderId, setSenderId] = useState<number>(0);
-  const [receiverId, setReceiverId] = useState<number>(0);
+  const [roomId, setRoomId] = useState<number>(roomIdProps);
+  const [senderId, setSenderId] = useState<number>(receiverIdProps);
+  const [receiverId, setReceiverId] = useState<number>(senderIdProps);
 
   const handleEnter: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
@@ -47,7 +54,8 @@ function ChatBox({ setIsOpenChatting, storeId }: ChatBoxProps) {
         {
           Authorization: LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken),
         },
-        () => {
+        async () => {
+          await axiosInstance.get(`/room/${roomId}`).then((res) => setMessages([...res.data]));
           if (client.current)
             client.current.subscribe(
               `/sub/${roomId}`,
@@ -84,15 +92,16 @@ function ChatBox({ setIsOpenChatting, storeId }: ChatBoxProps) {
   useScrollBottom(messageEndRef, messages, chatText);
 
   useEffect(() => {
-    axiosInstance
-      .get(`/room?storeId=${storeId}`)
-      .then((res) => {
-        setRoomId(res.data.roomId);
-        setReceiverId(res.data.receiverId);
-        setSenderId(res.data.senderId);
-        console.log(res.data);
-      })
-      .catch((err) => console.log(err));
+    if (roomId === 0) {
+      axiosInstance
+        .get(`/room?storeId=${storeId}`)
+        .then((res) => {
+          setRoomId(res.data.roomId);
+          setReceiverId(res.data.receiverId);
+          setSenderId(res.data.senderId);
+        })
+        .catch((err) => console.log(err));
+    }
   }, []);
 
   useEffect(() => {
@@ -106,6 +115,7 @@ function ChatBox({ setIsOpenChatting, storeId }: ChatBoxProps) {
   }, [roomId]);
 
   useEffect(() => {
+    console.log(senderId, receiverId);
     const handleEscDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsOpenChatting(false);
@@ -122,16 +132,33 @@ function ChatBox({ setIsOpenChatting, storeId }: ChatBoxProps) {
   return (
     <ChattingContainer>
       <ExitMapModalButton onClick={() => setIsOpenChatting(false)}>BUYTE</ExitMapModalButton>
-      <ChattingMessageBox>
-        {messages.length > 0 &&
-          messages.map((e, idx) => (
-            <ChattingMessage key={idx} type={e.receiverId === receiverId ? 'answer' : 'question'}>
-              {e.content.length > 1 && e.content}
-            </ChattingMessage>
-          ))}
 
-        <div ref={messageEndRef} />
-      </ChattingMessageBox>
+      {receiverId === senderId ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          }}
+        >
+          <div style={{ fontSize: '1rem' }}>판매자는 판매자의 가게에 채팅할 수 없습니다.</div>
+        </div>
+      ) : (
+        <ChattingMessageBox>
+          {messages.length > 0 &&
+            messages.map((e, idx) => (
+              <ChattingMessage key={idx} type={e.receiverId === receiverId ? 'answer' : 'question'}>
+                {e.content.length > 1 && e.content}
+                <ChattingTime type={e.receiverId === receiverId ? 'answer' : 'question'}>
+                  00:00
+                </ChattingTime>
+              </ChattingMessage>
+            ))}
+          <div ref={messageEndRef} />
+        </ChattingMessageBox>
+      )}
+
       <ChattingTextareaContainer>
         <ChattingTextarea
           ref={inputMessageRef}

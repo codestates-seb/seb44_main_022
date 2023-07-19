@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import { useNavigate } from 'react-router';
 import LoginForm from '../LoginForm';
 import RoundButton from '../../../components/RoundButton/RoundButton';
 import SignUpForm from '../SignUpForm';
-import Logo from '../../../components/Logo/Logo';
 import {
   AuthCategory,
   AuthCategoryContainer,
@@ -11,16 +11,19 @@ import {
   AuthContentContainer,
   AuthForm,
   AuthImage,
+  LogoFont,
 } from './Auth.style';
 
 function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
+  const navigate = useNavigate();
+
   return (
     <AuthContainer>
       <AuthImage />
       <AuthContentContainer>
         <AuthForm>
-          <Logo />
+          <LogoFont onClick={() => navigate('/')}>BUYTE</LogoFont>
           <AuthCategoryContainer>
             <AuthCategory isSignUp={isSignUp} types="login" onClick={() => setIsSignUp(false)}>
               로그인

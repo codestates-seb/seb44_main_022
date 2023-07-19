@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { dropDown, dropUp } from '../../styles/keyframes';
+import { dropDown, dropUp, fadeIn, fadeOut } from '../../styles/keyframes';
 
 export const LinkText = styled(Link)`
   display: flex;
@@ -73,18 +73,20 @@ export const IconDiv = styled.div`
   }
 `;
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.div<{ animation: string }>`
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   display: flex;
-  background-color: #efeeff;
   width: 100%;
   height: 80px;
   z-index: 1;
   align-items: center;
   justify-content: space-between;
+  background-color: #fcfcffaa;
+
+  animation: 0.3s ${({ animation }) => (animation === 'fadeIn' ? fadeIn : fadeOut)} forwards;
 `;
 
 export const AuthRelativeContainer = styled.div`
