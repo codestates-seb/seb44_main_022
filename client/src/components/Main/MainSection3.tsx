@@ -107,7 +107,7 @@ function MainSection3({
       </ImageContainer>
       <TextContainer isAnimated={isAnimated}>
         <div style={{ color: '#fff6f6', fontSize: '22px', marginBottom: '40px' }}>
-          BUYTE에서 주문할 수 있는 커스텀 제품
+          BUYTE에서 주문할 수 있는 매장내 인기제품
         </div>
         <div
           style={{ color: '#ffffff', fontSize: '42px', fontWeight: 'bold', marginBottom: '70px' }}
