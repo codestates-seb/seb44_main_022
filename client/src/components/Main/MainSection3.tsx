@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import customCake1 from '../../assets/images/img_main/customCake1.png';
+import cake1 from '../../assets/images/img_main/cake1.png';
 
 const SectionContainer = styled.div`
   display: flex;
@@ -9,6 +9,7 @@ const SectionContainer = styled.div`
   background-color: #ffb7b0;
   width: 100%;
   height: 100vh;
+  scroll-snap-align: start;
 `;
 
 const Image = styled.img`
@@ -33,15 +34,15 @@ const TextContainer = styled.div`
   color: #ffffff;
 `;
 
-function MainSection2({ id }: { id: string }) {
+function MainSection3({ id, className }: { id: string; className?: string }) {
   return (
-    <SectionContainer id={id} className="section">
-      <ImageContainer>
-        <Image src={customCake1} alt="Custom Cake" />
-      </ImageContainer>
+    <SectionContainer id={id} className={`section3 ${className}`}>
       <TextContainer>텍스트를</TextContainer>
+      <ImageContainer>
+        <Image src={cake1} alt="Custom Cake" />
+      </ImageContainer>
     </SectionContainer>
   );
 }
 
-export default MainSection2;
+export default MainSection3;

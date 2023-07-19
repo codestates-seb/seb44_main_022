@@ -9,6 +9,7 @@ const SectionContainer = styled.div`
   background-color: #fff4e4;
   width: 100%;
   height: 100vh;
+  scroll-snap-align: start;
 `;
 
 const Image = styled.img`
@@ -33,13 +34,13 @@ const TextContainer = styled.div`
   color: #ffffff;
 `;
 
-function MainSection2({ id }: { id: string }) {
+function MainSection2({ id, className }: { id: string; className?: string }) {
   return (
-    <SectionContainer id={id} className="section3">
+    <SectionContainer id={id} className={`section2 ${className}`}>
       <ImageContainer>
         <Image src={customCake1} alt="Custom Cake" />
       </ImageContainer>
-      <TextContainer>택스트</TextContainer>
+      <TextContainer>텍스트</TextContainer>
     </SectionContainer>
   );
 }
