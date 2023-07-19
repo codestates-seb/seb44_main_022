@@ -30,7 +30,7 @@ interface Product {
 
   
 function MypageOrderList({ products }: MypageOrderListProps) {
-    console.log(products);
+    //console.log(products);
     const [isOpened, setIsOpened] = useState(false);
     const handleListClick = () => {
         setIsOpened(!isOpened);

@@ -8,6 +8,7 @@ import EditableNickname from './EditableNickname';
 import Pagination from './Paigination';
 
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
+//페이지 수 선택 가능하게 하고십당.....
 //NO 나오는 배열 순서 세는 함수 만들어야 됨.
  interface Product {
     cartId: number;
@@ -42,6 +43,8 @@ import Pagination from './Paigination';
 function Mypage() {
   const [editMode, setEditMode] = useState(false);
   const [nickname, setNickname] = useState('');
+  const [orderlist, setOrderlist] = useState([]);
+  console.log(orderlist)
   const fetchData = async () => {  
     try {
       const url = `/members`;
@@ -54,6 +57,7 @@ function Mypage() {
   };
 useEffect(() => {
     fetchData();
+    fetchOrderList();
   }, []);
 
   const handleNicknameChange = async (newNickname: string) => {
@@ -64,11 +68,25 @@ useEffect(() => {
       try {
         const response = await axiosInstance.patch('/members', formData);
         setNickname(response.data.memberName);
-        console.log("patch성공!")
+        console.log("PATCH 성공!")
       } catch (error) {
         console.error('Error updating nickname:', error);
       }
     }
+  };
+
+  const fetchOrderList = async () => {   
+    const page=1;
+    const size=5;
+    //일단은 고정해두고, 어떻게 처리할지 보자.
+      try {
+        const response = await axiosInstance.get(`/members/orders?page=${page}&size=${size}`);
+        setOrderlist(response.data)
+        console.log("List받아오기 성공!")
+      } catch (error) {
+        console.error('Error updating nickname:', error);
+      }
+    
   };
 
   const data: Data = {

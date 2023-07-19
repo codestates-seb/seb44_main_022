@@ -24,7 +24,6 @@ function StoreDetail() {
       const url = `/store/${storeId}`;
       const response = await axiosInstance.get(url);
       const data = response.data;
-      console.log(data);
       setData(data);
     } catch (error) {
       console.error('Error fetching store data:', error);
