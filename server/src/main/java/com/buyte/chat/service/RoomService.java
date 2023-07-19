@@ -38,7 +38,7 @@ public class RoomService {
         return RoomResponse.builder()
                 .senderId(custromer.getMemberId())
                 .receiverId(merchant.getMemberId())
-                .roomId(chatRoom.getId())
+                .roomId(chatRoom.getRoomId())
                 .build();
 
     }

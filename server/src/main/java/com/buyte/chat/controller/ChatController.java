@@ -12,9 +12,11 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,5 +37,11 @@ public class ChatController {
     public ResponseEntity<RoomResponse> createRoom(@ModelAttribute @Valid RoomRequest roomRequest) {
 
         return ResponseEntity.ok(roomService.findOrCreate(roomRequest));
+    }
+
+    @GetMapping("/room/{roomId}")
+    public ResponseEntity findChats(@PathVariable @Positive Long roomId) {
+
+        return ResponseEntity.ok(chatService.findAllChat(roomId));
     }
 }
