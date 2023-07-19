@@ -13,7 +13,7 @@ const SidebarContainer = styled.div`
   height: 150px;
   border-color: var(--purple);
   background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 9px 16px rgba(53, 47, 47, 0.16);
   border-radius: 20px;
   z-index: 10;
 `;
