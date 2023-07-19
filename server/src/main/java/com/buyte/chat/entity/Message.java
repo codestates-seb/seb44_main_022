@@ -17,14 +17,14 @@ public class Message extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long chatId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_chat_to_sender"))
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_sender"))
     private Member sender;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_room_to_receiver"))
+    @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_receiver"))
     private Member receiver;
 
     @Column(nullable = false)

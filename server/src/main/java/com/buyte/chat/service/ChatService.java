@@ -2,6 +2,7 @@ package com.buyte.chat.service;
 
 
 import com.buyte.chat.dto.ChatReqDto;
+import com.buyte.chat.dto.ChatResDto;
 import com.buyte.chat.entity.ChatRoom;
 import com.buyte.chat.entity.Message;
 import com.buyte.chat.repository.ChatRoomRepository;
@@ -12,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -38,5 +41,22 @@ public class ChatService {
                 .build();
 
         messageRepository.save(chatMessage);
+    }
+
+    public List<ChatResDto> findAllChat(Long roomId) {
+        List<Message> allChat = messageRepository.findByRoomRoomId(roomId);
+        List<ChatResDto> allChatDto = new ArrayList<>();
+
+        for (Message message : allChat) {
+            ChatResDto chatResDto = ChatResDto.builder()
+                    .chatId(message.getChatId())
+                    .content(message.getContent())
+                    .senderId(message.getSender().getMemberId())
+                    .receiverId(message.getReceiver().getMemberId())
+                    .build();
+            allChatDto.add(chatResDto);
+        }
+
+        return allChatDto;
     }
 }
