@@ -16,49 +16,43 @@ type ArrowProps = {
   onClick?: () => void;
 };
 
-function NextArrow(props: ArrowProps) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: 'block',
-        backgroundColor: 'transparent',
-        right: '0',
-        width: '150px',
-        height: '50px',
-      }}
-      onClick={onClick}
-    >
-      <i className="fas fa-chevron-right" style={{ fontSize: '48px', color: 'grey' }} />
-    </div>
-  );
-}
+const NextArrow = ({ className, style, onClick }: ArrowProps) => (
+  <div
+    className={className}
+    style={{
+      ...style,
+      display: 'block',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'contain',
+      right: '0',
+      width: '150px',
+      height: '50px',
+    }}
+    onClick={onClick}
+  />
+);
 
-function PrevArrow(props: ArrowProps) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: 'block',
-        backgroundColor: 'transparent',
-        left: '20px',
-        zIndex: 2,
-        width: '50px',
-        height: '50px',
-      }}
-      onClick={onClick}
-    >
-      <i className="fas fa-chevron-left" style={{ fontSize: '48px', color: 'grey' }} />
-    </div>
-  );
-}
+const PrevArrow = ({ className, style, onClick }: ArrowProps) => (
+  <div
+    className={className}
+    style={{
+      ...style,
+      display: 'block',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'contain',
+      left: '120px',
+      zIndex: 2,
+      width: '50px',
+      height: '50px',
+    }}
+    onClick={onClick}
+  />
+);
 
 const settings = {
-  dots: true,
+  dots: false,
   infinite: true,
   speed: 500,
   slidesToShow: 1,
@@ -66,6 +60,8 @@ const settings = {
   arrows: true,
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
+  autoplay: true,
+  autoplaySpeed: 2000,
 };
 
 const Section1_img = styled.img`
@@ -79,11 +75,7 @@ const SliderItem = styled.div`
   height: 100vh;
 `;
 
-const SliderContainer = styled.div`
-  height: 100vh;
-`;
-
-function MainSection1({ id }: { id: string }) {
+function MainSection1({ id, className }: { id: string; className?: string }) {
   const sliderItems = [
     { src: section1_1, text: 'Text image 1' },
     { src: section1_2, text: 'Text image 2' },
@@ -91,34 +83,28 @@ function MainSection1({ id }: { id: string }) {
     { src: section1_4, text: 'Text image 4' },
   ];
   return (
-    <div
-      id={id}
-      className="section"
-      style={{ boxSizing: 'border-box', width: '100%', height: '100%' }}
-    >
-      <SliderContainer>
-        <Slider {...settings}>
-          {sliderItems.map((item, index) => (
-            <SliderItem key={index}>
-              <Section1_img src={item.src} />
-              <h1
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  color: '#ffffff',
-                  fontSize: '3em',
-                  textAlign: 'center',
-                  fontWeight: 'bold',
-                }}
-              >
-                {item.text}
-              </h1>
-            </SliderItem>
-          ))}
-        </Slider>
-      </SliderContainer>
+    <div id={id} className={`section1 ${className}`}>
+      <Slider {...settings}>
+        {sliderItems.map((item, index) => (
+          <SliderItem key={index}>
+            <Section1_img src={item.src} />
+            <h1
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                color: '#ffffff',
+                fontSize: '3em',
+                textAlign: 'center',
+                fontWeight: 'bold',
+              }}
+            >
+              {item.text}
+            </h1>
+          </SliderItem>
+        ))}
+      </Slider>
     </div>
   );
 }

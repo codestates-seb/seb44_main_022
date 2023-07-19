@@ -30,6 +30,7 @@ const Section3 = styled.div`
   height: 250px;
   position: relative;
   perspective: 1100px;
+  scroll-snap-align: start;
   margin: 2rem;
 
   &:hover ${Section3Card} {
@@ -37,10 +38,10 @@ const Section3 = styled.div`
   }
 `;
 
-function MainSection5({ id }: { id: string }) {
+function MainSection5({ id, className }: { id: string; className?: string }) {
   return (
     <div className="section">
-      <Section3 id={id} className="section4">
+      <Section3 id={id} className={`section5 ${className}`}>
         <Section3Card className="card">
           <Section3Icon className="front" src={section3_1} />
           <Section3Icon className="back" src={section3_2} />

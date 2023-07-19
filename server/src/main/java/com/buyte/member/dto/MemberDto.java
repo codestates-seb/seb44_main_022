@@ -78,5 +78,6 @@ public class MemberDto {
         private Integer productPrice;
         private String productImage;
         private Integer productCount;
+        private Long storeId;
     }
 }

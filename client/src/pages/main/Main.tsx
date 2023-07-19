@@ -8,14 +8,25 @@ import MainSection5 from '../../components/Main/MainSection5';
 import MainSidebar from '../../components/Main/MainSidebar';
 import ModalPortal from '../../share/ModalPortal';
 
-const MainRoot = styled.div`
-  background-color: #fffffc;
+const MainContainer = styled.div`
+  height: 100vh;
+  overflow: hidden;
+`;
+
+const AnimatedSection = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin-top: 80px;
-  text-align: left;
-  font-size: 22px;
-  min-height: calc(120vh - 80px - HeaderHeight - FooterHeight);
-  position: relative;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 500ms ease-in-out;
+  pointer-events: none;
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
 `;
 
 function Main() {
@@ -23,79 +34,75 @@ function Main() {
 
   const handleScrollToSection = (section: number) => {
     setActiveSection(section);
-
-    const targetElement = document.getElementById(`section${section}`);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+
       const scrollPosition = window.scrollY;
 
-      const section1 = document.getElementById('section1');
-      const section2 = document.getElementById('section2');
-      const section3 = document.getElementById('section3');
-      const section4 = document.getElementById('section4');
-      const section5 = document.getElementById('section5');
+      if (event.deltaY < 0 && activeSection > 1) {
+        setActiveSection(activeSection - 1);
+      } else if (event.deltaY > 0 && activeSection < 5) {
+        setActiveSection(activeSection + 1);
+      }
 
-      if (
-        section1 &&
-        section2 &&
-        section3 &&
-        section4 &&
-        section5 &&
-        scrollPosition < section2.offsetTop
-      ) {
-        setActiveSection(1);
-      } else if (
-        section2 &&
-        section3 &&
-        section4 &&
-        section5 &&
-        scrollPosition >= section2.offsetTop &&
-        scrollPosition < section3.offsetTop
-      ) {
-        setActiveSection(2);
-      } else if (
-        section3 &&
-        section4 &&
-        section5 &&
-        scrollPosition >= section3.offsetTop &&
-        scrollPosition < section4.offsetTop
-      ) {
-        setActiveSection(3);
-      } else if (
-        section4 &&
-        section5 &&
-        scrollPosition >= section4.offsetTop &&
-        scrollPosition < section5.offsetTop
-      ) {
-        setActiveSection(4);
-      } else if (section5 && scrollPosition >= section5.offsetTop) {
-        setActiveSection(5);
+      setTimeout(() => {
+        window.scrollTo({ top: scrollPosition });
+      }, 0);
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+    };
+  }, [activeSection]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = Array.from(document.querySelectorAll('.section'));
+      const sectionOffsets = sections.map(
+        (section) => section.getBoundingClientRect().top + window.pageYOffset
+      );
+
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+
+      const activeIndex = sectionOffsets.findIndex((offset) => offset > scrollPosition);
+
+      if (activeIndex !== -1) {
+        setActiveSection(activeIndex + 1);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <MainRoot>
+    <MainContainer>
       <ModalPortal>
         <MainSidebar activeSection={activeSection} handleScrollToSection={handleScrollToSection} />
       </ModalPortal>
-      <MainSection1 id="section1" />
-      <MainSection2 id="section2" />
-      <MainSection3 id="section3" />
-      <MainSection4 id="section4" />
-      <MainSection5 id="section5" />
-    </MainRoot>
+      <AnimatedSection className={activeSection === 1 ? 'active' : ''}>
+        <MainSection1 id={'section1'} />
+      </AnimatedSection>
+      <AnimatedSection className={activeSection === 2 ? 'active' : ''}>
+        <MainSection2 id={'section2'} isActive={activeSection === 2} />
+      </AnimatedSection>
+      <AnimatedSection className={activeSection === 3 ? 'active' : ''}>
+        <MainSection3 id={'section3'} isActive={activeSection === 3} />
+      </AnimatedSection>
+      <AnimatedSection className={activeSection === 4 ? 'active' : ''}>
+        <MainSection4 id={'section4'} />
+      </AnimatedSection>
+      <AnimatedSection className={activeSection === 5 ? 'active' : ''}>
+        <MainSection5 id={'section5'} />
+      </AnimatedSection>
+    </MainContainer>
   );
 }
 
