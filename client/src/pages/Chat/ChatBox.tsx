@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
+import { CompatClient, Stomp } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 import { ExitMapModalButton } from '../map/Map.style';
 import useScrollBottom from '../../hooks/chatHooks/useScrollBottom';
 import useTextareaAutoHeight from '../../hooks/chatHooks/useTextareaAutoHeight';
-import { ChatBoxProps } from '../../assets/interface/Button.interface';
+import { LocalStorage } from '../../utils/browserStorage';
+import { LOCAL_STORAGE_KEY_LIST } from '../../assets/constantValue/constantValue';
+import { ChatBoxProps, messageList } from '../../assets/interface/Chat.interface';
+import axiosInstance from '../../api/apis';
 import {
   ChattingContainer,
   ChattingMessage,
@@ -11,32 +16,94 @@ import {
   ChattingTextareaContainer,
 } from './ChatBox.style';
 
-function ChatBox({ setIsOpenChatting }: ChatBoxProps) {
-  const [messages, setMessages] = useState([
-    { type: 'question', message: '안녕하세요?' },
-    { type: 'answer', message: '네 안녕하세요.' },
-    {
-      type: 'question',
-      message:
-        '안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오안녕하세요오',
-    },
-  ]);
+function ChatBox({ setIsOpenChatting, storeId }: ChatBoxProps) {
+  const [messages, setMessages] = useState<messageList[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const inputMessageRef = useRef<HTMLTextAreaElement>(null);
   const [chatText, setChatText] = useState<string>('');
-
-  useTextareaAutoHeight(inputMessageRef, chatText);
-  useScrollBottom(messageEndRef, messages, chatText);
+  const [roomId, setRoomId] = useState<number>(0);
+  const [senderId, setSenderId] = useState<number>(0);
+  const [receiverId, setReceiverId] = useState<number>(0);
 
   const handleEnter: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
     if (chatText.length !== 0) {
-      setMessages([...messages, { type: 'answer', message: chatText }]);
+      onPublishMessage(chatText);
       setChatText('');
       return;
     }
     alert('메세지를 입력한 뒤에 전송해주세요.');
   };
+
+  const client = useRef<CompatClient>();
+
+  const connect = () => {
+    client.current = Stomp.over(() => {
+      const sock = new SockJS('https://api.buyte.site/ws');
+      return sock;
+    });
+    if (client.current) {
+      client.current.connect(
+        {
+          Authorization: LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken),
+        },
+        () => {
+          if (client.current)
+            client.current.subscribe(
+              `/sub/${roomId}`,
+              (message) => {
+                setMessages((messages) => [...messages, JSON.parse(message.body)]);
+              },
+              {
+                Authorization: LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken),
+              }
+            );
+        }
+      );
+    }
+  };
+
+  const onPublishMessage = (chatText: string) => {
+    const Text = JSON.stringify({
+      senderId: senderId,
+      receiverId: receiverId,
+      content: chatText,
+    });
+    if (client.current) {
+      client.current.send(
+        `/pub/chats/${roomId}`,
+        {
+          Authorization: LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken),
+        },
+        Text
+      );
+    }
+  };
+
+  useTextareaAutoHeight(inputMessageRef, chatText);
+  useScrollBottom(messageEndRef, messages, chatText);
+
+  useEffect(() => {
+    axiosInstance
+      .get(`/room?storeId=${storeId}`)
+      .then((res) => {
+        setRoomId(res.data.roomId);
+        setReceiverId(res.data.receiverId);
+        setSenderId(res.data.senderId);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if (roomId > 0) {
+      connect();
+    }
+
+    return () => {
+      client.current?.disconnect();
+    };
+  }, [roomId]);
 
   useEffect(() => {
     const handleEscDown = (e: KeyboardEvent) => {
@@ -47,18 +114,21 @@ function ChatBox({ setIsOpenChatting }: ChatBoxProps) {
 
     document.addEventListener('keydown', handleEscDown);
 
-    return () => document.removeEventListener('keydown', handleEscDown);
+    return () => {
+      document.removeEventListener('keydown', handleEscDown);
+    };
   }, []);
 
   return (
     <ChattingContainer>
       <ExitMapModalButton onClick={() => setIsOpenChatting(false)}>BUYTE</ExitMapModalButton>
       <ChattingMessageBox>
-        {messages.map((e, idx) => (
-          <ChattingMessage key={idx} type={e.type}>
-            {e.message}
-          </ChattingMessage>
-        ))}
+        {messages.length > 0 &&
+          messages.map((e, idx) => (
+            <ChattingMessage key={idx} type={e.receiverId === receiverId ? 'answer' : 'question'}>
+              {e.content.length > 1 && e.content}
+            </ChattingMessage>
+          ))}
 
         <div ref={messageEndRef} />
       </ChattingMessageBox>

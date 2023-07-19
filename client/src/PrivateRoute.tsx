@@ -6,7 +6,7 @@ import { PrivateRouteProps } from './assets/interface/Router.interface';
 function PrivateRoute({ isAuth }: PrivateRouteProps) {
   const accessToken = LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken);
 
-  return isAuth === accessToken ? <Outlet /> : <Navigate to="/" />;
+  return isAuth === (accessToken !== null) ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default PrivateRoute;
