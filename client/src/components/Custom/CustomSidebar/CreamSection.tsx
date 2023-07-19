@@ -28,7 +28,7 @@ const ContentItem = styled.div`
   border-radius: 10px;
   display: flex;
   align-items: center;
-  padding-left: 11px;
+  padding-left: 17px;
   padding-bottom: 10px;
 `;
 

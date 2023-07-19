@@ -79,6 +79,7 @@ const ModalButtons = ({
     setBlinking(false);
     setShowPopup((prevState) => !prevState);
   };
+
   useEffect(() => {
     setBlinking(true);
   }, []);
@@ -100,7 +101,7 @@ const ModalButtons = ({
         </CenteredAlertContainer>
       </ImageBox>
       <CartButton onSaveImage={onSaveImage} />
-      {showPopup && <Popup />}
+      <Popup show={showPopup} />
     </>
   );
 };

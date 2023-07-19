@@ -1,42 +1,61 @@
-import styled, { keyframes } from 'styled-components';
+import { TransitionStatus } from 'react-transition-group';
+import styled, { css, keyframes } from 'styled-components';
 const fadeIn = keyframes`
-  from {
+  0% {
     opacity: 0;
+    visibility: hidden;
   }
-  to {
+  100% {
     opacity: 1;
+    visibility: visible;
   }
 `;
 
 const fadeOut = keyframes`
-  from {
+  0% {
     opacity: 1;
+    visibility: visible;
   }
-  to {
+  100% {
     opacity: 0;
+    visibility: hidden;
   }
 `;
-export const PopupContainer = styled.div<{ show: boolean }>`
-  display: flex;
+type PopupContainerProps = {
+  show: boolean;
+  state: TransitionStatus;
+};
+export const PopupContainer = styled.div<PopupContainerProps>`
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: 50%;
+  top: 40%;
   left: 60%;
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 5px;
   padding: 20px;
-  animation-duration: 0.3s;
+  display: block;
   animation-timing-function: ease-in-out;
   animation-fill-mode: both;
-  opacity: ${(props) => (props.show ? 1 : 0)};
-  animation-name: ${(props) => (props.show ? fadeIn : fadeOut)};
-  animation-fill-mode: forwards;
   width: 60%;
   height: 50%;
-
   @media (max-width: 900px) {
     flex-direction: column;
   }
+
+  ${({ state }) => {
+    switch (state) {
+      case 'entering':
+        return css`
+          animation: ${fadeIn} 0.3s linear forwards;
+        `;
+      case 'exiting':
+        return css`
+          animation: ${fadeOut} 0.3s linear forwards;
+        `;
+      default:
+        return '';
+    }
+  }};
 `;
