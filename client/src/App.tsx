@@ -18,7 +18,7 @@ function App() {
 
   useRouteAnimation(location, displayLocation, setDisplayLocation, setTransitionStage);
   useAxiosInterceptor();
-
+  const hideFooter = location.pathname === '/';
   return (
     <>
       <Header />
@@ -29,6 +29,7 @@ function App() {
         <MainContent>
           <Routes location={displayLocation}>{RouteList}</Routes>
         </MainContent>
+        {!hideFooter && <Footer />}
         <Footer />
       </div>
     </>
