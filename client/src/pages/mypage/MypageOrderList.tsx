@@ -11,6 +11,18 @@ function MypageOrderList({ products }: MypageOrderListProps) {
     const handleListClick = () => {
         setIsOpened(!isOpened);
       };
+      const getOrderStatusText = (status: string) => {
+        if (status === 'SUSPENSION') {
+          return '주문접수';
+        } else if(status ==="CANCELLATION"){
+            return '주문취소';
+        } else if(status ==="FAILURE"){
+            return '주문실패';
+        } else if(status==="COMPLETION"){
+            return '배송완료';
+        }
+        return status;
+      };
   return <div>
     <div style={{ display: 'flex', fontSize: '14px', cursor:'pointer' }} onClick={handleListClick} >
       <CartListName grow={5} minWidth={5} style={{ justifyContent: 'flex-start', marginRight: '0'  }}>
@@ -40,7 +52,7 @@ function MypageOrderList({ products }: MypageOrderListProps) {
         minWidth={150}
         style={{ justifyContent: 'flex-end', fontSize: '16px', paddingRight: '2.5rem', fontWeight: 'bold'  }}
       >
-        배송완료 <BsArrowDownSquare style={{
+        {getOrderStatusText(products.orderStatus)} <BsArrowDownSquare style={{
               fontSize:'20px',
               marginLeft: '10px',
               cursor: 'pointer',

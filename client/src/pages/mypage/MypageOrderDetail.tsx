@@ -41,9 +41,9 @@ function MypageOrderDetail({ product }: MypageOrderDetailProps) {
         <CartListName
           grow={5}
           minWidth={150}
-          style={{ justifyContent: 'flex-end', fontSize: '16px', paddingRight: '2.5rem', marginRight: '1.8rem' }}
+          style={{ justifyContent: 'flex-end', fontSize: '16px', paddingRight: '1.5rem', marginRight: '1.8rem' }}
         >
-          배송완료
+            <OrderButton onClick={() => navigate(`/store/${product.storeId}`)}>바로가기</OrderButton>
         </CartListName>
       </div>
     </CartListDetail>
@@ -56,3 +56,14 @@ const CartListDetail = styled.section`
   width: 100%;
   background-color: var(--gray);
 `;
+const OrderButton = styled.button`
+    background-color: var(--purple);
+    color: var(--white);
+    padding: 3px 5px;
+    border: 1px solid var(--light-gray);
+    border-radius: 3px;
+    :hover{
+        background-color: var(--dark-purple);
+        transition: all 0.2s ease;
+    }
+`

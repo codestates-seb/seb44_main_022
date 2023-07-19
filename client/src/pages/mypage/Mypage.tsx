@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { BsFillGearFill } from 'react-icons/bs';
 import  { useState, useEffect } from 'react';
 import axiosInstance from '../../api/apis';
@@ -6,11 +5,11 @@ import { Data } from '../../assets/interface/Mypage.interface'
 import MypageOrderTab from './MypageOrderTab';
 import MypageOrderList from './MypageOrderList';
 import EditableNickname from './EditableNickname';
-import Pagination from './Paigination';
+import Pagination from './Pagination';
+import { MyPageWrapper, WelcomeText, MyInfoSection, MyInfoDetail, MyOrderSection, MyOrderLists } from './Mypage.style';
 
 //페이지네이션(5개 이상의 리스트가 들어올 시 다음 페이지로)
 //페이지 수 선택 가능하게 하고십당.....
-//NO 나오는 배열 순서 세는 함수 만들어야 됨.
 function Mypage() {
   const [editMode, setEditMode] = useState(false);
   const [nickname, setNickname] = useState('');
@@ -97,8 +96,8 @@ useEffect(() => {
        <MypageOrderTab />
         {orderlist.orderInfos.length===0 ?
         <>
-          <BsFillGearFill style={{fontSize:'30px', color: 'var(--dark-gray)', margin: '15px'}}/>
-          <p style={{color: 'var(--dark-gray)', fontWeight:'800'}}>주문내역이 없습니다.</p>
+          <BsFillGearFill style={{fontSize:'30px', color: 'var(--dark-gray)', margin: '15px', marginTop:"40px"}}/>
+          <p style={{color: 'var(--dark-gray)', fontWeight:'800', marginBottom:"10px"}}>주문내역이 없습니다.</p>
           </>
         :(
           orderlist.orderInfos.map((order) => (
@@ -112,56 +111,3 @@ useEffect(() => {
   </div>;
 }
 export default Mypage;
-
-const MyPageWrapper = styled.section`
-  width: 70%;
-  margin-bottom: 80px;
-`
-const WelcomeText = styled.p`
-   font-weight:800;
-   color: var(--dark-gray);
-   text-align:center; 
-   margin-bottom:30px; 
-   font-size:18px;
-`
-const MyInfoSection = styled.section`
-  width: 100%;
-  display: flex;
-  padding: 1rem; 
-`
-const MyInfoDetail = styled.section`
-  margin-left: 2rem;
-  margin-top: 3.3rem;
-  min-width: 300px;
-  h3 {
-    color: var(--light-gray);
-    margin-bottom: 2.3rem;
-    font-size: 18px;
-    font-weight: 800;
-  }
-  @media (max-width: 780px) {
-    margin-left: 0.5rem;
-}
-`
-const MyOrderSection= styled.section`
-  padding: 3rem 1rem;
-  border: 1px solid var(--light-purple);
-  border-radius: 10px;
-  h2 {
-  font-weight:800;
-  font-size:18px; 
-  color:var(--light-gray);
-  margin-bottom:10px; 
-  margin-left: 20px
-  }
-`
-const MyOrderLists= styled.section`
-padding: 1rem;
-display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-div{
-  width: 100%;
-}
-`
