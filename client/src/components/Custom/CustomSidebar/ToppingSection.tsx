@@ -27,7 +27,7 @@ const ContentItem = styled.div`
   border-radius: 10px;
   display: flex;
   align-items: center;
-  padding-left: 21px;
+  padding-left: 13px;
   padding-bottom: 10px;
 `;
 const ContentImage = styled.img`
@@ -39,12 +39,11 @@ const ContentImage = styled.img`
 `;
 const ContentImageContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  grid-auto-rows: 1fr;
   gap: 8px;
   max-width: 100%;
-  max-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   margin-top: 8px;
 `;
 interface Topping {

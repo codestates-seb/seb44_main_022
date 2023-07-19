@@ -8,6 +8,9 @@ const SectionContainer = styled.div`
   margin-top: 10px;
   margin-bottom: 30px;
   margin-left: 11px;
+  @media (max-width: 200px) {
+    width: 40%;
+  }
 `;
 
 const SectionTitle = styled.p`
@@ -22,13 +25,10 @@ const SectionTitle = styled.p`
 const ContentItem = styled.div`
   margin-left: 1.5%;
   width: 88%;
-  height: 215px;
   background-color: #fff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  padding-left: 17px;
+  padding-left: 13px;
   padding-bottom: 10px;
 `;
 
@@ -38,16 +38,23 @@ const ContentImage = styled.img`
   margin-right: 5px;
   border: 0.9px solid var(--light-gray);
   border-radius: 8px;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  cursor: grab;
+  &:hover {
+    background-color: var(--gray);
+  }
+  &:active {
+    transform: scale(1.02);
+  }
 `;
 
 const ContentImageContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  grid-auto-rows: 1fr;
   gap: 8px;
   max-width: 100%;
-  max-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   margin-top: 8px;
 `;
 

@@ -53,6 +53,7 @@ const ModalContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  outline: none;
 `;
 
 const CustomContainer = styled.div`
@@ -65,7 +66,6 @@ const CustomContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.12);
   border-radius: 10px;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2), 0px 25px 20px rgba(0, 0, 0, 0.35);
-  border: 0.5px solid rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
