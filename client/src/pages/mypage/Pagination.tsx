@@ -1,27 +1,22 @@
 import styled, {css} from "styled-components";
-import {useState} from "react";
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import {PaginationProps, PageButtonsProps } from '../../assets/interface/Mypage.interface'
-function Pagination({data}:PaginationProps) {
-// const numPages = Math.ceil(total / limit);
-   const [currentPage, setCurrentPage] = useState(1);
+function Pagination({data, currentPage, onPageChange}:PaginationProps) {
+  console.log(data)
    const  totalPages  = data.pageInfo.totalPage;
-//    const handlePageChange = (page:number) => {
-//      setCurrentPage(page);
-//    };
    const goToPreviousPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      onPageChange(currentPage - 1);
     }
   };
   const goToNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      onPageChange(currentPage + 1);
     }
   };
   const goToPage = (page:number) => {
-    setCurrentPage(page);
+    onPageChange(page);
   };
  
     return (

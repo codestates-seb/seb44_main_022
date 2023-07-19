@@ -51,6 +51,8 @@ export interface MypageOrderDetailProps {
 
 export interface PaginationProps {
   data: Data; 
+  currentPage: number;
+  onPageChange: (page: number) => void;
 }
 
 export interface PageButtonsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
