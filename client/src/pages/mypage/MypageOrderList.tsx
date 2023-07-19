@@ -2,13 +2,10 @@ import styled, {keyframes} from 'styled-components';
 import { useState } from 'react';
 import { BsArrowDownSquare } from 'react-icons/bs';
 import { CartListName } from '../../components/CartItem/CartItem.style';
-import { OrderData } from '../../assets/interface/Mypage.interface'
+import {MypageOrderListProps} from '../../assets/interface/Mypage.interface'
 import MypageOrderDetail from './MypageOrderDetail';
 import DateFormatter from './DateFormatter';  
 
-interface MypageOrderListProps {
-    products: OrderData;
-  }
 function MypageOrderList({ products }: MypageOrderListProps) {
     const [isOpened, setIsOpened] = useState(false);
     const handleListClick = () => {

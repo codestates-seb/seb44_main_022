@@ -1,46 +1,8 @@
 import styled, {css} from "styled-components";
 import {useState} from "react";
-import { ButtonHTMLAttributes } from 'react';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 import { AiOutlineArrowRight } from 'react-icons/ai';
-interface Product {
-    orderProductId: number;
-    productId: number;
-    productName: string;
-    productImage: string;
-    productPrice: number;
-    productCount: number;
-    storeId: number;
-  }
-  
-  interface OrderData {
-    orderId: number;
-    orderAddress: string;
-    orderProductInfos: Product[];
-    totalPrice: number;
-    createdAt: string;
-    orderStatus: string;
-  }
-  
-  interface PageInfo {
-    page: number;
-    size: number;
-    totalElement: number;
-    totalPage: number;
-  }
-  
-  interface Data {
-    orderInfos: OrderData[];
-    pageInfo: PageInfo;
-  }
-
-
-  interface PaginationProps {
-    data: Data; 
-  }
-interface PageButtonsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    active?: boolean;
-  }
+import {PaginationProps, PageButtonsProps } from '../../assets/interface/Mypage.interface'
 function Pagination({data}:PaginationProps) {
 // const numPages = Math.ceil(total / limit);
    const [currentPage, setCurrentPage] = useState(1);

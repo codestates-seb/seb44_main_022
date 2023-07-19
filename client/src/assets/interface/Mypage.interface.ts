@@ -1,4 +1,4 @@
-
+import { ButtonHTMLAttributes } from 'react';
 export interface Product {
   orderProductId: number;
   productId: number;
@@ -42,3 +42,23 @@ export interface OrderData {
 export interface MypageOrderListProps {
     products: OrderData;
   }
+
+  
+export interface MypageOrderDetailProps {
+  product: Product;
+}
+
+
+export interface PaginationProps {
+  data: Data; 
+}
+
+export interface PageButtonsProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  active?: boolean;
+}
+
+ export interface EditableNicknameProps {
+  nickname: string;
+  onNicknameChange: (newNickname: string) => void;
+  onEditModeToggle: () => void;
+}  

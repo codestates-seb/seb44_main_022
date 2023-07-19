@@ -1,5 +1,5 @@
 import { CartListName } from '../../components/CartItem/CartItem.style';
-function CartItemTab() {
+function MypageOrderTab() {
   return (
     <div
       style={{
@@ -36,4 +36,4 @@ function CartItemTab() {
   );
 }
 
-export default CartItemTab;
+export default MypageOrderTab;

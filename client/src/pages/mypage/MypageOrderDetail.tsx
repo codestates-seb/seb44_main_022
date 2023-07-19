@@ -1,14 +1,8 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { CartListName } from '../../components/CartItem/CartItem.style';
-import {Product} from '../../assets/interface/Mypage.interface'
-
-
-interface MypageOrderDetailProps {
-  product: Product;
-}
-
-const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {    
+import { MypageOrderDetailProps } from '../../assets/interface/Mypage.interface'
+function MypageOrderDetail({ product }: MypageOrderDetailProps) {
   const navigate = useNavigate();
   return (
     <CartListDetail>
@@ -17,7 +11,7 @@ const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
         <CartListName grow={5} minWidth={40} style={{ padding: ' 1rem', justifyContent: 'flex-start' }}>
           <img
             src={product.productImage}
-            style={{ width: '4rem', height: '4rem', objectFit: 'cover', cursor:"pointer" }}
+            style={{ width: '4rem', height: '4rem', objectFit: 'cover', cursor: 'pointer' }}
             onClick={() => navigate(`/store/${product.storeId}`)}
             //여긴 storeId 받으면 고치기
           />
@@ -31,11 +25,11 @@ const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
             fontWeight: 'bold',
             paddingLeft: '1.5rem',
             paddingRight: '7rem',
-            lineHeight: '1.4'
+            lineHeight: '1.4',
           }}
         >
-          {product.productName} 
-          <span style={{marginLeft:"0.3rem", color:"var(--dark-purple)"}}>(x{product.productCount})</span>
+          {product.productName}
+          <span style={{ marginLeft: '0.3rem', color: 'var(--dark-purple)' }}>(x{product.productCount})</span>
         </CartListName>
         <CartListName grow={5} minWidth={20} style={{ fontWeight: 'bold' }}>
           {product.productPrice}원
@@ -48,12 +42,14 @@ const MypageOrderDetail = ({ product }: MypageOrderDetailProps) => {
         <CartListName
           grow={5}
           minWidth={150}
-          style={{ justifyContent: 'flex-end', fontSize: '16px', paddingRight: '2.5rem', marginRight:"1.8rem" }}
-        >배송완료</CartListName>
+          style={{ justifyContent: 'flex-end', fontSize: '16px', paddingRight: '2.5rem', marginRight: '1.8rem' }}
+        >
+          배송완료
+        </CartListName>
       </div>
     </CartListDetail>
   );
-};
+}
 
 export default MypageOrderDetail;
 

@@ -1,13 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { EditableNicknameProps } from '../../assets/interface/Mypage.interface';
 
-interface EditableNicknameProps {
-    nickname: string;
-    onNicknameChange: (newNickname: string) => void;
-    onEditModeToggle: () => void;
-  }  
-
-  function EditableNickname({ nickname, onNicknameChange, onEditModeToggle }: EditableNicknameProps) {
+function EditableNickname({ nickname, onNicknameChange, onEditModeToggle }: EditableNicknameProps) {
     const [inputValue, setInputValue] = useState(nickname);
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       setInputValue(event.target.value);
