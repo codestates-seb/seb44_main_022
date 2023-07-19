@@ -53,6 +53,7 @@ public class ChatService {
                     .content(message.getContent())
                     .senderId(message.getSender().getMemberId())
                     .receiverId(message.getReceiver().getMemberId())
+                    .createdAt(message.getCreatedAt())
                     .build();
             allChatDto.add(chatResDto);
         }
