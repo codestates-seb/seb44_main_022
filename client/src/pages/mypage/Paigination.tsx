@@ -28,15 +28,17 @@ function Pagination({data}:PaginationProps) {
       <>
       <Nav>
         <PrevButton onClick={goToPreviousPage}><AiOutlineArrowLeft/></PrevButton>
-        {Array.from(Array(totalPages), (_, index) => index + 1).map((page) => (
-        <PageButtons
-          key={page}
-          onClick={() => goToPage(page)}
-          active={page === currentPage}
-        >
-          {page}
-        </PageButtons>
-      ))}
+        {totalPages === 0 ? (
+          <PageButtons key={1} onClick={() => goToPage(1)} active={currentPage === 1}>
+            1
+          </PageButtons>
+        ) : (
+          Array.from(Array(totalPages), (_, index) => index + 1).map((page) => (
+            <PageButtons key={page} onClick={() => goToPage(page)} active={page === currentPage}>
+              {page}
+            </PageButtons>
+          ))
+        )}
         <NextButton onClick={goToNextPage}><AiOutlineArrowRight/></NextButton>
       </Nav>
         

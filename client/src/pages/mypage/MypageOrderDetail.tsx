@@ -13,7 +13,6 @@ function MypageOrderDetail({ product }: MypageOrderDetailProps) {
             src={product.productImage}
             style={{ width: '4rem', height: '4rem', objectFit: 'cover', cursor: 'pointer' }}
             onClick={() => navigate(`/store/${product.storeId}`)}
-            //여긴 storeId 받으면 고치기
           />
         </CartListName>
         <CartListName
