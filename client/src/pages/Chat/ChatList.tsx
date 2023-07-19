@@ -27,7 +27,7 @@ function ChatList() {
     >
       {chatList !== undefined &&
         chatList.length > 0 &&
-        chatList.map((e) => {
+        chatList.map((e: any) => {
           return (
             <>
               <div

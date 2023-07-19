@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from 'styled-components';
+import styled, { css } from 'styled-components';
 import { errFadeIn, errFadeOut } from '../../styles/keyframes';
 
 export const UserInputWrapper = styled.div`

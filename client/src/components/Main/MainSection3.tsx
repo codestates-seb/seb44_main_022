@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import cake1 from '../../assets/images/img_main/cake1.png';
 import cake2 from '../../assets/images/img_main/cake2.png';

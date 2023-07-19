@@ -4,7 +4,7 @@ import { ChattingOpenButton } from './ChatButton.style';
 import ChatBox from './ChatBox';
 
 interface ChatButtonProp {
-  storeId: string;
+  storeId: string | undefined;
 }
 
 function ChatButton({ storeId }: ChatButtonProp) {

@@ -6,7 +6,7 @@ export interface messageList {
 
 export interface ChatBoxProps {
   setIsOpenChatting: React.Dispatch<React.SetStateAction<boolean>>;
-  storeId: string;
+  storeId: string | undefined;
   roomIdProps?: number;
   receiverIdProps?: number;
   senderIdProps?: number;
