@@ -2,6 +2,7 @@ package com.buyte.chat.controller;
 
 import com.buyte.chat.dto.ChatReqDto;
 import com.buyte.chat.dto.RoomRequest;
+import com.buyte.chat.dto.RoomResponse;
 import com.buyte.chat.service.ChatService;
 import com.buyte.chat.service.RoomService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class ChatController {
     }
 
     @GetMapping("/room")
-    public ResponseEntity createRoom(@ModelAttribute @Valid RoomRequest roomRequest) {
+    public ResponseEntity<RoomResponse> createRoom(@ModelAttribute @Valid RoomRequest roomRequest) {
 
         return ResponseEntity.ok(roomService.findOrCreate(roomRequest));
     }

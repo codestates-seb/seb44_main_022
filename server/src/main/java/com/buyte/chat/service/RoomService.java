@@ -1,6 +1,7 @@
 package com.buyte.chat.service;
 
 import com.buyte.chat.dto.RoomRequest;
+import com.buyte.chat.dto.RoomResponse;
 import com.buyte.chat.entity.ChatRoom;
 import com.buyte.chat.repository.ChatRoomRepository;
 import com.buyte.chat.repository.MessageRepository;
@@ -24,7 +25,7 @@ public class RoomService {
     private final MemberRepository memberRepository;
     private final StoreRepository storeRepository;
 
-    public Long findOrCreate(RoomRequest roomRequest) {
+    public RoomResponse findOrCreate(RoomRequest roomRequest) {
 
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
         Member custromer = memberRepository.findById(authenticatedMemberId).orElseThrow();
@@ -34,7 +35,11 @@ public class RoomService {
                 .orElseGet(() -> new ChatRoom(merchant,custromer));
         ChatRoom chatRoom = chatRoomRepository.save(room);
 
-        return chatRoom.getId();
+        return RoomResponse.builder()
+                .senderId(custromer.getMemberId())
+                .receiverId(merchant.getMemberId())
+                .roomId(chatRoom.getId())
+                .build();
 
     }
 }
