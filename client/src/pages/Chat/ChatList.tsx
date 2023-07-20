@@ -43,7 +43,6 @@ function ChatList() {
               </ChatListItem>
               {activeChat === chatListItem.roomId && isOpenChatting && (
                 <ChatBox
-                  key={chatListItem.receiverId}
                   setIsOpenChatting={setIsOpenChatting}
                   storeName={chatListItem.storeName}
                   roomIdProps={chatListItem.roomId}
