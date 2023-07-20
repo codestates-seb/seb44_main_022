@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import login_img from '../../assets/images/login_img.png';
 import logout_img from '../../assets/images/logout_img.png';
 import cart_img from '../../assets/images/cart_img.png';
+import chatlist_img from '../../assets/images/chatlist_img.png';
 import { LocalStorage } from '../../utils/browserStorage';
 import {
   BASE_ANIMATION_TIME,
@@ -74,7 +75,7 @@ function Header() {
           <AuthRelativeContainer>
             {LocalStorage.get(LOCAL_STORAGE_KEY_LIST.MemberRole) === 'SELLER' && (
               <Icon to="/chatList">
-                <img src={cart_img} alt="ChatList" />
+                <img src={chatlist_img} alt="ChatList" style={{ width: '3rem' }} />
                 <SmallLinkText>채팅목록</SmallLinkText>
               </Icon>
             )}
@@ -93,7 +94,7 @@ function Header() {
               {LocalStorage.get(LOCAL_STORAGE_KEY_LIST.MemberRole) === 'SELLER' && (
                 <Link to="/chatList">
                   <li>
-                    <img src={cart_img} alt="ChatList" style={{ width: '2rem' }} />
+                    <img src={chatlist_img} alt="ChatList" style={{ width: '2rem' }} />
                     <div>채팅목록</div>
                   </li>
                 </Link>
@@ -106,7 +107,7 @@ function Header() {
                 </li>
               </Link>
               <li onClick={clickLogout}>
-                <img src={login_img} alt="Login" style={{ width: '3rem' }} />
+                <img src={login_img} alt="Login" style={{ width: '2rem' }} />
                 <div>LOGOUT</div>
               </li>
             </DropDownContent>
