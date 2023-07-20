@@ -8,25 +8,26 @@ function MypageOrderDetail({ product }: MypageOrderDetailProps) {
   return (
     <CartListDetail>
       <div style={{ display: 'flex', fontSize: '14px' }}>
-        <CartListName style={{justifyContent:'flex-start', marginLeft:'7.5rem', maxWidth:'10rem'}}>
+        <CartListName style={{justifyContent:'flex-start', marginLeft:'3rem', maxWidth:'10%'}}>
           <img
             src={product.productImage}
             style={{ width: '4rem', height: '4rem', objectFit: 'cover', cursor: 'pointer' }}
             onClick={() => navigate(`/store/${product.storeId}`)}
           />
         </CartListName>
-        <CartListName minWidth={190}
+        <CartListName
           style={{
             fontSize: '14px',
             fontWeight: 'bold',
             lineHeight: '1.4',
-            paddingRight:'3rem'
+            minWidth:'250px',
+            maxWidth: '30%'
           }}
         >
           {product.productName}
-          <span style={{ color: 'var(--dark-purple)' }}>(x{product.productCount})</span>
+          <span style={{ color: 'var(--dark-purple)', marginLeft:"3px" }}>(x{product.productCount})</span>
         </CartListName>
-        <CartListName className="hide-under-1600" style={{ fontWeight: 'bold', maxWidth:'310px', justifyContent:'flex-start'}}>
+        <CartListName className="hide-under-1600" style={{ fontWeight: 'bold', maxWidth: '15%' }}>
           {priceFormatter(product.productPrice)}원
         </CartListName>
         <CartListName

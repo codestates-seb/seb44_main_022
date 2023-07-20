@@ -9,21 +9,21 @@ function MypageOrderTab() {
         width: '100%'
       }}
     >
-      <CartListName grow={2} style={{ justifyContent:"flex-start", paddingLeft:'3rem'}}
+      <CartListName style={{ justifyContent:"flex-start", paddingLeft:'3rem'}}
       >
         No.
       </CartListName>
-      <CartListName grow={30} minWidth={330} style={{ fontWeight: 'bold', paddingLeft:'4rem'}}>
+      <CartListName style={{ fontWeight: 'bold'}}>
         주문정보
       </CartListName>
-      <CartListName grow={20} style={{ fontWeight: 'bold'}} className="hide-under-1600">
+      <CartListName style={{ fontWeight: 'bold'}} className="hide-under-1600">
         총액
       </CartListName>
-      <CartListName grow={20} style={{ fontWeight: 'bold' }} className="hide-under-1260">
+      <CartListName style={{ fontWeight: 'bold'}} className="hide-under-1260">
         주문날짜
       </CartListName>
-      <CartListName grow={20} minWidth={165}
-        style={{ fontWeight:'bold', justifyContent:"flex-end", paddingRight:'2rem' }}
+      <CartListName
+        style={{ fontWeight:'bold', justifyContent:"flex-end", paddingRight:'2rem'}}
       >
         배송상태
       </CartListName>

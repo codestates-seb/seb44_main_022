@@ -7,10 +7,8 @@ import MypageOrderDetail from './MypageOrderDetail';
 import DateFormatter from './DateFormatter';  
 import { priceFormatter } from './PriceFormatter';
 
-//orderId말고 배열순서 함수 필요->이건 프론트가 할수있는게아닌데?!
 //닉네임 유효성 검사.
 //CSS 반응형으로 다시 간격 조정.<-하..어렵네 
-//Loading 세팅해야 되는 부분들 상세 체크
 //분리할 수 있는 기능들은 분리하기
 function MypageOrderList({ products  }: MypageOrderListProps) {
     const [isOpenedLocal, setIsOpenedLocal] = useState(false); 
@@ -32,28 +30,28 @@ function MypageOrderList({ products  }: MypageOrderListProps) {
     
   return <div>
     <div style={{ display: 'flex', fontSize: '14px', cursor:'pointer' }} onClick={handleListClick} >
-      <CartListName style={{justifyContent:'flex-start', paddingLeft:'2rem', maxWidth:'5px'}}>
+      <CartListName style={{justifyContent:'flex-start', paddingLeft:'2rem', maxWidth:'3%'}}>
          {products.orderCount}.
       </CartListName >
-      <CartListName style={{ padding: '1rem', justifyContent:'flex-start', maxWidth:'10rem' }}>
+      <CartListName style={{ padding: '1rem', justifyContent:'flex-start', maxWidth:'10%' }}>
         <img
           src={products.orderProductInfos[0].productImage}
           style={{ width: '4rem', height: '4rem', objectFit: 'cover' }}
         />
       </CartListName>
-      <CartListName style={{ paddingLeft:'4rem', wordBreak:"keep-all", fontSize: '14px', fontWeight: 'bold', lineHeight:'1.4'}}>
-        {products.orderProductInfos[0].productName} 포함 총 <span style={{color:"var(--dark-purple)", marginLeft:"5px"}}>{products.orderProductInfos.length}</span>건
+      <CartListName style={{ fontSize: '14px', fontWeight: 'bold', lineHeight:'1.4', minWidth:'30%', maxWidth: '30%' }}>
+        {products.orderProductInfos[0].productName} <span style={{minWidth:'80px'}}><span style={{color:"var(--dark-purple)", marginLeft:'5px'}}>포함 총 {products.orderProductInfos.length}</span>건</span>
       </CartListName>
-      <CartListName style={{ fontWeight: 'bold', paddingLeft:'3rem' }}>
+      <CartListName style={{ fontWeight: 'bold', maxWidth: '15%' }}>
         {priceFormatter(products.totalPrice)}원
       </CartListName>
       <CartListName
-        style={{ fontSize: '15px'}} className="hide-under-1260"
+        style={{ fontSize: '15px', maxWidth: '22%'  }} className="hide-under-1260"
       >
        <DateFormatter timestamp={products.createdAt}></DateFormatter>
       </CartListName>
       <CartListName
-        style={{ fontSize: '16px',fontWeight: 'bold' , justifyContent:'flex-end', paddingRight:'1rem' }}
+        style={{ fontSize: '16px',fontWeight: 'bold' , justifyContent:'flex-end', minWidth:'10%', maxWidth: '20%' ,paddingRight:'1rem' }}
       >
         {getOrderStatusText(products.orderStatus)} <BsArrowDownSquare style={{
               fontSize:'20px',

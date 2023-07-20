@@ -12,12 +12,12 @@ export const CartListName = styled.div<{ grow?: number; minWidth?: number} >`
       ${grow}%
     `};
 
-  min-width: ${({ minWidth }) =>
+  /* min-width: ${({ minWidth }) =>
     minWidth
       ? css`
           ${minWidth}px
         `
-      : css`120px`};
+      : css`120px`}; */
 
   font-family: 'Yaldevi', sans-serif;
   font-weight: bold;

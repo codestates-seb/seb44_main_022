@@ -4,6 +4,7 @@ import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import ProductCartAlert from '../share/ProductCartAlert';
 import axiosInstance from '../api/apis';
 import { ModalProps, Product } from '../assets/interface/Store.interface';
+import { priceFormatter } from '../pages/mypage/PriceFormatter';
 import {
   AlertBox,
   CircleShape,
@@ -93,7 +94,7 @@ function ModalComponentDetail({
             <StoreName>{storeName}</StoreName>
             <ProductName>{product?.productName}</ProductName>
             <ProductDetail>{product?.productIntroduction}</ProductDetail>
-            <ProductPrice>{product?.productPrice}원</ProductPrice>
+            <ProductPrice>{product ? priceFormatter(product.productPrice) : ''}원</ProductPrice>
           </ProductsContainer>
           <DecorationTextContainer>
             <DecorationText>Sweet</DecorationText>
