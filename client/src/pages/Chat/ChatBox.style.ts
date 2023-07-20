@@ -12,7 +12,7 @@ export const ChattingContainer = styled.div`
   bottom: 1rem;
   width: 22rem;
   height: 40rem;
-  background-color: white;
+  background-color: #e3f2fd;
   border-radius: 36px;
   overflow-y: auto;
   font-size: 3rem;
@@ -25,11 +25,12 @@ export const ChattingContainer = styled.div`
 export const ChattingMessageBox = styled.div`
   overflow-y: auto;
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 1rem;
-  margin-top: 3rem;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
+  background-color: white;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -46,21 +47,14 @@ export const ChattingMessageBox = styled.div`
   }
 `;
 
-export const ChattingHeaderLogo = styled.div`
-  position: absolute;
-  font-size: 1.5rem;
-  font-family: Just Another Hand, cursive;
-  top: 2%;
-  left: 5%;
-`;
-
 export const ChattingHeaderStore = styled.div`
   position: absolute;
-  font-size: 1rem;
-  top: 3%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-weight: 700;
+  font-size: 1.25rem;
+  top: 4%;
+  left: 7%;
+  font-weight: 400;
+  font-family: BMJUA;
+  color: #616161;
 `;
 
 export const ChattingMessage = styled.div<{ type: string }>`
@@ -68,7 +62,7 @@ export const ChattingMessage = styled.div<{ type: string }>`
   padding: 1rem;
   max-width: 80%;
   border-radius: 28px;
-  color: var(--gray);
+  color: ;
   line-height: 1.2;
   margin: 0.5rem;
   white-space: pre-line;
@@ -84,6 +78,7 @@ export const ChattingTextBox = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
+  background-color: var(--gray);
 `;
 
 export const ChattingTime = styled.span<{ type: string }>`
@@ -101,6 +96,7 @@ export const ChattingTextareaContainer = styled.div`
   margin: 1rem;
   margin-right: 3rem;
   border-radius: 28px;
+  background-color: white;
   box-shadow: 1px 1px 5px 1px var(--light-gray);
 `;
 

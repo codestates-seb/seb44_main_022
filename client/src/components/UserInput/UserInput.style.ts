@@ -9,12 +9,14 @@ export const InputBox = styled.input<{ valid?: boolean }>`
   display: block;
   border-radius: 12px;
   width: 300px;
+  min-width: 210px;
   border: 1px solid transparent;
   background-color: var(--gray);
   margin: 0.2rem 0;
   padding: 1rem 0 1rem 2.5rem;
   color: var(--light-black);
   transition: 0.3s;
+  font-family: Yaldevi, sans-serif;
   ::placeholder {
     color: var(--bright-gray);
   }

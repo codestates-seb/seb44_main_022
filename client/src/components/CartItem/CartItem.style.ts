@@ -18,6 +18,9 @@ export const CartListName = styled.div<{ grow: number; minWidth?: number }>`
           ${minWidth}px
         `
       : css`120px`};
+
+  font-family: 'Yaldevi', sans-serif;
+  font-weight: bold;
 `;
 
 export const CartImage = styled.img`
