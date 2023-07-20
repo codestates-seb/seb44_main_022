@@ -3,12 +3,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styled from 'styled-components';
-import {
-  section1_1,
-  section1_2,
-  section1_3,
-  section1_4,
-} from '../../assets/images/img_main/img_main';
+import { section1_1, section1_2, section1_3 } from '../../assets/images/img_main/img_main';
 
 type ArrowProps = {
   className?: string;
@@ -80,7 +75,6 @@ function MainSection1({ id, className }: { id: string; className?: string }) {
     { src: section1_1, text: 'Text image 1' },
     { src: section1_2, text: 'Text image 2' },
     { src: section1_3, text: 'Text image 3' },
-    { src: section1_4, text: 'Text image 4' },
   ];
   return (
     <div id={id} className={`section1 ${className}`}>

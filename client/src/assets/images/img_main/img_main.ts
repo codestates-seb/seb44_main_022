@@ -1,7 +1,6 @@
 import section1_1 from './section1-1.png';
-import section1_2 from './section1-2.png';
-import section1_3 from './section1-3.png';
-import section1_4 from './section1-4.png';
+import section1_2 from './section1-2.jpg';
+import section1_3 from './section1-3.jpg';
 import section2 from './section2.png';
 import section3_1 from './section3-1.png';
 import section3_2 from './section3-2.png';
@@ -15,7 +14,6 @@ export {
   section1_1,
   section1_2,
   section1_3,
-  section1_4,
   section2,
   section3_1,
   section3_2,

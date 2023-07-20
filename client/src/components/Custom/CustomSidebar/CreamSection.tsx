@@ -5,45 +5,49 @@ const SectionContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: 42px;
+  margin-top: 10px;
+  margin-bottom: 30px;
   margin-left: 11px;
-`;
-
-const SectionTitle = styled.p`
-  font-family: 'Open Sans', cursive;
-  font-size: 16px;
-  color: var(--light-black);
-  text-align: left;
-  margin-left: 12px;
-  margin-bottom: 12px;
+  @media (max-width: 200px) {
+    width: 40%;
+  }
 `;
 
 const ContentItem = styled.div`
-  width: 90%;
-  height: 80px;
-  background-color: #fff;
+  margin-left: 1.5%;
+  width: 88%;
+  background-color: #ffffff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  padding: 12px;
+  padding-left: 8px;
+  padding-bottom: 10px;
 `;
 
 const ContentImage = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  border: 1px solid var(--light-gray);
-  border-radius: 4px;
+  width: 57px;
+  height: 57px;
+  margin-right: 5px;
+  border: 0.9px solid var(--light-gray);
+  border-radius: 8px;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  cursor: grab;
+  &:hover {
+    background-color: var(--gray);
+  }
+  &:active {
+    background-color: var(--normal-gray);
+  }
 `;
 
 const ContentImageContainer = styled.div`
-  display: flex;
-  align-items: center;
-  overflow: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(50px, 1fr)); // 3열로 고정
+  gap: 8px;
+  max-width: 100%;
+  overflow-y: auto;
   margin-top: 8px;
-  height: 70px;
 `;
+
 interface Cream {
   ingredientName: string;
   ingredientImage: string;
@@ -66,7 +70,31 @@ function CreamSection({ onImageDragStart, creamIngredientList }: CreamSectionPro
 
   return (
     <SectionContainer>
-      <SectionTitle>크림</SectionTitle>
+      <div
+        style={{
+          background: '#FFF4E4',
+          width: '80px',
+          height: '30px',
+          paddingTop: '6px',
+          borderRadius: '2px',
+          marginBottom: '5px',
+        }}
+      >
+        <p
+          style={{
+            fontFamily: "'Just Another Hand', cursive",
+            fontSize: '22px',
+            color: '#ffb144',
+            textAlign: 'left',
+            marginLeft: '12px',
+            marginBottom: '12px',
+            textShadow: '1px 1px 2px #FFADD4',
+          }}
+        >
+          CREAM.
+        </p>
+      </div>
+
       <ContentItem>
         <ContentImageContainer>
           {creamIngredientList.map((cream, index) => (

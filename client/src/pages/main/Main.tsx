@@ -7,7 +7,7 @@ import MainSection4 from '../../components/Main/MainSection4';
 import MainSection5 from '../../components/Main/MainSection5';
 import MainSidebar from '../../components/Main/MainSidebar';
 import ModalPortal from '../../share/ModalPortal';
-
+import { throttle } from '../../utils/Throttle';
 const MainContainer = styled.div`
   height: 100vh;
   overflow: hidden;
@@ -37,7 +37,7 @@ function Main() {
   };
 
   useEffect(() => {
-    const handleWheel = (event: WheelEvent) => {
+    const handleWheel = throttle((event: WheelEvent) => {
       event.preventDefault();
 
       const scrollPosition = window.scrollY;
@@ -51,7 +51,7 @@ function Main() {
       setTimeout(() => {
         window.scrollTo({ top: scrollPosition });
       }, 0);
-    };
+    }, 1000);
 
     window.addEventListener('wheel', handleWheel, { passive: false });
 
