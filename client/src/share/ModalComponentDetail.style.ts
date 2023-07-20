@@ -174,9 +174,9 @@ export const StoreName = styled.h2`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Open Sans', cursive;
+  font-family: 'BMJUA';
   font-weight: 500;
-  font-size: 15px;
+  font-size: 16px;
   color: #244030;
   border-radius: 214px;
   background-color: #dcd2bd;
@@ -189,16 +189,19 @@ export const StoreName = styled.h2`
 `;
 
 export const ProductName = styled.h2`
-  font-family: 'Open Sans', cursive;
+  font-family: 'BMJUA';
   font-size: 45px;
   font-weight: bold;
   color: var(--light-black);
-  margin-left: 2rem;
+  margin-left: 0;
+  word-break: keep-all;
   @media (max-width: 1190px) {
     font-size: 36px;
+    margin-left: 1rem;
   }
   @media (max-width: 910px) {
     font-size: 30px;
+    margin-left: 2rem;
   }
 `;
 
@@ -207,7 +210,9 @@ export const ProductDetail = styled.h3`
   font-weight: 600;
   color: var(--light-black);
   width: 400px;
-  line-height: 1.7;
+  font-family: 'Yaldevi';
+  line-height: 1.7;  
+  word-break: keep-all;
   @media (max-width: 1190px) {
     font-size: 15px;
     width: 300px;
@@ -222,6 +227,7 @@ export const ProductPrice = styled.h2`
   display: flex;
   font-size: 19px;
   color: var(--white);
+  font-family: 'BMJUA';
   background-color: #665d49;
   justify-content: center;
   align-items: center;
@@ -270,5 +276,6 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
   @media (max-width: 910px) {
     width: 20%;
     border-radius: 30px;
+    background-position:center;
   }
 `;

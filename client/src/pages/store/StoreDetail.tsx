@@ -66,13 +66,13 @@ function StoreDetail() {
                 fontWeight: '600',
                 fontSize: '18px',
                 color: 'var(--bright-black)',
-                marginBottom: '1rem',
+                marginBottom: '2rem',
               }}
             >
               {data.storeName}
             </h3>
             <DetailTitle>소개</DetailTitle>
-            <DetailInfo style={{whiteSpace: "pre-line"}}>{data.storeIntroduction}</DetailInfo>
+            <DetailInfo style={{whiteSpace: "pre-wrap", lineHeight:'1.2'}}>{data.storeIntroduction}</DetailInfo>
             <DetailTitle>주소</DetailTitle>
             <Link
               to="/map"
