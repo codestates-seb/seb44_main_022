@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { CartListName } from '../../components/CartItem/CartItem.style';
 import { MypageOrderDetailProps } from '../../assets/interface/Mypage.interface'
+import { priceFormatter } from './PriceFormatter';
 function MypageOrderDetail({ product }: MypageOrderDetailProps) {
   const navigate = useNavigate();
   return (
@@ -31,7 +32,7 @@ function MypageOrderDetail({ product }: MypageOrderDetailProps) {
           <span style={{ marginLeft: '0.3rem', color: 'var(--dark-purple)' }}>(x{product.productCount})</span>
         </CartListName>
         <CartListName grow={5} minWidth={20} style={{ fontWeight: 'bold' }}>
-          {product.productPrice}원
+          {priceFormatter(product.productPrice)}원
         </CartListName>
         <CartListName
           grow={5}

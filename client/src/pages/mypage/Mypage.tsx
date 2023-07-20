@@ -15,7 +15,6 @@ function Mypage() {
   const [selectedSize, setSelectedSize] = useState(5);
   const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
 
-
   const fetchData = async () => {  
     try {
       const url = `/members`;

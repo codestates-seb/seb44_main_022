@@ -5,13 +5,22 @@ import { CartListName } from '../../components/CartItem/CartItem.style';
 import {MypageOrderListProps} from '../../assets/interface/Mypage.interface'
 import MypageOrderDetail from './MypageOrderDetail';
 import DateFormatter from './DateFormatter';  
+import { priceFormatter } from './PriceFormatter';
 
+//pull 한번 받고! 
+//들어온 숫자 세 자리에서 ,로 끊는 함수 toLocalString() string으로 바꿔준 뒤 
+//orderId말고 배열순서 함수 필요
+//나의 주문 누르면 page1로 리셋되고 isOpened도 다 false로 바뀌는 주문
+//닉네임 유효성 검사.
+//CSS 반응형으로 다시 간격 조정.
+//Loading 세팅해야 되는 부분들 상세 체크
+//분리할 수 있는 기능들은 분리하기
 function MypageOrderList({ products }: MypageOrderListProps) {
     const [isOpened, setIsOpened] = useState(false);
     const handleListClick = () => {
         setIsOpened(!isOpened);
       };
-      const getOrderStatusText = (status: string) => {
+    const getOrderStatusText = (status: string) => {
         if (status === 'SUSPENSION') {
           return '주문접수';
         } else if(status ==="CANCELLATION"){
@@ -23,6 +32,7 @@ function MypageOrderList({ products }: MypageOrderListProps) {
         }
         return status;
       };
+    
   return <div>
     <div style={{ display: 'flex', fontSize: '14px', cursor:'pointer' }} onClick={handleListClick} >
       <CartListName grow={5} minWidth={5} style={{ justifyContent: 'flex-start', marginRight: '0'  }}>
@@ -38,7 +48,7 @@ function MypageOrderList({ products }: MypageOrderListProps) {
         {products.orderProductInfos[0].productName} 포함 총 <span style={{color:"var(--dark-purple)", marginLeft:"5px"}}>{products.orderProductInfos.length}</span>건
       </CartListName>
       <CartListName grow={5} minWidth={20} style={{ fontWeight: 'bold' }}>
-        {products.totalPrice}원
+        {priceFormatter(products.totalPrice)}원
       </CartListName>
       <CartListName
         grow={5}

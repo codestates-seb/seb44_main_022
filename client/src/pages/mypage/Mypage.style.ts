@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-
-
 export const MyPageWrapper = styled.section`
   width: 70%;
   margin-bottom: 80px;
