@@ -24,8 +24,12 @@ public class ChatRoom{
     @JoinColumn(nullable = false, foreignKey = @ForeignKey(name = "fk_customer"))
     private Member customer;
 
-    public ChatRoom(Member merchant, Member customer) {
+    @Column(name = "store_name")
+    private String storeName;
+
+    public ChatRoom(Member merchant, Member customer, String storeName) {
         this.merchant = merchant;
         this.customer = customer;
+        this.storeName = storeName;
     }
 }
