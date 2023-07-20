@@ -13,7 +13,8 @@ export const StoreSection = styled.section`
   justify-content: center;
   align-items: center; 
   flex-direction: column;
-  margin-top:240px;
+  margin-top: 240px;
+  margin-bottom: 80px;
   @media (max-width: 772px) {
     margin-top: 120px;
   }
