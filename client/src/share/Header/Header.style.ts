@@ -133,13 +133,16 @@ export const DropDownContent = styled.ul`
   width: 150px;
   border-radius: 0px 0px 15px 15px;
   overflow: hidden;
-  & > li {
+
+  & > li,
+  a > li {
     padding: 1rem;
     text-align: center;
     transition: 0.3s;
     display: flex;
     align-items: center;
     justify-content: space-around;
+
     &:hover {
       background-color: var(--normal-gray);
     }

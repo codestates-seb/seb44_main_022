@@ -38,7 +38,7 @@ function StoreDetail() {
   return (
     <>
       <StoreDetailSection>
-        <Chat storeId={storeId} />
+        <Chat storeId={storeId} storeName={data.storeName} />
         <Link to="/store">
           <BiArrowBack
             style={{

@@ -87,6 +87,7 @@ export const CART_CATEGORY_NAME = [
 export const LOCAL_STORAGE_KEY_LIST = {
   AccessToken: 'AccessToken',
   IdList: 'IdList',
+  MemberRole: 'MemberRole',
 };
 
 export const DELIVERY_FEE = 3500;
@@ -111,7 +112,7 @@ export const CHAT_TYPE_STYLE: { [index: string]: FlattenSimpleInterpolation } = 
   `,
   answer: css`
     align-self: flex-end;
-    background-color: #65abf7;
+    background-image: linear-gradient(to right, #6190e8, #a7bfe8);
   `,
 };
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { BsCircleFill } from 'react-icons/bs';
 import { MapModalProps } from '../../assets/interface/Map.interface';
 import {
   IMAGE_NUMBER_BUTTON,
@@ -33,7 +34,9 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
   return (
     <>
       <MarkerModal isClose={isClose}>
-        <ExitMapModalButton onClick={handleCloseModal}>BUYTE</ExitMapModalButton>
+        <ExitMapModalButton onClick={handleCloseModal}>
+          <BsCircleFill style={{ color: 'var(--purple)' }} />
+        </ExitMapModalButton>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <MapModalTitleContainer>
             <div style={{ overflow: 'hidden', borderRadius: '50%' }}>

@@ -46,6 +46,23 @@ export const ChattingMessageBox = styled.div`
   }
 `;
 
+export const ChattingHeaderLogo = styled.div`
+  position: absolute;
+  font-size: 1.5rem;
+  font-family: Just Another Hand, cursive;
+  top: 2%;
+  left: 5%;
+`;
+
+export const ChattingHeaderStore = styled.div`
+  position: absolute;
+  font-size: 1rem;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 700;
+`;
+
 export const ChattingMessage = styled.div<{ type: string }>`
   font-size: 1rem;
   padding: 1rem;
@@ -55,10 +72,18 @@ export const ChattingMessage = styled.div<{ type: string }>`
   line-height: 1.2;
   margin: 0.5rem;
   white-space: pre-line;
+  word-wrap: break-word;
   font-family: BMJUA;
   position: relative;
 
   ${({ type }) => CHAT_TYPE_STYLE[type]}
+`;
+
+export const ChattingTextBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
 
 export const ChattingTime = styled.span<{ type: string }>`

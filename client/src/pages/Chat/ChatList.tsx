@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../api/apis';
 import ChatBox from './ChatBox';
+import { ChatListContainer, ChatListItem } from './ChatList.style';
+
+interface ChatListType {
+  senderId: number;
+  receiverId: number;
+  roomId: number;
+  customerName: string;
+  storeName: string;
+}
 
 function ChatList() {
   // 관리자 or 나중에 구현할 사업자 전용 페이지로 디자인 미구현이라 임의로 구성중입니다.
-  const [chatList, setChatList] = useState<any>([]);
+  const [chatList, setChatList] = useState<ChatListType[]>([]);
   const [isOpenChatting, setIsOpenChatting] = useState<boolean>(false);
   const [activeChat, setActiveChat] = useState<number | null>(null);
 
@@ -16,53 +25,36 @@ function ChatList() {
   }, []);
 
   return (
-    <div
-      style={{
-        marginTop: '80px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column',
-      }}
-    >
+    <ChatListContainer>
       {chatList !== undefined &&
         chatList.length > 0 &&
-        chatList.map((e: any) => {
+        chatList.map((chatListItem: ChatListType) => {
           return (
             <>
-              <div
-                style={{
-                  border: '1px solid red',
-                  width: '80%',
-                  height: '3rem',
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  cursor: 'pointer',
-                }}
-                key={e.receiverId}
+              <ChatListItem
+                key={chatListItem.receiverId}
                 onClick={() => {
-                  console.log(e.roomId);
-                  setActiveChat(e.roomId);
+                  setActiveChat(chatListItem.roomId);
                   setIsOpenChatting(true);
                 }}
               >
-                <div style={{ padding: '0rem 0.5rem' }}>{e.customerName}</div>
-              </div>
-              {activeChat === e.roomId && isOpenChatting && (
+                <div style={{ padding: '0rem 0.5rem' }}>{chatListItem.storeName}</div>
+                <div style={{ padding: '0rem 0.5rem' }}>{chatListItem.customerName}</div>
+              </ChatListItem>
+              {activeChat === chatListItem.roomId && isOpenChatting && (
                 <ChatBox
-                  key={e.receiverId}
+                  key={chatListItem.receiverId}
                   setIsOpenChatting={setIsOpenChatting}
-                  storeId="1"
-                  roomIdProps={e.roomId}
-                  receiverIdProps={e.senderId}
-                  senderIdProps={e.receiverId}
+                  storeName={chatListItem.storeName}
+                  roomIdProps={chatListItem.roomId}
+                  receiverIdProps={chatListItem.senderId}
+                  senderIdProps={chatListItem.receiverId}
                 />
               )}
             </>
           );
         })}
-    </div>
+    </ChatListContainer>
   );
 }
 

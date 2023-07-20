@@ -25,7 +25,7 @@ export const Routes = [
   { path: '/complete', element: <OrderComplete />, isAuth: true },
   { path: '/mypage', element: <Mypage />, isAuth: true },
   { path: '/cart', element: <ShoppingCart />, isAuth: true },
-  { path: '/chatList', element: <ChatList />, isAuth: true },
+  { path: '/chatList', element: <ChatList />, isAuth: true, seller: true },
 ];
 
 export const RouteList = (
@@ -34,7 +34,7 @@ export const RouteList = (
       return route.isAuth === undefined ? (
         <Route key={index} path={route.path} element={route.element} />
       ) : (
-        <Route element={<PrivateRoute isAuth={route.isAuth} />}>
+        <Route element={<PrivateRoute isAuth={route.isAuth} seller={route.seller} />}>
           <Route key={index} path={route.path} element={route.element} />
         </Route>
       );

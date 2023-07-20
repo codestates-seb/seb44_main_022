@@ -71,6 +71,12 @@ function Header() {
       {LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken) ? (
         <>
           <AuthRelativeContainer>
+            {LocalStorage.get(LOCAL_STORAGE_KEY_LIST.MemberRole) === 'SELLER' && (
+              <Icon to="/chatList">
+                <img src={cart_img} alt="ChatList" />
+                <SmallLinkText>채팅목록</SmallLinkText>
+              </Icon>
+            )}
             <Icon to="/cart">
               <img src={cart_img} alt="Cart" />
               <SmallLinkText>장바구니</SmallLinkText>
@@ -83,10 +89,21 @@ function Header() {
           <DropDownContainer onClick={() => setIsOpenMenu(!isOpenMenu)} isOpenMenu={isOpenMenu}>
             <HamburgerMenu isOpenMenu={isOpenMenu} />
             <DropDownContent>
-              <li>
-                <img src={cart_img} alt="Cart" style={{ width: '2rem' }} />
-                <Link to="/cart">장바구니</Link>
-              </li>
+              {LocalStorage.get(LOCAL_STORAGE_KEY_LIST.MemberRole) === 'SELLER' && (
+                <Link to="/chatList">
+                  <li>
+                    <img src={cart_img} alt="ChatList" style={{ width: '2rem' }} />
+                    <div>채팅목록</div>
+                  </li>
+                </Link>
+              )}
+
+              <Link to="/cart">
+                <li>
+                  <img src={cart_img} alt="Cart" style={{ width: '2rem' }} />
+                  <div>장바구니</div>
+                </li>
+              </Link>
               <li onClick={clickLogout}>
                 <img src={login_img} alt="Login" style={{ width: '2rem' }} />
                 <div>LOGOUT</div>
@@ -105,10 +122,12 @@ function Header() {
           <DropDownContainer onClick={() => setIsOpenMenu(!isOpenMenu)} isOpenMenu={isOpenMenu}>
             <HamburgerMenu isOpenMenu={isOpenMenu} />
             <DropDownContent>
-              <li>
-                <img src={login_img} alt="Login" style={{ width: '2rem' }} />
-                <Link to="/auth">LOGIN</Link>
-              </li>
+              <Link to="/auth">
+                <li>
+                  <img src={login_img} alt="Login" style={{ width: '2rem' }} />
+                  <div>LOGIN</div>
+                </li>
+              </Link>
             </DropDownContent>
           </DropDownContainer>
         </>

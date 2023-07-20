@@ -26,7 +26,9 @@ function LoginForm() {
       postLogin(userId, password)
         .then((res) => {
           const accessToken = res.headers['authorization'];
+          const memberRole = res.headers['member-role'];
           LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.AccessToken, accessToken);
+          LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.MemberRole, memberRole);
           navigate('/');
           return;
         })
