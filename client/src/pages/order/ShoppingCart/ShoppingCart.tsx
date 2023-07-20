@@ -19,7 +19,6 @@ import {
 } from './ShoppingCart.style';
 
 function ShoppingCart() {
-  const [isLoading, setIsLoading] = useState(false);
   const [cartList, setCartList] = useState<CartItemTypes[]>([]);
   const [initialChecked, setInitialChecked] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -38,16 +37,12 @@ function ShoppingCart() {
   };
 
   useEffect(() => {
-    setIsLoading(true);
     getCartList()
       .then((res) => {
         setCartList(res.data.cartInfos);
         setTotalPrice(res.data.totalPrice);
       })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .catch((err) => console.log(err));
   }, []);
 
   const handleSelectedPayment = (array: number[] | CartItemTypes[], state: string) => {
@@ -73,9 +68,8 @@ function ShoppingCart() {
           </div>
         </CartCategoryName>
         <CartItemTab path="cart" />
-        {isLoading ? (
-          <div style={{ backgroundImage: `url(${loading})` }}>로딩중</div>
-        ) : cartList !== undefined && cartList.length > 0 ? (
+
+        {cartList !== undefined && cartList.length > 0 ? (
           cartList.map((e, idx) => (
             <CartItem
               items={e}

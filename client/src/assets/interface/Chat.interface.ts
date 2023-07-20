@@ -1,4 +1,29 @@
-export interface messageList {
-  type: string;
-  message: string;
+export interface IdType {
+  senderId: number;
+  receiverId: number;
+}
+
+export interface BaseChatData extends IdType {
+  roomId: number;
+}
+
+export interface MessageList {
+  senderId: number;
+  receiverId: number;
+  content: string;
+  createdAt: string;
+}
+
+export interface ChatBoxProps {
+  setIsOpenChatting: React.Dispatch<React.SetStateAction<boolean>>;
+  storeId?: string | undefined;
+  storeName: string | undefined;
+  roomIdProps?: number;
+  receiverIdProps?: number;
+  senderIdProps?: number;
+}
+
+export interface ChatButtonProp {
+  storeId: string | undefined;
+  storeName: string | undefined;
 }
