@@ -10,7 +10,7 @@ export const CartButtonContainer = styled.div`
   border: none;
   background-color: transparent;
   border-radius: 0px 0px 20px 0px;
-  background-color: rgba(59, 88, 156, 0.9);
+  background-color: rgba(59, 88, 156, 1);
   display: flex;
   flex-direction: column;
   align-items: center;

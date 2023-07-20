@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { section3_1, section3_2 } from '../../assets/images/img_main/img_main';
-
+import section5_1 from '../../assets/images/img_main/section5_1.jpg';
+import section5_2 from '../../assets/images/img_main/section5_2.jpg';
 const Section3Icon = styled.img`
   position: absolute;
   width: 100%;
@@ -43,8 +43,8 @@ function MainSection5({ id, className }: { id: string; className?: string }) {
     <div className="section">
       <Section3 id={id} className={`section5 ${className}`}>
         <Section3Card className="card">
-          <Section3Icon className="front" src={section3_1} />
-          <Section3Icon className="back" src={section3_2} />
+          <Section3Icon className="front" src={section5_1} />
+          <Section3Icon className="back" src={section5_2} />
         </Section3Card>
       </Section3>
     </div>
