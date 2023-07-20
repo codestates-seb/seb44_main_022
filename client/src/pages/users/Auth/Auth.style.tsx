@@ -70,3 +70,9 @@ export const AuthCategoryContainer = styled.div`
   margin: 1.5rem 0;
   justify-content: space-around;
 `;
+
+export const LogoFont = styled.div`
+  font-family: Just Another Hand, cursive;
+  font-size: 3rem;
+  cursor: pointer;
+`;

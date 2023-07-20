@@ -9,7 +9,7 @@ export const MapPageContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 80vh;
+  height: 90vh;
   padding-top: 2rem;
 `;
 
@@ -30,7 +30,7 @@ export const MarkerModal = styled.div<{ isClose: boolean }>`
   background-color: var(--background);
   border-radius: 15px;
   border: 1px solid var(--normal-gray);
-  top: 25%;
+  bottom: calc(35% - 10vh);
   right: 15%;
   display: flex;
   flex-direction: column;
@@ -38,7 +38,7 @@ export const MarkerModal = styled.div<{ isClose: boolean }>`
   animation: ${({ isClose }) => (isClose ? fadeOut : fadeIn)} 0.3s forwards;
   box-shadow: 1px 1px 5px 1px var(--light-gray);
 
-  @media screen and (max-height: 950px) {
+  @media screen and (max-height: 600px) {
     animation: ${fadeUpNone} 0.3s forwards;
   }
 `;
@@ -62,11 +62,9 @@ export const ExitMapModalButton = styled.div`
   font-size: 1.5rem;
   font-family: Just Another Hand, cursive;
   transition: 0.3s;
-  color: var(--dark-gray);
 
   &:hover {
     transform: scale(110%, 110%);
-    color: var(--purple);
   }
 `;
 

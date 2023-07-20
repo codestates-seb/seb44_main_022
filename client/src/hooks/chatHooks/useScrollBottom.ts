@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { messageList } from '../../assets/interface/Chat.interface';
+import { MessageList } from '../../assets/interface/Chat.interface';
 
 const useScrollBottom = (
   ref: React.RefObject<HTMLDivElement>,
-  messageList: messageList[],
+  messageList: MessageList[],
   chatText: string
 ) => {
   useEffect(() => {

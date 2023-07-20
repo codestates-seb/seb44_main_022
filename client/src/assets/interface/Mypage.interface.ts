@@ -11,6 +11,7 @@ export interface Product {
 
 export interface OrderData {
     orderId: number; 
+    orderCount: number;
     orderAddress: string;
     orderProductInfos: Product[];
     totalPrice: number;

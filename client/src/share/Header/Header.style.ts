@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { dropDown, dropUp } from '../../styles/keyframes';
+import { dropDown, dropUp, fadeIn, fadeOut } from '../../styles/keyframes';
 
 export const LinkText = styled(Link)`
   display: flex;
@@ -75,7 +75,7 @@ export const IconDiv = styled.div`
   }
 `;
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.div<{ animation: string }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -87,6 +87,7 @@ export const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #fcfcffaa;
+  animation: 0.3s ${({ animation }) => (animation === 'fadeIn' ? fadeIn : fadeOut)} forwards;
 `;
 
 export const AuthRelativeContainer = styled.div`
@@ -133,13 +134,16 @@ export const DropDownContent = styled.ul`
   width: 150px;
   border-radius: 0px 0px 15px 15px;
   overflow: hidden;
-  & > li {
+
+  & > li,
+  a > li {
     padding: 1rem;
     text-align: center;
     transition: 0.3s;
     display: flex;
     align-items: center;
     justify-content: space-around;
+
     &:hover {
       background-color: var(--normal-gray);
     }

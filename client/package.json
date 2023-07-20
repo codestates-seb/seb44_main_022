@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-oauth/google": "^0.11.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@stomp/stompjs": "^7.0.0",
     "@types/daum-postcode": "^2.0.0",
     "@types/styled-components": "^5.1.26",
     "autoprefixer": "^10.4.14",
@@ -30,6 +31,7 @@
     "react-slick": "^0.29.0",
     "react-transition-group": "^4.4.5",
     "slick-carousel": "^1.8.1",
+    "sockjs-client": "^1.6.1",
     "sort-by": "^1.2.0",
     "styled-components": "^5.3.10"
   },
@@ -38,6 +40,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-modal": "^3.16.0",
     "@types/react-slick": "^0.23.10",
+    "@types/sockjs-client": "^1.5.1",
     "@types/react-transition-group": "^4.4.6",
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",

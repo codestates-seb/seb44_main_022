@@ -14,6 +14,7 @@ function Mypage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSize, setSelectedSize] = useState(5);
   const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
+  console.log(filteredOrderlist)
   const fetchData = async () => {  
     try {
       const url = `/members`;

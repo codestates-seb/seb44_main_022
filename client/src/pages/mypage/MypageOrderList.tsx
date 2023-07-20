@@ -9,7 +9,7 @@ import { priceFormatter } from './PriceFormatter';
 
 //orderId말고 배열순서 함수 필요->이건 프론트가 할수있는게아닌데?!
 //닉네임 유효성 검사.
-//CSS 반응형으로 다시 간격 조정.
+//CSS 반응형으로 다시 간격 조정.<-하..어렵네 
 //Loading 세팅해야 되는 부분들 상세 체크
 //분리할 수 있는 기능들은 분리하기
 function MypageOrderList({ products  }: MypageOrderListProps) {
@@ -33,7 +33,7 @@ function MypageOrderList({ products  }: MypageOrderListProps) {
   return <div>
     <div style={{ display: 'flex', fontSize: '14px', cursor:'pointer' }} onClick={handleListClick} >
       <CartListName style={{justifyContent:'flex-start', paddingLeft:'2rem', maxWidth:'5px'}}>
-         {products.orderId}.
+         {products.orderCount}.
       </CartListName >
       <CartListName style={{ padding: '1rem', justifyContent:'flex-start', maxWidth:'10rem' }}>
         <img
