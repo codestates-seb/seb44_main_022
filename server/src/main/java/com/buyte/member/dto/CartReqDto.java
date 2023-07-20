@@ -1,6 +1,7 @@
 package com.buyte.member.dto;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class CartReqDto {
 
     @Getter
+    @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CartIds {
 
@@ -18,6 +20,7 @@ public class CartReqDto {
     }
 
     @Getter
+    @AllArgsConstructor
     @NoArgsConstructor(access = AccessLevel.PRIVATE)
     public static class CartProductCount {
 
