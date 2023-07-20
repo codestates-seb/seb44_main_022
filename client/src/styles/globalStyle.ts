@@ -31,7 +31,7 @@ export const GlobalStyle = createGlobalStyle`
 @font-face {
     font-family: 'BMJUA';
     src: url(${BMJUA}) format('woff');
-    font-weight: normal;
+    font-weight: lighter;
     font-style: normal;
 }
 :root{

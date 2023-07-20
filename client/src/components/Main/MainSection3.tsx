@@ -107,19 +107,19 @@ function MainSection3({
       </ImageContainer>
       <TextContainer isAnimated={isAnimated}>
         <div style={{ color: '#fff6f6', fontSize: '22px', marginBottom: '40px' }}>
-          BUYTE에서 주문할 수 있는 커스텀 제품
+          BUYTE에서 주문할 수 있는 매장내 인기제품
         </div>
         <div
-          style={{ color: '#ffffff', fontSize: '42px', fontWeight: 'bold', marginBottom: '70px' }}
+          style={{ color: '#fff6f6', fontSize: '42px', fontWeight: 'bold', marginBottom: '70px' }}
         >
           케이크 도넛 쿠키
         </div>
         <div style={{ color: '#ffffff', fontSize: '22px' }}>
           <div style={{ color: '#ffffff', marginBottom: '12px' }}>
-            ✔︎ 매장별 재료에 따라 원하는대로 커스텀 가능
+            ✔︎ 직접 커스텀하기 어려우신분들을 위해
           </div>
           <div style={{ color: '#ffffff', marginBottom: '12px' }}>
-            ✔︎ 원하는 디자인을 만들어주세요
+            ✔︎ 원하는 디자인을 골라보세요
           </div>
           <div style={{ color: '#ffffff', marginBottom: '12px' }}>
             ✔︎ 가까운 매장을 찾아서 주문해주세요

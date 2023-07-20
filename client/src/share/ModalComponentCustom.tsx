@@ -31,8 +31,7 @@ const StyledModal = styled(Modal)`
   transform: translate(-50%, -50%);
   min-height: 77%;
   min-width: 77%;
-  box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 1);
   z-index: 10;
   border-radius: 20px;
   overflow: hidden;
@@ -44,7 +43,7 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 9;
 `;
 
@@ -53,6 +52,7 @@ const ModalContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  outline: none;
 `;
 
 const CustomContainer = styled.div`
@@ -62,10 +62,8 @@ const CustomContainer = styled.div`
   transform: translate(-50%, -50%);
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: rgba(20, 46, 56, 0.13);
   border-radius: 10px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2), 0px 25px 20px rgba(0, 0, 0, 0.35);
-  border: 0.5px solid rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   overflow: hidden;
   display: flex;

@@ -17,10 +17,10 @@ export const LinkText = styled(Link)`
 
 export const SmallLinkText = styled.div`
   font-family: 'Yaldevi', sans-serif;
-  line-height: 30px;
+  line-height: 15px;
   display: flex;
-  height: 2rem;
-  font-size: 15px;
+  height: 1.5rem;
+  font-size: 13px;
   color: #6d4924;
   transition: 0.3s;
 `;
@@ -33,6 +33,7 @@ export const Icon = styled(Link)`
   align-items: center;
   width: 80px;
   min-width: 60px;
+  margin-top: 15px;
 
   &:hover > div {
     transform: scale(110%, 110%);
@@ -57,6 +58,7 @@ export const IconDiv = styled.div`
   align-items: center;
   width: 80px;
   min-width: 60px;
+  margin-top: 15px;
 
   &:hover > div {
     transform: scale(110%, 110%);
@@ -85,7 +87,6 @@ export const HeaderContainer = styled.div<{ animation: string }>`
   align-items: center;
   justify-content: space-between;
   background-color: #fcfcffaa;
-
   animation: 0.3s ${({ animation }) => (animation === 'fadeIn' ? fadeIn : fadeOut)} forwards;
 `;
 

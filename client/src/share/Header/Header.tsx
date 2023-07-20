@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import login_img from '../../assets/images/login_img.png';
+import logout_img from '../../assets/images/logout_img.png';
 import cart_img from '../../assets/images/cart_img.png';
 import { LocalStorage } from '../../utils/browserStorage';
 import {
@@ -78,11 +79,11 @@ function Header() {
               </Icon>
             )}
             <Icon to="/cart">
-              <img src={cart_img} alt="Cart" />
+              <img src={cart_img} alt="Cart" style={{ width: '3rem' }} />
               <SmallLinkText>장바구니</SmallLinkText>
             </Icon>
             <IconDiv onClick={clickLogout}>
-              <img src={login_img} alt="Login" />
+              <img src={logout_img} alt="Login" style={{ width: '3rem' }} />
               <SmallLinkText>LOGOUT</SmallLinkText>
             </IconDiv>
           </AuthRelativeContainer>
@@ -105,7 +106,7 @@ function Header() {
                 </li>
               </Link>
               <li onClick={clickLogout}>
-                <img src={login_img} alt="Login" style={{ width: '2rem' }} />
+                <img src={login_img} alt="Login" style={{ width: '3rem' }} />
                 <div>LOGOUT</div>
               </li>
             </DropDownContent>
@@ -115,7 +116,7 @@ function Header() {
         <>
           <AuthRelativeContainer>
             <Icon to="/auth">
-              <img src={login_img} alt="Login" />
+              <img src={login_img} alt="Login" style={{ width: '3rem' }} />
               <SmallLinkText>LOGIN</SmallLinkText>
             </Icon>
           </AuthRelativeContainer>

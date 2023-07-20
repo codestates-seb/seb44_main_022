@@ -7,12 +7,4 @@ export const CanvasComponentWrapper = styled.div`
   height: 100%;
   margin-bottom: 0;
   z-index: 10;
-
-  &:first-child {
-    top: 0;
-  }
-
-  &:last-child {
-    bottom: 0;
-  }
 `;
