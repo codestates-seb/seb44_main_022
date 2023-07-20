@@ -69,6 +69,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.addExposedHeader("Authorization");
         configuration.addExposedHeader("Set-Cookie");
+        configuration.addExposedHeader("Member-Role");
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
