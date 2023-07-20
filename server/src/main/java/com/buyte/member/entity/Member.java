@@ -43,9 +43,6 @@ public class Member extends Auditable {
     @Column(name = "member_name", nullable = false)
     private String memberName;
 
-    @OneToOne(mappedBy = "member", cascade = {CascadeType.ALL})
-    private Store store;
-
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Cart> cartList = new ArrayList<>();
 
@@ -59,6 +56,9 @@ public class Member extends Auditable {
     @Column(name = "member_role")
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    private List<Store> storeList = new ArrayList<>();
 
     public enum MemberType {
         BASIC,

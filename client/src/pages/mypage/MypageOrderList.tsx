@@ -8,17 +8,16 @@ import DateFormatter from './DateFormatter';
 import { priceFormatter } from './PriceFormatter';
 
 //pull 한번 받고! 
-//들어온 숫자 세 자리에서 ,로 끊는 함수 toLocalString() string으로 바꿔준 뒤 
 //orderId말고 배열순서 함수 필요
 //나의 주문 누르면 page1로 리셋되고 isOpened도 다 false로 바뀌는 주문
 //닉네임 유효성 검사.
 //CSS 반응형으로 다시 간격 조정.
 //Loading 세팅해야 되는 부분들 상세 체크
 //분리할 수 있는 기능들은 분리하기
-function MypageOrderList({ products }: MypageOrderListProps) {
-    const [isOpened, setIsOpened] = useState(false);
+function MypageOrderList({ products  }: MypageOrderListProps) {
+    const [isOpenedLocal, setIsOpenedLocal] = useState(false); 
     const handleListClick = () => {
-        setIsOpened(!isOpened);
+        setIsOpenedLocal(!isOpenedLocal);
       };
     const getOrderStatusText = (status: string) => {
         if (status === 'SUSPENSION') {
@@ -44,7 +43,7 @@ function MypageOrderList({ products }: MypageOrderListProps) {
           style={{ width: '4rem', height: '4rem', objectFit: 'cover' }}
         />
       </CartListName>
-      <CartListName grow={80} minWidth={200} style={{ fontSize: '14px', justifyContent: 'flex-start', fontWeight: 'bold', paddingLeft: "1.5rem", paddingRight:"7rem", lineHeight:'1.4'}}>
+      <CartListName grow={80} minWidth={200} style={{ wordBreak:"keep-all", fontSize: '14px', justifyContent: 'flex-start', fontWeight: 'bold', paddingLeft: "1.5rem", paddingRight:"7rem", lineHeight:'1.4'}}>
         {products.orderProductInfos[0].productName} 포함 총 <span style={{color:"var(--dark-purple)", marginLeft:"5px"}}>{products.orderProductInfos.length}</span>건
       </CartListName>
       <CartListName grow={5} minWidth={20} style={{ fontWeight: 'bold' }}>
@@ -67,12 +66,12 @@ function MypageOrderList({ products }: MypageOrderListProps) {
               marginLeft: '10px',
               cursor: 'pointer',
               color: 'var(--dark-purple)',
-              transform: isOpened ? 'scaleY(-1)' : 'scaleY(1)',
+              transform: isOpenedLocal ? 'scaleY(-1)' : 'scaleY(1)',
               transition: 'transform 0.5s ease',
             }}/>
       </CartListName>      
     </div>
-    {isOpened && (
+    {isOpenedLocal && (
         <SlideDown>
           {products.orderProductInfos.map((product, index) => (
             <MypageOrderDetail key={index} product={product} />

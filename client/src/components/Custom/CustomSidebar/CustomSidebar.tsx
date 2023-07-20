@@ -7,13 +7,15 @@ import ToppingSection from './ToppingSection';
 import FillingSection from './FillingSection';
 import CreamSection from './CreamSection';
 const Sidebar = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 20%;
+  width: 21%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(50px);
+  background-color: #ffec9e;
+  backdrop-filter: blur(5px);
+  overflow: hidden;
+  border-right: 14px solid #cdc4aa;
 `;
 
 const SidebarContent = styled.div`
@@ -21,15 +23,15 @@ const SidebarContent = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding-top: 30px;
-  overflow: auto;
+  padding-top: 25px;
+  overflow: hidden;
 `;
 
 const CustomIcon = styled.img`
   width: 40px;
   height: 10px;
   margin-bottom: 20px;
-  margin-left: 10px;
+  margin-left: 15px;
 `;
 interface CustomSidebarProps {
   store_id: number;

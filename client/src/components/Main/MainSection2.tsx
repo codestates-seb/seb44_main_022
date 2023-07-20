@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import customCake1 from '../../assets/images/img_main/customCake1.png';
 import customCake2 from '../../assets/images/img_main/customCake2.png';
@@ -46,7 +46,6 @@ const Image = styled.img`
   transition: opacity 0.5s ease-in-out;
   cursor: pointer;
   &:hover {
-    transform: scale(1.05);
     cursor: pointer;
   }
 `;

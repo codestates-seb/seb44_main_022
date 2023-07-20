@@ -7,6 +7,7 @@ import RangeInputContainer from './RangeInputcontainer';
 import UploadButton from './UploadButton';
 import { CanvasWrapper, Canvas } from './CanvasComponent';
 import UndoButton from './UndoButton';
+import RedoButton from './RedoButton';
 import { ContentContainer } from './ContentContainer';
 
 type ImageData = {
@@ -16,7 +17,11 @@ type ImageData = {
   width: number;
   height: number;
 };
-
+type PenDrawing = {
+  color: string;
+  size: number;
+  lines: { x: number; y: number }[];
+};
 const CustomContent: React.FC<{
   canvasRef: React.RefObject<HTMLCanvasElement>;
   updateImages: React.Dispatch<React.SetStateAction<ImageData[]>>;
@@ -25,10 +30,15 @@ const CustomContent: React.FC<{
   const [color, setColor] = useState<string>('#000000');
   const [eraser, setEraser] = useState<boolean>(false);
   const [images, setImages] = useState<ImageData[]>([]);
+  const [penDrawings, setPenDrawings] = useState<PenDrawing[]>([]);
   const [drawingMode, setDrawingMode] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [, setDraggedImage] = useState<string | null>(null);
   const [draggedImageIndex, setDraggedImageIndex] = useState<number>(-1);
+  const [undoMode] = useState<'image' | 'drawing'>('image');
+  const [redoMode, setRedoMode] = useState<'image' | 'drawing' | 'none'>('none');
+  const [redoImages, setRedoImages] = useState<ImageData[]>([]);
+  const [redoPenDrawings, setRedoPenDrawings] = useState<PenDrawing[]>([]);
 
   const handleChangeSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSize(Number(event.target.value));
@@ -118,6 +128,43 @@ const CustomContent: React.FC<{
       ctx.stroke();
     }
   };
+  useEffect(() => {
+    const handleResize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      // 캔버스 상태 저장
+      const tempCanvas = document.createElement('canvas');
+      const tempCtx = tempCanvas.getContext('2d');
+      if (!tempCtx) return;
+
+      tempCanvas.width = canvas.width;
+      tempCanvas.height = canvas.height;
+      tempCtx.drawImage(canvas, 0, 0);
+
+      // 캔버스 크기 조정
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      // 펜 상태 재설정
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = size;
+      ctx.strokeStyle = color;
+      ctx.globalCompositeOperation = eraser ? 'destination-out' : 'source-over';
+
+      ctx.drawImage(tempCanvas, 0, 0);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
@@ -278,23 +325,58 @@ const CustomContent: React.FC<{
   };
 
   const handleUndoButtonClick = () => {
-    if (images.length > 0) {
+    if (undoMode === 'image' && images.length > 0) {
       const updatedImages = [...images];
-      updatedImages.pop();
-      setImages(updatedImages);
-      updateImages(updatedImages); // updateImages 함수를 사용하여 state 업데이트
+      const lastImage = updatedImages.pop();
 
-      const canvas = canvasRef.current;
-      if (!canvas) return;
+      if (lastImage) {
+        // lastImage가 undefined가 아닌지 확인
+        setImages(updatedImages);
+        updateImages(updatedImages);
+        setRedoImages([lastImage, ...redoImages]);
+        setRedoMode('image');
+      }
+    } else if (undoMode === 'drawing' && penDrawings.length > 0) {
+      const updatedPenDrawings = [...penDrawings];
+      const lastPenDrawing = updatedPenDrawings.pop();
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (lastPenDrawing) {
+        // lastPenDrawing이 undefined가 아닌지 확인
+        setPenDrawings(updatedPenDrawings);
+        setRedoPenDrawings([lastPenDrawing, ...redoPenDrawings]);
+        setRedoMode('drawing');
+      }
     }
 
     setDraggedImage(null);
     setDraggedImageIndex(-1);
+  };
+
+  const handleRedoButtonClick = () => {
+    if (redoMode === 'image' && redoImages.length > 0) {
+      const updatedRedoImages = [...redoImages];
+      const redoImage = updatedRedoImages.shift();
+
+      if (redoImage) {
+        // redoImage가 undefined가 아닌지 확인
+        setImages([redoImage, ...images]);
+        updateImages([redoImage, ...images]);
+        setRedoImages(updatedRedoImages);
+      }
+    } else if (redoMode === 'drawing' && redoPenDrawings.length > 0) {
+      const updatedRedoPenDrawings = [...redoPenDrawings];
+      const redoPenDrawing = updatedRedoPenDrawings.shift();
+
+      if (redoPenDrawing) {
+        // redoPenDrawing이 undefined가 아닌지 확인
+        setPenDrawings([redoPenDrawing, ...penDrawings]);
+        setRedoPenDrawings(updatedRedoPenDrawings);
+      }
+    }
+
+    if (redoImages.length === 0 && redoPenDrawings.length === 0) {
+      setRedoMode('none');
+    }
   };
 
   return (
@@ -305,6 +387,7 @@ const CustomContent: React.FC<{
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <UploadButton onUpload={handleUploadImage} />
         <UndoButton onUndo={handleUndoButtonClick} />
+        <RedoButton onRedo={handleRedoButtonClick} /> {/* RedoButton 추가 */}
       </RangeInputContainer>
       <CanvasWrapper onDragOver={handleDragOver} onDrop={handleDrop}>
         {images.map((imageData, index) => (

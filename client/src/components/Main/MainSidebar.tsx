@@ -11,9 +11,7 @@ const SidebarContainer = styled.div`
   justify-content: space-between;
   padding: 10px;
   height: 150px;
-  border-color: var(--purple);
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  background-color: var(--ivory);
   border-radius: 20px;
   z-index: 10;
 `;

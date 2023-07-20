@@ -14,7 +14,6 @@ function Mypage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSize, setSelectedSize] = useState(5);
   const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
-
   const fetchData = async () => {  
     try {
       const url = `/members`;
@@ -124,7 +123,7 @@ useEffect(() => {
           </>
         :(
           filteredOrderlist.orderInfos.map((order) => (
-            <MypageOrderList key={order.orderId} products={order} />
+            <MypageOrderList key={order.orderId} products={order}   />
           ))
         )}
       </MyOrderLists>
