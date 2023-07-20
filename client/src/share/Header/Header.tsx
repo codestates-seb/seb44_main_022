@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react';
 import login_img from '../../assets/images/login_img.png';
 import cart_img from '../../assets/images/cart_img.png';
 import { LocalStorage } from '../../utils/browserStorage';
-import { LOCAL_STORAGE_KEY_LIST } from '../../assets/constantValue/constantValue';
+import {
+  BASE_ANIMATION_TIME,
+  LOCAL_STORAGE_KEY_LIST,
+} from '../../assets/constantValue/constantValue';
 import { postLogout } from '../../api/authApis';
 import useScreenResize from '../../hooks/useScreenResize';
-import useSetAnimation from '../../hooks/useSetAnimation';
+import useAuthAnimation from '../../hooks/useAuthAnimation';
 import {
   AuthRelativeContainer,
   DropDownContainer,
@@ -24,7 +27,7 @@ function Header() {
   const location = useLocation();
   const navigate = useNavigate();
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const { animation, setAnimation } = useSetAnimation();
+  const { animation, setAnimation } = useAuthAnimation();
 
   const handleResize = () => {
     if (window.innerWidth > 700) {
@@ -50,7 +53,7 @@ function Header() {
       return;
     }
     if (location.pathname !== '/auth') {
-      setTimeout(() => setAnimation('fadeIn'), 300);
+      setTimeout(() => setAnimation('fadeIn'), BASE_ANIMATION_TIME);
       return;
     }
   }, [location]);

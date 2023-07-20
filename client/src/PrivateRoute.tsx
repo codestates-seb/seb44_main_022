@@ -1,20 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { LocalStorage } from './utils/browserStorage';
 import { LOCAL_STORAGE_KEY_LIST } from './assets/constantValue/constantValue';
-
-interface PrivateRouteProps {
-  children?: React.ReactElement;
-  isAuth: boolean;
-}
+import { PrivateRouteProps } from './assets/interface/Router.interface';
 
 function PrivateRoute({ isAuth }: PrivateRouteProps) {
   const accessToken = LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken);
-
-  if (isAuth) {
-    return accessToken !== null ? <Outlet /> : <Navigate to="/" />;
-  } else {
-    return accessToken !== null ? <Navigate to="/" /> : <Outlet />;
-  }
+  return isAuth === (accessToken !== null) ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default PrivateRoute;

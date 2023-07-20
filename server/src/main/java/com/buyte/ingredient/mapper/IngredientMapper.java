@@ -21,7 +21,6 @@ public interface IngredientMapper {
         return IngredientInfoDto.builder()
             .ingredientImage(ingredient.getIngredientImage())
             .ingredientName(ingredient.getIngredientName())
-            .ingredientPrice(ingredient.getIngredientPrice())
             .build();
     }
 }

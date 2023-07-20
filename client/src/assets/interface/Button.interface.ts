@@ -19,3 +19,7 @@ export interface RectangleButtonProps {
   types: string;
   handleClick: () => void;
 }
+
+export interface ChatBoxProps {
+  setIsOpenChatting: React.Dispatch<React.SetStateAction<boolean>>;
+}

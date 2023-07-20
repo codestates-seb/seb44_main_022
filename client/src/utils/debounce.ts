@@ -1,4 +1,6 @@
-export const debounce = (func: (...args: any[]) => void, time = 300) => {
+import { BASE_ANIMATION_TIME } from '../assets/constantValue/constantValue';
+
+export const debounce = (func: (...args: any[]) => void, time = BASE_ANIMATION_TIME) => {
   let timer: number;
   return (...args: any[]) => {
     clearTimeout(timer);

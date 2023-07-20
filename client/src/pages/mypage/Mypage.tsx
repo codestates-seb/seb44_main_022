@@ -69,6 +69,10 @@ useEffect(() => {
     setCurrentPage(1); 
   };
 
+  const resetPage= ()=>{
+    setCurrentPage(1);
+  }
+
   if (filteredOrderlist === null) {    
     return <div style={{ marginTop: '160px', display:"flex", alignItems:"center", flexDirection:"column" }}> 
     <img src="../../../src/assets/images/loading.gif"/>
@@ -104,7 +108,7 @@ useEffect(() => {
       </section>
       <MyOrderSection>
         <div style={{display:"flex", justifyContent:"space-between"}}>
-          <h2>나의 주문</h2>
+          <h2 onClick={resetPage} style={{cursor:"pointer"}}>나의 주문</h2>
           <SizeSelect onChange={handleSizeChange} value={selectedSize}>
             <option value={3}>3개씩 보기</option>
             <option value={5}>5개씩 보기</option>

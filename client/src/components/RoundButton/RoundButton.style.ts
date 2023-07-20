@@ -14,6 +14,10 @@ export const RoundButtonStyle = styled.button<{ types: string }>`
   outline: none;
   transition: 0.3s;
   ${({ types }) => ROUND_BUTTON_TYPE[types]};
+
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 export const Icons = styled.div`

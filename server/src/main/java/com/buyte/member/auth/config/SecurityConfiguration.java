@@ -56,6 +56,7 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                         .antMatchers("/cart/**").authenticated()
                         .antMatchers(HttpMethod.POST, "/store/{store_id}/{product_id}").authenticated()
                         .antMatchers(HttpMethod.POST, "/store/{store_id}/custom/{product_id}").authenticated()
+                        .antMatchers("/room/**").authenticated()
                         .anyRequest().permitAll());
 
         return http.build();

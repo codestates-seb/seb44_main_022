@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function useSetAnimation() {
+function useAuthAnimation() {
   const [animation, setAnimation] = useState(() => {
     if (location.pathname === '/auth') {
       return 'none';
@@ -11,4 +11,4 @@ function useSetAnimation() {
   return { animation, setAnimation };
 }
 
-export default useSetAnimation;
+export default useAuthAnimation;

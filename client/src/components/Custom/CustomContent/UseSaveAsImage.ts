@@ -30,7 +30,7 @@ const saveAsImage = async (
     return new Promise((resolve) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = imageData.imageUrl;
+      img.src = `${imageData.imageUrl}?timestamp=${new Date().getTime()}`;
       img.onload = () => {
         ctx.drawImage(img, imageData.x, imageData.y);
         resolve();

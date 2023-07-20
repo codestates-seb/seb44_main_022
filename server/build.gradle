@@ -56,6 +56,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 }
 
 tasks.named('test') {
