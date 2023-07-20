@@ -84,7 +84,9 @@ function ChatBox({
           setShowChatBox(true);
         })
         .catch((err) => console.log(err));
+      return;
     }
+    setShowChatBox(true);
   }, []);
 
   return (
