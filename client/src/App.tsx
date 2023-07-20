@@ -1,34 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Routes, useLocation } from 'react-router-dom';
-import { authRoute, mainRoutes } from './Routes';
+import styled from 'styled-components';
+import { RouteList } from './RouteList';
+import Header from './share/Header/Header';
+import Footer from './share/Footer';
+import useAxiosInterceptor from './hooks/useAxiosInterceptor';
+import useRouteAnimation from './hooks/useRouteAnimation';
+
+const MainContent = styled.div`
+  flex-grow: 1;
+`;
 
 function App() {
   const location = useLocation();
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionStage, setTransitionStage] = useState('fadeIn');
 
-  useEffect(() => {
-    if (location !== displayLocation) {
-      setTransitionStage('fadeOut');
-    }
-  }, [location]);
+  useRouteAnimation(location, displayLocation, setDisplayLocation, setTransitionStage);
+  useAxiosInterceptor();
 
   return (
     <>
+      <Header />
       <div
         className={`${transitionStage}`}
-        style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}
-        onAnimationEnd={() => {
-          if (transitionStage === 'fadeOut') {
-            setTransitionStage('fadeIn');
-            setDisplayLocation(location);
-          }
-        }}
+        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
       >
-        <Routes location={displayLocation}>
-          {mainRoutes}
-          {authRoute}
-        </Routes>
+        <MainContent>
+          <Routes location={displayLocation}>{RouteList}</Routes>
+        </MainContent>
+        <Footer />
       </div>
     </>
   );

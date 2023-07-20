@@ -13,5 +13,7 @@ export interface OrderInputProps {
   id: string;
   name: string;
   width: string;
+  placeholder: string;
+  state?: string;
   setState: React.Dispatch<React.SetStateAction<string>>;
 }

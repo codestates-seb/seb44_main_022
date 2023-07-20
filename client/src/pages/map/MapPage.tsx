@@ -1,17 +1,24 @@
 import { Map } from 'react-kakao-maps-sdk';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
-import { POSITIONS, UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
+import { UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
 import { PositionData } from '../../assets/interface/Map.interface';
+import axiosInstance from '../../api/apis';
+import useScreenResize from '../../hooks/useScreenResize';
+import ChatButton from '../Chat/Chat';
 import MapModal from './MapModal';
 import CustomMarker from './CustomMarker';
-import { MapContainer } from './Map.style';
+import { MapContainer, MapPageContainer, MapPageIntroduce } from './Map.style';
 
 function MapPage() {
-  const { lat, lng } = useCurrentLocation();
+  const location = useLocation();
+  const { lat, lng } = useCurrentLocation(location.state);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [limitSize, setLimitSize] = useState(false);
   const [clickedId, setClickedId] = useState(0);
   const [isClose, setIsClose] = useState(true);
+  const [storeMapList, setStoreMapList] = useState([]);
 
   const unmountAnimation = () => {
     setTimeout(() => setIsOpenModal(!isOpenModal), UNMOUNT_ANIMATION_TIME);
@@ -35,27 +42,30 @@ function MapPage() {
     setIsClose(false);
   };
 
+  const handleResize = () => {
+    setLimitSize(window.innerWidth > 1000);
+  };
+
+  useScreenResize(handleResize);
+
+  useEffect(() => {
+    axiosInstance.get('/store/map').then((res) => {
+      setStoreMapList(res.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (storeMapList !== undefined && storeMapList.length > 0 && location.state !== null) {
+      setClickedId(location.state.id);
+      setIsOpenModal(true);
+      setIsClose(false);
+    }
+  }, [storeMapList]);
+
   return (
-    <div
-      style={{
-        marginTop: '160px',
-        display: 'flex',
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        flexDirection: 'column',
-        width: '100%',
-        height: '100%',
-        paddingTop: '2rem',
-      }}
-    >
-      <div
-        style={{
-          width: '80%',
-          padding: '0 2rem 2rem 2rem',
-        }}
-      >
-        BUYTE에 입점된 매장을 찾아보세요!
-      </div>
+    <MapPageContainer>
+      <ChatButton />
+      <MapPageIntroduce>BUYTE에 입점된 매장을 찾아보세요!</MapPageIntroduce>
       <MapContainer>
         <Map
           center={{ lat: lat, lng: lng }}
@@ -66,20 +76,23 @@ function MapPage() {
           }}
           level={3}
         >
-          {POSITIONS.map((position, idx) => (
-            <CustomMarker key={idx} markerPosition={position} handleClick={handleClickMarker} />
-          ))}
+          {storeMapList !== undefined &&
+            storeMapList.length > 0 &&
+            storeMapList.map((position, idx) => (
+              <CustomMarker key={idx} markerPosition={position} handleClick={handleClickMarker} />
+            ))}
 
-          {isOpenModal && clickedId !== 0 && (
+          {isOpenModal && limitSize && clickedId !== 0 && (
             <MapModal
-              position={POSITIONS[clickedId - 1]}
+              position={storeMapList[clickedId - 1]}
               isClose={isClose}
+              isOpenModal={limitSize}
               handleCloseModal={handleCloseModal}
             />
           )}
         </Map>
       </MapContainer>
-    </div>
+    </MapPageContainer>
   );
 }
 

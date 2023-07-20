@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import CheckBox from '../CheckBox';
 import CountButton from '../CountButton/CountButton';
 import { CartItemProps } from '../../assets/interface/Cart.interface';
-import { CartListName } from './CartItem.style';
+import CheckBox from './CheckBox';
+import { CartImage, CartListName } from './CartItem.style';
 
 function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) {
   const [priceCnt, setPriceCnt] = useState<number>(items.productCount);
@@ -13,9 +13,9 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
         {idx + 1}.
       </CartListName>
       <CartListName grow={5} minWidth={40} style={{ padding: ' 0.5rem', alignItems: 'center' }}>
-        <img
+        <CartImage
           src={items.productImagePath}
-          style={{ width: '3rem', height: '3rem', objectFit: 'cover' }}
+          onClick={() => window.open(items.productImagePath)}
         />
       </CartListName>
       <CartListName grow={75} style={{ justifyContent: 'flex-start', fontWeight: 'bold' }}>

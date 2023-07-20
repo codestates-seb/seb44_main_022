@@ -9,5 +9,4 @@ public class IngredientInfoDto {
 
     private String ingredientName;
     private String ingredientImage;
-    private Integer ingredientPrice;
 }

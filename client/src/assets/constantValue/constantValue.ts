@@ -85,12 +85,6 @@ export const CART_CATEGORY_NAME = [
   },
 ];
 
-export const DELIVERY_FEE = 3500;
-
-export const STORE_MAP_INTRODUCE_LIMIT = 70;
-
-export const UNMOUNT_ANIMATION_TIME = 290;
-
 export const POSITIONS = [
   {
     storeId: 1,
@@ -152,4 +146,30 @@ export const POSITIONS = [
 export const LOCAL_STORAGE_KEY_LIST = {
   AccessToken: 'AccessToken',
   IdList: 'IdList',
+};
+
+export const DELIVERY_FEE = 3500;
+
+export const STORE_MAP_INTRODUCE_LIMIT = 70;
+
+export const UNMOUNT_ANIMATION_TIME = 290;
+
+export const BASE_ANIMATION_TIME = 300;
+
+export const IMAGE_NUMBER_BUTTON = [0, 1, 2];
+
+export const CHAT_TYPE = {
+  question: 'question',
+  answer: 'answer',
+};
+
+export const CHAT_TYPE_STYLE: { [index: string]: FlattenSimpleInterpolation } = {
+  question: css`
+    align-self: flex-start;
+    background-color: #33c658;
+  `,
+  answer: css`
+    align-self: flex-end;
+    background-color: #0079ff;
+  `,
 };

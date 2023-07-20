@@ -48,4 +48,8 @@ public class Cart {
     public void updateProductCount(Integer productCount) {
         this.productCount = productCount;
     }
+
+    public void setProductCount(Integer productCount) {
+        this.productCount = productCount;
+    }
 }

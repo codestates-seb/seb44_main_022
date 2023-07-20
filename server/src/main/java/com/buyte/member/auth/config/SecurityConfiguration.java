@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -52,6 +53,10 @@ public class SecurityConfiguration implements WebMvcConfigurer {
                 .logout().disable()
                 .authorizeHttpRequests(authorize -> authorize
                         .antMatchers("/members/**").authenticated()
+                        .antMatchers("/cart/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/store/{store_id}/{product_id}").authenticated()
+                        .antMatchers(HttpMethod.POST, "/store/{store_id}/custom/{product_id}").authenticated()
+                        .antMatchers("/room/**").authenticated()
                         .anyRequest().permitAll());
 
         return http.build();

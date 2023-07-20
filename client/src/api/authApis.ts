@@ -22,17 +22,13 @@ export const postSignUp = (loginId: string, password: string, memberName: string
 };
 
 export const postRefreshToken = async () => {
-  const response = await axiosInstance.post('/token/refresh', null, {
-    withCredentials: true,
-  });
-
-  return response;
-};
-
-export const postGoogleOAuth = (code: string) => {
-  return axiosInstance.post(`/signup/oauth?authorization=${code}`);
+  return await axiosInstance.post('/token/refresh', null);
 };
 
 export const postGoogleOAuthLogin = (code: string) => {
   return axiosInstance.post(`/login/oauth?authorization=${code}`);
+};
+
+export const postLogout = () => {
+  return axiosInstance.post('/logout', null);
 };

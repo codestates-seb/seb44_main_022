@@ -3,6 +3,9 @@ import JustAnotherHand from '../assets/fonts/JustAnotherHand-Regular.ttf';
 import Yaldevi from '../assets/fonts/Yaldevi-VariableFont_wght.ttf';
 import IndieFlower from '../assets/fonts/IndieFlower-Regular.ttf';
 import OpenSans from '../assets/fonts/OpenSans-SemiBold.ttf';
+import BMJUA from '../assets/fonts/BMJUA_ttf.ttf';
+import { fadeOut } from './keyframes';
+import { fadeIn } from './keyframes';
 
 export const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -25,6 +28,12 @@ export const GlobalStyle = createGlobalStyle`
   font-family: 'Open Sans';
   src: url(${OpenSans}) ;
 }
+@font-face {
+    font-family: 'BMJUA';
+    src: url(${BMJUA}) format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 :root{
   --background: #FCFCFF;
   --light-purple: #DDDCED;
@@ -42,6 +51,7 @@ export const GlobalStyle = createGlobalStyle`
   --black: #000000;
   --dark-blue-black: #142E38;
   --gold: #DCD2BD;
+  --dark-gold: #877859;
   --dark-khaki: #665D49;
   --orange-yellow: #FAB65D;
   --ivory: #FFF4E4;
@@ -124,59 +134,12 @@ html, body, div, span, applet, object, iframe,
     box-sizing: border-box;
   }
   .fadeIn {
-    animation: 0.4s fadeIn forwards;
+    animation: 0.3s ${fadeIn} forwards;
   }
   .fadeOut {
-    animation: 0.4s fadeOut forwards;
+    animation: 0.3s ${fadeOut} forwards;
   }
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translate(-40px, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translate(0px, 0px);
-    }
-  }
-  @keyframes fadeOut {
-    from {
-      opacity: 1;
-      transform: translate(0px, 0px);
-    }
-    to {
-      transform: translate(40px, 0);
-      opacity: 0;
-    }
-  }
-  @keyframes fadeNone {
-    0% {
-      transform: translate(0px, 0px);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(-40px, 0);
-      opacity: 0;
-    }
-  }
-  @keyframes fadeUpNone {
-    0% {
-      transform: translate(0px, 0px);
-      opacity: 1;
-    }
-    100% {
-      transform: translate(0px, -40px);
-      opacity: 0;
-    }
-  }
-  @keyframes fadeDown {
-    0% {
-      transform: translate(0px, -40px);
-      opacity: 0;
-    }
-    100% {
-      transform: translate(0px, 0px);
-      opacity: 1;
-    }
+  .none {
+    display: none;
   }
 `;

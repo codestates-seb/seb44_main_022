@@ -13,9 +13,12 @@ public class StoreDetailsDto {
     private long memberId;
     private String storeName;
     private String storeAddress;
+    private double storeLatitude;
+    private double storeLongitude;
     private String storeIntroduction;
     private String storeImage;
     private String storePhoneNumber;
+    private Long storeId;
     private List<CustomProductInfoDto> customProductInfoList;
     private List<StandardProductInfoDto> standardProductInfoList;
 }

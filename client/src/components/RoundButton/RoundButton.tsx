@@ -5,19 +5,23 @@ import { postGoogleOAuthLogin } from '../../api/authApis';
 import { LocalStorage } from '../../utils/browserStorage';
 import { LOCAL_STORAGE_KEY_LIST } from '../../assets/constantValue/constantValue';
 import { Icons, RoundButtonStyle } from './RoundButton.style';
-// import { postGoogleOAuth } from '../../api/authApis';
 
 function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log('a');
-    if (types === 'google') handleGoogleLogin();
+    if (types === 'google') {
+      handleGoogleLogin();
+      return;
+    }
+    if (types === 'purple') {
+      alert('지금은 사업자 회원을 받고 있지 않습니다.');
+      return;
+    }
   };
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: ({ code }) => {
-      console.log(code);
       postGoogleOAuthLogin(code)
         .then((res) => {
           const accessToken = res.headers['authorization'];

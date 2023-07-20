@@ -18,9 +18,12 @@ public interface StoreMapper {
             .memberId(store.getMember().getMemberId())
             .storeName(store.getStoreName())
             .storeAddress(store.getStoreAddress())
+            .storeLongitude(store.getStoreLongitude())
+            .storeLatitude(store.getStoreLatitude())
             .storeImage(store.getStoreImage())
             .storeIntroduction(store.getStoreIntroduction())
             .storePhoneNumber(store.getStorePhoneNumber())
+            .storeId(store.getStoreId())
             .build();
     }
 
@@ -40,6 +43,7 @@ public interface StoreMapper {
             .storeLongitude(store.getStoreLongitude())
             .storeImage(store.getStoreImage())
             .storeName(store.getStoreName())
+            .storeAddress(store.getStoreAddress())
             .storeIntroduction(store.getStoreIntroduction())
             .build();
     }

@@ -39,7 +39,9 @@ public class MemberController {
     @PostMapping("/token/refresh")
     public ResponseEntity reIssueAccessToken(HttpServletRequest request, HttpServletResponse response) {
         response = memberService.checkRefreshAndReIssueAccess(request, response);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (response.getStatus() == 403) return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (response.getStatus() == 401) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        else return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/logout")
@@ -54,6 +56,14 @@ public class MemberController {
         Member member = memberService.getMemberDetails(authenticatedMemberId);
 
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.OK);
+    }
+
+    @GetMapping("/members/orders")
+    public ResponseEntity orderDetails(@RequestParam(required = false, defaultValue = "1") int page,
+                                       @RequestParam(required = false, defaultValue = "5") int size) {
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        MemberDto.OrderResponse response = memberService.getOrderDetails(authenticatedMemberId, page, size);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PatchMapping("/members")

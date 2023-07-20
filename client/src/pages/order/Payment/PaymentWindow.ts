@@ -13,16 +13,16 @@ IMP.init('imp04163177');
 
 const makeMerchantUid = () => {
   const today = new Date();
-  const hours = today.getHours(); // 시
-  const minutes = today.getMinutes(); // 분
-  const seconds = today.getSeconds(); // 초
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const seconds = today.getSeconds();
   const milliseconds = today.getMilliseconds();
 
   return hours + minutes + seconds + milliseconds;
 };
 
 export function requestPay(params: PaymentWindowParams) {
-  const { orderUserName, shippingAddress, cartList, onSuccess } = params;
+  const { orderUserName, shippingAddress, detailAddress, cartList, onSuccess } = params;
   const itemsName = cartList.map((item) => item.productName).join(',');
   const idList = cartList.map((item) => item.cartId);
   const totalAmount = (cartList: CartItemTypes[]) => {
@@ -43,14 +43,12 @@ export function requestPay(params: PaymentWindowParams) {
     (res) => {
       const { success, imp_uid, error_msg } = res;
       if (success) {
-        // postAfterPayment(idList, imp_uid)
-        //   .then((res) => {
-        //     console.log(res);
-        //     onSuccess();
-        //   })
-        //   .catch((err) => alert(`결제에 실패하였습니다. 에러 내용: ${err}`));
-        alert('결제 성공');
-        onSuccess();
+        postAfterPayment(idList, imp_uid, orderUserName, shippingAddress + ' ' + detailAddress)
+          .then(() => {
+            alert('결제 성공');
+            onSuccess();
+          })
+          .catch((err) => alert(`결제에 실패하였습니다. 에러 내용: ${err}`));
       } else {
         if (error_msg === '이미 결제가 이루어진 거래건입니다.') alert('잠시 후 다시 시도해주세요.');
         else {

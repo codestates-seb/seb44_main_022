@@ -74,8 +74,6 @@ public class ProductServiceImpl implements ProductService {
             throw new BusinessLogicException(ExceptionCode.PRODUCT_TYPE_CUSTOM_FORBIDDEN);
         }
 
-        log.info("# storeId : {} findStoreId : {}", storeId, findProduct.getStore().getStoreId());
-
         List<IngredientOriginDto> ingredientOriginList = findProduct.getProductIngerdientList()
             .stream()
             .map(productIngerdient -> ingredientMapper.ingredientToIngredientOrigin(
@@ -102,7 +100,6 @@ public class ProductServiceImpl implements ProductService {
             throw new BusinessLogicException(ExceptionCode.PRODUCT_TYPE_STANDARD_FORBIDDEN);
         }
 
-        List<IngredientInfoDto> baseIngredientList = new ArrayList<>();
         List<IngredientInfoDto> creamIngredientList = new ArrayList<>();
         List<IngredientInfoDto> toppingIngredientList = new ArrayList<>();
         List<IngredientInfoDto> fillingIngredientList = new ArrayList<>();
@@ -123,14 +120,11 @@ public class ProductServiceImpl implements ProductService {
                     fillingIngredientList.add(ingredientDto);
                 } else if (ingredientCategory == IngredientCategory.TOPPING) {
                     toppingIngredientList.add(ingredientDto);
-                } else {
-                    baseIngredientList.add(ingredientDto);
                 }
             }
         );
 
         return CustomProductDetailsDto.builder()
-            .baseIngredientList(baseIngredientList)
             .creamIngredientList(creamIngredientList)
             .toppingIngredientList(toppingIngredientList)
             .fillingIngredientList(fillingIngredientList)

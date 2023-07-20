@@ -1,6 +1,6 @@
 package com.buyte.store.dto;
 
-import com.buyte.product.dto.ProductInfoDto;
+import com.buyte.product.dto.ProductImageDto;
 import java.util.List;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +12,7 @@ public class StoreMapDto {
     private double storeLongitude;
     private String storeImage;
     private String storeName;
+    private String storeAddress;
     private String storeIntroduction;
-    private List<ProductInfoDto> productPreferenceList;
+    private List<ProductImageDto> productPreferenceList;
 }

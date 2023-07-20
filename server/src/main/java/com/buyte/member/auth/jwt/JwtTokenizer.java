@@ -98,7 +98,7 @@ public class JwtTokenizer {
         String base64EncodedSecretKey = encodeBase64SecretKey(getSecretKey());
 
         String refreshToken = generateRefreshToken(subject, expiration, base64EncodedSecretKey);
-        redisTemplate.opsForValue().set(member.getMemberId().toString(), refreshToken, getRefreshTokenExpirationMinutes(), TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(refreshToken, "login", getRefreshTokenExpirationMinutes(), TimeUnit.MINUTES);
 
         return refreshToken;
     }

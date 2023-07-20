@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react';
+import { useCurrentLocationProps } from '../assets/interface/Map.interface';
 
-const useCurrentLocation = () => {
+const useCurrentLocation = (storePosition: useCurrentLocationProps | null) => {
   const [currentLocation, setCurrentLocation] = useState<{ lat: number; lng: number }>({
     lat: 0,
     lng: 0,
   });
 
   useEffect(() => {
+    if (storePosition !== null) {
+      return setCurrentLocation({
+        lat: storePosition.lat,
+        lng: storePosition.lng,
+      });
+    }
+
     const success = (position: GeolocationPosition) => {
       setCurrentLocation({
         lat: position.coords.latitude,

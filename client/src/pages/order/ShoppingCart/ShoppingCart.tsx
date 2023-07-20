@@ -10,6 +10,7 @@ import { CartItemTypes } from '../../../assets/interface/Cart.interface';
 import { deleteCartList, getCartList } from '../../../api/orderApis';
 import CartCategoryList from '../../../components/CartCategoryList';
 import CartItemTab from '../../../components/CartItem/CartItemTab';
+import loading from '../../../assets/images/loading.gif';
 import {
   CartCategoryName,
   CartContainer,
@@ -73,7 +74,7 @@ function ShoppingCart() {
         </CartCategoryName>
         <CartItemTab path="cart" />
         {isLoading ? (
-          <div>로딩중</div>
+          <div style={{ backgroundImage: `url(${loading})` }}>로딩중</div>
         ) : cartList !== undefined && cartList.length > 0 ? (
           cartList.map((e, idx) => (
             <CartItem

@@ -1,8 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-
-type State = {
-  idList: number[];
-};
+import { CartReducerState } from '../../assets/interface/Cart.interface';
 
 const cartReducer = createSlice({
   name: 'CartReducer',
@@ -10,10 +7,10 @@ const cartReducer = createSlice({
     idList: [],
   },
   reducers: {
-    addCartIdList(state: State, action) {
+    addCartIdList(state: CartReducerState, action) {
       state.idList.push(action.payload);
     },
-    removeCartIdList(state: State, action) {
+    removeCartIdList(state: CartReducerState, action) {
       const index = state.idList.indexOf(action.payload);
       if (index > -1) {
         state.idList.splice(index, 1);

@@ -34,6 +34,30 @@ function Payment() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [orderUserName, setOrderUserName] = useState<string>('');
   const [shippingAddress, setShippingAddress] = useState<string>('');
+  const [detailAddress, setDetailAddress] = useState<string>('');
+
+  const handleClickPayment = () => {
+    if (
+      orderUserName !== undefined &&
+      shippingAddress !== undefined &&
+      detailAddress !== undefined &&
+      orderUserName.length !== 0 &&
+      shippingAddress.length !== 0 &&
+      detailAddress.length !== 0
+    ) {
+      requestPay({
+        orderUserName,
+        shippingAddress,
+        detailAddress,
+        cartList,
+        onSuccess: () => navigate('/complete', { state: { rightPass: true }, replace: true }),
+      });
+      return;
+    }
+    alert(
+      '주문자 정보를 반드시 기입해주세요.\n잘못된 정보를 기입함에 있어서 Buyte는 책임지지 않습니다.'
+    );
+  };
 
   useGoBackRestrict(navigate, '/cart');
 
@@ -95,8 +119,29 @@ function Payment() {
           </div>
         </CartCategoryName>
         <OrderInfoContainer>
-          <OrderInput id="orderName" name="주문자명" width="50%" setState={setOrderUserName} />
-          <OrderInput id="shippingAddress" name="주소" width="80%" setState={setShippingAddress} />
+          <OrderInput
+            id="orderName"
+            name="주문자명"
+            width="17%"
+            placeholder="이름을 입력해주세요."
+            setState={setOrderUserName}
+          />
+          <OrderInput
+            id="shippingAddress"
+            name="주소"
+            width="40%"
+            placeholder="주소 작성을 위해 클릭해주세요."
+            state={shippingAddress}
+            setState={setShippingAddress}
+          />
+          <OrderInput
+            id="detailAddress"
+            name=""
+            width="50%"
+            placeholder="주소 상세정보를 입력해주세요."
+            state={detailAddress}
+            setState={setDetailAddress}
+          />
         </OrderInfoContainer>
         <TotalPaymentContainer style={{ flexDirection: 'row' }}>
           <PriceNumberText price={totalPrice} priceText="상품금액" />
@@ -120,19 +165,7 @@ function Payment() {
               navigate(-1);
             }}
           />
-          <RectangleButton
-            text="결제하기"
-            types="purple"
-            handleClick={() =>
-              requestPay({
-                orderUserName,
-                shippingAddress,
-                cartList,
-                onSuccess: () =>
-                  navigate('/complete', { state: { rightPass: true }, replace: true }),
-              })
-            }
-          />
+          <RectangleButton text="결제하기" types="purple" handleClick={handleClickPayment} />
         </div>
       </div>
     </CartContainer>
