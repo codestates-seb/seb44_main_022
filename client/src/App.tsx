@@ -19,7 +19,7 @@ function App() {
   useRouteAnimation(location, displayLocation, setDisplayLocation, setTransitionStage);
   useAxiosInterceptor();
 
-  const hideFooter = location.pathname === '/';
+  const hideFooter = location.pathname === '/' || location.pathname === '/auth';
 
   return (
     <>

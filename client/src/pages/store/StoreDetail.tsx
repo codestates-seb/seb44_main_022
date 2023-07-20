@@ -72,7 +72,7 @@ function StoreDetail() {
               {data.storeName}
             </h3>
             <DetailTitle>소개</DetailTitle>
-            <DetailInfo>{data.storeIntroduction}</DetailInfo>
+            <DetailInfo style={{whiteSpace: "pre-line"}}>{data.storeIntroduction}</DetailInfo>
             <DetailTitle>주소</DetailTitle>
             <Link
               to="/map"
@@ -82,9 +82,9 @@ function StoreDetail() {
             </Link>
             <DetailInfo>{data.storeAddress}</DetailInfo>
             <DetailTitle>전화번호</DetailTitle>
-            <span style={{ color: 'var(--bright-black)', fontWeight: '500', fontSize: '13px' }}>
+            <p style={{ color: 'var(--bright-black)', fontWeight: '500', fontSize: '13px', marginTop:'5px' }}>
               {data.storePhoneNumber}
-            </span>
+            </p>
           </DetailWrapper>
         </StoreDetails>
       </StoreDetailSection>

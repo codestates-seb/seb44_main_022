@@ -110,7 +110,11 @@ function Payment() {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
-            <div style={{ fontSize: '22px', fontWeight: 'bold' }}>주문자 정보</div>
+            <div
+              style={{ fontSize: '22px', fontWeight: 'bold', fontFamily: 'Yaldevi, sans-serif' }}
+            >
+              주문자 정보
+            </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '23.5rem' }}>
             {CART_CATEGORY_NAME.map((category) => (

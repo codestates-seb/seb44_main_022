@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { BsCircleFill } from 'react-icons/bs';
+import { RiCompassDiscoverFill } from 'react-icons/ri';
 import { ExitMapModalButton } from '../map/Map.style';
 import useScrollBottom from '../../hooks/chatHooks/useScrollBottom';
 import useTextareaAutoHeight from '../../hooks/chatHooks/useTextareaAutoHeight';
@@ -9,7 +10,6 @@ import useKeydown from '../../hooks/useKeydown';
 import useChat from '../../hooks/chatHooks/useChat';
 import {
   ChattingContainer,
-  ChattingHeaderLogo,
   ChattingHeaderStore,
   ChattingMessage,
   ChattingMessageBox,
@@ -34,6 +34,7 @@ function ChatBox({
   const [senderId, setSenderId] = useState<number>(receiverIdProps);
   const [receiverId, setReceiverId] = useState<number>(senderIdProps);
   const { messages, onPublishMessage } = useChat(roomId);
+  const [showChatBox, setShowChatBox] = useState<boolean>(false);
 
   const createMessageTime = () => {
     return (
@@ -80,59 +81,69 @@ function ChatBox({
       getChatRoomId(storeId)
         .then((res) => {
           setInitChatData(res.data);
+          setShowChatBox(true);
         })
         .catch((err) => console.log(err));
     }
   }, []);
 
   return (
-    <ChattingContainer>
-      <ChattingHeaderLogo>BUYTE</ChattingHeaderLogo>
-      <ChattingHeaderStore>{storeName}</ChattingHeaderStore>
+    <>
+      {showChatBox && (
+        <ChattingContainer>
+          <ChattingHeaderStore>{storeName}</ChattingHeaderStore>
 
-      <ExitMapModalButton onClick={() => setIsOpenChatting(false)}>
-        <BsCircleFill style={{ color: 'var(--purple)' }} />
-      </ExitMapModalButton>
+          <ExitMapModalButton onClick={() => setIsOpenChatting(false)}>
+            <BsCircleFill style={{ color: 'var(--purple)' }} />
+          </ExitMapModalButton>
 
-      {receiverId === senderId ? (
-        <ChatIntroBox text="판매자는 판매자의 가게에 채팅할 수 없습니다." />
-      ) : messages.length > 0 ? (
-        <ChattingMessageBox>
-          {messages.map((e, idx) => (
-            <ChattingMessage key={idx} type={e.receiverId === receiverId ? 'answer' : 'question'}>
-              {e.content.length > 1 && e.content}
-              <ChattingTime type={e.receiverId === receiverId ? 'answer' : 'question'}>
-                {e.createdAt ? e.createdAt.slice(11, 16) : createMessageTime()}
-              </ChattingTime>
-            </ChattingMessage>
-          ))}
-          <div ref={messageEndRef} />
-        </ChattingMessageBox>
-      ) : (
-        <ChatIntroBox text="판매자님과 채팅을 시작하세요!" />
+          {receiverId === senderId ? (
+            <ChatIntroBox text="판매자는 판매자의 가게에 채팅할 수 없습니다." />
+          ) : messages.length > 0 ? (
+            <ChattingMessageBox>
+              {messages.map((e, idx) => (
+                <ChattingMessage
+                  key={idx}
+                  type={e.receiverId === receiverId ? 'answer' : 'question'}
+                >
+                  {e.content.length > 1 && e.content}
+                  <ChattingTime type={e.receiverId === receiverId ? 'answer' : 'question'}>
+                    {e.createdAt ? e.createdAt.slice(11, 16) : createMessageTime()}
+                  </ChattingTime>
+                </ChattingMessage>
+              ))}
+              <div ref={messageEndRef} />
+            </ChattingMessageBox>
+          ) : (
+            <ChatIntroBox text="판매자님과 채팅을 시작하세요!" />
+          )}
+          {receiverId !== senderId && (
+            <>
+              <ChattingTextareaContainer>
+                <ChattingTextarea
+                  ref={inputMessageRef}
+                  value={chatText}
+                  onChange={(e) => setChatText(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                      if (e.shiftKey) {
+                        e.preventDefault();
+                        setChatText(chatText + '\n');
+                      } else {
+                        e.preventDefault();
+                        handleEnter(e);
+                      }
+                    }
+                  }}
+                  rows={1}
+                />
+              </ChattingTextareaContainer>
+              <RiCompassDiscoverFill style={{ position: 'absolute', bottom: '0', right: '0' }} />
+            </>
+          )}
+        </ChattingContainer>
       )}
-      {receiverId !== senderId && (
-        <ChattingTextareaContainer>
-          <ChattingTextarea
-            ref={inputMessageRef}
-            value={chatText}
-            onChange={(e) => setChatText(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                if (e.shiftKey) {
-                  e.preventDefault();
-                  setChatText(chatText + '\n');
-                } else {
-                  e.preventDefault();
-                  handleEnter(e);
-                }
-              }
-            }}
-            rows={1}
-          />
-        </ChattingTextareaContainer>
-      )}
-    </ChattingContainer>
+    </>
   );
 }
 
