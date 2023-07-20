@@ -4,6 +4,7 @@ import { fadeInCenter } from '../../styles/keyframes';
 export const ChattingOpenButton = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 2;
   right: 1rem;

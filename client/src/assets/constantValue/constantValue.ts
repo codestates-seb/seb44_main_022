@@ -108,11 +108,14 @@ export const CHAT_TYPE = {
 export const CHAT_TYPE_STYLE: { [index: string]: FlattenSimpleInterpolation } = {
   question: css`
     align-self: flex-start;
-    background-color: #6bdb87;
+    color: black;
+    background-color: var(--normal-gray);
   `,
   answer: css`
     align-self: flex-end;
-    background-image: linear-gradient(to right, #6190e8, #a7bfe8);
+    color: white;
+    background-image: linear-gradient(-225deg, #eca1fe 0%, #b19fff 48%, #5271c4 100%);
+    // background-image: linear-gradient(to right, #6190e8, #a7bfe8);
   `,
 };
 

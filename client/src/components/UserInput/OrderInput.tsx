@@ -5,7 +5,15 @@ import { InputBox } from './UserInput.style';
 function OrderInput({ id, name, width, placeholder, state, setState }: OrderInputProps) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', width: '100%' }} key={id}>
-      <label htmlFor={id} style={{ marginRight: '1.5rem', width: '4rem', textAlign: 'center' }}>
+      <label
+        htmlFor={id}
+        style={{
+          marginRight: '1.5rem',
+          width: '4rem',
+          textAlign: 'center',
+          fontFamily: 'Yaldevi, sans-serif',
+        }}
+      >
         {name}
       </label>
       <InputBox

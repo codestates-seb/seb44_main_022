@@ -5,7 +5,7 @@ import { dropDown, dropUp, fadeIn, fadeOut } from '../../styles/keyframes';
 export const LinkText = styled(Link)`
   display: flex;
   font-size: 1.3rem;
-  font-family: 'Yaldevi', sans-serif;
+  font-family: BMJUA;
   color: #6d4924;
   transition: 0.3s;
   &:hover {
@@ -16,11 +16,11 @@ export const LinkText = styled(Link)`
 `;
 
 export const SmallLinkText = styled.div`
-  font-family: 'Yaldevi', sans-serif;
+  font-family: BMJUA;
   line-height: 15px;
   display: flex;
   height: 1.5rem;
-  font-size: 13px;
+  font-size: 14px;
   color: #6d4924;
   transition: 0.3s;
 `;
@@ -183,10 +183,12 @@ export const HamburgerMenuStyle = styled.a<{ isOpenModal: boolean }>`
     border-radius: 4px;
     transition: all 0.3s;
   }
+
   & > span:nth-of-type(1) {
     top: 25%;
     ${({ isOpenModal }) => (isOpenModal ? 'transform: translateY(11.5px) rotate(-45deg);' : '')}
   }
+
   & > span:nth-of-type(2) {
     top: 50%;
     ${({ isOpenModal }) => (isOpenModal ? 'opacity: 0' : '')}

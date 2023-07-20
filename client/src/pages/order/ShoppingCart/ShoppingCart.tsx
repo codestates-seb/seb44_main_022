@@ -56,7 +56,14 @@ function ShoppingCart() {
     <CartContainer>
       <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
         <CartCategoryName>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'baseline',
+              fontFamily: 'Yaldevi, sans-serif',
+            }}
+          >
             <div style={{ fontSize: '22px', fontWeight: 'bold' }}>Cart</div>
             <div style={{ fontWeight: 'bold' }}>({cartList !== undefined && cartList.length})</div>
           </div>
@@ -81,7 +88,7 @@ function ShoppingCart() {
         ) : (
           <EmptyCartListBox>
             <BsFillGearFill />
-            <div>장바구니가 비어 있습니다.</div>
+            <div style={{ marginTop: '1rem' }}>장바구니가 비어 있습니다.</div>
           </EmptyCartListBox>
         )}
 
