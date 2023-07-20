@@ -30,9 +30,15 @@ public interface MemberMapper {
                 .limit(size)
                 .collect(Collectors.toList());
 
+        int maxCount = orders.size() - (page - 1) * size;
+
         List<MemberDto.OrderInfo> orderInfos = paginatedOrders.stream()
                 .map(this::orderToOrderInfo)
                 .collect(Collectors.toList());
+
+        for (MemberDto.OrderInfo orderInfo : orderInfos) {
+            orderInfo.setOrderCount(maxCount--);
+        }
 
         PageInfoDto pageInfo = PageInfoDto.builder()
                 .page(page)
