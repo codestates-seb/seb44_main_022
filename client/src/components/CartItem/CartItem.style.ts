@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const CartListName = styled.div<{ grow: number; minWidth?: number }>`
+export const CartListName = styled.div<{ grow?: number; minWidth?: number} >`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +18,7 @@ export const CartListName = styled.div<{ grow: number; minWidth?: number }>`
           ${minWidth}px
         `
       : css`120px`};
-`;
+`;   
 
 export const CartImage = styled.img`
   width: 3rem;

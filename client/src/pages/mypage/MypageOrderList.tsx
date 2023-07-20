@@ -1,15 +1,13 @@
 import styled, {keyframes} from 'styled-components';
 import { useState } from 'react';
 import { BsArrowDownSquare } from 'react-icons/bs';
-import { CartListName } from '../../components/CartItem/CartItem.style';
+import { CartListName} from '../../components/CartItem/CartItem.style';
 import {MypageOrderListProps} from '../../assets/interface/Mypage.interface'
 import MypageOrderDetail from './MypageOrderDetail';
 import DateFormatter from './DateFormatter';  
 import { priceFormatter } from './PriceFormatter';
 
-//pull 한번 받고! 
-//orderId말고 배열순서 함수 필요
-//나의 주문 누르면 page1로 리셋되고 isOpened도 다 false로 바뀌는 주문
+//orderId말고 배열순서 함수 필요->이건 프론트가 할수있는게아닌데?!
 //닉네임 유효성 검사.
 //CSS 반응형으로 다시 간격 조정.
 //Loading 세팅해야 되는 부분들 상세 체크
@@ -34,32 +32,28 @@ function MypageOrderList({ products  }: MypageOrderListProps) {
     
   return <div>
     <div style={{ display: 'flex', fontSize: '14px', cursor:'pointer' }} onClick={handleListClick} >
-      <CartListName grow={5} minWidth={5} style={{ justifyContent: 'flex-start', marginRight: '0'  }}>
+      <CartListName style={{justifyContent:'flex-start', paddingLeft:'2rem', maxWidth:'5px'}}>
          {products.orderId}.
-      </CartListName>
-      <CartListName grow={5} minWidth={40} style={{ padding: ' 1rem', justifyContent:'flex-start' }}>
+      </CartListName >
+      <CartListName style={{ padding: '1rem', justifyContent:'flex-start', maxWidth:'10rem' }}>
         <img
           src={products.orderProductInfos[0].productImage}
           style={{ width: '4rem', height: '4rem', objectFit: 'cover' }}
         />
       </CartListName>
-      <CartListName grow={80} minWidth={200} style={{ wordBreak:"keep-all", fontSize: '14px', justifyContent: 'flex-start', fontWeight: 'bold', paddingLeft: "1.5rem", paddingRight:"7rem", lineHeight:'1.4'}}>
+      <CartListName style={{ paddingLeft:'4rem', wordBreak:"keep-all", fontSize: '14px', fontWeight: 'bold', lineHeight:'1.4'}}>
         {products.orderProductInfos[0].productName} 포함 총 <span style={{color:"var(--dark-purple)", marginLeft:"5px"}}>{products.orderProductInfos.length}</span>건
       </CartListName>
-      <CartListName grow={5} minWidth={20} style={{ fontWeight: 'bold' }}>
+      <CartListName style={{ fontWeight: 'bold', paddingLeft:'3rem' }}>
         {priceFormatter(products.totalPrice)}원
       </CartListName>
       <CartListName
-        grow={5}
-        minWidth={130}
-        style={{ justifyContent: 'flex-end', fontSize: '15px', paddingRight: '2rem' }}
+        style={{ fontSize: '15px'}} className="hide-under-1260"
       >
        <DateFormatter timestamp={products.createdAt}></DateFormatter>
       </CartListName>
       <CartListName
-        grow={5}
-        minWidth={150}
-        style={{ justifyContent: 'flex-end', fontSize: '16px', paddingRight: '2.5rem', fontWeight: 'bold'  }}
+        style={{ fontSize: '16px',fontWeight: 'bold' , justifyContent:'flex-end', paddingRight:'1rem' }}
       >
         {getOrderStatusText(products.orderStatus)} <BsArrowDownSquare style={{
               fontSize:'20px',
