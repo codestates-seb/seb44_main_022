@@ -93,29 +93,26 @@ const Popup = ({ show }: PopupProps) => {
                   flexDirection: 'column',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  padding: '20px',
+                  padding: '30px',
                   color: 'white',
-                  lineHeight: '2.8',
-                  fontSize: '20px',
+                  lineHeight: '2.7',
+                  fontSize: '19px',
                   fontFamily: 'BMJUA',
                 }}
               >
-                1. 단면으로 그려주면 사장님이 알기 쉬워요! <br />
+                1. 단면으로 그려주시면 사장님이 알기 쉬워요! <br />
                 2. 참고할 만한 이미지를 추가할 수 있어요!
                 <br />
                 3. 원하는 재료들을 추가해주세요! <br />
                 4. 마무리로 장바구니에 넣어주세요!
-                <span style={{ color: '#726e6e' }}>
-                  색상 | 펜/지우개 | 이미지 업로드 | 이미지 취소
-                </span>
+                <span style={{ color: '#726e6e' }}></span>
               </div>
               <div
                 style={{
                   height: '18%',
-                  fontFamily: 'Just Another Hand, cursive',
-                  fontSize: '28px',
+                  fontFamily: 'BMJUA',
+                  fontSize: '18px',
                   borderRadius: '0 0 15px 15px',
-                  paddingTop: '26px',
                   color: '#726e6e',
                   overflow: 'hidden',
                   display: 'flex',
@@ -123,7 +120,7 @@ const Popup = ({ show }: PopupProps) => {
                   justifyContent: 'center',
                 }}
               >
-                BUYTE BUYTE BUYTE BUYTE BUYTE BUYTE BUYTE
+                색상 | 펜/지우개 | 이미지 업로드 | 취소/되돌리기
               </div>
             </RightContent>
           </PopupContent>
