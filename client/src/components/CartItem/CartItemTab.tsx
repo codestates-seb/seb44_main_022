@@ -19,7 +19,9 @@ function CartItemTab(path: CartItemTabProps) {
         No.
       </CartListName>
       <CartListName grow={5} minWidth={40} style={{ padding: '0.5rem' }}></CartListName>
-      <CartListName grow={75}>상품정보</CartListName>
+      <CartListName grow={75} minWidth={150}>
+        상품정보
+      </CartListName>
       <CartListName grow={10} minWidth={100} style={{ width: '100px' }}>
         수량
       </CartListName>
