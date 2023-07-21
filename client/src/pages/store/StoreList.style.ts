@@ -13,7 +13,7 @@ export const StoreSection = styled.section`
   justify-content: center;
   align-items: center; 
   flex-direction: column;
-  margin-top: 240px;
+  margin-top: 170px;
   margin-bottom: 80px;
   @media (max-width: 772px) {
     margin-top: 120px;
@@ -34,7 +34,6 @@ export const StoreText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   h2 {
     font-size: 38px;
     margin-bottom: 30px;
@@ -46,6 +45,7 @@ export const StoreText = styled.div`
     font-size: 16px;
     margin-bottom: 50px;
     color: var(--light-black); 
+    font-family:'Yaldevi'
   }
 `;
 
@@ -57,6 +57,7 @@ export const Search = styled.div`
   span {
     color: var(--light-gray);
     font-size: 16px;
+    font-family:'Yaldevi'
   }
   @media (max-width: 800px) {
     span {
@@ -69,8 +70,8 @@ export const Search = styled.div`
     border-radius: 20px;
     padding: 10px 20px;
     width: 350px;
-    font-family: inherit;
-    color: var(--dark-gray)
+    color: var(--dark-gray);
+    font-family:'Yaldevi';
   }
   @media (max-width: 800px) {
     flex-direction: column;

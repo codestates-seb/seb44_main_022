@@ -37,38 +37,30 @@ function StoreDetail() {
   return (
     <>
       <StoreDetailSection>
-        <Chat storeId={storeId} storeName={data.storeName} />
         <Link to="/store">
-          <BiArrowBack
-            style={{
-              fontSize: '40px',
-              color: 'var(--dark-purple)',
-              marginTop: '11rem',
-              position: 'absolute',
-              left: '11rem',
-              cursor: 'pointer',
-            }}
-          />
-        </Link>
+              <BiArrowBack
+                style={{
+                  fontSize: '40px',
+                  marginTop: '11rem',
+                  cursor: 'pointer',
+                  alignSelf:''
+                }}
+              />
+         </Link>
+        <Chat storeId={storeId} storeName={data.storeName} />       
         <StoreDetails>
+          
           <div
             style={{
               backgroundImage: `url('${data.storeImage}')`,
               width: '280px',
               height: '280px',
               borderRadius: '50%',
-              backgroundSize: 'cover',
+              backgroundSize: 'cover'
             }}
           ></div>
           <DetailWrapper>
-            <h3
-              style={{
-                fontWeight: '600',
-                fontSize: '18px',
-                color: 'var(--bright-black)',
-                marginBottom: '2rem',
-              }}
-            >
+            <h3>
               {data.storeName}
             </h3>
             <DetailTitle>소개</DetailTitle>
@@ -78,13 +70,11 @@ function StoreDetail() {
               to="/map"
               state={{ lat: data.storeLatitude, lng: data.storeLongitude, id: data.storeId }}
             >
-              <span style={{ color: 'var(--light-gray)', fontSize: '13px' }}>[지도보기]</span>
+              <span style={{ color: 'var(--light-gray)', fontSize: '14px' }}>[지도보기]</span>
             </Link>
             <DetailInfo>{data.storeAddress}</DetailInfo>
             <DetailTitle>전화번호</DetailTitle>
-            <p style={{ color: 'var(--bright-black)', fontWeight: '500', fontSize: '13px', marginTop:'5px' }}>
-              {data.storePhoneNumber}
-            </p>
+            <DetailInfo>{data.storePhoneNumber}</DetailInfo>
           </DetailWrapper>
         </StoreDetails>
       </StoreDetailSection>

@@ -24,7 +24,7 @@ function StoreCard({ data }: StoreCardProps) {
               </div>
             </Link>
             <StoreTitleInfo>
-              <p style={{ fontSize: '16px', marginBottom: '0.4rem' }}>
+              <p style={{ fontSize: '16px', marginBottom: '0.4rem', fontFamily:'Yaldevi' }}>
                 <Link to={`/store/${store.storeId}`} style={{ color: 'var(--light-black)' }}>
                   {store.storeName}
                 </Link>
@@ -35,6 +35,7 @@ function StoreCard({ data }: StoreCardProps) {
                   color: 'var(--light-gray)',
                   marginRight: '0.3rem',
                   lineHeight: '1.3',
+                  fontFamily:'Yaldevi'
                 }}
               >
                 <FiMapPin style={{ marginRight: '0.1rem', alignItems: 'center' }} />

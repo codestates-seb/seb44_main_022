@@ -143,7 +143,7 @@ function StoreList() {
 
   return (
     <>
-      <StoreSection style={{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop:'240px'}}>
+      <StoreSection >
         <section style={{ width: '70%'}}>    
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <StoreText>
