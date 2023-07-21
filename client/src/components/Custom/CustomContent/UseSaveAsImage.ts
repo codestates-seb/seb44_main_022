@@ -26,7 +26,6 @@ const saveAsImage = async (
     return;
   }
 
-  // Create a temporary canvas
   const tempCanvas = document.createElement('canvas');
   const tempCtx = tempCanvas.getContext('2d');
 
@@ -38,15 +37,23 @@ const saveAsImage = async (
   tempCanvas.width = canvas.width;
   tempCanvas.height = canvas.height;
 
-  // Draw the original canvas onto the temporary one
   tempCtx.drawImage(canvas, 0, 0);
 
-  // Load and draw each image onto the canvas
+  const isDataURL = (s: string) => {
+    return !!s.match(/^data:image\/([a-zA-Z]*);base64,([^"]*)/);
+  };
+
   const loadAndDrawImage = async (imageData: ImageData) => {
     return new Promise<void>((resolve, reject) => {
       const img = new Image();
       img.crossOrigin = 'anonymous';
-      img.src = `${imageData.imageUrl}?timestamp=${new Date().getTime()}`;
+
+      if (isDataURL(imageData.imageUrl)) {
+        img.src = imageData.imageUrl;
+      } else {
+        img.src = `${imageData.imageUrl}?timestamp=${new Date().getTime()}`;
+      }
+
       img.onload = () => {
         tempCtx.drawImage(img, imageData.x, imageData.y, imageData.width, imageData.height);
         resolve();
@@ -59,23 +66,17 @@ const saveAsImage = async (
 
   await Promise.all(images.map(loadAndDrawImage));
 
-  // Iterate over every pixel
-  // Iterate over every pixel
-  // Iterate over every pixel
   const imageData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
   for (let i = 0; i < imageData.data.length; i += 4) {
-    // If the pixel is transparent, color it white
     if (imageData.data[i + 3] === 0) {
-      imageData.data[i] = 255; // red
-      imageData.data[i + 1] = 255; // green
-      imageData.data[i + 2] = 255; // blue
-      imageData.data[i + 3] = 255; // alpha
+      imageData.data[i] = 255;
+      imageData.data[i + 1] = 255;
+      imageData.data[i + 2] = 255;
+      imageData.data[i + 3] = 255;
     }
   }
-  // Put the modified image data back onto the temporary canvas
   tempCtx.putImageData(imageData, 0, 0);
 
-  // Get a data URL of the image from the temporary canvas
   const dataUrl = tempCanvas.toDataURL('image/png');
 
   const byteString = atob(dataUrl.split(',')[1]);
