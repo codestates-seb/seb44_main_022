@@ -32,11 +32,11 @@ public class StoreController {
     }
 
     @GetMapping
-    public ResponseEntity getStores(
+    public ResponseEntity getStoreList(
         @RequestParam(required = false, defaultValue = "1") int page,
         @RequestParam(required = false) String search) {
 
-        StoreInfoPageDto storeInfoPageDto = storeService.getStores(page - 1, search);
+        StoreInfoPageDto storeInfoPageDto = storeService.getStoreList(page - 1, search);
 
         return new ResponseEntity<>(storeInfoPageDto, HttpStatus.OK);
     }
