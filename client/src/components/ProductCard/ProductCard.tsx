@@ -57,9 +57,8 @@ function ProductCard({ data, storeId, storeName }: ProductCardProps) {
               isOpen={modalOpen}
               onRequestClose={closeModal}
               contentLabel="Modal"
-              storeId={storeId.toString()}
-              storeName={storeName}
-              productId={selectedProduct.productId.toString()}
+              storeId={storeId}
+              productId={selectedProduct.productId}
             />
           )}
         </ModalContainer>
