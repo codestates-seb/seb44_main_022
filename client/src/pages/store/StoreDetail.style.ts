@@ -14,13 +14,14 @@ export const StoreDetails = styled.section`
 display: flex;
 justify-content: center;
 align-items: center;
+margin-top: 7rem;
 margin-bottom: 5rem; 
 @media (max-width: 1000px) {
-    margin: 0rem 3rem 5rem 3rem;
+    margin: 5rem 3rem 5rem 3rem;
     }
 @media (max-width: 820px) {
     width: 600px;
-    margin: 0rem 3rem 3rem 3rem;
+    margin: 4rem 3rem 3rem 3rem;
     }
 `
 

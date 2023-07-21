@@ -56,7 +56,9 @@ function ProductCard({ data, storeId, storeName }: ProductCardProps) {
             <ModalComponentCustom
               isOpen={modalOpen}
               onRequestClose={closeModal}
-              contentLabel="매장 리스트"
+              contentLabel="Modal"
+              storeId={storeId}
+              productId={selectedProduct.productId}
             />
           )}
         </ModalContainer>

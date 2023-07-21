@@ -20,3 +20,23 @@ export const ChattingOpenButton = styled.div`
   animation: 0.3s ${fadeInCenter} 0.5s forwards;
   transform-origin: center;
 `;
+
+export const ChattingPostButton = styled.button`
+  position: absolute;
+  bottom: 22px;
+  right: 6px;
+  border-radius: 50%;
+  border: none;
+  overflow: hidden;
+  box-shadow: 1px 1px 5px 1px var(--light-gray);
+
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.2, 1.2);
+  }
+
+  &:active {
+    transform: scale(1, 1);
+  }
+`;

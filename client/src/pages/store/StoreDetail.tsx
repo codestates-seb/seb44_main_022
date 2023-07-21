@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, } from 'react';
+import { useNavigate } from 'react-router-dom'
 import { Link, useParams } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -20,6 +21,7 @@ function StoreDetail() {
   useEffect(() => {
     fetchData();
   }, []);
+
   const fetchData = async () => {
     try {
       const url = `/store/${storeId}`;
@@ -30,6 +32,7 @@ function StoreDetail() {
       console.error('Error fetching store data:', error);
     }
   };
+  const navigate = useNavigate();
 
   if (!data) {
     return <div>입점을 준비 중입니다!</div>;
@@ -37,21 +40,11 @@ function StoreDetail() {
   return (
     <>
       <StoreDetailSection>
-        <Link to="/store">
-          {/*버튼으로 하고, Usenavigate(-1)*/}
           {/* div width를 100%가 아니라 짧게 */}
-              <BiArrowBack
-                style={{
-                  fontSize: '40px',
-                  marginTop: '11rem',
-                  cursor: 'pointer',
-                  alignSelf:''
-                }}
-              />
-         </Link>
+          
         <Chat storeId={storeId} storeName={data.storeName} />       
         <StoreDetails>
-          
+          <button style={{width: '50px', height:'50px', borderRadius:'50%'}} onClick={()=>{navigate(-1)}}><BiArrowBack style={{fontSize:'20px'}}/></button>   
           <div
             style={{
               backgroundImage: `url('${data.storeImage}')`,

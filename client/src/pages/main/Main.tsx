@@ -22,7 +22,6 @@ const AnimatedSection = styled.div`
   opacity: 0;
   transition: opacity 500ms ease-in-out;
   pointer-events: none;
-  margin: 10px 0;
   &.active {
     opacity: 1;
     pointer-events: auto;

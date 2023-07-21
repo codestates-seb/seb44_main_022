@@ -94,10 +94,19 @@ export const ChattingTextareaContainer = styled.div`
   width: auto;
   height: auto;
   margin: 1rem;
-  margin-right: 3rem;
+  margin-right: 3.5rem;
   border-radius: 28px;
   background-color: white;
   box-shadow: 1px 1px 5px 1px var(--light-gray);
+  transition: 0.3s;
+
+  &:hover {
+    background-color: var(--gray);
+  }
+
+  &:focus {
+    background-color: red;
+  }
 `;
 
 export const ChattingTextarea = styled.textarea`
@@ -116,6 +125,7 @@ export const ChattingTextarea = styled.textarea`
   box-sizing: border-box;
   border: none;
   white-space: pre-line;
+  background-color: inherit;
 
   &::-webkit-scrollbar {
     width: 10px;
