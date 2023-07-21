@@ -10,13 +10,17 @@ import {
 import {
   ExitMapModalButton,
   ImageCarouselButton,
+  ImageCarouselButtonContainer,
   MapModalAddressContainer,
+  MapModalImg,
+  MapModalImgBox,
+  MapModalImgContainer,
   MapModalStoreImg,
   MapModalStoreInfoContainer,
   MapModalStoreName,
   MapModalTitleContainer,
-  MarkerModal,
-} from './Map.style';
+} from './MapModal.style';
+import { MarkerModal } from './Map.style';
 
 function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
   const [currentNumber, setCurrentNumber] = useState<number>(0);
@@ -55,35 +59,9 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
               </MapModalAddressContainer>
             </MapModalStoreInfoContainer>
           </MapModalTitleContainer>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              width: '100%',
-              height: '310px',
-              marginTop: '1.5rem',
-            }}
-          >
-            <div
-              style={{
-                overflow: 'hidden',
-                width: '80%',
-                height: '100%',
-                borderRadius: '28px',
-                boxShadow: '1px 1px 3px 1px var(--light-gray)',
-
-                backgroundColor: 'var(--background)',
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  transform: `translateX(-${currentNumber * 246.5}px)`,
-                  transition: '0.3s',
-                  height: '80%',
-                  padding: '1rem 1rem 0 1rem',
-                }}
-              >
+          <MapModalImgContainer>
+            <MapModalImgBox>
+              <MapModalImg currentNumber={currentNumber}>
                 {position.productPreferenceList.map((product) => (
                   <img
                     src={product.productImage}
@@ -97,16 +75,8 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
                     alt="추천 제품 사진"
                   />
                 ))}
-              </div>
-              <div
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'center',
-                  columnGap: '1rem',
-                  marginTop: '1.75rem',
-                }}
-              >
+              </MapModalImg>
+              <ImageCarouselButtonContainer>
                 {IMAGE_NUMBER_BUTTON.map((number) => (
                   <ImageCarouselButton
                     imageNumber={number}
@@ -115,9 +85,9 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
                     key={number}
                   ></ImageCarouselButton>
                 ))}
-              </div>
-            </div>
-          </div>
+              </ImageCarouselButtonContainer>
+            </MapModalImgBox>
+          </MapModalImgContainer>
 
           <div
             style={{

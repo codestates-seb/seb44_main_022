@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { BsCircleFill, BsFillCursorFill } from 'react-icons/bs';
-import { ExitMapModalButton } from '../map/Map.style';
+import { BsCircleFill } from 'react-icons/bs';
 import useScrollBottom from '../../hooks/chatHooks/useScrollBottom';
 import useTextareaAutoHeight from '../../hooks/chatHooks/useTextareaAutoHeight';
 import { BaseChatData, ChatBoxProps } from '../../assets/interface/Chat.interface';
 import { getChatRoomId } from '../../api/chatApis';
 import useKeydown from '../../hooks/useKeydown';
 import useChat from '../../hooks/chatHooks/useChat';
+import { ExitMapModalButton } from '../map/MapModal.style';
 import {
+  ChatButtonImg,
   ChattingContainer,
   ChattingHeaderStore,
   ChattingMessage,
@@ -33,8 +34,9 @@ function ChatBox({
   const [roomId, setRoomId] = useState<number>(roomIdProps);
   const [senderId, setSenderId] = useState<number>(receiverIdProps);
   const [receiverId, setReceiverId] = useState<number>(senderIdProps);
-  const { messages, onPublishMessage } = useChat(roomId);
   const [showChatBox, setShowChatBox] = useState<boolean>(false);
+  const [isDelaySend, setIsDelaySend] = useState<boolean>(true);
+  const { messages, onPublishMessage } = useChat(roomId);
 
   const createMessageTime = () => {
     return (
@@ -42,6 +44,20 @@ function ChatBox({
       ':' +
       String(new Date().getMinutes()).padStart(2, '0')
     );
+  };
+
+  const handleKeyPress: React.KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      e.shiftKey ? setChatText(chatText + '\n') : handleEnter(e);
+    }
+  };
+
+  const publish = (Message: string) => {
+    onPublishMessage(Message);
+    setChatText('');
+    setIsDelaySend(false);
+    setTimeout(() => setIsDelaySend(true), 1000);
   };
 
   const handleEnter: React.FormEventHandler<HTMLElement> = (e) => {
@@ -52,8 +68,8 @@ function ChatBox({
         receiverId: receiverId,
         content: chatText,
       });
-      onPublishMessage(Message);
-      setChatText('');
+      publish(Message);
+
       return;
     }
     alert('메세지를 입력한 뒤에 전송해주세요.');
@@ -108,7 +124,7 @@ function ChatBox({
                   key={idx}
                   type={e.receiverId === receiverId ? 'answer' : 'question'}
                 >
-                  {e.content.length > 1 && e.content}
+                  {e.content.length > 0 && e.content}
                   <ChattingTime type={e.receiverId === receiverId ? 'answer' : 'question'}>
                     {e.createdAt ? e.createdAt.slice(11, 16) : createMessageTime()}
                   </ChattingTime>
@@ -127,29 +143,21 @@ function ChatBox({
                   value={chatText}
                   onChange={(e) => setChatText(e.target.value)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                      if (e.shiftKey) {
-                        e.preventDefault();
-                        setChatText(chatText + '\n');
-                      } else {
-                        e.preventDefault();
-                        handleEnter(e);
-                      }
+                    if (isDelaySend) {
+                      handleKeyPress(e);
                     }
                   }}
                   rows={1}
                 />
               </ChattingTextareaContainer>
-              <ChattingPostButton onClick={(e) => handleEnter(e)}>
-                <BsFillCursorFill
-                  style={{
-                    width: '2rem',
-                    height: '2rem',
-                    color: 'gray',
-                    padding: '0.2rem',
-                    backgroundColor: 'white',
-                  }}
-                />
+              <ChattingPostButton
+                onClick={(e) => {
+                  if (isDelaySend) {
+                    handleEnter(e);
+                  }
+                }}
+              >
+                <ChatButtonImg />
               </ChattingPostButton>
             </>
           )}

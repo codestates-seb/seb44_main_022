@@ -8,7 +8,7 @@ import RectangleButton from '../../../components/RectangleButton/RectangleButton
 import { CART_CATEGORY_NAME } from '../../../assets/constantValue/constantValue';
 import { CartItemTypes } from '../../../assets/interface/Cart.interface';
 import { deleteCartList, getCartList } from '../../../api/orderApis';
-import CartCategoryList from '../../../components/CartCategoryList';
+import CartCategoryList from '../../../components/CartItem/CartCategoryList';
 import CartItemTab from '../../../components/CartItem/CartItemTab';
 import {
   CartCategoryName,

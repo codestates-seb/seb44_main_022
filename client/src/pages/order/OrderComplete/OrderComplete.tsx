@@ -7,7 +7,7 @@ import {
 import RectangleButton from '../../../components/RectangleButton/RectangleButton';
 import useGoBackRestrict from '../../../hooks/useGoBackRestrict';
 import { CartCategoryName, CartContainer } from '../ShoppingCart/ShoppingCart.style';
-import CartCategoryList from '../../../components/CartCategoryList';
+import CartCategoryList from '../../../components/CartItem/CartCategoryList';
 import { LocalStorage } from '../../../utils/browserStorage';
 import { OrderCompleteMessageContainer } from './OrderComplete.style';
 
