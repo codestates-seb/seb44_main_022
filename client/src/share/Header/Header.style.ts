@@ -5,7 +5,8 @@ import { dropDown, dropUp, fadeIn, fadeOut } from '../../styles/keyframes';
 export const LinkText = styled(Link)`
   display: flex;
   font-size: 1.3rem;
-  font-family: BMJUA;
+  font-family: 'Yaldevi', sans-serif;
+  font-weight: 700;
   color: #6d4924;
   transition: 0.3s;
   &:hover {
@@ -16,7 +17,8 @@ export const LinkText = styled(Link)`
 `;
 
 export const SmallLinkText = styled.div`
-  font-family: BMJUA;
+  font-family: 'Yaldevi', sans-serif;
+  font-weight: 700;
   line-height: 15px;
   display: flex;
   height: 1.5rem;
