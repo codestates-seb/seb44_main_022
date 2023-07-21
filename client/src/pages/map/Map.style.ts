@@ -76,7 +76,7 @@ export const MapModalTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 4rem;
+  padding-left: 2rem;
   padding-top: 2.5rem;
 `;
 
@@ -123,6 +123,6 @@ export const MapPageIntroduce = styled.div`
   width: 80%;
   padding: 1rem 2rem 2rem 2rem;
   font-family: BMJUA;
-  font-size: 1.5rem;
+  font-size: 2rem;
   color: var(--light-black);
 `;

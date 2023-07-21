@@ -18,7 +18,7 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
           onClick={() => window.open(items.productImagePath)}
         />
       </CartListName>
-      <CartListName grow={75} style={{ justifyContent: 'flex-start' }}>
+      <CartListName grow={75} minWidth={150} style={{ justifyContent: 'flex-start' }}>
         {items.productName}
       </CartListName>
       <CartListName

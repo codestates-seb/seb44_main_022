@@ -72,7 +72,7 @@ function MapPage() {
             height: '100%',
             borderRadius: '40px',
           }}
-          level={3}
+          level={10}
         >
           {storeMapList !== undefined &&
             storeMapList.length > 0 &&

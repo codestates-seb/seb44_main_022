@@ -119,7 +119,14 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
             </div>
           </div>
 
-          <div style={{ padding: '1.5rem', lineHeight: '1.25', wordBreak: 'break-word' }}>
+          <div
+            style={{
+              padding: '1.5rem 2rem',
+              lineHeight: '1.25',
+              whiteSpace: 'pre-line',
+              wordBreak: 'break-word',
+            }}
+          >
             {sliceText(position.storeIntroduction)}
           </div>
         </div>
