@@ -4,6 +4,7 @@ import modal_cake from '../assets/images/img_modal/modal_cake.png';
 import ProductCartAlert from '../share/ProductCartAlert';
 import axiosInstance from '../api/apis';
 import { ModalProps, Product } from '../assets/interface/Store.interface';
+import { priceFormatter } from '../pages/mypage/PriceFormatter';
 import {
   AlertBox,
   CircleShape,
@@ -38,22 +39,20 @@ function ModalComponentDetail({
   productId,
 }: ModalProps) {
   const [isProductCartAlertVisible, setProductCartAlertVisible] = useState(false);
-  const [product, setProduct] = useState<Product | null>(null);
-  const fetchData = async () => {
-    try {
-      const url = `/store/${storeId}/${productId}`;
-      const response = await axiosInstance.get(url);
-      const data = response.data;
-      setProduct(data);
-    } catch (error) {
-      console.error('Error fetching store data:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  const [product, setProduct] = useState<Product | null>(null);    
+  const fetchData = async () => {  
+        try {
+          const url = `/store/${storeId}/${productId}`;
+          const response = await axiosInstance.get(url);      
+          const data = response.data;    
+          setProduct(data);
+        } catch (error) {
+          console.error('Error fetching store data:', error);
+        }
+      };
+    useEffect(() => {
+        fetchData();
+      }, []);
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formData = {
@@ -95,7 +94,7 @@ function ModalComponentDetail({
             <StoreName>{storeName}</StoreName>
             <ProductName>{product?.productName}</ProductName>
             <ProductDetail>{product?.productIntroduction}</ProductDetail>
-            <ProductPrice>{product?.productPrice}원</ProductPrice>
+            <ProductPrice>{product ? priceFormatter(product.productPrice) : ''}원</ProductPrice>
           </ProductsContainer>
           <DecorationTextContainer>
             <DecorationText>Sweet</DecorationText>

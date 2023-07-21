@@ -7,20 +7,19 @@ const SectionContainer = styled.div`
   flex-direction: column;
   margin-bottom: 30px;
   margin-left: 11px;
-`;
 
+  max-height: 500px;
+`;
 const ContentItem = styled.div`
   margin-left: 1.5%;
   width: 88%;
-  height: 130px;
-  background-color: #fff;
+  background-color: #fafcff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  padding-left: 13px;
+  padding-left: 8px;
   padding-bottom: 10px;
 `;
+
 const ContentImage = styled.img`
   width: 57px;
   height: 57px;
@@ -36,15 +35,17 @@ const ContentImage = styled.img`
     background-color: var(--normal-gray);
   }
 `;
+
 const ContentImageContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  grid-auto-rows: 1fr;
+  grid-template-columns: repeat(3, minmax(50px, 1fr)); // 3열로 고정
   gap: 8px;
   max-width: 100%;
   overflow-y: auto;
+  max-height: 130px;
   margin-top: 8px;
 `;
+
 interface Topping {
   ingredientName: string;
   ingredientImage: string;

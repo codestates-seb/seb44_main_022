@@ -142,3 +142,28 @@ export const errFadeOut = keyframes`
     height: 0;
   }
 `;
+export const appearAndSlideUp = keyframes`
+  0% {
+    opacity: 0;
+    transform: translateY(20vh);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(20vh);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+export const slideUpText = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;

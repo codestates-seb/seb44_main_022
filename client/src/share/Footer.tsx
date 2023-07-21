@@ -1,46 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import styled from 'styled-components';
 import github from '../assets/images/github.png';
 import notion from '../assets/images/notion.png';
 import youtube from '../assets/images/youtube.png';
 import { BASE_ANIMATION_TIME } from '../assets/constantValue/constantValue';
-const FooterContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--purple);
-  width: 100%;
-  color: var(--color-white);
-  font-family: var(--font-noto-sans-kr);
-  margin-top: auto;
-`;
-const FooterInfoContainer = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 40%;
-  margin-bottom: 8px;
-`;
-const InfoBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: 70px;
-`;
-
-const RightInfoBlock = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
-const ImageContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 12%;
-`;
+import {
+  FooterContainer,
+  FooterInfoContainer,
+  InfoBlock,
+  RightInfoBlock,
+  ImageContainer,
+} from './Footer.style';
 
 function Footer() {
   const location = useLocation();

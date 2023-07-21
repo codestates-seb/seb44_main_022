@@ -70,14 +70,17 @@ export const StyledModal = styled(Modal)`
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      min-height: 77%;
-      min-width: 77%;
+      width: 1000px;
       border-radius: 20px;
       box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
       background-color: rgba(255, 255, 255, 0.9);
       z-index: 100;
       outline: none;
       border: none;
+      @media (max-width: 1200px) {
+        width: 77%;
+        height: 77%;
+      }
     `}
 `;
 
@@ -87,7 +90,7 @@ export const Overlay = styled.div<{ isOpen: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 9;
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;
@@ -164,7 +167,7 @@ export const ProductsContainer = styled.div`
   > * + * {
     margin-top: 40px;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 950px) {
     > * + * {
       margin-top: 30px;
     }
@@ -174,31 +177,34 @@ export const StoreName = styled.h2`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Open Sans', cursive;
+  font-family: 'BMJUA';
   font-weight: 500;
-  font-size: 15px;
+  font-size: 16px;
   color: #244030;
   border-radius: 214px;
   background-color: #dcd2bd;
   border: none;
   width: 300px;
   height: 30px;
-  @media (max-width: 910px) {
+  @media (max-width: 950px) {
     width: 270px;
   }
 `;
 
 export const ProductName = styled.h2`
-  font-family: 'Open Sans', cursive;
+  font-family: 'BMJUA';
   font-size: 45px;
   font-weight: bold;
   color: var(--light-black);
-  margin-left: 2rem;
-  @media (max-width: 1190px) {
+  margin-left: 0;
+  word-break: keep-all;
+  @media (max-width: 1200px) {
     font-size: 36px;
+    margin-left: 1rem;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 950px) {
     font-size: 30px;
+    margin-left: 2rem;
   }
 `;
 
@@ -207,13 +213,15 @@ export const ProductDetail = styled.h3`
   font-weight: 600;
   color: var(--light-black);
   width: 400px;
-  line-height: 1.7;
-  @media (max-width: 1190px) {
+  font-family: 'Yaldevi';
+  line-height: 1.7;  
+  word-break: keep-all;
+  @media (max-width: 1200px) {
     font-size: 15px;
     width: 300px;
     line-height: 1.4;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 950px) {
     font-size: 14px;
     width: 250px;
   }
@@ -222,18 +230,19 @@ export const ProductPrice = styled.h2`
   display: flex;
   font-size: 19px;
   color: var(--white);
+  font-family: 'BMJUA';
   background-color: #665d49;
   justify-content: center;
   align-items: center;
   border-radius: 10px;
   width: 300px;
   padding: 18px;
-  @media (max-width: 1190px) {
+  @media (max-width: 1200px) {
     font-size: 17px;
     width: 230px;
     margin-left: 15px;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 950px) {
     font-size: 15px;
     width: 150px;
     height: 30px;
@@ -246,8 +255,8 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
   top: 50%;
   right: 10%;
   transform: translate(0, -50%);
-  width: 400px;
-  height: 400px;
+  width: 350px;
+  height: 350px;
   border-radius: 50%;
   background-color: #fab65d;
   display: flex;
@@ -259,16 +268,13 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
       background-repeat: no-repeat;
       background-size: cover;
     `}
-  @media (max-width: 1320px) {
+  @media (max-width: 1200px) {
     width: 300px;
     height: 300px;
   }
-  @media (max-width: 1190px) {
-    width: 230px;
-    height: 230px;
-  }
-  @media (max-width: 910px) {
+  @media (max-width: 950px) {
     width: 20%;
     border-radius: 30px;
+    background-position:center;
   }
 `;

@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
-
-export const CartListName = styled.div<{ grow: number; minWidth?: number }>`
+export const CartListName = styled.div<{ grow: number; minWidth: number} >`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,12 +11,12 @@ export const CartListName = styled.div<{ grow: number; minWidth?: number }>`
       ${grow}%
     `};
 
-  min-width: ${({ minWidth }) =>
+ min-width: ${({ minWidth }) =>
     minWidth
       ? css`
           ${minWidth}px
         `
-      : css`120px`};
+      : css`120px`}; 
 
   font-family: 'Yaldevi', sans-serif;
   font-weight: bold;
@@ -28,3 +27,4 @@ export const CartImage = styled.img`
   height: 3rem;
   object-fit: cover;
 `;
+
