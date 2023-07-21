@@ -70,14 +70,17 @@ export const StyledModal = styled(Modal)`
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      min-height: 77%;
-      min-width: 77%;
+      width: 1000px;
       border-radius: 20px;
       box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
       background-color: rgba(255, 255, 255, 0.9);
       z-index: 100;
       outline: none;
       border: none;
+      @media (max-width: 1200px) {
+        width: 77%;
+        height: 77%;
+      }
     `}
 `;
 
@@ -164,7 +167,7 @@ export const ProductsContainer = styled.div`
   > * + * {
     margin-top: 40px;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     > * + * {
       margin-top: 30px;
     }
@@ -183,7 +186,7 @@ export const StoreName = styled.h2`
   border: none;
   width: 300px;
   height: 30px;
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     width: 270px;
   }
 `;
@@ -195,11 +198,11 @@ export const ProductName = styled.h2`
   color: var(--light-black);
   margin-left: 0;
   word-break: keep-all;
-  @media (max-width: 1190px) {
+  @media (max-width: 1200px) {
     font-size: 36px;
     margin-left: 1rem;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     font-size: 30px;
     margin-left: 2rem;
   }
@@ -213,12 +216,12 @@ export const ProductDetail = styled.h3`
   font-family: 'Yaldevi';
   line-height: 1.7;  
   word-break: keep-all;
-  @media (max-width: 1190px) {
+  @media (max-width: 1200px) {
     font-size: 15px;
     width: 300px;
     line-height: 1.4;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     font-size: 14px;
     width: 250px;
   }
@@ -234,12 +237,12 @@ export const ProductPrice = styled.h2`
   border-radius: 10px;
   width: 300px;
   padding: 18px;
-  @media (max-width: 1190px) {
+  @media (max-width: 1200px) {
     font-size: 17px;
     width: 230px;
     margin-left: 15px;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     font-size: 15px;
     width: 150px;
     height: 30px;
@@ -265,15 +268,11 @@ export const ProductImgContainer = styled.div<ProductImgContainerProps>`
       background-repeat: no-repeat;
       background-size: cover;
     `}
-  @media (max-width: 1320px) {
-    width: 300px;
-    height: 300px;
-  }
-  @media (max-width: 1190px) {
+  @media (max-width: 1200px) {
     width: 230px;
     height: 230px;
   }
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     width: 20%;
     border-radius: 30px;
     background-position:center;
