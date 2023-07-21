@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import ColorInput from './ColorInput';
 import EraseButton from './EraseButton';
@@ -58,6 +57,7 @@ const CustomContent: React.FC<{
     setIsDragging(false);
 
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.src = imageUrl;
 
     image.onload = () => {

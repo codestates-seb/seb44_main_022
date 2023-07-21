@@ -11,6 +11,8 @@ type ModalProps = {
   onRequestClose: () => void;
   contentLabel: string;
   overlay?: boolean;
+  storeId: number;
+  productId: number;
 };
 
 const Title = styled.h3`
@@ -70,13 +72,11 @@ const CustomContainer = styled.div`
   display: flex;
 `;
 
-function ModalComponent({ isOpen, onRequestClose, contentLabel }: ModalProps) {
+function ModalComponent({ isOpen, onRequestClose, contentLabel, storeId, productId }: ModalProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<
     { imageUrl: string; x: number; y: number; width: number; height: number }[]
   >([]);
-  const storeId = 1;
-  const productId = 1;
 
   useEffect(() => {
     if (isOpen) {
