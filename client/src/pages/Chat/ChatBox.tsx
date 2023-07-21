@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { BsCircleFill } from 'react-icons/bs';
-import { RiCompassDiscoverFill } from 'react-icons/ri';
+import { BsCircleFill, BsFillCursorFill } from 'react-icons/bs';
 import { ExitMapModalButton } from '../map/Map.style';
 import useScrollBottom from '../../hooks/chatHooks/useScrollBottom';
 import useTextareaAutoHeight from '../../hooks/chatHooks/useTextareaAutoHeight';
@@ -18,6 +17,7 @@ import {
   ChattingTime,
 } from './ChatBox.style';
 import ChatIntroBox from './ChatIntroBox';
+import { ChattingPostButton } from './ChatButton.style';
 
 function ChatBox({
   setIsOpenChatting,
@@ -140,7 +140,17 @@ function ChatBox({
                   rows={1}
                 />
               </ChattingTextareaContainer>
-              <RiCompassDiscoverFill style={{ position: 'absolute', bottom: '0', right: '0' }} />
+              <ChattingPostButton onClick={(e) => handleEnter(e)}>
+                <BsFillCursorFill
+                  style={{
+                    width: '2rem',
+                    height: '2rem',
+                    color: 'gray',
+                    padding: '0.2rem',
+                    backgroundColor: 'white',
+                  }}
+                />
+              </ChattingPostButton>
             </>
           )}
         </ChattingContainer>
