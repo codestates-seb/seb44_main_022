@@ -60,7 +60,6 @@ const ImageContainer = styled.div<{ isAnimated: boolean }>`
   animation: ${slideInLeft} 1s ease-out;
   animation-play-state: ${({ isAnimated }) => (isAnimated ? 'running' : 'paused')};
 `;
-
 const TextContainer = styled.div<{ isAnimated: boolean }>`
   flex: 1;
   display: flex;
@@ -86,6 +85,7 @@ function MainSection2({
 }) {
   const [isImageOneVisible, setImageOneVisible] = useState(true);
   const [isAnimated, setAnimated] = useState(false);
+
   useEffect(() => {
     if (isActive) {
       setAnimated(true);
@@ -93,13 +93,21 @@ function MainSection2({
       setAnimated(false);
     }
   }, [isActive]);
-  const handleImageClick = () => {
-    setImageOneVisible(!isImageOneVisible);
+
+  const handleMouseEnter = () => {
+    setImageOneVisible(false);
   };
 
+  const handleMouseLeave = () => {
+    setImageOneVisible(true);
+  };
   return (
     <SectionContainer id={id} className={`section2 ${className}`}>
-      <ImageContainer onClick={handleImageClick} isAnimated={isAnimated}>
+      <ImageContainer
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        isAnimated={isAnimated}
+      >
         <Image src={customCake1} alt="Custom Cake" style={{ opacity: isImageOneVisible ? 1 : 0 }} />
         <Image src={customCake2} alt="Custom Cake" style={{ opacity: isImageOneVisible ? 0 : 1 }} />
       </ImageContainer>

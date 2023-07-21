@@ -87,7 +87,7 @@ export const Overlay = styled.div<{ isOpen: boolean }>`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 9;
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
 `;

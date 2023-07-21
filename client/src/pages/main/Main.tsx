@@ -22,7 +22,7 @@ const AnimatedSection = styled.div`
   opacity: 0;
   transition: opacity 500ms ease-in-out;
   pointer-events: none;
-
+  margin: 10px 0;
   &.active {
     opacity: 1;
     pointer-events: auto;
@@ -97,8 +97,9 @@ function Main() {
         <MainSection3 id={'section3'} isActive={activeSection === 3} />
       </AnimatedSection>
       <AnimatedSection className={activeSection === 4 ? 'active' : ''}>
-        <MainSection4 id={'section4'} />
+        <MainSection4 id={'section4'} isActive={activeSection === 4} />
       </AnimatedSection>
+
       <AnimatedSection className={activeSection === 5 ? 'active' : ''}>
         <MainSection5 id={'section5'} />
       </AnimatedSection>
