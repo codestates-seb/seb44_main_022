@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StoreService {
 
-    StoreInfoPageDto getStores(int page, String search);
+    StoreInfoPageDto getStoreList(int page, String search);
 
     List<StoreMapDto> getStoreMap();
 
