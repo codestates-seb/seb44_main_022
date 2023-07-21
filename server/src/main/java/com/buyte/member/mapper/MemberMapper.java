@@ -30,9 +30,15 @@ public interface MemberMapper {
                 .limit(size)
                 .collect(Collectors.toList());
 
+        int maxCount = orders.size() - (page - 1) * size;
+
         List<MemberDto.OrderInfo> orderInfos = paginatedOrders.stream()
                 .map(this::orderToOrderInfo)
                 .collect(Collectors.toList());
+
+        for (MemberDto.OrderInfo orderInfo : orderInfos) {
+            orderInfo.setOrderCount(maxCount--);
+        }
 
         PageInfoDto pageInfo = PageInfoDto.builder()
                 .page(page)
@@ -76,6 +82,7 @@ public interface MemberMapper {
                     .productPrice(orderProduct1.getProduct().getProductPrice())
                     .productImage(orderProduct1.getOrderProductCustomProductImage())
                     .productCount(orderProduct1.getOrderProductCustomProductCount())
+                    .storeId(orderProduct1.getProduct().getStore().getStoreId())
                     .build());
         }
 

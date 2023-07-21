@@ -1,5 +1,7 @@
 package com.buyte.member.auth.utils;
 
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -11,7 +13,7 @@ public class SecurityUtil {
             return (Long) principal;
         }
         catch (ClassCastException e) {
-            throw new IllegalArgumentException("잘못된 토큰 정보입니다.");
+            throw new BusinessLogicException(ExceptionCode.ACCESS_TOKEN_EXPIRED);
         }
     }
 }

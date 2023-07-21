@@ -60,8 +60,10 @@ public class MemberDto {
 
     @Builder
     @Getter
+    @Setter
     public static class OrderInfo {
         private Long orderId;
+        private Integer orderCount;
         private LocalDateTime createdAt;
         private Long totalPrice;
         private Orders.OrderState orderStatus;
@@ -78,5 +80,6 @@ public class MemberDto {
         private Integer productPrice;
         private String productImage;
         private Integer productCount;
+        private Long storeId;
     }
 }

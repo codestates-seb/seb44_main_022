@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { BsCircleFill } from 'react-icons/bs';
 import { MapModalProps } from '../../assets/interface/Map.interface';
 import {
   IMAGE_NUMBER_BUTTON,
@@ -30,10 +31,16 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
     return text;
   };
 
+  useEffect(() => {
+    setCurrentNumber(0);
+  }, [position]);
+
   return (
     <>
       <MarkerModal isClose={isClose}>
-        <ExitMapModalButton onClick={handleCloseModal}>BUYTE</ExitMapModalButton>
+        <ExitMapModalButton onClick={handleCloseModal}>
+          <BsCircleFill style={{ color: 'var(--purple)' }} />
+        </ExitMapModalButton>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           <MapModalTitleContainer>
             <div style={{ overflow: 'hidden', borderRadius: '50%' }}>
@@ -43,53 +50,76 @@ function MapModal({ position, isClose, handleCloseModal }: MapModalProps) {
             <MapModalStoreInfoContainer>
               <MapModalStoreName onClick={clickStore}>{position.storeName}</MapModalStoreName>
               <MapModalAddressContainer>
-                <FaSearch style={{ paddingLeft: '2px', paddingRight: '5px' }} />
+                <FaSearch style={{ paddingTop: '3px', paddingLeft: '2px', paddingRight: '5px' }} />
                 {position.storeAddress}
               </MapModalAddressContainer>
             </MapModalStoreInfoContainer>
           </MapModalTitleContainer>
-          <div style={{ overflow: 'hidden', width: '328px' }}>
-            <div
-              style={{
-                display: 'flex',
-                transform: `translateX(-${currentNumber * 327.8}px)`,
-                transition: '0.3s',
-              }}
-            >
-              {position.productPreferenceList.map((product) => (
-                <img
-                  src={product.productImage}
-                  style={{
-                    width: '328px',
-                    height: '296px',
-                    padding: '1rem 2rem',
-                    objectFit: 'fill',
-                  }}
-                  alt="추천 제품 사진"
-                  key={product.productId}
-                />
-              ))}
-            </div>
-          </div>
           <div
             style={{
               display: 'flex',
-              width: '100%',
               justifyContent: 'center',
-              columnGap: '1rem',
+              width: '100%',
+              height: '310px',
+              marginTop: '1.5rem',
             }}
           >
-            {IMAGE_NUMBER_BUTTON.map((number) => (
-              <ImageCarouselButton
-                imageNumber={number}
-                currentNumber={currentNumber}
-                onClick={() => setCurrentNumber(number)}
-                key={number}
-              ></ImageCarouselButton>
-            ))}
+            <div
+              style={{
+                overflow: 'hidden',
+                width: '80%',
+                height: '100%',
+                borderRadius: '28px',
+                boxShadow: '1px 1px 3px 1px var(--light-gray)',
+
+                backgroundColor: 'var(--background)',
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  transform: `translateX(-${currentNumber * 246.5}px)`,
+                  transition: '0.3s',
+                  height: '80%',
+                  padding: '1rem 1rem 0 1rem',
+                }}
+              >
+                {position.productPreferenceList.map((product) => (
+                  <img
+                    src={product.productImage}
+                    style={{
+                      width: '100%',
+                      height: '112%',
+                      padding: '1rem',
+                      objectFit: 'fill',
+                    }}
+                    key={product.productId}
+                    alt="추천 제품 사진"
+                  />
+                ))}
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'center',
+                  columnGap: '1rem',
+                  marginTop: '1.75rem',
+                }}
+              >
+                {IMAGE_NUMBER_BUTTON.map((number) => (
+                  <ImageCarouselButton
+                    imageNumber={number}
+                    currentNumber={currentNumber}
+                    onClick={() => setCurrentNumber(number)}
+                    key={number}
+                  ></ImageCarouselButton>
+                ))}
+              </div>
+            </div>
           </div>
 
-          <div style={{ padding: '1.5rem', fontSize: '14px', lineHeight: '1.25' }}>
+          <div style={{ padding: '1.5rem', lineHeight: '1.25', wordBreak: 'break-word' }}>
             {sliceText(position.storeIntroduction)}
           </div>
         </div>

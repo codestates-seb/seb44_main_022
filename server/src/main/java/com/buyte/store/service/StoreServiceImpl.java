@@ -39,9 +39,10 @@ public class StoreServiceImpl implements StoreService{
     private final ProductMapper productMapper;
 
     @Transactional(readOnly = true)
-    public StoreInfoPageDto getStores(int page, String search) {
+    public StoreInfoPageDto getStoreList(int page, String search) {
 
-        Pageable pageable = PageRequest.of(page, 20, Sort.by("storeId").descending());
+        Pageable pageable = PageRequest.of(page, 20, Sort.by("storeId"));
+
         Page<Store> findStorePage = search != null
             ? storeRepository.findByStoreNameContaining(search, pageable)
             : storeRepository.findAll(pageable);

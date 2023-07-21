@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { dropDown, dropUp } from '../../styles/keyframes';
+import { dropDown, dropUp, fadeIn, fadeOut } from '../../styles/keyframes';
 
 export const LinkText = styled(Link)`
   display: flex;
   font-size: 1.3rem;
-  font-family: 'Yaldevi', sans-serif;
+  font-family: BMJUA;
   color: #6d4924;
   transition: 0.3s;
   &:hover {
@@ -16,11 +16,11 @@ export const LinkText = styled(Link)`
 `;
 
 export const SmallLinkText = styled.div`
-  font-family: 'Yaldevi', sans-serif;
+  font-family: BMJUA;
   line-height: 15px;
   display: flex;
   height: 1.5rem;
-  font-size: 13px;
+  font-size: 14px;
   color: #6d4924;
   transition: 0.3s;
 `;
@@ -75,7 +75,7 @@ export const IconDiv = styled.div`
   }
 `;
 
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.div<{ animation: string }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -87,6 +87,7 @@ export const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   background-color: #fcfcffaa;
+  animation: 0.3s ${({ animation }) => (animation === 'fadeIn' ? fadeIn : fadeOut)} forwards;
 `;
 
 export const AuthRelativeContainer = styled.div`
@@ -133,13 +134,16 @@ export const DropDownContent = styled.ul`
   width: 150px;
   border-radius: 0px 0px 15px 15px;
   overflow: hidden;
-  & > li {
+
+  & > li,
+  a > li {
     padding: 1rem;
     text-align: center;
     transition: 0.3s;
     display: flex;
     align-items: center;
     justify-content: space-around;
+
     &:hover {
       background-color: var(--normal-gray);
     }
@@ -179,10 +183,12 @@ export const HamburgerMenuStyle = styled.a<{ isOpenModal: boolean }>`
     border-radius: 4px;
     transition: all 0.3s;
   }
+
   & > span:nth-of-type(1) {
     top: 25%;
     ${({ isOpenModal }) => (isOpenModal ? 'transform: translateY(11.5px) rotate(-45deg);' : '')}
   }
+
   & > span:nth-of-type(2) {
     top: 50%;
     ${({ isOpenModal }) => (isOpenModal ? 'opacity: 0' : '')}

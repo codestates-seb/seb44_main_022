@@ -65,6 +65,7 @@ public class OauthService {
 
         response.setHeader("Authorization", "Bearer " + accessToken);
         response.addHeader("Set-Cookie", jwtTokenizer.createCookie(member).toString());
+        response.addHeader("Member-Role", member.getMemberRole().toString());
 
         return response;
     }
