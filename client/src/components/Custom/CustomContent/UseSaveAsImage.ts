@@ -34,7 +34,6 @@ const saveAsImage = async (
       img.onload = () => {
         ctx.drawImage(img, imageData.x, imageData.y);
         resolve();
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
       };
     });
   };

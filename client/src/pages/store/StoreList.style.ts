@@ -13,7 +13,8 @@ export const StoreSection = styled.section`
   justify-content: center;
   align-items: center; 
   flex-direction: column;
-  margin-top:240px;
+  margin-top: 170px;
+  margin-bottom: 80px;
   @media (max-width: 772px) {
     margin-top: 120px;
   }
@@ -33,32 +34,32 @@ export const StoreText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   h2 {
-    font-size: 30px;
-    margin-bottom: 40px;
+    font-size: 38px;
+    margin-bottom: 30px;
     font-weight: 600;
-    font-family: inherit;
+    font-family: 'BMJUA';
     color: var(--light-black);  
   }
-
   p {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 50px;
     color: var(--light-black); 
+    font-family:'Yaldevi'
   }
 `;
 
 export const Search = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0.5rem 2.9rem;
+  margin: 0.5rem 0;
   align-items: center;
   span {
     color: var(--light-gray);
-    font-size: 13px;
+    font-size: 16px;
+    font-family:'Yaldevi'
   }
-  @media (max-width: 772px) {
+  @media (max-width: 800px) {
     span {
       display: none;
     }
@@ -67,12 +68,12 @@ export const Search = styled.div`
     background-color: var(--gray);  
     border: none;
     border-radius: 20px;
-    padding: 7px 20px;
-    width: 300px;
-    font-family: inherit;
-    color: var(--dark-gray)
+    padding: 10px 20px;
+    width: 350px;
+    color: var(--dark-gray);
+    font-family:'Yaldevi';
   }
-  @media (max-width: 772px) {
+  @media (max-width: 800px) {
     flex-direction: column;
     align-items: center;
     margin: 0.5rem auto; 

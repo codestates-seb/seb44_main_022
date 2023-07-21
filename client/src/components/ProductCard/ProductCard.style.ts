@@ -17,6 +17,7 @@ export const ProductTitle = styled.p`
   margin-top: 0.4rem;
   font-weight: 800;
   color: var(--dark-gray);
+  line-height: 1.2;
 `;
 
 export const ProductImage = styled.img`
