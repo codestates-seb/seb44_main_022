@@ -36,15 +36,14 @@ export const StoreText = styled.div`
   align-items: center;
 
   h2 {
-    font-size: 30px;
-    margin-bottom: 40px;
+    font-size: 38px;
+    margin-bottom: 30px;
     font-weight: 600;
-    font-family: inherit;
+    font-family: 'BMJUA';
     color: var(--light-black);  
   }
-
   p {
-    font-size: 14px;
+    font-size: 16px;
     margin-bottom: 50px;
     color: var(--light-black); 
   }
@@ -53,13 +52,13 @@ export const StoreText = styled.div`
 export const Search = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0.5rem 2.9rem;
+  margin: 0.5rem 0;
   align-items: center;
   span {
     color: var(--light-gray);
-    font-size: 13px;
+    font-size: 16px;
   }
-  @media (max-width: 772px) {
+  @media (max-width: 800px) {
     span {
       display: none;
     }
@@ -68,12 +67,12 @@ export const Search = styled.div`
     background-color: var(--gray);  
     border: none;
     border-radius: 20px;
-    padding: 7px 20px;
-    width: 300px;
+    padding: 10px 20px;
+    width: 350px;
     font-family: inherit;
     color: var(--dark-gray)
   }
-  @media (max-width: 772px) {
+  @media (max-width: 800px) {
     flex-direction: column;
     align-items: center;
     margin: 0.5rem auto; 
