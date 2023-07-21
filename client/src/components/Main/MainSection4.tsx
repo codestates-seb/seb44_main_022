@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { css } from 'styled-components';
 import section4_1 from '../../assets/images/img_main/section4_1.png';
 import section4_2 from '../../assets/images/img_main/section4_2.png';
 import { appearAndSlideUp, slideUpText } from '../../styles/keyframes';
@@ -39,20 +40,30 @@ const ColorContainer = styled.div`
   box-sizing: border-box;
   text-align: center;
 `;
-const Image = styled.img`
+const Image = styled.img<{ isActive: boolean }>`
   width: 50%;
   height: 50%;
   border-radius: 20px;
   opacity: 0;
-  animation: ${appearAndSlideUp} 3s;
+  animation: ${(props) =>
+    props.isActive
+      ? css`
+          ${appearAndSlideUp} 3s
+        `
+      : 'none'};
   animation-fill-mode: forwards;
 `;
-const Text = styled.div`
-  animation: ${slideUpText} 1s ease-in-out;
-  animation-delay: 3s;
+
+const Text = styled.div<{ isActive: boolean }>`
+  animation: ${(props) =>
+    props.isActive
+      ? css`
+          ${slideUpText} 1s ease-in-out;
+          animation-delay: 3s;
+        `
+      : 'none'};
   animation-fill-mode: backwards;
 `;
-
 const PinkContainer = styled(ColorContainer)`
   background-color: #ffa299;
 `;
@@ -61,14 +72,22 @@ const PurpleContainer = styled(ColorContainer)`
   background-color: #7771d5;
 `;
 
-function MainSection4({ id, className }: { id: string; className?: string }) {
+function MainSection4({
+  id,
+  className,
+  isActive,
+}: {
+  id: string;
+  className?: string;
+  isActive: boolean;
+}) {
   return (
     <SectionContainer id={id} className={`section4 ${className}`}>
       <HalfContainer>
         <Header />
         <PinkContainer>
-          <Image src={section4_1} alt="section4_1" />
-          <Text>
+          <Image src={section4_1} alt="section4_1" isActive={isActive} />
+          <Text isActive={isActive}>
             <div
               style={{ color: 'white', fontSize: '30px', fontFamily: 'BMJUA', margin: '20px 0' }}
             >
@@ -93,8 +112,8 @@ function MainSection4({ id, className }: { id: string; className?: string }) {
       <HalfContainer>
         <Header />
         <PurpleContainer>
-          <Image src={section4_2} alt="section4_2" />
-          <Text>
+          <Image src={section4_2} alt="section4_2" isActive={isActive} />
+          <Text isActive={isActive}>
             <div
               style={{ color: 'white', fontSize: '30px', fontFamily: 'BMJUA', margin: '20px 0' }}
             >

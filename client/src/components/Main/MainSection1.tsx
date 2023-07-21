@@ -68,13 +68,14 @@ const Section1_img = styled.img`
 const SliderItem = styled.div`
   position: relative;
   height: 100vh;
+  background-color: gray; // Add this line
 `;
 
 function MainSection1({ id, className }: { id: string; className?: string }) {
   const sliderItems = [
-    { src: section1_1, text: 'Text image 1' },
-    { src: section1_2, text: 'Text image 2' },
-    { src: section1_3, text: 'Text image 3' },
+    { src: section1_1, text: 'BUYTE,\n당신을 위한 특별한 빵.' },
+    { src: section1_2, text: 'BUYTE가\n당신에게 딱 맞는 맛과 조합을 선사합니다.' },
+    { src: section1_3, text: '맛과 상상력의 조화,\nBUYTE에서 경험해보세요.' },
   ];
   return (
     <div id={id} className={`section1 ${className}`}>
@@ -85,16 +86,22 @@ function MainSection1({ id, className }: { id: string; className?: string }) {
             <h1
               style={{
                 position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                color: '#ffffff',
-                fontSize: '3em',
-                textAlign: 'center',
+                bottom: '200px',
+                left: '20px',
+                color: 'white',
+                fontSize: '4em',
+                fontFamily: 'BMJUA',
+                textAlign: 'left',
                 fontWeight: 'bold',
+                padding: '20px',
               }}
             >
-              {item.text}
+              {item.text.split('\n').map((line, index) => (
+                <span key={index}>
+                  {line}
+                  <br />
+                </span>
+              ))}
             </h1>
           </SliderItem>
         ))}
