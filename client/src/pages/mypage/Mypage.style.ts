@@ -2,6 +2,12 @@ import styled from 'styled-components';
 export const MyPageWrapper = styled.section`
   width: 70%;
   margin-bottom: 80px;
+  @media (max-width: 1050px) {
+    width: 85%;
+}
+  @media (max-width: 800px) {
+    width: 95%;
+}
 `
 export const WelcomeText = styled.p`
    font-weight:800;
@@ -14,6 +20,7 @@ export const MyInfoSection = styled.section`
   width: 100%;
   display: flex;
   padding: 1rem; 
+  
 `
 export const MyInfoDetail = styled.section`
   margin-left: 2rem;
@@ -40,6 +47,9 @@ export const MyOrderSection= styled.section`
   margin-bottom:10px; 
   margin-left: 20px
   }
+  @media (max-width: 1000px) {
+    padding: 2rem 0.5rem;
+}
 `
 export const MyOrderLists= styled.section`
 padding: 1rem;
@@ -49,6 +59,9 @@ justify-content: center;
 align-items: center;
 div{
   width: 100%;
+}
+@media (max-width: 800px) {
+    padding: 0.3rem;
 }
 `
 

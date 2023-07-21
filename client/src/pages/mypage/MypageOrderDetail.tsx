@@ -1,21 +1,21 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { CartListName } from '../../components/CartItem/CartItem.style';
 import { MypageOrderDetailProps } from '../../assets/interface/Mypage.interface'
+import { MyOrderListName } from './MyOrderListName.style';
 import { priceFormatter } from './PriceFormatter';
 function MypageOrderDetail({ product }: MypageOrderDetailProps) {
   const navigate = useNavigate();
   return (
     <CartListDetail>
       <div style={{ display: 'flex', fontSize: '14px' }}>
-        <CartListName style={{justifyContent:'flex-start', marginLeft:'3rem', maxWidth:'10%'}}>
+        <MyOrderListName style={{justifyContent:'flex-start', marginLeft:'3rem', maxWidth:'10%'}}>
           <img
             src={product.productImage}
             style={{ width: '4rem', height: '4rem', objectFit: 'cover', cursor: 'pointer' }}
             onClick={() => navigate(`/store/${product.storeId}`)}
           />
-        </CartListName>
-        <CartListName
+        </MyOrderListName>
+        <MyOrderListName
           style={{
             fontSize: '14px',
             fontWeight: 'bold',
@@ -26,15 +26,15 @@ function MypageOrderDetail({ product }: MypageOrderDetailProps) {
         >
           {product.productName}
           <span style={{ color: 'var(--dark-purple)', marginLeft:"3px" }}>(x{product.productCount})</span>
-        </CartListName>
-        <CartListName className="hide-under-1600" style={{ fontWeight: 'bold', maxWidth: '15%' }}>
+        </MyOrderListName>
+        <MyOrderListName className="hide-under-1600" minWidth={1050}  style={{ fontWeight: 'bold', maxWidth: '15%' }}>
           {priceFormatter(product.productPrice)}원
-        </CartListName>
-        <CartListName
+        </MyOrderListName>
+        <MyOrderListName
           style={{ fontSize: '16px', justifyContent:'flex-end', paddingRight:'2rem'}}
         >
             <OrderButton onClick={() => navigate(`/store/${product.storeId}`)}>바로가기</OrderButton>
-        </CartListName>
+        </MyOrderListName>
       </div>
     </CartListDetail>
   );

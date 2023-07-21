@@ -1,4 +1,4 @@
-import { CartListName } from '../../components/CartItem/CartItem.style';
+import { MyOrderListName } from './MyOrderListName.style';
 function MypageOrderTab() {
   return (
     <div
@@ -9,24 +9,24 @@ function MypageOrderTab() {
         width: '100%'
       }}
     >
-      <CartListName style={{ justifyContent:"flex-start", paddingLeft:'3rem'}}
+      <MyOrderListName style={{ justifyContent:"flex-start", paddingLeft:'3rem'}}
       >
         No.
-      </CartListName>
-      <CartListName style={{ fontWeight: 'bold'}}>
+      </MyOrderListName>
+      <MyOrderListName style={{ fontWeight: 'bold'}}>
         주문정보
-      </CartListName>
-      <CartListName style={{ fontWeight: 'bold'}} className="hide-under-1600">
+      </MyOrderListName>
+      <MyOrderListName style={{ fontWeight: 'bold' }} minWidth={1050}>
         총액
-      </CartListName>
-      <CartListName style={{ fontWeight: 'bold'}} className="hide-under-1260">
+      </MyOrderListName>
+      <MyOrderListName style={{ fontWeight: 'bold'}} minWidth={800}> 
         주문날짜
-      </CartListName>
-      <CartListName
+      </MyOrderListName>
+      <MyOrderListName
         style={{ fontWeight:'bold', justifyContent:"flex-end", paddingRight:'2rem'}}
       >
         배송상태
-      </CartListName>
+      </MyOrderListName>
     </div>
   );
 }
