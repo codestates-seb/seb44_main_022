@@ -46,7 +46,6 @@ const Image = styled.img`
   transition: opacity 0.5s ease-in-out;
   cursor: pointer;
   &:hover {
-    transform: scale(1.05);
     cursor: pointer;
   }
 `;
@@ -88,6 +87,7 @@ function MainSection3({
 }) {
   const [isImageOneVisible, setImageOneVisible] = useState(true);
   const [isAnimated, setAnimated] = useState(false);
+
   useEffect(() => {
     if (isActive) {
       setAnimated(true);
@@ -95,13 +95,22 @@ function MainSection3({
       setAnimated(false);
     }
   }, [isActive]);
-  const handleImageClick = () => {
-    setImageOneVisible(!isImageOneVisible);
+
+  const handleMouseEnter = () => {
+    setImageOneVisible(false);
+  };
+
+  const handleMouseLeave = () => {
+    setImageOneVisible(true);
   };
 
   return (
     <SectionContainer id={id} className={`section2 ${className}`}>
-      <ImageContainer onClick={handleImageClick} isAnimated={isAnimated}>
+      <ImageContainer
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        isAnimated={isAnimated}
+      >
         <Image src={cake1} alt="Custom Cake" style={{ opacity: isImageOneVisible ? 1 : 0 }} />
         <Image src={cake2} alt="Custom Cake" style={{ opacity: isImageOneVisible ? 0 : 1 }} />
       </ImageContainer>

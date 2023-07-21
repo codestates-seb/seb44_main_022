@@ -62,8 +62,8 @@ const CustomContent: React.FC<{
 
     image.onload = () => {
       const { naturalWidth, naturalHeight } = image;
-      const targetWidth = 100;
-      const targetHeight = 100;
+      const targetWidth = 250;
+      const targetHeight = 250;
       const aspectRatio = naturalWidth / naturalHeight;
 
       let width = targetWidth;
@@ -87,7 +87,7 @@ const CustomContent: React.FC<{
       ];
 
       setImages(newImages);
-      updateImages(newImages); // updateImages 함수를 사용하여 state 업데이트
+      updateImages(newImages);
     };
   };
 

@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import CustomSidebar from '../components/Custom/CustomSidebar/CustomSidebar';
 import CustomContent from '../components/Custom/CustomContent/CustomContent';
 import ModalButtons from '../components/Custom/CustomButton/ModalButtons';
 import ModalPortal from './ModalPortal';
+
 type ModalProps = {
   isOpen: boolean;
   onRequestClose: () => void;
@@ -43,7 +44,7 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 9;
 `;
 
@@ -76,6 +77,18 @@ function ModalComponent({ isOpen, onRequestClose, contentLabel }: ModalProps) {
   >([]);
   const storeId = 1;
   const productId = 1;
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   return (
     <ModalPortal>

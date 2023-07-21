@@ -6,13 +6,13 @@ import com.buyte.product.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@Builder
 public class Store extends Auditable {
 
     @Id

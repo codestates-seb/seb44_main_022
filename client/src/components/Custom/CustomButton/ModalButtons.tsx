@@ -9,7 +9,7 @@ import Popup from './Popup';
 
 const ImageBox = styled.div`
   position: absolute;
-  background-color: #ffec9e;
+  background-color: #ffe57d;
   width: 155px;
   height: 75px;
   bottom: 0px;

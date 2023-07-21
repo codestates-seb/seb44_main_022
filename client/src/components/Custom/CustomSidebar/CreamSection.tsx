@@ -1,22 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-
 const SectionContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
   margin-bottom: 30px;
   margin-left: 11px;
-  @media (max-width: 200px) {
-    width: 40%;
-  }
-`;
 
+  max-height: 500px;
+`;
 const ContentItem = styled.div`
   margin-left: 1.5%;
   width: 88%;
-  background-color: #ffffff;
+  background-color: #fafcff;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding-left: 8px;
@@ -45,6 +41,7 @@ const ContentImageContainer = styled.div`
   gap: 8px;
   max-width: 100%;
   overflow-y: auto;
+  max-height: 180px;
   margin-top: 8px;
 `;
 
