@@ -3,6 +3,7 @@ import { CartItemTypes, RspData } from './Cart.interface';
 export interface PaymentWindowParams {
   orderUserName: string;
   shippingAddress: string;
+  detailAddress: string;
   cartList: CartItemTypes[];
   onSuccess: () => void;
 }

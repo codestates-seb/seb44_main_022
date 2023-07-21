@@ -41,7 +41,8 @@ public class StoreServiceImpl implements StoreService{
     @Transactional(readOnly = true)
     public StoreInfoPageDto getStoreList(int page, String search) {
 
-        Pageable pageable = PageRequest.of(page, 20, Sort.by("storeId").descending());
+        Pageable pageable = PageRequest.of(page, 20, Sort.by("storeId"));
+
         Page<Store> findStorePage = search != null
             ? storeRepository.findByStoreNameContaining(search, pageable)
             : storeRepository.findAll(pageable);

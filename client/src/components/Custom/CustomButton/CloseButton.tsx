@@ -10,7 +10,7 @@ const CloseButton = styled.button`
   right: 0px;
   padding: 10px;
   border: none;
-  background-color: rgba(20, 46, 56, 0.9);
+  background-color: rgba(59, 88, 156, 0.9);
   color: white;
   border-radius: 0px 20px 0px 0px;
   &:hover {

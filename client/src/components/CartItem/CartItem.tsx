@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import CheckBox from '../CheckBox';
 import CountButton from '../CountButton/CountButton';
 import { CartItemProps } from '../../assets/interface/Cart.interface';
+import CheckBox from './CheckBox';
 import { CartImage, CartListName } from './CartItem.style';
 
 function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) {
@@ -18,7 +18,7 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
           onClick={() => window.open(items.productImagePath)}
         />
       </CartListName>
-      <CartListName grow={75} style={{ justifyContent: 'flex-start', fontWeight: 'bold' }}>
+      <CartListName grow={75} style={{ justifyContent: 'flex-start' }}>
         {items.productName}
       </CartListName>
       <CartListName
@@ -40,7 +40,7 @@ function CartItem({ items, idx, initialChecked, setTotalPrice }: CartItemProps) 
           <div>{items.productCount}</div>
         )}
       </CartListName>
-      <CartListName grow={15} minWidth={110} style={{ fontWeight: 'bold' }}>
+      <CartListName grow={15} minWidth={110}>
         {items.productPrice.toLocaleString()}
       </CartListName>
       <CartListName

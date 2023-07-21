@@ -1,5 +1,4 @@
 import { FlattenSimpleInterpolation, css } from 'styled-components';
-import testImg from '../images/img_main/divimgbox.png';
 
 export const REGEX = {
   nickname: /^[가-힣a-zA-Z0-9]{4,12}$/,
@@ -85,73 +84,46 @@ export const CART_CATEGORY_NAME = [
   },
 ];
 
+export const LOCAL_STORAGE_KEY_LIST = {
+  AccessToken: 'AccessToken',
+  IdList: 'IdList',
+  MemberRole: 'MemberRole',
+};
+
 export const DELIVERY_FEE = 3500;
 
 export const STORE_MAP_INTRODUCE_LIMIT = 70;
 
 export const UNMOUNT_ANIMATION_TIME = 290;
 
+export const BASE_ANIMATION_TIME = 300;
+
 export const IMAGE_NUMBER_BUTTON = [0, 1, 2];
 
-export const POSITIONS = [
-  {
-    storeId: 1,
-    storeLatitude: 37.301011,
-    storeLongitude: 127.012222,
-    storeAddress: '수원시 장안구',
-    storeImage: testImg,
-    storeName: '수원 종합 운동장',
-    storeIntroduction:
-      '수원 종합 운동장입니다. 뭐 어쩌구 저쩌구 솰라솰라수원 종합 운동장입니다. 뭐 어쩌구 저쩌구 솰라솰라수원 종합 운동장입니다. 뭐 어쩌구 저쩌구 솰라솰라수원 종합 운동장입니다. 뭐 어쩌구 저쩌구 솰라솰라수원 종합 운동장입니다. 뭐 어쩌구 저쩌구 솰라솰라',
-    productPreferenceList: [
-      {
-        productId: 1,
-        productImage: testImg,
-      },
-      {
-        productId: 2,
-        productImage: testImg,
-      },
-      {
-        productId: 3,
-        productImage: testImg,
-      },
-    ],
-  },
-  {
-    storeId: 2,
-    storeLatitude: 37.591625,
-    storeLongitude: 127.131863,
-    storeAddress: '구리시 OO구',
-    storeImage: testImg,
-    storeName: '구리시',
-    storeIntroduction:
-      'asdasd zxcajskdiqw apoxcpoisadm;kqw asdasd zxcajskdiqw apoxcpoisadm;kqwasdasd zxcajskdiqw apoxcpoisadm;kqwasdasd zxcajskdiqw apoxcpoisadm;kqwasdasd zxcajskdiqw apoxcpoisadm;kqwasdasd zxcajskdiqw apoxcpoisadm;kqw ',
-    productPreferenceList: [
-      {
-        productId: 2,
-        productImage: testImg,
-      },
-    ],
-  },
-  {
-    storeId: 3,
-    storeLatitude: 37.612458,
-    storeLongitude: 126.717777,
-    storeImage: testImg,
-    storeAddress: '김포시 OO구',
-    storeName: '김포시',
-    storeIntroduction: '경기도 김포입니다. 김포시에는 공항이 있어요. 굳굳! ',
-    productPreferenceList: [
-      {
-        productId: 3,
-        productImage: testImg,
-      },
-    ],
-  },
-];
+export const CHAT_TYPE = {
+  question: 'question',
+  answer: 'answer',
+};
 
-export const LOCAL_STORAGE_KEY_LIST = {
-  AccessToken: 'AccessToken',
-  IdList: 'IdList',
+export const CHAT_TYPE_STYLE: { [index: string]: FlattenSimpleInterpolation } = {
+  question: css`
+    align-self: flex-start;
+    color: black;
+    background-color: var(--normal-gray);
+  `,
+  answer: css`
+    align-self: flex-end;
+    color: white;
+    background-image: linear-gradient(-225deg, #eca1fe 0%, #b19fff 48%, #5271c4 100%);
+    // background-image: linear-gradient(to right, #6190e8, #a7bfe8);
+  `,
+};
+
+export const CHAT_TYPE_TIME_STYLE: { [index: string]: FlattenSimpleInterpolation } = {
+  question: css`
+    right: -40px;
+  `,
+  answer: css`
+    left: -40px;
+  `,
 };

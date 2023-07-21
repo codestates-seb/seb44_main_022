@@ -9,7 +9,7 @@ import Popup from './Popup';
 
 const ImageBox = styled.div`
   position: absolute;
-  background-color: #fab65d;
+  background-color: #ffec9e;
   width: 155px;
   height: 75px;
   bottom: 0px;
@@ -79,6 +79,7 @@ const ModalButtons = ({
     setBlinking(false);
     setShowPopup((prevState) => !prevState);
   };
+
   useEffect(() => {
     setBlinking(true);
   }, []);
@@ -100,7 +101,7 @@ const ModalButtons = ({
         </CenteredAlertContainer>
       </ImageBox>
       <CartButton onSaveImage={onSaveImage} />
-      {showPopup && <Popup />}
+      <Popup show={showPopup} />
     </>
   );
 };

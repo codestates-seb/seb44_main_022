@@ -10,22 +10,34 @@ import SelectStore from './pages/store/SelectStore';
 import OrderComplete from './pages/order/OrderComplete/OrderComplete';
 import StoreDetail from './pages/store/StoreDetail';
 import PrivateRoute from './PrivateRoute';
+import NotFound from './pages/notfound/NotFound';
+import ChatList from './pages/Chat/ChatList';
+
+export const Routes = [
+  { path: '/', element: <Main /> },
+  { path: '/select', element: <SelectStore /> },
+  { path: '/map', element: <Map /> },
+  { path: '/store', element: <StoreList /> },
+  { path: '/store/:storeId', element: <StoreDetail /> },
+  { path: '*', element: <NotFound /> },
+  { path: '/auth', element: <Auth />, isAuth: false },
+  { path: '/payment', element: <Payment />, isAuth: true },
+  { path: '/complete', element: <OrderComplete />, isAuth: true },
+  { path: '/mypage', element: <Mypage />, isAuth: true },
+  { path: '/cart', element: <ShoppingCart />, isAuth: true },
+  { path: '/chatList', element: <ChatList />, isAuth: true, seller: true },
+];
 
 export const RouteList = (
   <>
-    <Route path="/" element={<Main />} />
-    <Route path="/select" element={<SelectStore />} />
-    <Route path="/map" element={<Map />} />
-    <Route path="/store" element={<StoreList />} />
-    <Route path="/store/:storeId" element={<StoreDetail />} />
-    <Route element={<PrivateRoute isAuth={false} />}>
-      <Route path="/auth" element={<Auth />} />
-    </Route>
-    <Route element={<PrivateRoute isAuth={true} />}>
-      <Route path="/payment" element={<Payment />} />
-      <Route path="/complete" element={<OrderComplete />} />
-      <Route path="/mypage" element={<Mypage />} />
-      <Route path="/cart" element={<ShoppingCart />} />
-    </Route>
+    {Routes.map((route, index) => {
+      return route.isAuth === undefined ? (
+        <Route key={index} path={route.path} element={route.element} />
+      ) : (
+        <Route element={<PrivateRoute isAuth={route.isAuth} seller={route.seller} />}>
+          <Route key={index} path={route.path} element={route.element} />
+        </Route>
+      );
+    })}
   </>
 );

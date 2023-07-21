@@ -4,6 +4,7 @@ import { BiArrowBack } from 'react-icons/bi';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import axiosInstance from '../../api/apis';
 import { StoreDetailInfo } from '../../assets/interface/Store.interface';
+import Chat from '../Chat/Chat';
 import {
   StoreProductSection,
   ProductListTitle,
@@ -15,7 +16,7 @@ import {
 } from './StoreDetail.style';
 function StoreDetail() {
   const [data, setData] = useState<StoreDetailInfo | null>(null);
-  const { storeId } = useParams();
+  const { storeId } = useParams<{ storeId: string }>();
   useEffect(() => {
     fetchData();
   }, []);
@@ -37,6 +38,7 @@ function StoreDetail() {
   return (
     <>
       <StoreDetailSection>
+        <Chat storeId={storeId} storeName={data.storeName} />
         <Link to="/store">
           <BiArrowBack
             style={{
@@ -73,7 +75,10 @@ function StoreDetail() {
             <DetailTitle>소개</DetailTitle>
             <DetailInfo>{data.storeIntroduction}</DetailInfo>
             <DetailTitle>주소</DetailTitle>
-            <Link to="/map">
+            <Link
+              to="/map"
+              state={{ lat: data.storeLatitude, lng: data.storeLongitude, id: data.storeId }}
+            >
               <span style={{ color: 'var(--light-gray)', fontSize: '13px' }}>[지도보기]</span>
             </Link>
             <DetailInfo>{data.storeAddress}</DetailInfo>

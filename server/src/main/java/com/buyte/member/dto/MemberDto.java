@@ -1,12 +1,14 @@
 package com.buyte.member.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import com.buyte.dto.PageInfoDto;
+import com.buyte.order.entity.Orders;
+import lombok.*;
 import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class MemberDto {
 
@@ -47,5 +49,37 @@ public class MemberDto {
     public static class Response {
         private long memberId;
         private String memberName;
+    }
+
+    @Builder
+    @Getter
+    public static class OrderResponse {
+        private List<OrderInfo> orderInfos;
+        private PageInfoDto pageInfo;
+    }
+
+    @Builder
+    @Getter
+    @Setter
+    public static class OrderInfo {
+        private Long orderId;
+        private Integer orderCount;
+        private LocalDateTime createdAt;
+        private Long totalPrice;
+        private Orders.OrderState orderStatus;
+        private String orderAddress;
+        private List<OrderProductInfo> orderProductInfos;
+    }
+
+    @Builder
+    @Getter
+    public static class OrderProductInfo {
+        private Long orderProductId;
+        private long productId;
+        private String productName;
+        private Integer productPrice;
+        private String productImage;
+        private Integer productCount;
+        private Long storeId;
     }
 }

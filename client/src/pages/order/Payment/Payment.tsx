@@ -34,17 +34,21 @@ function Payment() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [orderUserName, setOrderUserName] = useState<string>('');
   const [shippingAddress, setShippingAddress] = useState<string>('');
+  const [detailAddress, setDetailAddress] = useState<string>('');
 
   const handleClickPayment = () => {
     if (
       orderUserName !== undefined &&
       shippingAddress !== undefined &&
+      detailAddress !== undefined &&
       orderUserName.length !== 0 &&
-      shippingAddress.length !== 0
+      shippingAddress.length !== 0 &&
+      detailAddress.length !== 0
     ) {
       requestPay({
         orderUserName,
         shippingAddress,
+        detailAddress,
         cartList,
         onSuccess: () => navigate('/complete', { state: { rightPass: true }, replace: true }),
       });
@@ -106,7 +110,11 @@ function Payment() {
           }}
         >
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'baseline' }}>
-            <div style={{ fontSize: '22px', fontWeight: 'bold' }}>주문자 정보</div>
+            <div
+              style={{ fontSize: '22px', fontWeight: 'bold', fontFamily: 'Yaldevi, sans-serif' }}
+            >
+              주문자 정보
+            </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', width: '23.5rem' }}>
             {CART_CATEGORY_NAME.map((category) => (
@@ -115,8 +123,29 @@ function Payment() {
           </div>
         </CartCategoryName>
         <OrderInfoContainer>
-          <OrderInput id="orderName" name="주문자명" width="50%" setState={setOrderUserName} />
-          <OrderInput id="shippingAddress" name="주소" width="80%" setState={setShippingAddress} />
+          <OrderInput
+            id="orderName"
+            name="주문자명"
+            width="17%"
+            placeholder="이름을 입력해주세요."
+            setState={setOrderUserName}
+          />
+          <OrderInput
+            id="shippingAddress"
+            name="주소"
+            width="40%"
+            placeholder="주소 작성을 위해 클릭해주세요."
+            state={shippingAddress}
+            setState={setShippingAddress}
+          />
+          <OrderInput
+            id="detailAddress"
+            name=""
+            width="50%"
+            placeholder="주소 상세정보를 입력해주세요."
+            state={detailAddress}
+            setState={setDetailAddress}
+          />
         </OrderInfoContainer>
         <TotalPaymentContainer style={{ flexDirection: 'row' }}>
           <PriceNumberText price={totalPrice} priceText="상품금액" />

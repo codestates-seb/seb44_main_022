@@ -10,7 +10,14 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (types === 'google') handleGoogleLogin();
+    if (types === 'google') {
+      handleGoogleLogin();
+      return;
+    }
+    if (types === 'purple') {
+      alert('지금은 사업자 회원을 받고 있지 않습니다.');
+      return;
+    }
   };
 
   const handleGoogleLogin = useGoogleLogin({
@@ -18,7 +25,9 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
       postGoogleOAuthLogin(code)
         .then((res) => {
           const accessToken = res.headers['authorization'];
+          // const memberRole = res.headers['member-role'];
           LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.AccessToken, accessToken);
+          // LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.MemberRole, memberRole);
           navigate('/');
           return;
         })

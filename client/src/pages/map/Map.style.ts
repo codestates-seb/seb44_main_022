@@ -9,36 +9,37 @@ export const MapPageContainer = styled.div`
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 120%;
+  height: 90vh;
   padding-top: 2rem;
 `;
+
 export const MapContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 80%;
   height: 80%;
-  min-height: 500px;
   margin-bottom: 2rem;
 `;
 
 export const MarkerModal = styled.div<{ isClose: boolean }>`
   position: absolute;
   z-index: 10;
-  width: 330px;
-  height: 500px;
-  background-color: var(--background);
+  width: 350px;
+  height: 530px;
+  background-color: var(--gray);
   border-radius: 15px;
   border: 1px solid var(--normal-gray);
-  top: 25%;
+  bottom: calc(35% - 10vh);
   right: 15%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   animation: ${({ isClose }) => (isClose ? fadeOut : fadeIn)} 0.3s forwards;
   box-shadow: 1px 1px 5px 1px var(--light-gray);
+  font-family: BMJUA;
 
-  @media screen and (max-height: 950px) {
+  @media screen and (max-height: 600px) {
     animation: ${fadeUpNone} 0.3s forwards;
   }
 `;
@@ -47,8 +48,14 @@ export const ImageCarouselButton = styled(BsCircle)<{ imageNumber: number; curre
   transition: 0.3s;
   color: var(--purple);
   border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+
   ${({ imageNumber, currentNumber }) =>
-    imageNumber === currentNumber && 'background-color: var(--purple)'};
+    imageNumber === currentNumber ? 'background-color: var(--purple)' : 'cursor: pointer'};
+  &:hover {
+    opacity: 0.7;
+  }
 `;
 
 export const ExitMapModalButton = styled.div`
@@ -58,14 +65,19 @@ export const ExitMapModalButton = styled.div`
   top: 2%;
   font-size: 1.5rem;
   font-family: Just Another Hand, cursive;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(110%, 110%);
+  }
 `;
 
 export const MapModalTitleContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-left: 2rem;
-  padding-top: 2rem;
+  padding-left: 4rem;
+  padding-top: 2.5rem;
 `;
 
 export const MapModalStoreInfoContainer = styled.div`
@@ -76,8 +88,41 @@ export const MapModalStoreInfoContainer = styled.div`
 `;
 
 export const MapModalAddressContainer = styled.div`
-  font-size: 10px;
+  font-size: 12px;
   font-weight: normal;
   color: gray;
   padding-top: 6px;
+`;
+
+export const MapModalStoreImg = styled.img`
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: scale(1.2, 1.2);
+    opacity: 0.7;
+  }
+`;
+
+export const MapModalStoreName = styled.div`
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--dark-gray);
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    color: var(--light-gray);
+  }
+`;
+
+export const MapPageIntroduce = styled.div`
+  width: 80%;
+  padding: 1rem 2rem 2rem 2rem;
+  font-family: BMJUA;
+  font-size: 1.5rem;
+  color: var(--light-black);
 `;

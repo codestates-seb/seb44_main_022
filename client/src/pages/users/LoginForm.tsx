@@ -26,11 +26,13 @@ function LoginForm() {
       postLogin(userId, password)
         .then((res) => {
           const accessToken = res.headers['authorization'];
+          const memberRole = res.headers['member-role'];
           LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.AccessToken, accessToken);
+          LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.MemberRole, memberRole);
           navigate('/');
           return;
         })
-        .catch(() => alert('로그인 실패'));
+        .catch(() => alert('입력된 아이디 혹은 비밀번호가 일치하지 않습니다.'));
       return;
     }
   };

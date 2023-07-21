@@ -21,6 +21,8 @@ export const CartCategoryContainer = styled.div`
 
 export const CartCategory = styled.div<{ location: boolean }>`
   padding-left: 1rem;
+  font-family: 'Yaldevi', sans-serif;
+
   ${({ location }) =>
     location &&
     css`
@@ -59,6 +61,8 @@ export const EmptyCartListBox = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2rem 0;
+
+  font-family: BMJUA;
 `;
 
 export const TotalPaymentContainer = styled.div`

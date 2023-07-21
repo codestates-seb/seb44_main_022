@@ -1,5 +1,6 @@
 import { Map } from 'react-kakao-maps-sdk';
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import useCurrentLocation from '../../hooks/useCurrentLocation';
 import { UNMOUNT_ANIMATION_TIME } from '../../assets/constantValue/constantValue';
 import { PositionData } from '../../assets/interface/Map.interface';
@@ -7,10 +8,11 @@ import axiosInstance from '../../api/apis';
 import useScreenResize from '../../hooks/useScreenResize';
 import MapModal from './MapModal';
 import CustomMarker from './CustomMarker';
-import { MapContainer, MapPageContainer } from './Map.style';
+import { MapContainer, MapPageContainer, MapPageIntroduce } from './Map.style';
 
 function MapPage() {
-  const { lat, lng } = useCurrentLocation();
+  const location = useLocation();
+  const { lat, lng } = useCurrentLocation(location.state);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [limitSize, setLimitSize] = useState(false);
   const [clickedId, setClickedId] = useState(0);
@@ -51,16 +53,17 @@ function MapPage() {
     });
   }, []);
 
+  useEffect(() => {
+    if (storeMapList !== undefined && storeMapList.length > 0 && location.state !== null) {
+      setClickedId(location.state.id);
+      setIsOpenModal(true);
+      setIsClose(false);
+    }
+  }, [storeMapList]);
+
   return (
     <MapPageContainer>
-      <div
-        style={{
-          width: '80%',
-          padding: '0 2rem 2rem 2rem',
-        }}
-      >
-        BUYTE에 입점된 매장을 찾아보세요!
-      </div>
+      <MapPageIntroduce>BUYTE에 입점된 매장을 찾아보세요!</MapPageIntroduce>
       <MapContainer>
         <Map
           center={{ lat: lat, lng: lng }}
