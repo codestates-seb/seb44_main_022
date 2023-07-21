@@ -20,7 +20,7 @@ export const Routes = [
   { path: '/map', element: <Map /> },
   { path: '/store', element: <StoreList /> },
   { path: '/store/:storeId', element: <StoreDetail /> },
-  { path: '/recommended', element: <PreferenceProductList /> },
+  { path: '/product', element: <PreferenceProductList /> },
   { path: '*', element: <NotFound /> },
   { path: '/auth', element: <Auth />, isAuth: false },
   { path: '/payment', element: <Payment />, isAuth: true },

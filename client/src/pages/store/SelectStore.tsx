@@ -30,7 +30,7 @@ const SelectStore = () => {
     navigate('/store');
   };
   const handleSelectProductClick = () => {
-    navigate('/recommended');
+    navigate('/product');
   };
   return (
     <MainRoot>

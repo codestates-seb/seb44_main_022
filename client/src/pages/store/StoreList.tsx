@@ -29,6 +29,7 @@ function StoreList() {
     rootMargin: '0px',
     threshold: 1.0
   };
+  console.log(filteredStores)
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {

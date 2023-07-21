@@ -38,6 +38,8 @@ function StoreDetail() {
     <>
       <StoreDetailSection>
         <Link to="/store">
+          {/*버튼으로 하고, Usenavigate(-1)*/}
+          {/* div width를 100%가 아니라 짧게 */}
               <BiArrowBack
                 style={{
                   fontSize: '40px',
