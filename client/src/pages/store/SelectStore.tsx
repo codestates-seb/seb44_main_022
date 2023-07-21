@@ -26,8 +26,11 @@ const Text = styled.div`
 const SelectStore = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
+  const handleSelectStoreClick = () => {
     navigate('/store');
+  };
+  const handleSelectProductClick = () => {
+    navigate('/recommended');
   };
   return (
     <MainRoot>
@@ -57,7 +60,7 @@ const SelectStore = () => {
               marginTop: '5px',
             }}
           />
-          <Button onClick={handleClick}>입점매장 보기(클릭!)</Button>
+          <Button onClick={handleSelectStoreClick}>입점매장 보기(클릭!)</Button>
           <TextButtonContainer>
             <Text>
               입점된 매장들을 보고 싶으시면 <br /> 리스트를 먼저 확인해보세요
@@ -88,7 +91,7 @@ const SelectStore = () => {
               objectFit: 'cover',
             }}
           />
-          <Button>추천메뉴 보기 (클릭!)</Button>
+          <Button onClick={handleSelectProductClick}>추천메뉴 보기 (클릭!)</Button>
           <TextButtonContainer>
             <Text>
               추천 메뉴를 보고 싶으시면
