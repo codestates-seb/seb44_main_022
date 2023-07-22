@@ -22,7 +22,6 @@ public class RedisSubscriber implements MessageListener {
     @Override
     public void onMessage(Message message, byte[] pattern) {
         try {
-            //레디스 에서 받은 데이터를 역직렬화
             String publishMessage = redisTemplate.getStringSerializer().deserialize(message.getBody());
             RedisChat redisChat = objectMapper.readValue(publishMessage, RedisChat.class);
             messagingTemplate.convertAndSend("/sub/" + redisChat.getRoomId(), redisChat);
