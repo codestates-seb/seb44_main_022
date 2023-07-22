@@ -42,8 +42,8 @@ function StoreDetail() {
   return (
     <>
       <div style={{display: 'flex', justifyContent:'center', width:'100%'}}>
-        <div> 
-          <StoreDetailSection style={{position:'relative'}}>
+        <div style={{width: '70%'}}> 
+          <StoreDetailSection >
             <BackButton onClick={()=>{navigate(-1)}}><BiArrowBack style={{fontSize:'20px'}}/></BackButton>
             <Chat storeId={storeId} storeName={data.storeName} />
             <StoreDetails>             
@@ -76,7 +76,7 @@ function StoreDetail() {
             </StoreDetails>
           </StoreDetailSection>
           <StoreProductSection>
-            <div style={{ width: '70%' }}>
+            <div style={{ width: '100%' }}>
               <ProductListTitle>Custom</ProductListTitle>
               <ProductCard
                 data={data.customProductInfoList}

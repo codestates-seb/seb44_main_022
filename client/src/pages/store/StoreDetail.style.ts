@@ -1,5 +1,26 @@
 import styled from 'styled-components';
 
+export const StoreDetailSection = styled.section`
+margin-bottom: 4rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+position: relative;
+width: 100%;
+    &::after {
+    content:"";
+    display: block;
+    background-color: var(--light-gray);
+    height: 1.4px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  @media (max-width: 820px) {
+    margin-bottom: 3rem;
+    }
+ 
+`
+
 export const StoreProductSection = styled.section`
 display: flex;
 flex-direction: column;
@@ -32,8 +53,8 @@ border-radius: 50%;
 color: var(--dark-gray);
 border: 1px solid var(--dark-gray);
 position: absolute;
-left: 3rem;
-top: 8rem;
+left: 1rem;
+top: 7rem;
 :active {
    background-color: var(--gray);
 }
@@ -67,26 +88,6 @@ h3{
     }
 `
 
-
-export const StoreDetailSection = styled.section`
-margin-bottom: 4rem;
-display: flex;
-flex-direction: column;
-align-items: center;
-width: 70%;
-    &::after {
-    content:"";
-    display: block;
-    background-color: var(--light-gray);
-    height: 1.4px;
-    width: 100%;
-    margin-top: 20px;
-  }
-  @media (max-width: 820px) {
-    margin-bottom: 3rem;
-    }
- 
-`
 
 export const DetailTitle = styled.span`
     color: var(--light-gray);
