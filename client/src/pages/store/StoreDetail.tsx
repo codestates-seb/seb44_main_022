@@ -18,6 +18,7 @@ import {
 } from './StoreDetail.style';
 function StoreDetail() {
   const [data, setData] = useState<StoreDetailInfo | null>(null);
+  console.log(data)
   const { storeId } = useParams<{ storeId: string }>();
   useEffect(() => {
     fetchData();
@@ -45,8 +46,7 @@ function StoreDetail() {
           <StoreDetailSection style={{position:'relative'}}>
             <BackButton onClick={()=>{navigate(-1)}}><BiArrowBack style={{fontSize:'20px'}}/></BackButton>
             <Chat storeId={storeId} storeName={data.storeName} />
-            <StoreDetails>
-             
+            <StoreDetails>             
               <div
                 style={{
                   backgroundImage: `url('${data.storeImage}')`,
@@ -81,7 +81,7 @@ function StoreDetail() {
               <ProductCard
                 data={data.customProductInfoList}
                 storeId={data.storeId}
-                storeName={data.storeName}
+                storeName={data.storeName}                
               />
               <ProductListTitle>We Made It</ProductListTitle>
               <ProductCard

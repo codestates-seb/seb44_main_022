@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ProductCardProps } from '../assets/interface/Product.interface';
+import { priceFormatter } from '../pages/mypage/PriceFormatter';
 import { StoreMenuInfo, CardListContainer, Cards, StoreTitleInfo } from './storeCard.style';
-
 function StoreCard({ data }: ProductCardProps) {
   return (
     <>
       <CardListContainer>
-        {data.map((product) => (
+        {data.map((product) => (          
           <Cards key={product.productId}>
             <Link style={{ height: '100%', width: '100%' }} to={`/store/${product.storeId}`}>
               <div style={{ position: 'relative', height: '100%', width: '100%' }}>
@@ -37,7 +37,7 @@ function StoreCard({ data }: ProductCardProps) {
                   fontFamily:'Yaldevi'
                 }}
               >
-                
+                {priceFormatter(product.productPrice)}원                
               </p>
             </StoreTitleInfo>
           </Cards>
