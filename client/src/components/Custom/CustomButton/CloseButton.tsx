@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import CloseAlert from './CloseAlert';
+import CloseAlert from '../../../share/CloseAlert';
 
 const CloseButton = styled.button`
   position: absolute;
@@ -46,7 +46,7 @@ function CloseButtonComponent({ onClick }: CloseButtonProps) {
     <>
       <CloseButton onClick={handleClick}>X</CloseButton>
       <CenteredAlertContainer>
-        {showCloseAlert && <CloseAlert closeModal={closeModal} handleClose={onClick} />}
+        {showCloseAlert && <CloseAlert closeModal={closeModal} handleClose={onClick} alertText="계속 하시겠습니까?" alertSubText='(현재 창을 종료하면 초기화됩니다.)' continueButtonText='계속 커스텀하기' closeButtonText='종료하기'/>}
       </CenteredAlertContainer>
     </>
   );

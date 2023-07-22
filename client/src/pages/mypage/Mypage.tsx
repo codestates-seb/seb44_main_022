@@ -83,9 +83,9 @@ useEffect(() => {
     <MyPageWrapper>
       <WelcomeText>안녕하세요, <span style={{color: 'var(--purple)'}}>{nickname}</span>님!</WelcomeText>
       <section style={{borderTop:"2px solid var(--light-purple)", margin:"20px", padding:"30px"}}>
-        <MyInfoSection>
+        <MyInfoSection >
           <img src="../../../src/assets/images/profile.png" style={{width: '200px', paddingRight:'10px'}}/>
-          <MyInfoDetail>
+          <MyInfoDetail >
          {editMode ? (
           <EditableNickname
             nickname={nickname}

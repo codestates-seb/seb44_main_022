@@ -14,6 +14,7 @@ import {
   DetailInfo,
   DetailTitle,
   DetailWrapper,
+  BackButton
 } from './StoreDetail.style';
 function StoreDetail() {
   const [data, setData] = useState<StoreDetailInfo | null>(null);
@@ -39,56 +40,59 @@ function StoreDetail() {
   }
   return (
     <>
-      <StoreDetailSection>
-          {/* div width를 100%가 아니라 짧게 */}
-          
-        <Chat storeId={storeId} storeName={data.storeName} />       
-        <StoreDetails>
-          <button style={{width: '50px', height:'50px', borderRadius:'50%'}} onClick={()=>{navigate(-1)}}><BiArrowBack style={{fontSize:'20px'}}/></button>   
-          <div
-            style={{
-              backgroundImage: `url('${data.storeImage}')`,
-              width: '280px',
-              height: '280px',
-              borderRadius: '50%',
-              backgroundSize: 'cover'
-            }}
-          ></div>
-          <DetailWrapper>
-            <h3>
-              {data.storeName}
-            </h3>
-            <DetailTitle>소개</DetailTitle>
-            <DetailInfo style={{whiteSpace: "pre-wrap", lineHeight:'1.2'}}>{data.storeIntroduction}</DetailInfo>
-            <DetailTitle>주소</DetailTitle>
-            <Link
-              to="/map"
-              state={{ lat: data.storeLatitude, lng: data.storeLongitude, id: data.storeId }}
-            >
-              <span style={{ color: 'var(--light-gray)', fontSize: '14px' }}>[지도보기]</span>
-            </Link>
-            <DetailInfo>{data.storeAddress}</DetailInfo>
-            <DetailTitle>전화번호</DetailTitle>
-            <DetailInfo>{data.storePhoneNumber}</DetailInfo>
-          </DetailWrapper>
-        </StoreDetails>
-      </StoreDetailSection>
-      <StoreProductSection>
-        <div style={{ width: '70%' }}>
-          <ProductListTitle>Custom</ProductListTitle>
-          <ProductCard
-            data={data.customProductInfoList}
-            storeId={data.storeId}
-            storeName={data.storeName}
-          />
-          <ProductListTitle>We Made It</ProductListTitle>
-          <ProductCard
-            data={data.standardProductInfoList}
-            storeId={data.storeId}
-            storeName={data.storeName}
-          />
+      <div style={{display: 'flex', justifyContent:'center', width:'100%'}}>
+        <div> 
+          <StoreDetailSection style={{position:'relative'}}>
+            <BackButton onClick={()=>{navigate(-1)}}><BiArrowBack style={{fontSize:'20px'}}/></BackButton>
+            <Chat storeId={storeId} storeName={data.storeName} />
+            <StoreDetails>
+             
+              <div
+                style={{
+                  backgroundImage: `url('${data.storeImage}')`,
+                  width: '280px',
+                  height: '280px',
+                  borderRadius: '50%',
+                  backgroundSize: 'cover'
+                }}
+              ></div>
+              <DetailWrapper>
+                <h3>
+                  {data.storeName}
+                </h3>
+                <DetailTitle>소개</DetailTitle>
+                <DetailInfo style={{whiteSpace: "pre-wrap", lineHeight:'1.2'}}>{data.storeIntroduction}</DetailInfo>
+                <DetailTitle>주소</DetailTitle>
+                <Link
+                  to="/map"
+                  state={{ lat: data.storeLatitude, lng: data.storeLongitude, id: data.storeId }}
+                >
+                  <span style={{ color: 'var(--light-gray)', fontSize: '14px' }}>[지도보기]</span>
+                </Link>
+                <DetailInfo>{data.storeAddress}</DetailInfo>
+                <DetailTitle>전화번호</DetailTitle>
+                <DetailInfo>{data.storePhoneNumber}</DetailInfo>
+              </DetailWrapper>
+            </StoreDetails>
+          </StoreDetailSection>
+          <StoreProductSection>
+            <div style={{ width: '70%' }}>
+              <ProductListTitle>Custom</ProductListTitle>
+              <ProductCard
+                data={data.customProductInfoList}
+                storeId={data.storeId}
+                storeName={data.storeName}
+              />
+              <ProductListTitle>We Made It</ProductListTitle>
+              <ProductCard
+                data={data.standardProductInfoList}
+                storeId={data.storeId}
+                storeName={data.storeName}
+              />
+            </div>
+          </StoreProductSection>
         </div>
-      </StoreProductSection>
+      </div>
     </>
   );
 }

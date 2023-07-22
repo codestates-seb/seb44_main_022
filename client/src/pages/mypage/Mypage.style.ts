@@ -20,7 +20,7 @@ export const MyInfoSection = styled.section`
   width: 100%;
   display: flex;
   padding: 1rem; 
-  
+  position: relative;  
 `
 export const MyInfoDetail = styled.section`
   margin-left: 2rem;

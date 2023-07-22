@@ -1,18 +1,29 @@
 import { AiOutlineWarning } from 'react-icons/ai';
 import { CloseAlertWrapper, CloseAlertSection, Button, WhiteButton } from './CloseAlert.style';
-
 interface CloseAlertProps {
   closeModal: () => void;
-  handleClose: () => void;
+  handleClose?: () => void;
+  alertText: string; 
+  alertSubText?:string;
+  continueButtonText: string; 
+  closeButtonText: string; 
+  positionAbsolute?: boolean; 
 }
 
-function CloseAlert({ closeModal, handleClose }: CloseAlertProps) {
+function CloseAlert({  
+  closeModal,
+  handleClose,
+  alertText,
+  continueButtonText,
+  alertSubText,
+  closeButtonText,
+  positionAbsolute }: CloseAlertProps) {
   const handleContinueShopping = () => {
     closeModal();
   };
   return (
-    <CloseAlertWrapper>
-      <CloseAlertSection>
+    <CloseAlertWrapper positionAbsolute={positionAbsolute}>
+      <CloseAlertSection positionAbsolute={positionAbsolute}>
         <AiOutlineWarning style={{ fontSize: '28px', color: '#F15757', marginBottom: '13px' }} />
         <p
           style={{
@@ -22,7 +33,7 @@ function CloseAlert({ closeModal, handleClose }: CloseAlertProps) {
             textAlign: 'center',
           }}
         >
-          종료 하시겠습니까?
+          {alertText}
           <br />
         </p>
         <p
@@ -31,15 +42,17 @@ function CloseAlert({ closeModal, handleClose }: CloseAlertProps) {
             fontWeight: '600',
             fontSize: '16px',
             textAlign: 'center',
+            margin: '3px'
           }}
         >
-          (현재 창을 종료하면 초기화됩니다.)
+          {alertSubText}          
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
           <Button style={{ color: '#FCFDFF' }} onClick={handleContinueShopping}>
-            계속 커스텀하기
+            {continueButtonText}
           </Button>
-          <WhiteButton onClick={handleClose}>종료하기</WhiteButton>
+          <WhiteButton onClick={handleClose}>
+          {closeButtonText}</WhiteButton>
         </div>
       </CloseAlertSection>
     </CloseAlertWrapper>
