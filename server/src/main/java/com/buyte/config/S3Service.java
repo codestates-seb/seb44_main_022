@@ -1,7 +1,9 @@
 package com.buyte.config;
 
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,5 +69,18 @@ public class S3Service {
             return Optional.of(convertFile);
         }
         return Optional.empty();
+    }
+
+    public void deleteFile(String fileName) throws IOException {
+
+        try {
+            DeleteObjectRequest request = new DeleteObjectRequest(bucket, "customProduct/"+fileName);
+            log.info("string: {}",request.getKey());
+            amazonS3Client.deleteObject(request);
+            log.info("제거 성공");
+        }
+        catch (SdkClientException e) {
+            throw new IOException("Error delete in file from S3", e);
+        }
     }
 }
