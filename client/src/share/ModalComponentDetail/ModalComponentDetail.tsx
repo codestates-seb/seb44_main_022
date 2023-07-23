@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import modal_cart from '../../assets/images/img_modal/modal_cart.png';
 import modal_cake from '../../assets/images/img_modal/modal_cake.png';
 import axiosInstance from '../../api/apis';
@@ -6,6 +7,8 @@ import { ModalProps, Product } from '../../assets/interface/Store.interface'
 import { priceFormatter } from '../../pages/mypage/PriceFormatter';
 import ProductCartAlert from '../ProductCartAlert/ProductCartAlert';
 import ModalPortal from '../ModalPortal';
+import { LocalStorage } from '../../utils/browserStorage';
+import { LOCAL_STORAGE_KEY_LIST } from '../../assets/constantValue/constantValue';
 import {
   AlertBox,
   CircleShape,
@@ -39,7 +42,8 @@ function ModalComponentDetail({
   productId,
 }: ModalProps) {
   const [isProductCartAlertVisible, setProductCartAlertVisible] = useState(false);
-  const [product, setProduct] = useState<Product | null>(null);    
+  const [product, setProduct] = useState<Product | null>(null); 
+  const navigate = useNavigate();
   const fetchData = async () => {  
         try {
           const url = `/store/${storeId}/${productId}`;
@@ -53,6 +57,7 @@ function ModalComponentDetail({
     useEffect(() => {
         fetchData();
       }, []);
+      
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const formData = {
@@ -60,6 +65,8 @@ function ModalComponentDetail({
       productId: productId,
     };
     const url = `/store/${storeId}/${productId}`;
+    const accessToken = LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken);
+    if (accessToken) {
     await axiosInstance
       .post(url, formData)
       .then(() => {
@@ -69,7 +76,12 @@ function ModalComponentDetail({
       .catch((error) => {
         console.error('POST 요청 실패:', error);
       });
-  };
+  } else {
+    alert('로그인 먼저 해주세요!')
+    console.log('비회원 주문 처리')
+    navigate('/auth');
+  }
+}
   const handleOverlayClick = () => {
     closeModal();
   };
