@@ -117,7 +117,7 @@ function ChatBox({
 
           {receiverId === senderId ? (
             <ChatIntroBox text="판매자는 판매자의 가게에 채팅할 수 없습니다." />
-          ) : messages.length > 0 ? (
+          ) : messages !== undefined && messages.length > 0 ? (
             <ChattingMessageBox>
               {messages.map((e, idx) => (
                 <ChattingMessage
