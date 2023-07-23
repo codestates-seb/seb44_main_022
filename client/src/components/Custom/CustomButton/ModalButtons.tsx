@@ -37,6 +37,7 @@ const Image = styled.img<{ blinking: boolean }>`
       animation: ${blink} 1s linear infinite;
     `}
 `;
+
 const CenteredAlertContainer = styled.div`
   position: fixed;
   top: 50%;
@@ -44,6 +45,17 @@ const CenteredAlertContainer = styled.div`
   transform: translate(-50%, -50%);
   z-index: 30;
 `;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 20;
+`;
+
 type ModalButtonsProps = {
   onRequestClose: () => void;
   images: ImageData[];
@@ -51,6 +63,7 @@ type ModalButtonsProps = {
   storeId: number;
   productId: number;
 };
+
 type ImageData = {
   imageUrl: string;
   x: number;
@@ -102,6 +115,7 @@ const ModalButtons = ({
       </ImageBox>
       <CartButton onSaveImage={onSaveImage} />
       <Popup show={showPopup} />
+      {(showPopup || showAlert) && <Overlay onClick={onRequestClose} />}
     </>
   );
 };
