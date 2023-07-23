@@ -37,7 +37,7 @@ function StoreDetail() {
   const navigate = useNavigate();
 
   if (!data) {
-    return <div>입점을 준비 중입니다!</div>;
+    return <div>Loading</div>;
   }
   return (
     <>

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef} from 'react';
-import ProductCard from '../../components/ProductCard';
+import ProductCard from '../../components/RecommandProductCard';
 import axiosInstance from '../../api/apis';
 import { Product, PageInfo } from '../../assets/interface/Product.interface';
  import { 
