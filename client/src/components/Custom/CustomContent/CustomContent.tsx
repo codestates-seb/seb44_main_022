@@ -133,30 +133,27 @@ const CustomContent: React.FC<{
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      // 캔버스 상태 저장
       const tempCanvas = document.createElement('canvas');
       const tempCtx = tempCanvas.getContext('2d');
       if (!tempCtx) return;
 
       tempCanvas.width = canvas.width;
       tempCanvas.height = canvas.height;
-      tempCtx.drawImage(canvas, 0, 0);
+      tempCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height);
 
-      // 캔버스 크기 조정
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
 
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      // 펜 상태 재설정
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.lineWidth = size;
       ctx.strokeStyle = color;
       ctx.globalCompositeOperation = eraser ? 'destination-out' : 'source-over';
 
-      ctx.drawImage(tempCanvas, 0, 0);
+      ctx.drawImage(tempCanvas, 0, 0, canvas.width, canvas.height);
     };
 
     window.addEventListener('resize', handleResize);
@@ -164,7 +161,7 @@ const CustomContent: React.FC<{
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [size, color, eraser]);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement, MouseEvent>) => {
     const canvas = canvasRef.current;
