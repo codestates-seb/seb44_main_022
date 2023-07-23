@@ -26,7 +26,7 @@ function CartItemTab(path: CartItemTabProps) {
         수량
       </CartListName>
       <CartListName grow={15} minWidth={110}>
-        주문금액
+        상품금액
       </CartListName>
       <CartListName
         grow={5}

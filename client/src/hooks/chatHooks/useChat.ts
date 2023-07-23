@@ -14,6 +14,14 @@ const useChat = (roomId: number) => {
     Authorization: LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken),
   };
 
+  const createMessageTime = () => {
+    return (
+      String(new Date().getHours()).padStart(2, '0') +
+      ':' +
+      String(new Date().getMinutes()).padStart(2, '0')
+    );
+  };
+
   const createStompClient = () =>
     Stomp.over(() => {
       const sock = new SockJS(import.meta.env.VITE_BASE_URL + '/ws');
@@ -35,7 +43,10 @@ const useChat = (roomId: number) => {
         `/sub/${roomId}`,
         (message) => {
           console.log(message.body);
-          setMessages((messages) => [...messages, JSON.parse(message.body)]);
+          setMessages((messages) => [
+            ...messages,
+            { ...JSON.parse(message.body), time: createMessageTime() },
+          ]);
         },
         headerData
       );

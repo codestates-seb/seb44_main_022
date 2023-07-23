@@ -12,6 +12,7 @@ export interface MessageList {
   receiverId: number;
   content: string;
   message?: string;
+  time?: string;
   createdAt: string;
 }
 
