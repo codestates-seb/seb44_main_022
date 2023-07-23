@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import CloseAlert from '../../../share/CloseAlert';
+import CloseAlert from '../../../share/CloseAlert/CloseAlert';
 
 const CloseButton = styled.button`
   position: absolute;

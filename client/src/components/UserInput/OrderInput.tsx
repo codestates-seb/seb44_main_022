@@ -1,21 +1,11 @@
 import { OrderInputProps } from '../../assets/interface/Input.interface';
 import AddressFunc from '../../pages/order/Payment/AddressFunc';
-import { InputBox } from './UserInput.style';
+import { InputBox, InputLabel } from './UserInput.style';
 
 function OrderInput({ id, name, width, placeholder, state, setState }: OrderInputProps) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', width: '100%' }} key={id}>
-      <label
-        htmlFor={id}
-        style={{
-          marginRight: '1.5rem',
-          width: '4rem',
-          textAlign: 'center',
-          fontFamily: 'Yaldevi, sans-serif',
-        }}
-      >
-        {name}
-      </label>
+      <InputLabel htmlFor={id}>{name}</InputLabel>
       <InputBox
         id={id}
         style={{

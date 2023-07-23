@@ -8,6 +8,7 @@ interface CloseAlertProps {
   continueButtonText: string; 
   closeButtonText: string; 
   positionAbsolute?: boolean; 
+  onDeleteButtonClick?: () => void;
 }
 
 function CloseAlert({  
@@ -17,9 +18,19 @@ function CloseAlert({
   continueButtonText,
   alertSubText,
   closeButtonText,
-  positionAbsolute }: CloseAlertProps) {
+  positionAbsolute,
+  onDeleteButtonClick  }: CloseAlertProps) {
   const handleContinueShopping = () => {
     closeModal();
+  };
+  const handleModalClose = () => {
+    if (onDeleteButtonClick) {
+      onDeleteButtonClick(); 
+    } else if (handleClose) {
+      handleClose(); 
+    } else {
+      closeModal(); 
+    }
   };
   return (
     <CloseAlertWrapper positionAbsolute={positionAbsolute}>
@@ -51,7 +62,7 @@ function CloseAlert({
           <Button style={{ color: '#FCFDFF' }} onClick={handleContinueShopping}>
             {continueButtonText}
           </Button>
-          <WhiteButton onClick={handleClose}>
+          <WhiteButton onClick={handleModalClose}>
           {closeButtonText}</WhiteButton>
         </div>
       </CloseAlertSection>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { BsFillCursorFill } from 'react-icons/bs';
 import { CHAT_TYPE_STYLE, CHAT_TYPE_TIME_STYLE } from '../../assets/constantValue/constantValue';
 import { sliceUp } from '../../styles/keyframes';
 
@@ -78,7 +79,9 @@ export const ChattingTextBox = styled.div`
   justify-content: center;
   align-items: center;
   height: 100%;
-  background-color: var(--gray);
+  background-color: white;
+  margin-top: 4rem;
+  font-family: BMJUA;
 `;
 
 export const ChattingTime = styled.span<{ type: string }>`
@@ -140,4 +143,12 @@ export const ChattingTextarea = styled.textarea`
     background-color: var(--normal-gray);
     border-radius: 28px;
   }
+`;
+
+export const ChatButtonImg = styled(BsFillCursorFill)`
+  width: 2rem;
+  height: 2rem;
+  color: gray;
+  padding: 0.2rem;
+  background-color: white;
 `;

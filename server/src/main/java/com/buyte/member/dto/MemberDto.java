@@ -14,6 +14,7 @@ public class MemberDto {
 
     @Getter
     @AllArgsConstructor
+    @NoArgsConstructor
     public static class Post {
 
         @NotBlank(message = "아이디를 입력해주세요.")
@@ -32,6 +33,7 @@ public class MemberDto {
     }
 
     @AllArgsConstructor
+    @NoArgsConstructor
     @Getter
     @Setter
     public static class Patch {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ModalComponentDetail from '../../share/ModalComponentDetail';
+import ModalComponentDetail from '../../share/ModalComponentDetail/ModalComponentDetail';
 import ModalComponentCustom from '../../share/ModalComponentCustom';
 import { Product, ProductCardProps } from '../../assets/interface/Store.interface';
 import { priceFormatter } from '../../pages/mypage/PriceFormatter';

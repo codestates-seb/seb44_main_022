@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import modal_cart from '../assets/images/img_modal/modal_cart.png';
-import modal_cake from '../assets/images/img_modal/modal_cake.png';
-import ProductCartAlert from '../share/ProductCartAlert';
-import axiosInstance from '../api/apis';
-import { ModalProps, Product } from '../assets/interface/Store.interface';
-import { priceFormatter } from '../pages/mypage/PriceFormatter';
+import modal_cart from '../../assets/images/img_modal/modal_cart.png';
+import modal_cake from '../../assets/images/img_modal/modal_cake.png';
+import axiosInstance from '../../api/apis';
+import { ModalProps, Product } from '../../assets/interface/Store.interface';
+import { priceFormatter } from '../../pages/mypage/PriceFormatter';
+import ProductCartAlert from '../ProductCartAlert/ProductCartAlert';
+import ModalPortal from '../ModalPortal';
 import {
   AlertBox,
   CircleShape,
@@ -27,7 +28,6 @@ import {
   ProductPrice,
   ProductImgContainer,
 } from './ModalComponentDetail.style';
-import ModalPortal from './ModalPortal';
 
 function ModalComponentDetail({
   isOpen,

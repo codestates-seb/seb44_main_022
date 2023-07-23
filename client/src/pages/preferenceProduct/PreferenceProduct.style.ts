@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import loading from '../../assets/images/loading.gif';
-
 export const StyledInput = styled.input`
   outline: 1px solid var(--white);
   &:focus {

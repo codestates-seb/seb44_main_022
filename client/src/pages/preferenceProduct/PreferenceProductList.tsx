@@ -19,7 +19,6 @@ function PreferenceProductList() {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [page, setPage] = useState(1);
   const [pageInfo, setPageInfo] = useState<PageInfo>({ currentPage: 0, totalPage: 0 });
-  console.log(filteredProducts);
   const target = useRef<HTMLDivElement>(null);
   const options = {
     root: null,

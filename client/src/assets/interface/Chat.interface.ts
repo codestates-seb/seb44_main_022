@@ -27,3 +27,15 @@ export interface ChatButtonProp {
   storeId: string | undefined;
   storeName: string | undefined;
 }
+
+export interface ChatListType {
+  senderId: number;
+  receiverId: number;
+  roomId: number;
+  customerName: string;
+  storeName: string;
+}
+
+export interface ChatIntroProps {
+  text: string;
+}

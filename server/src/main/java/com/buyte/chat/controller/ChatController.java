@@ -2,12 +2,13 @@ package com.buyte.chat.controller;
 
 import com.buyte.chat.dto.*;
 import com.buyte.chat.service.ChatService;
+import com.buyte.chat.service.RedisPublisher;
 import com.buyte.chat.service.RoomService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +22,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChatController {
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
+    private final RedisPublisher redisPublisher;
     private final ChatService chatService;
     private final RoomService roomService;
 
     @MessageMapping("/chats/{roomId}")
     public void chat(@DestinationVariable Long roomId, ChatReqDto message) {
 
-        simpMessagingTemplate.convertAndSend("/sub/" + roomId, message);
+        redisPublisher.publish(ChannelTopic.of("room"+roomId), new RedisChat(message.getSenderId()
+                , message.getReceiverId(), roomId, message.getContent()));
         chatService.save(roomId,message);
     }
 
