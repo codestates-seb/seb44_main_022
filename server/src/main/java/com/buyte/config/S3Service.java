@@ -1,5 +1,6 @@
 package com.buyte.config;
 
+import com.amazonaws.SdkClientException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -67,5 +68,15 @@ public class S3Service {
             return Optional.of(convertFile);
         }
         return Optional.empty();
+    }
+
+    public void deleteFile(String fileName) throws IOException {
+
+        try {
+            amazonS3Client.deleteObject(bucket, fileName);
+        }
+        catch (SdkClientException e) {
+            throw new IOException("Error deletin file from S3", e);
+        }
     }
 }
