@@ -3,8 +3,8 @@ import {
   CartCategory,
   CartCategoryArrow,
   CartCategoryContainer,
-} from '../pages/order/ShoppingCart/ShoppingCart.style';
-import { CartCategoryListProps } from '../assets/interface/Cart.interface';
+} from '../../pages/order/ShoppingCart/ShoppingCart.style';
+import { CartCategoryListProps } from '../../assets/interface/Cart.interface';
 
 function CartCategoryList({ category, pathname }: CartCategoryListProps) {
   const showIcon = (icon: string) => {

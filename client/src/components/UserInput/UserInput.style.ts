@@ -60,3 +60,10 @@ export const ErrorBox = styled.div<{ animate: boolean; isChanged: boolean | null
         0.3s forwards;
     `};
 `;
+
+export const InputLabel = styled.label`
+  margin-right: 1.5rem;
+  width: 4rem;
+  text-align: center;
+  font-family: Yaldevi, sans-serif;
+`;

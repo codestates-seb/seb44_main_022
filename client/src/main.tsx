@@ -8,11 +8,7 @@ import store from './redux/store/store';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
-    <GoogleOAuthProvider
-      clientId={import.meta.env.VITE_GOOGLE_CLIENT_KEY}
-      onScriptLoadError={() => console.log('실패')}
-      onScriptLoadSuccess={() => console.log('성공')}
-    >
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_KEY}>
       <BrowserRouter>
         <GlobalStyle />
         <App />

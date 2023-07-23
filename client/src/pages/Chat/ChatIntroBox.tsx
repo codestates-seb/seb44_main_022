@@ -1,8 +1,5 @@
+import { ChatIntroProps } from '../../assets/interface/Chat.interface';
 import { ChattingTextBox } from './ChatBox.style';
-
-interface ChatIntroProps {
-  text: string;
-}
 
 function ChatIntroBox({ text }: ChatIntroProps) {
   return (

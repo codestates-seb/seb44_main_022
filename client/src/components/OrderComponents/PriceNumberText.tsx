@@ -1,4 +1,4 @@
-import { PriceNumberProps } from '../assets/interface/Cart.interface';
+import { PriceNumberProps } from '../../assets/interface/Cart.interface';
 
 function PriceNumberText({ price, priceText }: PriceNumberProps) {
   return (

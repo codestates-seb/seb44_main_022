@@ -13,7 +13,7 @@ import { RootState } from '../../../redux/store/store';
 import RectangleButton from '../../../components/RectangleButton/RectangleButton';
 import { getCartList, postSelectedCartList } from '../../../api/orderApis';
 import useGoBackRestrict from '../../../hooks/useGoBackRestrict';
-import CartCategoryList from '../../../components/CartCategoryList';
+import CartCategoryList from '../../../components/CartItem/CartCategoryList';
 import {
   CartCategoryName,
   CartContainer,
@@ -21,7 +21,7 @@ import {
 } from '../ShoppingCart/ShoppingCart.style';
 import CartItemTab from '../../../components/CartItem/CartItemTab';
 import OrderInput from '../../../components/UserInput/OrderInput';
-import PriceNumberText from '../../../components/PriceNumberText';
+import PriceNumberText from '../../../components/OrderComponents/PriceNumberText';
 import { LocalStorage } from '../../../utils/browserStorage';
 import { requestPay } from './PaymentWindow';
 import { OrderInfoContainer } from './Payment.style';
