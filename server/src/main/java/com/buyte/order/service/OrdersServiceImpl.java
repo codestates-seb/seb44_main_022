@@ -92,7 +92,7 @@ public class OrdersServiceImpl implements OrdersService{
                 cartRepository.delete(cart);
                 totalOrderPrice += (long) cart.getProduct().getProductPrice() * cart.getProductCount();
             }
-            orders.setOrder(totalOrderPrice, orderInfo.getAddress());
+            orders.setOrder(totalOrderPrice +3500, orderInfo.getAddress());
             ordersRepository.save(orders);
 
             log.info("주문 완료");
