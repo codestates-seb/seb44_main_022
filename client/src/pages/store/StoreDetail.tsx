@@ -2,7 +2,7 @@ import { useState, useEffect, } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { Link, useParams } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
-import ProductCard from '../../components/ProductCard/ProductCard';
+import ProductCard from '../../components/Cards/ProductCard';
 import axiosInstance from '../../api/apis';
 import { StoreDetailInfo } from '../../assets/interface/Store.interface';
 import Chat from '../Chat/Chat';
@@ -16,9 +16,10 @@ import {
   DetailWrapper,
   BackButton
 } from './StoreDetail.style';
+
+
 function StoreDetail() {
   const [data, setData] = useState<StoreDetailInfo | null>(null);
-  console.log(data)
   const { storeId } = useParams<{ storeId: string }>();
   useEffect(() => {
     fetchData();

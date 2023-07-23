@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef} from 'react';
-import ProductCard from '../../components/RecommandProductCard';
+import ProductCard from '../../components/Cards/RecommandProductCard';
 import axiosInstance from '../../api/apis';
 import { Product, PageInfo } from '../../assets/interface/Product.interface';
  import { 
@@ -60,7 +60,6 @@ function PreferenceProductList() {
       setIsLoadingMore(page > 1);
       const url = `/product?page=${page}`;     
     const response = await axiosInstance.get(url);
-    console.log(response)
     const { preferenceProductList, pageInfo } = response.data;    
       if (page === 1) {
         setFilteredProducts(preferenceProductList);

@@ -1,17 +1,25 @@
+import { FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { ProductCardProps } from '../assets/interface/Product.interface';
-import { priceFormatter } from '../pages/mypage/PriceFormatter';
+import { useState } from 'react';
+import { StoreCardProps } from '../../assets/interface/Store.interface';
 import { StoreMenuInfo, CardListContainer, Cards, StoreTitleInfo } from './storeCard.style';
-function StoreCard({ data }: ProductCardProps) {
+
+function StoreCard({ data }: StoreCardProps) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+    setModalOpen(true);
+  };
   return (
     <>
       <CardListContainer>
-        {data.map((product) => (          
-          <Cards key={product.productId}>
-            <Link style={{ height: '100%', width: '100%' }} to={`/store/${product.storeId}`}>
+        {data.map((store) => (
+          <Cards key={store.storeId}>
+            <Link style={{ height: '100%', width: '100%' }} to={`/store/${store.storeId}`}>
               <div style={{ position: 'relative', height: '100%', width: '100%' }}>
                 <img
-                  src={product.productImage}
+                  src={store.storeImage}
                   style={{
                     height: '100%',
                     width: '100%',
@@ -24,8 +32,8 @@ function StoreCard({ data }: ProductCardProps) {
             </Link>
             <StoreTitleInfo>
               <p style={{ fontSize: '16px', marginBottom: '0.4rem', fontFamily:'Yaldevi' }}>
-                <Link to={`/store/${product.storeId}`} style={{ color: 'var(--light-black)' }}>
-                  {product.productName}
+                <Link to={`/store/${store.storeId}`} style={{ color: 'var(--light-black)' }}>
+                  {store.storeName}
                 </Link>
               </p>
               <p
@@ -37,7 +45,8 @@ function StoreCard({ data }: ProductCardProps) {
                   fontFamily:'Yaldevi'
                 }}
               >
-                {priceFormatter(product.productPrice)}원                
+                <FiMapPin style={{ marginRight: '0.1rem', alignItems: 'center' }} />
+                {store.storeAddress}
               </p>
             </StoreTitleInfo>
           </Cards>

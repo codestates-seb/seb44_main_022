@@ -11,6 +11,8 @@ import {
   ProductTitle,
   ProductPrice
 } from './ProductCard.style';
+
+
 function ProductCard({ data, storeId, storeName }: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
