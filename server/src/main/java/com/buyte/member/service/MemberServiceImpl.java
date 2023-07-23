@@ -57,7 +57,7 @@ public class MemberServiceImpl implements MemberService {
             throw new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN_STATE);
         }
         else if (tokenStatus.equals("login")) {
-            String accessToken = jwtTokenizer.delegateAccessToken(memberRepository.findById(Long.parseLong(memberId)).orElseThrow());
+            String accessToken = jwtTokenizer.delegateAccessToken(memberRepository.findById(Long.parseLong(memberId)).orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND)));
             response.setHeader("Authorization", "Bearer " + accessToken);
         } else {
             response.setStatus(403);
@@ -80,6 +80,12 @@ public class MemberServiceImpl implements MemberService {
     public Member getMemberDetails(long memberId) {
         Member member = findVerifiedMember(memberId);
         return member;
+    }
+
+    @Override
+    public void deleteMember(long memberId) {
+        Member member = findVerifiedMember(memberId);
+        memberRepository.delete(member);
     }
 
     @Override

@@ -58,6 +58,13 @@ public class MemberController {
         return new ResponseEntity<>(mapper.memberToMemberResponseDto(member), HttpStatus.OK);
     }
 
+    @DeleteMapping("/members/withdraw")
+    public ResponseEntity deleteMember() {
+        long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        memberService.deleteMember(authenticatedMemberId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("/members/orders")
     public ResponseEntity orderDetails(@RequestParam(required = false, defaultValue = "1") int page,
                                        @RequestParam(required = false, defaultValue = "5") int size) {
