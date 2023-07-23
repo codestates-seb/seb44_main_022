@@ -110,7 +110,7 @@ function ShoppingCart() {
             </span>
             원
           </div>
-          <div style={{ margin: '0.5rem 0', fontWeight: 'bold' }}>주문금액</div>
+          <div style={{ margin: '0.5rem 0', fontWeight: 'bold' }}>상품금액</div>
         </TotalPaymentContainer>
         <div
           style={{

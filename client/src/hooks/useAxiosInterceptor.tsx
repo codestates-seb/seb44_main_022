@@ -57,6 +57,9 @@ const useAxiosInterceptor = () => {
           navigate('/auth');
           break;
         }
+        case 'Customer ID and Seller ID are the same': {
+          throw err;
+        }
         default:
           break;
       }

@@ -35,16 +35,7 @@ function ChatBox({
   const [senderId, setSenderId] = useState<number>(receiverIdProps);
   const [receiverId, setReceiverId] = useState<number>(senderIdProps);
   const [showChatBox, setShowChatBox] = useState<boolean>(false);
-  const [isDelaySend, setIsDelaySend] = useState<boolean>(true);
   const { messages, onPublishMessage } = useChat(roomId);
-
-  const createMessageTime = () => {
-    return (
-      String(new Date().getHours()).padStart(2, '0') +
-      ':' +
-      String(new Date().getMinutes()).padStart(2, '0')
-    );
-  };
 
   const handleKeyPress: React.KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -56,8 +47,6 @@ function ChatBox({
   const publish = (Message: string) => {
     onPublishMessage(Message);
     setChatText('');
-    setIsDelaySend(false);
-    setTimeout(() => setIsDelaySend(true), 1000);
   };
 
   const handleEnter: React.FormEventHandler<HTMLElement> = (e) => {
@@ -97,9 +86,9 @@ function ChatBox({
       getChatRoomId(storeId)
         .then((res) => {
           setInitChatData(res.data);
-          setShowChatBox(true);
         })
         .catch((err) => console.log(err));
+      setShowChatBox(true);
       return;
     }
     setShowChatBox(true);
@@ -126,7 +115,7 @@ function ChatBox({
                 >
                   {e.content ? e.content.length > 0 && e.content : e.message}
                   <ChattingTime type={e.receiverId === receiverId ? 'answer' : 'question'}>
-                    {e.createdAt ? e.createdAt.slice(11, 16) : createMessageTime()}
+                    {e.createdAt ? e.createdAt.slice(11, 16) : e.time}
                   </ChattingTime>
                 </ChattingMessage>
               ))}
@@ -143,18 +132,14 @@ function ChatBox({
                   value={chatText}
                   onChange={(e) => setChatText(e.target.value)}
                   onKeyDown={(e) => {
-                    if (isDelaySend) {
-                      handleKeyPress(e);
-                    }
+                    handleKeyPress(e);
                   }}
                   rows={1}
                 />
               </ChattingTextareaContainer>
               <ChattingPostButton
                 onClick={(e) => {
-                  if (isDelaySend) {
-                    handleEnter(e);
-                  }
+                  handleEnter(e);
                 }}
               >
                 <ChatButtonImg />
