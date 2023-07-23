@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import ModalComponentDetail from '../../share/ModalComponentDetail';
+import ModalComponentDetail from '../../share/ModalComponentDetail/ModalComponentDetail';
 import ModalComponentCustom from '../../share/ModalComponentCustom';
 import { Product, ProductCardProps } from '../../assets/interface/Store.interface';
+import { priceFormatter } from '../../pages/mypage/PriceFormatter';
 import {
   ProductContainer,
   ProductImage,
   HoverOverlay,
   ModalContainer,
   ProductTitle,
+  ProductPrice
 } from './ProductCard.style';
+
+
 function ProductCard({ data, storeId, storeName }: ProductCardProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -35,6 +39,7 @@ function ProductCard({ data, storeId, storeName }: ProductCardProps) {
           >
             <ProductImage src={product.productImage} alt={product.productName} />
             <ProductTitle>{product.productName}</ProductTitle>
+            <ProductPrice> {priceFormatter(product.productPrice)}원 </ProductPrice>
             <HoverOverlay />
           </li>
         ))}

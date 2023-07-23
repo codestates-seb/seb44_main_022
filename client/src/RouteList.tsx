@@ -12,6 +12,7 @@ import StoreDetail from './pages/store/StoreDetail';
 import PrivateRoute from './PrivateRoute';
 import NotFound from './pages/notfound/NotFound';
 import ChatList from './pages/Chat/ChatList';
+import PreferenceProductList from './pages/preferenceProduct/PreferenceProductList';
 
 export const Routes = [
   { path: '/', element: <Main /> },
@@ -19,6 +20,7 @@ export const Routes = [
   { path: '/map', element: <Map /> },
   { path: '/store', element: <StoreList /> },
   { path: '/store/:storeId', element: <StoreDetail /> },
+  { path: '/product', element: <PreferenceProductList /> },
   { path: '*', element: <NotFound /> },
   { path: '/auth', element: <Auth />, isAuth: false },
   { path: '/payment', element: <Payment />, isAuth: true },

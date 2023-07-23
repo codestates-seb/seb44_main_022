@@ -52,3 +52,10 @@ export const ModalContainer = styled.div`
   align-items: center;
   justify-content: center;
 `;
+export const ProductPrice = styled.p`
+font-size: 14px;
+color:var(--light-gray);
+line-height: 1.3;
+font-family: 'Yaldevi';
+text-align: center;
+font-weight: 600;`
