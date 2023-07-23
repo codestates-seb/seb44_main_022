@@ -33,7 +33,12 @@ function Login() {
             </AuthCategory>
           </AuthCategoryContainer>
           <div style={{ width: '100%' }}>
-            <RoundButton title="Continue with Google" types="google" icon={<FcGoogle />} />
+            <RoundButton
+              buttonType="button"
+              title="Continue with Google"
+              types="google"
+              icon={<FcGoogle />}
+            />
           </div>
           <div style={{ width: '100%', position: 'relative', margin: '1.25rem 0' }}>
             <hr style={{ border: '1px solid var(--normal-gray)' }} />

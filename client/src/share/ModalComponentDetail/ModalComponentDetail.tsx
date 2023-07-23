@@ -71,14 +71,12 @@ function ModalComponentDetail({
       .post(url, formData)
       .then(() => {
         setProductCartAlertVisible(true);
-        console.log('POST 요청 성공');
       })
       .catch((error) => {
         console.error('POST 요청 실패:', error);
       });
   } else {
     alert('로그인 먼저 해주세요!')
-    console.log('비회원 주문 처리')
     navigate('/auth');
   }
 }

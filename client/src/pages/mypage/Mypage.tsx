@@ -38,7 +38,6 @@ useEffect(() => {
       try {
         const response = await axiosInstance.patch('/members', formData);
         setNickname(response.data.memberName);
-        console.log("PATCH 성공!")
       } catch (error) {
         console.error('Error updating nickname:', error);
       }
@@ -50,7 +49,6 @@ useEffect(() => {
       try {
         const response = await axiosInstance.get(`/members/orders?page=${page}&size=${size}`);
         setFilteredOrderlist(response.data);
-        console.log("List받아오기 성공!")
       } catch (error) {
         console.error('Error updating nickname:', error);
       }    

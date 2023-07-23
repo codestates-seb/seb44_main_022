@@ -11,6 +11,7 @@ export interface MessageList {
   senderId: number;
   receiverId: number;
   content: string;
+  message?: string;
   createdAt: string;
 }
 

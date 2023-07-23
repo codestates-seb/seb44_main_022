@@ -9,7 +9,6 @@ function RecommandProductCard({ data }: ProductCardProps) {
   const navigate = useNavigate();
   const handleProductClick = (storeId: number) => {
     navigate(`/store/${storeId}`);
-    console.log('aaa')
   };
   return (
     <>

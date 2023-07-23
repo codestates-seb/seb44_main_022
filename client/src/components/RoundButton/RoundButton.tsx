@@ -6,7 +6,7 @@ import { LocalStorage } from '../../utils/browserStorage';
 import { LOCAL_STORAGE_KEY_LIST } from '../../assets/constantValue/constantValue';
 import { Icons, RoundButtonStyle } from './RoundButton.style';
 
-function RoundButton({ title, types, icon, enabled }: ButtonProps) {
+function RoundButton({ buttonType, title, types, icon, enabled }: ButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -44,6 +44,7 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
       types={types}
       disabled={enabled === false && true}
       onClick={() => handleClick()}
+      type={buttonType as 'button' | 'submit'}
     >
       {icon && <Icons>{icon}</Icons>}
       {title}
