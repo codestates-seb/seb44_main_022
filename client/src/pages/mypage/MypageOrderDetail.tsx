@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MypageOrderDetailProps } from '../../assets/interface/Mypage.interface'
 import { MyOrderListName } from './MyOrderListName.style';
 import { priceFormatter } from './PriceFormatter';
+
 function MypageOrderDetail({ product }: MypageOrderDetailProps) {
   const navigate = useNavigate();
   return (

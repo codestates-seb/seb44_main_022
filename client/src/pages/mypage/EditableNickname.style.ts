@@ -32,3 +32,12 @@ export const EditButton = styled.button`
     background-color: var(--blue-purple);
   }
 `
+
+export const DeleteAccountButton = styled(EditButton)`
+  background-color: #f15757;    
+  width: 80px;
+  color: white;  
+  :hover {        
+    background-color: #AB0A0A;
+  }
+`;

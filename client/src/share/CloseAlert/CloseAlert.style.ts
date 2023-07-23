@@ -1,11 +1,21 @@
-import styled from 'styled-components';
-
-export const CloseAlertWrapper = styled.section`
+import styled, { css } from 'styled-components';
+interface CloseAlertProps {
+  positionAbsolute?: boolean;
+}
+export const CloseAlertWrapper = styled.section<CloseAlertProps>`
   display: flex;
   align-items: center;
   z-index: 11;
+  ${({ positionAbsolute }) =>
+    positionAbsolute &&
+    css`
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    `}
 `;
-export const CloseAlertSection = styled.div`
+export const CloseAlertSection = styled.div<CloseAlertProps>`
   background-color: #ffffff;
   width: 300px;
   height: 220px;
@@ -38,4 +48,14 @@ export const WhiteButton = styled(Button)`
   &:hover {
     background-color: #d83838;
   }
+`;
+
+export const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10;
 `;

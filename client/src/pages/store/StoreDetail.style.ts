@@ -1,5 +1,26 @@
 import styled from 'styled-components';
 
+export const StoreDetailSection = styled.section`
+margin-bottom: 4rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+position: relative;
+width: 100%;
+    &::after {
+    content:"";
+    display: block;
+    background-color: var(--light-gray);
+    height: 1.4px;
+    width: 100%;
+    margin-top: 20px;
+  }
+  @media (max-width: 820px) {
+    margin-bottom: 3rem;
+    }
+ 
+`
+
 export const StoreProductSection = styled.section`
 display: flex;
 flex-direction: column;
@@ -15,14 +36,42 @@ display: flex;
 justify-content: center;
 align-items: center;
 margin-bottom: 5rem; 
-@media (max-width: 1000px) {
-    margin: 0rem 3rem 5rem 3rem;
+position: relative;
+margin-top: 10rem;
+@media (max-width: 1200px) {
+    margin: 8rem 3rem 5rem 3rem;
     }
 @media (max-width: 820px) {
     width: 600px;
-    margin: 0rem 3rem 3rem 3rem;
+    margin: 7rem 3rem 3rem 3rem;
     }
 `
+export const BackButton = styled.button`
+width: 50px;
+height: 50px;
+border-radius: 50%;
+color: var(--dark-gray);
+border: 1px solid var(--dark-gray);
+position: absolute;
+left: 1rem;
+top: 7rem;
+:active {
+   background-color: var(--gray);
+}
+@media (max-width: 1200px) {
+    width: 35px;
+    height: 35px;
+    left: -2rem;
+    top: 6rem;
+    }
+@media (max-width: 820px) {
+    width: 30px;
+    height: 30px;
+    left: -2rem;
+    top: 6rem;
+    }
+`
+
 
 export const DetailWrapper = styled.section`
 margin-left: 8rem;
@@ -39,25 +88,6 @@ h3{
     }
 `
 
-
-export const StoreDetailSection = styled.section`
-margin-bottom: 4rem;
-display: flex;
-flex-direction: column;
-align-items: center;
-    &::after {
-    content:"";
-    display: block;
-    background-color: var(--light-gray);
-    height: 1.4px;
-    width: 70%;
-    margin-top: 20px;
-  }
-  @media (max-width: 820px) {
-    margin-bottom: 3rem;
-    }
- 
-`
 
 export const DetailTitle = styled.span`
     color: var(--light-gray);

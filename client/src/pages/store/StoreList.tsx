@@ -1,6 +1,6 @@
 import { FaSearch } from 'react-icons/fa';
 import { useState, useEffect, useRef, ChangeEvent, KeyboardEvent } from 'react';
-import StoreCard from '../../components/storeCard';
+import StoreCard from '../../components/Cards/StoreCard';
 import axiosInstance from '../../api/apis';
 import { Store, PageInfo } from '../../assets/interface/Store.interface';
 import { 

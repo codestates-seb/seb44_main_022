@@ -17,7 +17,8 @@ public enum ExceptionCode {
     ACCESS_TOKEN_EXPIRED(401, "Access Token Expired"),
     REFRESH_TOKEN_EXPIRED(401, "Refresh Token Expired"),
     CART_NOT_FOUND(404, "Cart not found"),
-    CHATROOM_NOT_FOUND(404,"Chatroom not found");
+    CHATROOM_NOT_FOUND(404,"Chatroom not found"),
+    SAME_ID_CHAT_ROOM(401,"Customer ID and Seller ID are the same");
 
     @Getter
     private int status;

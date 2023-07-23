@@ -3,7 +3,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import saveAsImage from '../CustomContent/UseSaveAsImage';
-import ProductCartAlert from '../../../share/ProductCartAlert';
+import ProductCartAlert from '../../../share/ProductCartAlert/ProductCartAlert';
 import CloseButton from './CloseButton';
 import CartButton from './CartButton';
 import Popup from './Popup';

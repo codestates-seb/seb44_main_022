@@ -54,18 +54,23 @@ public class RoomService {
     public RoomResponse findOrCreate(RoomRequest roomRequest) {
 
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
-        Member custromer = memberRepository.findById(authenticatedMemberId)
+        Member customer = memberRepository.findById(authenticatedMemberId)
                 .orElseThrow(()-> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         Store store = storeRepository.findById(roomRequest.getStoreId())
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.STORE_NOT_FOUND));
         Member merchant = store.getMember();
-        ChatRoom room = chatRoomRepository.findByCustomerAndMerchantAndStoreName(custromer, merchant, store.getStoreName())
-                .orElseGet(() -> new ChatRoom(merchant,custromer,store.getStoreName()));
+
+        if(customer.equals(merchant)){
+            throw new BusinessLogicException(ExceptionCode.SAME_ID_CHAT_ROOM);
+        }
+
+        ChatRoom room = chatRoomRepository.findByCustomerAndMerchantAndStoreName(customer, merchant, store.getStoreName())
+                .orElseGet(() -> new ChatRoom(merchant,customer,store.getStoreName()));
         ChatRoom chatRoom = chatRoomRepository.save(room);
         String roomId = "room" + chatRoom.getRoomId();
         topics.computeIfAbsent(roomId, this::addTopic);
         RoomResponse roomResponse = RoomResponse.builder()
-                .senderId(custromer.getMemberId())
+                .senderId(customer.getMemberId())
                 .receiverId(merchant.getMemberId())
                 .roomId(chatRoom.getRoomId())
                 .build();
