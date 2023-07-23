@@ -56,6 +56,9 @@ const CustomContent: React.FC<{
 
     setIsDragging(false);
 
+    ctx.fillStyle = 'rgba(0,0,0,0)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     const image = new Image();
     image.crossOrigin = 'anonymous';
     image.src = imageUrl;
@@ -384,7 +387,7 @@ const CustomContent: React.FC<{
         <EraseButton eraser={eraser} onClick={handleEraseButtonClick} />
         <UploadButton onUpload={handleUploadImage} />
         <UndoButton onUndo={handleUndoButtonClick} />
-        <RedoButton onRedo={handleRedoButtonClick} /> {/* RedoButton 추가 */}
+        <RedoButton onRedo={handleRedoButtonClick} />
       </RangeInputContainer>
       <CanvasWrapper onDragOver={handleDragOver} onDrop={handleDrop}>
         {images.map((imageData, index) => (
