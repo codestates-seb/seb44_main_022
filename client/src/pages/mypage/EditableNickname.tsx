@@ -26,6 +26,7 @@ function EditableNickname({ nickname, onNicknameChange, onEditModeToggle }: Edit
         try {
           await axiosInstance.delete('/members/withdraw');
           console.log("회원탈퇴 성공!");
+          window.localStorage.clear()
           window.location.href = '/'
         } catch (error) {
           console.error('Error deleting Account:', error);

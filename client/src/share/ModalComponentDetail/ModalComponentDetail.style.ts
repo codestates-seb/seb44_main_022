@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import Modal from 'react-modal';
-import { ProductImgContainerProps } from '../assets/interface/Store.interface';
+import { ProductImgContainerProps } from '../../assets/interface/Store.interface';
 
 export const AlertBox = styled.div`
   width: 100%;
