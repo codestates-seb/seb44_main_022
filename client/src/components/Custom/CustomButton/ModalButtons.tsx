@@ -20,6 +20,17 @@ const ImageBox = styled.div`
   border-radius: 20px 0px 0px 0px;
 `;
 
+const Overlay = styled.div<{ show: boolean }>`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.35);
+  z-index: 20;
+  display: ${({ show }) => (show ? 'block' : 'none')};
+`;
+
 const blink = keyframes`
   0% {opacity: 1;}
   50% {opacity: 0.3;}
@@ -44,16 +55,6 @@ const CenteredAlertContainer = styled.div`
   left: 58%;
   transform: translate(-50%, -50%);
   z-index: 30;
-`;
-
-const Overlay = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 20;
 `;
 
 type ModalButtonsProps = {
@@ -82,10 +83,11 @@ const ModalButtons = ({
   const [showPopup, setShowPopup] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [blinking, setBlinking] = useState(true);
-  const popupRef = useRef(null);
+  const popupRef = useRef<HTMLDivElement | null>(null);
 
   const closeAlert = () => {
     setShowAlert(false);
+    setShowPopup(false);
   };
 
   const handleImageClick = () => {
@@ -93,8 +95,25 @@ const ModalButtons = ({
     setShowPopup((prevState) => !prevState);
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (showAlert) {
+      return;
+    }
+    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      setShowPopup(false);
+    }
+  };
+
+  const handleRequestClose = () => {
+    onRequestClose();
+  };
+
   useEffect(() => {
     setBlinking(true);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
 
   const onSaveImage = async () => {
@@ -106,16 +125,17 @@ const ModalButtons = ({
 
   return (
     <>
-      <CloseButton onClick={onRequestClose} />
+      <CloseButton onClick={handleRequestClose} />
       <ImageBox ref={popupRef}>
         <Image src={modal_cake} alt="Cart" onClick={handleImageClick} blinking={blinking} />
-        <CenteredAlertContainer>
-          {showAlert && <ProductCartAlert closeModal={closeAlert} />}
-        </CenteredAlertContainer>
+        <Overlay show={showAlert}>
+          <CenteredAlertContainer>
+            {showAlert && <ProductCartAlert closeModal={closeAlert} />}
+          </CenteredAlertContainer>
+        </Overlay>
       </ImageBox>
       <CartButton onSaveImage={onSaveImage} />
       <Popup show={showPopup} />
-      {(showPopup || showAlert) && <Overlay onClick={onRequestClose} />}
     </>
   );
 };

@@ -1,3 +1,4 @@
+import { useRef, useEffect } from 'react';
 import { AiOutlineWarning } from 'react-icons/ai';
 import { CloseAlertWrapper, CloseAlertSection, Button, WhiteButton } from './CloseAlert.style';
 
@@ -7,12 +8,28 @@ interface CloseAlertProps {
 }
 
 function CloseAlert({ closeModal, handleClose }: CloseAlertProps) {
+  const ref = useRef<HTMLDivElement | null>(null);
+
   const handleContinueShopping = () => {
     closeModal();
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <CloseAlertWrapper>
-      <CloseAlertSection>
+      <CloseAlertSection ref={ref}>
         <AiOutlineWarning style={{ fontSize: '28px', color: '#F15757', marginBottom: '13px' }} />
         <p
           style={{
