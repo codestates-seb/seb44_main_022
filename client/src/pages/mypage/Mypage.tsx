@@ -14,7 +14,6 @@ function Mypage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSize, setSelectedSize] = useState(5);
   const [filteredOrderlist, setFilteredOrderlist] = useState<Data | null>(null);
-  console.log(filteredOrderlist)
   const fetchData = async () => {  
     try {
       const url = `/members`;
@@ -39,7 +38,6 @@ useEffect(() => {
       try {
         const response = await axiosInstance.patch('/members', formData);
         setNickname(response.data.memberName);
-        console.log("PATCH 성공!")
       } catch (error) {
         console.error('Error updating nickname:', error);
       }
@@ -51,11 +49,9 @@ useEffect(() => {
       try {
         const response = await axiosInstance.get(`/members/orders?page=${page}&size=${size}`);
         setFilteredOrderlist(response.data);
-        console.log("List받아오기 성공!")
       } catch (error) {
         console.error('Error updating nickname:', error);
-      }
-    
+      }    
   };
 
   const handlePageChange = async (page: number) => {
@@ -83,9 +79,9 @@ useEffect(() => {
     <MyPageWrapper>
       <WelcomeText>안녕하세요, <span style={{color: 'var(--purple)'}}>{nickname}</span>님!</WelcomeText>
       <section style={{borderTop:"2px solid var(--light-purple)", margin:"20px", padding:"30px"}}>
-        <MyInfoSection>
+        <MyInfoSection >
           <img src="../../../src/assets/images/profile.png" style={{width: '200px', paddingRight:'10px'}}/>
-          <MyInfoDetail>
+          <MyInfoDetail >
          {editMode ? (
           <EditableNickname
             nickname={nickname}
