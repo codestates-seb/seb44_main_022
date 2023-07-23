@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,14 +53,19 @@ public class ChatService {
     public List<ChatResDto> findAllChat(Long roomId) {
         List<Message> allChat = messageRepository.findByRoomRoomId(roomId);
         List<ChatResDto> allChatDto = new ArrayList<>();
+        ZoneId seoulZoneId = ZoneId.of("Asia/Seoul");
 
         for (Message message : allChat) {
+            ZonedDateTime seoulCreatedAt = message.getCreatedAt()
+                    .atZone(ZoneId.systemDefault())
+                    .withZoneSameInstant(seoulZoneId);
+
             ChatResDto chatResDto = ChatResDto.builder()
                     .chatId(message.getChatId())
                     .content(message.getContent())
                     .senderId(message.getSender().getMemberId())
                     .receiverId(message.getReceiver().getMemberId())
-                    .createdAt(message.getCreatedAt())
+                    .createdAt(seoulCreatedAt.toLocalDateTime())
                     .build();
             allChatDto.add(chatResDto);
         }
