@@ -32,6 +32,6 @@ export const getCustomBoard = async (store_id: number, product_id: number) => {
       fillingIngredientList,
     };
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };

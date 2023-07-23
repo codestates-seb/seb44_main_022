@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import modal_cake from '../../../assets/images/img_modal/modal_cake.png';
 import saveAsImage from '../CustomContent/UseSaveAsImage';
 import ProductCartAlert from '../../../share/ProductCartAlert';
@@ -80,6 +81,7 @@ const ModalButtons = ({
   storeId,
   productId,
 }: ModalButtonsProps) => {
+  const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [blinking, setBlinking] = useState(true);
@@ -117,7 +119,7 @@ const ModalButtons = ({
   }, []);
 
   const onSaveImage = async () => {
-    const result = await saveAsImage(images, canvasRef, storeId, productId);
+    const result = await saveAsImage(images, canvasRef, storeId, productId, navigate);
     if (result) {
       setShowAlert(true);
     }
