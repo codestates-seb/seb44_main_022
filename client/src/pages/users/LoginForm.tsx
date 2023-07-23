@@ -68,7 +68,12 @@ function LoginForm() {
         <LinkText>Forgot password</LinkText>
       </div>
       <div>
-        <RoundButton title="로그인" types="dark" enabled={userIdValid && passwordValid} />
+        <RoundButton
+          buttonType="submit"
+          title="로그인"
+          types="dark"
+          enabled={userIdValid && passwordValid}
+        />
       </div>
     </form>
   );

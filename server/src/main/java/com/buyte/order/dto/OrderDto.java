@@ -12,7 +12,7 @@ public class OrderDto {
 
         private String impUid;
         private List<Long> cartIds;
-        private String userName;
+        private String username;
         private String address;
     }
 }

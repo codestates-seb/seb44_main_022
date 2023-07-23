@@ -6,7 +6,7 @@ import { LocalStorage } from '../../utils/browserStorage';
 import { LOCAL_STORAGE_KEY_LIST } from '../../assets/constantValue/constantValue';
 import { Icons, RoundButtonStyle } from './RoundButton.style';
 
-function RoundButton({ title, types, icon, enabled }: ButtonProps) {
+function RoundButton({ buttonType, title, types, icon, enabled }: ButtonProps) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -25,9 +25,9 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
       postGoogleOAuthLogin(code)
         .then((res) => {
           const accessToken = res.headers['authorization'];
-          // const memberRole = res.headers['member-role'];
+          const memberRole = res.headers['member-role'];
           LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.AccessToken, accessToken);
-          // LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.MemberRole, memberRole);
+          LocalStorage.set<string>(LOCAL_STORAGE_KEY_LIST.MemberRole, memberRole);
           navigate('/');
           return;
         })
@@ -44,6 +44,7 @@ function RoundButton({ title, types, icon, enabled }: ButtonProps) {
       types={types}
       disabled={enabled === false && true}
       onClick={() => handleClick()}
+      type={buttonType as 'button' | 'submit'}
     >
       {icon && <Icons>{icon}</Icons>}
       {title}

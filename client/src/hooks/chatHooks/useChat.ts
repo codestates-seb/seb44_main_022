@@ -34,6 +34,7 @@ const useChat = (roomId: number) => {
       client.current.subscribe(
         `/sub/${roomId}`,
         (message) => {
+          console.log(message.body);
           setMessages((messages) => [...messages, JSON.parse(message.body)]);
         },
         headerData

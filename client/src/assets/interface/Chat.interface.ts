@@ -11,6 +11,7 @@ export interface MessageList {
   senderId: number;
   receiverId: number;
   content: string;
+  message?: string;
   createdAt: string;
 }
 
@@ -26,4 +27,16 @@ export interface ChatBoxProps {
 export interface ChatButtonProp {
   storeId: string | undefined;
   storeName: string | undefined;
+}
+
+export interface ChatListType {
+  senderId: number;
+  receiverId: number;
+  roomId: number;
+  customerName: string;
+  storeName: string;
+}
+
+export interface ChatIntroProps {
+  text: string;
 }
