@@ -12,7 +12,7 @@ import StoreDetail from './pages/store/StoreDetail';
 import PrivateRoute from './PrivateRoute';
 import NotFound from './pages/notfound/NotFound';
 import ChatList from './pages/Chat/ChatList';
-import PreferenceProductList from './pages/preferenceProduct/PreferenceProduct';
+import PreferenceProductList from './pages/preferenceProduct/PreferenceProductList';
 
 export const Routes = [
   { path: '/', element: <Main /> },

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { ProductCardProps } from '../../assets/interface/Product.interface';
 import { priceFormatter } from '../../pages/mypage/PriceFormatter';
-import { StoreMenuInfo, CardListContainer, Cards, StoreTitleInfo } from './storeCard.style';
+import { StoreMenuInfo, CardListContainer, Cards, StoreTitleInfo } from './StoreCard.style';
 import { ProductPrice } from './ProductCard.style';
 
 function RecommandProductCard({ data }: ProductCardProps) {

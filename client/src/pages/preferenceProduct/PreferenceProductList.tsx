@@ -81,9 +81,11 @@ function PreferenceProductList() {
   return (
     <>
       <ProductSection >
+        
         <section style={{ width: '70%'}}>    
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <ProductText>
+              
               <h2>Specials</h2>
               <p>BUYTE만의 특색있는 커스텀 제품들을 만나보세요!</p>
             </ProductText>

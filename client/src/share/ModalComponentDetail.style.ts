@@ -38,7 +38,6 @@ export const DecorationTextContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
 `;
 
 export const DecorationText = styled.h2`
@@ -71,6 +70,8 @@ export const StyledModal = styled(Modal)`
       left: 50%;
       transform: translate(-50%, -50%);
       width: 1000px;
+      height: 600px;
+      min-height: 500px;;
       border-radius: 20px;
       box-shadow: 0px 8px 24px rgba(49, 70, 86, 0.12);
       background-color: rgba(255, 255, 255, 0.9);
@@ -140,9 +141,9 @@ export const CartButton = styled.button`
 `;
 export const Line = styled.div`
   width: 1px;
-  height: 160px;
+  height: 100px;
   background-color: rgba(20, 46, 56, 0.7);
-  margin-top: 250px;
+  margin-bottom: 80px;
   margin-right: 15px;
 `;
 export const ImageBox = styled.div`

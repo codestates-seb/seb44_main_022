@@ -53,8 +53,7 @@ useEffect(() => {
         console.log("List받아오기 성공!")
       } catch (error) {
         console.error('Error updating nickname:', error);
-      }
-    
+      }    
   };
 
   const handlePageChange = async (page: number) => {

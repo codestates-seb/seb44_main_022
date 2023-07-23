@@ -1,16 +1,9 @@
 import { FiMapPin } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import { StoreCardProps } from '../../assets/interface/Store.interface';
-import { StoreMenuInfo, CardListContainer, Cards, StoreTitleInfo } from './storeCard.style';
+import { StoreMenuInfo, CardListContainer, Cards, StoreTitleInfo } from './StoreCard.style';
 
 function StoreCard({ data }: StoreCardProps) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const handleProductClick = (product) => {
-    setSelectedProduct(product);
-    setModalOpen(true);
-  };
   return (
     <>
       <CardListContainer>
