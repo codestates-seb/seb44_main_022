@@ -13,6 +13,8 @@ public interface MemberService {
 
     void logout(HttpServletRequest request);
 
+    void deleteMember(long memberId);
+
     Member getMemberDetails(long memberId);
 
     Member updateMember(Member member);
