@@ -65,8 +65,13 @@ function SignUpForm({ setIsSignUp }: SignUpFormProps) {
         />
       </div>
       <div style={{ marginTop: '2.5rem' }}>
-        <RoundButton title="회원가입" types="dark" enabled={userIdValid && passwordValid} />
-        <RoundButton title="사업자 회원이신가요?" types="purple" />
+        <RoundButton
+          buttonType="submit"
+          title="회원가입"
+          types="dark"
+          enabled={userIdValid && passwordValid}
+        />
+        <RoundButton buttonType="button" title="사업자 회원이신가요?" types="purple" />
       </div>
     </form>
   );

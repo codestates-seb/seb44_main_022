@@ -62,7 +62,7 @@ function ChatBox({
 
   const handleEnter: React.FormEventHandler<HTMLElement> = (e) => {
     e.preventDefault();
-    if (chatText.length !== 0) {
+    if (chatText !== undefined && chatText.length !== 0) {
       const Message = JSON.stringify({
         senderId: senderId,
         receiverId: receiverId,
@@ -117,14 +117,14 @@ function ChatBox({
 
           {receiverId === senderId ? (
             <ChatIntroBox text="판매자는 판매자의 가게에 채팅할 수 없습니다." />
-          ) : messages.length > 0 ? (
+          ) : messages !== undefined && messages.length > 0 ? (
             <ChattingMessageBox>
               {messages.map((e, idx) => (
                 <ChattingMessage
                   key={idx}
                   type={e.receiverId === receiverId ? 'answer' : 'question'}
                 >
-                  {e.content.length > 0 && e.content}
+                  {e.content ? e.content.length > 0 && e.content : e.message}
                   <ChattingTime type={e.receiverId === receiverId ? 'answer' : 'question'}>
                     {e.createdAt ? e.createdAt.slice(11, 16) : createMessageTime()}
                   </ChattingTime>

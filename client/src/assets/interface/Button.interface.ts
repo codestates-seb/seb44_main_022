@@ -1,6 +1,7 @@
 import { ComponentType, ReactElement } from 'react';
 
 export interface ButtonProps {
+  buttonType: string;
   title: string;
   types: string;
   icon?: ReactElement<ComponentType>;
