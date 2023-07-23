@@ -12,7 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Builder
 public class Store extends Auditable {
 
     @Id

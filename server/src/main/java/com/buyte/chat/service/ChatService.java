@@ -7,6 +7,8 @@ import com.buyte.chat.entity.ChatRoom;
 import com.buyte.chat.entity.Message;
 import com.buyte.chat.repository.ChatRoomRepository;
 import com.buyte.chat.repository.MessageRepository;
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.member.entity.Member;
 import com.buyte.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +31,12 @@ public class ChatService {
 
     @Transactional
     public void save(Long roomId, ChatReqDto message) {
-        ChatRoom room = chatRoomRepository.findById(roomId).orElseThrow();
-        Member sender = memberRepository.findById(message.getSenderId()).orElseThrow();
-        Member receiver = memberRepository.findById(message.getReceiverId()).orElseThrow();
+        ChatRoom room = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.CHATROOM_NOT_FOUND));
+        Member sender = memberRepository.findById(message.getSenderId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+        Member receiver = memberRepository.findById(message.getReceiverId())
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 
         Message chatMessage = Message.builder()
                 .sender(sender)
