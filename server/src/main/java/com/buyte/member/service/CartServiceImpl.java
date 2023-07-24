@@ -45,6 +45,24 @@ public class CartServiceImpl implements CartService{
     @Override
     public void deleteSelectedProducts(CartReqDto.CartIds cartIds)  {
         long authenticatedMemberId = SecurityUtil.getLoginMemberId();
+        List<Cart> cartList = cartRepository.findAllByCartIdIn(cartIds.getCartIds());
+        for (Cart cart : cartList) {
+            if (cart.getMember().getMemberId() != authenticatedMemberId) {
+                throw new IllegalArgumentException("카트 아이디가 현재 사용자의 것이 아닙니다.");
+            }
+        }
+
+        for (Cart cart : cartList) {
+            String imageFilePath = cart.getCartCustomProductImage();
+            if (imageFilePath != null) {
+                String fileName = imageFilePath.substring(imageFilePath.lastIndexOf("/") + 1);
+                try {
+                    s3Service.deleteFile(fileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         cartRepository.deleteByCartIdInaAndMemberMemberId(cartIds.getCartIds(),authenticatedMemberId);
     }
 

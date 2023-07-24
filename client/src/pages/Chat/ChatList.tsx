@@ -23,7 +23,7 @@ function ChatList() {
           return (
             <>
               <ChatListItem
-                key={chatListItem.receiverId}
+                key={chatListItem.roomId}
                 onClick={() => {
                   setActiveChat(chatListItem.roomId);
                   setIsOpenChatting(true);

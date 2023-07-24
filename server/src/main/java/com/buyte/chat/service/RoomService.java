@@ -60,7 +60,7 @@ public class RoomService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.STORE_NOT_FOUND));
         Member merchant = store.getMember();
 
-        if(customer.equals(merchant)){
+        if(customer.getMemberId() == merchant.getMemberId()){
             throw new BusinessLogicException(ExceptionCode.SAME_ID_CHAT_ROOM);
         }
 
