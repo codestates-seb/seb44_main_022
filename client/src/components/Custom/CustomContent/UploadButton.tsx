@@ -75,7 +75,8 @@ const UploadButton: React.FC<UploadButtonProps> = ({ onUpload }) => {
           canvas.height = height;
           ctx?.drawImage(image, 0, 0, width, height);
 
-          const imageUrl = canvas.toDataURL('image/jpeg', 1);
+          const imageUrl = canvas.toDataURL('image/png');
+
           onUpload(imageUrl);
         };
 

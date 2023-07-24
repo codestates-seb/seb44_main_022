@@ -59,10 +59,13 @@ type PopupProps = {
 };
 
 const Popup = ({ show }: PopupProps) => {
+  const handleClick = (event: { stopPropagation: () => void }) => {
+    event.stopPropagation();
+  };
   return (
     <Transition in={show} timeout={200} unmountOnExit>
       {(state) => (
-        <PopupContainer show={show} state={state}>
+        <PopupContainer show={show} state={state} onClick={handleClick}>
           <PopupContent>
             <PopupImage src={ExampleImage} alt="Example" />
             <RightContent>

@@ -39,16 +39,6 @@ const SectionContainer = styled.div`
   gap: -50px;
 `;
 
-const Image = styled.img`
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  transition: opacity 0.5s ease-in-out;
-  cursor: pointer;
-  &:hover {
-    cursor: pointer;
-  }
-`;
 const ImageContainer = styled.div<{ isAnimated: boolean }>`
   flex: 1;
   display: flex;
@@ -61,6 +51,17 @@ const ImageContainer = styled.div<{ isAnimated: boolean }>`
   animation-play-state: ${({ isAnimated }) => (isAnimated ? 'running' : 'paused')};
 `;
 
+const Image = styled.img`
+  max-width: 60%;
+  max-height: 90%;
+  position: absolute;
+  transition: opacity 0.5s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const TextContainer = styled.div<{ isAnimated: boolean }>`
   flex: 1;
   display: flex;
@@ -69,13 +70,15 @@ const TextContainer = styled.div<{ isAnimated: boolean }>`
   align-items: flex-start;
   margin-left: 23%;
   margin-top: 70px;
-  font-size: 3rem;
+  font-size: clamp(1rem, 2vw, 3rem);
+
   color: #ffffff;
   font-family: 'BMJUA';
   align-items: flex-start;
   animation: ${slideInLeft} 1s ease-out;
   animation-play-state: ${({ isAnimated }) => (isAnimated ? 'running' : 'paused')};
 `;
+
 function MainSection3({
   id,
   className,
@@ -115,15 +118,20 @@ function MainSection3({
         <Image src={cake2} alt="Custom Cake" style={{ opacity: isImageOneVisible ? 0 : 1 }} />
       </ImageContainer>
       <TextContainer isAnimated={isAnimated}>
-        <div style={{ color: '#fff6f6', fontSize: '22px', marginBottom: '40px' }}>
-          BUYTE에서 주문할 수 있는 매장내 인기제품
+        <div style={{ color: '#fff6f6', fontSize: 'clamp(1rem, 2vw, 2rem)', marginBottom: '40px' }}>
+          BUYTE에서 주문할 수 있는 인기제품
         </div>
         <div
-          style={{ color: '#fff6f6', fontSize: '42px', fontWeight: 'bold', marginBottom: '70px' }}
+          style={{
+            color: '#fff6f6',
+            fontSize: 'clamp(1.5rem, 3vw, 3rem)',
+            fontWeight: 'bold',
+            marginBottom: '70px',
+          }}
         >
           케이크 도넛 쿠키
         </div>
-        <div style={{ color: '#ffffff', fontSize: '22px' }}>
+        <div style={{ color: '#ffffff', fontSize: 'clamp(1rem, 2vw, 2rem)' }}>
           <div style={{ color: '#ffffff', marginBottom: '12px' }}>
             ✔︎ 직접 커스텀하기 어려우신분들을 위해
           </div>

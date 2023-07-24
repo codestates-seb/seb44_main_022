@@ -5,8 +5,12 @@ import section5_3 from '../../assets/images/img_main/section5_3.jpg';
 import section5_4 from '../../assets/images/img_main/section5_4.jpg';
 import section5_5 from '../../assets/images/img_main/section5_5.jpg';
 import section5_6 from '../../assets/images/img_main/section5_6.jpg';
-import cake1 from '../../assets/images/img_main/cake1.png';
-
+import customExample2 from '../../assets/images/img_main/customExample1.png';
+import customExample1 from '../../assets/images/img_main/customExample2.png';
+import customExample3 from '../../assets/images/img_main/customExample5.png';
+import customExample6 from '../../assets/images/img_main/customExample3.png';
+import customExample4 from '../../assets/images/img_main/customExample4.png';
+import customExample5 from '../../assets/images/img_main/customExample6.png';
 const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,7 +26,7 @@ const SectionContainer = styled.div`
 const ReviewText = styled.div`
   position: absolute;
   left: 5%;
-  top: 30%;
+  top: 18%;
   font-family: 'BMJUA';
   transform: translateY(-50%);
   color: #826d58;
@@ -30,18 +34,27 @@ const ReviewText = styled.div`
 `;
 const ReviewUnderline = styled.div`
   position: absolute;
-  left: 17%;
-  top: 37%;
+  left: 20%;
+  top: 155%;
   height: 6px;
-  width: 10%;
+  width: 200px;
   background: rgba(130, 110, 86, 0.3);
 `;
+
+const ReviewContainer = styled.div`
+  position: relative;
+  right: 45%;
+  top: 9%;
+  height: 40px;
+`;
+
 const ImagesContainer1 = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 50px;
+  margin-top: 5%;
   margin-left: 20%;
 `;
 
@@ -55,15 +68,15 @@ const ImagesContainer2 = styled.div`
 `;
 
 const images1 = [
-  { front: section5_1, back: cake1 },
-  { front: section5_2, back: cake1 },
-  { front: section5_3, back: cake1 },
+  { front: section5_1, back: customExample1 },
+  { front: section5_2, back: customExample2 },
+  { front: section5_3, back: customExample3 },
 ];
 
 const images2 = [
-  { front: section5_4, back: cake1 },
-  { front: section5_5, back: cake1 },
-  { front: section5_6, back: cake1 },
+  { front: section5_4, back: customExample4 },
+  { front: section5_5, back: customExample5 },
+  { front: section5_6, back: customExample6 },
 ];
 
 const Section3Icon = styled.img`
@@ -131,8 +144,10 @@ const Section3_2 = styled(Section3)`
 function MainSection5({ id, className }: { id: string; className?: string }) {
   return (
     <SectionContainer className="section">
-      <ReviewText>REVIEWS</ReviewText>
-      <ReviewUnderline />
+      <ReviewContainer>
+        <ReviewText>REVIEWS</ReviewText>
+        <ReviewUnderline />
+      </ReviewContainer>
       <ImagesContainer1>
         {images1.map((image, index) => (
           <Section3_1 key={index} id={id} className={`section5 ${className}`}>

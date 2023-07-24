@@ -1,6 +1,7 @@
 import { RefObject } from 'react';
 import { addCustom } from '../../../api/customApis';
-
+import { LocalStorage } from '../../../utils/browserStorage';
+import { LOCAL_STORAGE_KEY_LIST } from '../../../assets/constantValue/constantValue';
 type ImageData = {
   imageUrl: string;
   x: number;
@@ -13,13 +14,13 @@ const saveAsImage = async (
   images: ImageData[],
   canvasRef: RefObject<HTMLCanvasElement>,
   storeId: number,
-  productId: number
+  productId: number,
+  navigate: (path: string) => void
 ) => {
   const canvas = canvasRef.current;
   if (!canvas) {
     return;
   }
-
   const ctx = canvas.getContext('2d');
   if (!ctx) {
     console.error('Context 2D is not available');
@@ -88,13 +89,19 @@ const saveAsImage = async (
   const blob = new Blob([int8Array], { type: 'image/png' });
   const file = new File([blob], 'canvas.png', { type: 'image/png' });
 
-  try {
-    await addCustom(storeId, productId, file);
-    return true;
-  } catch (error) {
-    alert('이미지 저장에 실패했습니다.');
+  const accessToken = LocalStorage.get(LOCAL_STORAGE_KEY_LIST.AccessToken);
+  if (accessToken) {
+    try {
+      await addCustom(storeId, productId, file);
+      return true;
+    } catch (error) {
+      alert('이미지 저장에 실패했습니다.');
+      return false;
+    }
+  } else {
+    alert('로그인 먼저 해주세요!');
+    navigate('/auth');
     return false;
   }
 };
-
 export default saveAsImage;
