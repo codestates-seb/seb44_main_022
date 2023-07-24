@@ -177,9 +177,9 @@
 
 
 ##   🖥 Frontend
-| Html | CSS| TypeScript| React | Styled-<br>Components |
-| :---: | :---: | :---: | :---: | :---: |
-| <img alt="Html" src ="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/440px-HTML5_logo_and_wordmark.svg.png" width="65" height="65" /> | <div style="display: flex; align-items: flex-start;"><img src="https://user-images.githubusercontent.com/111227745/210204643-4c3d065c-59ec-481d-ac13-cea795730835.png" alt="CSS" width="50" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://www.styled-components.com/atom.png" alt="styled-components icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://axios-http.com/assets/logo.svg" width="65" height="65"/></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/redux-icon.svg" width="65" height="65"/></div> | <div style="display: flex; align-items: flex-start;"><img src="https://timeago.org/clock.png" width="100" height="100"/></div> |  <div style="display: flex; align-items: flex-start;"><img src="https://user-images.githubusercontent.com/81786662/210204172-8fc62516-4ee9-410d-859a-17a0da1e76f9.png" width="100" height="65"/></div>|
+| Html | CSS| TypeScript| React | Styled-<br>Components | Redux-ToolKit |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| <img alt="Html" src ="https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/HTML5_logo_and_wordmark.svg/440px-HTML5_logo_and_wordmark.svg.png" width="65" height="65" /> | <div style="display: flex; align-items: flex-start;"><img src="https://user-images.githubusercontent.com/111227745/210204643-4c3d065c-59ec-481d-ac13-cea795730835.png" alt="CSS" width="50" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/ts-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/react-icon.svg" alt="icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://www.styled-components.com/atom.png" alt="styled-components icon" width="65" height="65" /></div> | <div style="display: flex; align-items: flex-start;"><img src="https://techstack-generator.vercel.app/redux-icon.svg" alt="icon" width="63" height="63" /></div> |
 
 ## 🔒 Backend
 
@@ -226,7 +226,7 @@ npm start
   <tr>
     <td>
       <img src="https://github.com/codestates-seb/seb44_main_022/assets/81670100/e2596499-f048-4b9c-88a3-6c0362556978"  alt="signup page" width = "500" height = "300">
-      <span><br/>   ✔ 처음 사용자를 위해 주문방법, 판매제품 등을 소개합니다.  <br/> ✔ 커스텀 기능을 사용해본 팀원들의  <br/><span/>
+      <span><br/>   ✔ 처음 사용자를 위해 주문방법, 판매제품 등을 소개합니다.  <br/> ✔ 커스텀 기능을 사용해본 팀원들의 리뷰를 확인할 수 있습니다.  <br/><span/>
     </td>
     <td>
       <img src= "https://github.com/codestates-seb/seb44_main_022/assets/81670100/17e9d5c5-4ea7-47d7-b15e-e23fb39d2820" alt="login page" width = "500" height = "300">
