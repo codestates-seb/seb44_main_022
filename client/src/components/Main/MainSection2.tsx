@@ -41,7 +41,7 @@ const SectionContainer = styled.div`
 
 const Image = styled.img`
   position: absolute;
-  max-width: 100%;
+  max-width: 80%;
   height: auto;
   transition: opacity 0.5s ease-in-out;
   cursor: pointer;
