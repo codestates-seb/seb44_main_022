@@ -36,13 +36,17 @@ const SectionContainer = styled.div`
   width: 100%;
   height: 100vh;
   scroll-snap-align: start;
-  gap: 60px;
+  gap: 10px;
 `;
 
 const Image = styled.img`
-  position: absolute;
-  max-width: 80%;
+  max-width: 75%;
+  max-height: 75%;
+  width: auto;
   height: auto;
+  top: 30%;
+  left: 30%;
+  position: absolute;
   transition: opacity 0.5s ease-in-out;
   cursor: pointer;
   &:hover {
@@ -55,7 +59,7 @@ const ImageContainer = styled.div<{ isAnimated: boolean }>`
   justify-content: center;
   align-items: center;
   height: 100%;
-  margin-left: 12%;
+  margin-right: 15%;
   position: relative;
   animation: ${slideInLeft} 1s ease-out;
   animation-play-state: ${({ isAnimated }) => (isAnimated ? 'running' : 'paused')};
@@ -112,7 +116,7 @@ function MainSection2({
         <Image src={customCake2} alt="Custom Cake" style={{ opacity: isImageOneVisible ? 0 : 1 }} />
       </ImageContainer>
       <TextContainer isAnimated={isAnimated}>
-        <div style={{ color: '#a08a74', fontSize: '22px', marginBottom: '40px' }}>
+        <div style={{ color: '#a08a74', fontSize: 'clamp(1rem, 2vw, 2rem)', marginBottom: '40px' }}>
           BUYTE에서 주문할 수 있는 커스텀 제품
         </div>
         <div
@@ -120,7 +124,7 @@ function MainSection2({
         >
           케이크 도넛 쿠키
         </div>
-        <div style={{ color: '#826d58', fontSize: '22px' }}>
+        <div style={{ color: '#826d58', fontSize: 'clamp(1rem, 2vw, 2rem)' }}>
           <div style={{ color: '#826d58', marginBottom: '12px' }}>
             ✔︎ 매장별 재료에 따라 원하는대로 커스텀 가능
           </div>
