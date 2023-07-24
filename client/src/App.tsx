@@ -1,29 +1,38 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import './App.css';
+import { Routes, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
+import { RouteList } from './RouteList';
+import Header from './share/Header/Header';
+import Footer from './share/Footer';
+import useAxiosInterceptor from './hooks/useAxiosInterceptor';
+import useRouteAnimation from './hooks/useRouteAnimation';
+
+const MainContent = styled.div`
+  flex-grow: 1;
+`;
 
 function App() {
-  const [count, setCount] = useState(0);
+  const location = useLocation();
+  const [displayLocation, setDisplayLocation] = useState(location);
+  const [transitionStage, setTransitionStage] = useState('fadeIn');
+
+  useRouteAnimation(location, displayLocation, setDisplayLocation, setTransitionStage);
+  useAxiosInterceptor();
+
+  const hideFooter = location.pathname === '/' || location.pathname === '/auth';
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <Header />
+      <div
+        className={`${transitionStage}`}
+        style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}
+      >
+        <MainContent>
+          <Routes location={displayLocation}>{RouteList}</Routes>
+        </MainContent>
+        {!hideFooter && <Footer />}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
     </>
   );
 }

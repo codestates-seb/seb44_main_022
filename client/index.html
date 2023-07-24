@@ -2,12 +2,22 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/png" href="public/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=bb9d9af1d9c60801b3daebd3d663b9c1&libraries=services,clusterer"
+    ></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+      var global = window;
+    </script>
+    <title>BUYTE</title>
   </head>
   <body>
     <div id="root"></div>
+    <div id="modal"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

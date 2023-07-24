@@ -1,0 +1,72 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_IP}:${DB_PORT}/${DB_NAME}?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  redis:
+    host: ${REDIS_IP}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    open-in-view: false
+    show-sql: true
+    hibernate:
+      format_sql: true
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: Asia/Seoul
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+jwt:
+  key: ${JWT_KEY}
+
+  access-token-expiration-minutes: ${ACCESS_MIN}
+  refresh-token-expiration-minutes: ${REFRESH_MIN}
+
+cloud:
+  aws:
+    credentials:
+      accessKey: ${S3_ACCESS_KEY}
+      secretKey: ${S3_SECRET_KEY}
+    s3:
+      bucket: ${S3_BUCKET_NAME}
+    region:
+      static: ${S3_REGION}
+    stack:
+      auto: false
+
+portone:
+  impkey: ${PORTONE_ACCESS_KEY}
+  impsecret: ${PORTONE_SECRET_KEY}
+
+security:
+  oauth2:
+    google:
+      token-uri: https://oauth2.googleapis.com/token
+      resource-uri: https://www.googleapis.com/oauth2/v2/userinfo
+      fe-uri: ${FE_URI}
+      fe-id: ${FE_ID}
+      fe-secret: ${FE_SECRET}
