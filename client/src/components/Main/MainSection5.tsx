@@ -11,6 +11,7 @@ import customExample3 from '../../assets/images/img_main/customExample5.png';
 import customExample6 from '../../assets/images/img_main/customExample3.png';
 import customExample4 from '../../assets/images/img_main/customExample4.png';
 import customExample5 from '../../assets/images/img_main/customExample6.png';
+import { wiggle } from '../../styles/keyframes';
 const SectionContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -30,7 +31,7 @@ const ReviewText = styled.div`
   font-family: 'BMJUA';
   transform: translateY(-50%);
   color: #826d58;
-  font-size: 6rem;
+  font-size: 5.5rem;
 `;
 const ReviewUnderline = styled.div`
   position: absolute;
@@ -44,7 +45,7 @@ const ReviewUnderline = styled.div`
 const ReviewContainer = styled.div`
   position: relative;
   right: 45%;
-  top: 9%;
+  top: 10%;
   height: 40px;
 `;
 
@@ -54,7 +55,7 @@ const ImagesContainer1 = styled.div`
   justify-content: center;
   align-items: center;
   gap: 50px;
-  margin-top: 5%;
+  margin-top: 4%;
   margin-left: 20%;
 `;
 
@@ -122,6 +123,12 @@ const Section3 = styled.div`
 `;
 
 const Section3_1 = styled(Section3)`
+  animation: ${wiggle} 2s ease-in-out infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+
   &:hover ${Section3Card} {
     transform: rotateY(-180deg);
   }
@@ -136,11 +143,16 @@ const Section3_2Card = styled(Section3Card)`
 `;
 
 const Section3_2 = styled(Section3)`
+  animation: ${wiggle} 2s ease-in-out infinite;
+
+  &:hover {
+    animation-play-state: paused;
+  }
+
   &:hover ${Section3_2Card} {
     transform: rotateY(-180deg);
   }
 `;
-
 function MainSection5({ id, className }: { id: string; className?: string }) {
   return (
     <SectionContainer className="section">
