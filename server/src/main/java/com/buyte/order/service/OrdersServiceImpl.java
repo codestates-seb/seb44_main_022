@@ -1,5 +1,7 @@
 package com.buyte.order.service;
 
+import com.buyte.exception.BusinessLogicException;
+import com.buyte.exception.ExceptionCode;
 import com.buyte.member.auth.utils.SecurityUtil;
 import com.buyte.member.entity.Cart;
 import com.buyte.member.entity.Member;
@@ -79,13 +81,15 @@ public class OrdersServiceImpl implements OrdersService{
             }
 
             Long authenticatedMemberId = SecurityUtil.getLoginMemberId();
-            Member member = memberRepository.findById(authenticatedMemberId).orElseThrow();
+            Member member = memberRepository.findById(authenticatedMemberId)
+                    .orElseThrow(()-> new BusinessLogicException(ExceptionCode.ACCESS_TOKEN_EXPIRED));
             Orders orders = new Orders(member);
             Long totalOrderPrice = 0L;
             ordersRepository.save(orders);
 
             for (Long cartId : cartIds) {
-                Cart cart = cartRepository.findById(cartId).orElseThrow();
+                Cart cart = cartRepository.findById(cartId)
+                        .orElseThrow(()-> new BusinessLogicException(ExceptionCode.CART_NOT_FOUND));
                 OrderProduct orderProduct = new OrderProduct(cart.getProduct(), cart.getCartCustomProductImage(), cart.getProductCount());
                 orderProduct.setOrder(orders);
                 orderProductRepository.save(orderProduct);
