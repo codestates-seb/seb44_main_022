@@ -3,15 +3,15 @@ import { CloseAlertWrapper, CloseAlertSection, Button, WhiteButton } from './Clo
 interface CloseAlertProps {
   closeModal: () => void;
   handleClose?: () => void;
-  alertText: string; 
-  alertSubText?:string;
-  continueButtonText: string; 
-  closeButtonText: string; 
-  positionAbsolute?: boolean; 
+  alertText: string;
+  alertSubText?: string;
+  continueButtonText: string;
+  closeButtonText: string;
+  positionAbsolute?: boolean;
   onDeleteButtonClick?: () => void;
 }
 
-function CloseAlert({  
+function CloseAlert({
   closeModal,
   handleClose,
   alertText,
@@ -19,17 +19,18 @@ function CloseAlert({
   alertSubText,
   closeButtonText,
   positionAbsolute,
-  onDeleteButtonClick  }: CloseAlertProps) {
+  onDeleteButtonClick,
+}: CloseAlertProps) {
   const handleContinueShopping = () => {
     closeModal();
   };
   const handleModalClose = () => {
     if (onDeleteButtonClick) {
-      onDeleteButtonClick(); 
+      onDeleteButtonClick();
     } else if (handleClose) {
-      handleClose(); 
+      handleClose();
     } else {
-      closeModal(); 
+      closeModal();
     }
   };
   return (
@@ -53,17 +54,16 @@ function CloseAlert({
             fontWeight: '600',
             fontSize: '16px',
             textAlign: 'center',
-            margin: '3px'
+            margin: '3px',
           }}
         >
-          {alertSubText}          
+          {alertSubText}
         </p>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
           <Button style={{ color: '#FCFDFF' }} onClick={handleContinueShopping}>
             {continueButtonText}
           </Button>
-          <WhiteButton onClick={handleModalClose}>
-          {closeButtonText}</WhiteButton>
+          <WhiteButton onClick={handleModalClose}>{closeButtonText}</WhiteButton>
         </div>
       </CloseAlertSection>
     </CloseAlertWrapper>

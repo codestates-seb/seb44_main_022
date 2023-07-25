@@ -1,6 +1,6 @@
-import styled, {css} from 'styled-components';
+import styled, { css } from 'styled-components';
 interface CloseAlertProps {
-  positionAbsolute?: boolean; 
+  positionAbsolute?: boolean;
 }
 export const CloseAlertWrapper = styled.section<CloseAlertProps>`
   display: flex;
@@ -10,7 +10,7 @@ export const CloseAlertWrapper = styled.section<CloseAlertProps>`
     positionAbsolute &&
     css`
       position: absolute;
-      left:50%;
+      left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
     `}
@@ -56,6 +56,6 @@ export const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.8); 
-  z-index: 10; 
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 10;
 `;

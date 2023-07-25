@@ -33,7 +33,7 @@ const StyledModal = styled(Modal)`
   left: 50%;
   transform: translate(-50%, -50%);
   min-height: 77%;
-  min-width: 77%;
+  min-width: 80%;
   background-color: rgba(255, 255, 255, 1);
   z-index: 10;
   border-radius: 20px;

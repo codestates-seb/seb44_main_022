@@ -41,8 +41,10 @@ const ColorContainer = styled.div`
   text-align: center;
 `;
 const Image = styled.img<{ isActive: boolean }>`
-  width: 50%;
-  height: 50%;
+  max-width: 50%;
+  max-height: 50%;
+  width: auto;
+  height: auto;
   border-radius: 20px;
   opacity: 0;
   animation: ${(props) =>
