@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,6 +28,9 @@ public class ChatRoom {
 
     @Column(name = "store_name")
     private String storeName;
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Message> messages = new ArrayList<>();
 
     public ChatRoom(Member merchant, Member customer, String storeName) {
         this.merchant = merchant;
