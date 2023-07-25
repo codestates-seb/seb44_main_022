@@ -35,7 +35,7 @@
   ### Contributors
 | [김준표](https://github.com/KimJunpyo)(FE, 팀장)  |[민정호](https://github.com/jungo0 ) (FE)| [양효정](https://github.com/Raros17 ) (FE)| [김현우](https://github.com/j6d9s)     (BE, 부팀장)    | [오숙현](https://github.com/oshyun00)(BE) | [이준기](https://github.com/ljg980708)(BE)| 
 | :-----------------------------------: | :-----------------------------------: | :----------------------------------: | :----------------------------------: | :------------------------------------: | :-------------------------------------: |
-|<img src="https://github.com/codestates-seb/seb44_pre_035/assets/81670100/abc876e8-3e53-42fe-9209-9cd696b5434a" width = "120" alt = "jungho"/> |<img src=" " width="120" alt=""/> | <img src="" width="120" alt =""/> |<img src = "" width = "120" alt = "hyunwoo"/>| <img src =""  width = "120" alt = ""/> |<img src =  "" width="120" alt=""/>  |
+|<img src="https://github.com/codestates-seb/seb44_main_022/assets/81670100/3892ae63-64c2-4193-8816-c10ed9cf7b1c" width = "120" alt = ""/> |<img src="https://github.com/codestates-seb/seb44_main_022/assets/81670100/8db25782-41ce-4dde-bda5-a4dddc98363e" width="120" alt=""/> | <img src="https://github.com/codestates-seb/seb44_main_022/assets/81670100/11a41a41-d034-451f-af20-40f581b91c18" width="120" alt =""/> |<img src = "https://github.com/codestates-seb/seb44_main_022/assets/81670100/2bbe07cc-e988-47bd-bef7-8b5c0f327377" width = "120" alt = ""/>| <img src = "https://github.com/codestates-seb/seb44_main_022/assets/81670100/b7f580ab-3d41-4353-aba1-7e83c422919f" width = "120" alt = ""/> |<img src = "https://github.com/codestates-seb/seb44_main_022/assets/81670100/b1fc756f-6384-41bd-a60b-feb0046f021a" width="120" alt=""/>  |
 
 </div>
 
