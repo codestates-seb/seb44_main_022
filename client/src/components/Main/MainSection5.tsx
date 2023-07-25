@@ -34,25 +34,27 @@ const ReviewText = styled.div`
   font-size: 5.5rem;
 `;
 const ReviewUnderline = styled.div`
-  position: absolute;
-  left: 20%;
-  top: 155%;
+  position: fixed;
+  left: 8.5%;
+  top: 40%;
   height: 6px;
   width: 200px;
   background: rgba(130, 110, 86, 0.3);
 `;
 
 const ReviewContainer = styled.div`
-  position: relative;
-  right: 42%;
-  top: 28%;
+  position: absolute;
+  left: 8%;
+  top: 33%;
   height: 40px;
 
   @media (max-width: 1400px) {
     display: none;
   }
+  @media (max-height: 700px) {
+    display: none;
+  }
 `;
-
 const ImagesContainer1 = styled.div`
   display: flex;
   flex-direction: row;
@@ -61,6 +63,14 @@ const ImagesContainer1 = styled.div`
   gap: 50px;
   margin-top: 4%;
   margin-left: 20%;
+
+  @media (max-width: 1400px) {
+    margin-right: 15%;
+  }
+
+  @media (max-height: 700px) {
+    margin-left: 15%;
+  }
 `;
 
 const ImagesContainer2 = styled.div`
@@ -70,6 +80,14 @@ const ImagesContainer2 = styled.div`
   align-items: center;
   gap: 50px;
   margin-left: 30%;
+
+  @media (max-width: 1400px) {
+    margin-right: 15%;
+  }
+
+  @media (max-height: 700px) {
+    margin-left: 25%;
+  }
 `;
 
 const images1 = [
