@@ -44,9 +44,13 @@ const ReviewUnderline = styled.div`
 
 const ReviewContainer = styled.div`
   position: relative;
-  right: 45%;
-  top: 10%;
+  right: 42%;
+  top: 28%;
   height: 40px;
+
+  @media (max-width: 1400px) {
+    display: none;
+  }
 `;
 
 const ImagesContainer1 = styled.div`
