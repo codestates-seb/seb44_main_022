@@ -1,6 +1,8 @@
 package com.buyte.member.entity;
 
 import com.buyte.audit.Auditable;
+import com.buyte.chat.entity.ChatRoom;
+import com.buyte.chat.entity.Message;
 import com.buyte.exception.BusinessLogicException;
 import com.buyte.exception.ExceptionCode;
 import com.buyte.order.entity.Orders;
@@ -48,6 +50,18 @@ public class Member extends Auditable {
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     private List<Orders> orderList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "merchant", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ChatRoom> merchantChatRooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ChatRoom> customerChatRooms = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Message> sentMessages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Message> receivedMessages = new ArrayList<>();
 
     @Column(name = "member_type")
     @Enumerated(EnumType.STRING)
