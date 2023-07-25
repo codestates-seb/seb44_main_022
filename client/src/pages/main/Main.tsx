@@ -98,7 +98,6 @@ function Main() {
       <AnimatedSection className={activeSection === 4 ? 'active' : ''}>
         <MainSection4 id={'section4'} isActive={activeSection === 4} />
       </AnimatedSection>
-
       <AnimatedSection className={activeSection === 5 ? 'active' : ''}>
         <MainSection5 id={'section5'} />
       </AnimatedSection>

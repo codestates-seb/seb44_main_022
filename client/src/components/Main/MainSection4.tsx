@@ -50,7 +50,7 @@ const Image = styled.img<{ isActive: boolean }>`
   animation: ${(props) =>
     props.isActive
       ? css`
-          ${appearAndSlideUp} 3s
+          ${appearAndSlideUp} 1.5s
         `
       : 'none'};
   animation-fill-mode: forwards;
@@ -61,7 +61,7 @@ const Text = styled.div<{ isActive: boolean }>`
     props.isActive
       ? css`
           ${slideUpText} 1s ease-in-out;
-          animation-delay: 3s;
+          animation-delay: 1.5s;
         `
       : 'none'};
   animation-fill-mode: backwards;
